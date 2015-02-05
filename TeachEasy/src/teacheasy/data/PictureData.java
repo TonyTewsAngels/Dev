@@ -7,13 +7,13 @@ import teacheasy.data.PageObject.PageObjectType;
  * @author sh1157 sr896
  *
  */
-public class PictureObject extends PageObject {
+public class PictureData extends PageObject {
 	String url;
 	String uri;
 	float xScaleFactor, yScaleFactor, rotation;
 	
 	/** Constructor Method */
-	public PictureObject (PageObjectType nType, float nXStart, float nYStart) {
+	public PictureData (PageObjectType nType, float nXStart, float nYStart) {
 		/* Must call the constructor method of superclass */
 		super(PageObjectType.PICTURE, nXStart, nYStart);	
 	}
