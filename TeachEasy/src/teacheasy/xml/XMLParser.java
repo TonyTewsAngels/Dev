@@ -37,9 +37,11 @@ public class XMLParser extends DefaultHandler{
 	/** Parses an XML file */
 	public void parse(String filename) {
 		try {
+			/* Create an instance of the SAX Parser */
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser saxParser = factory.newSAXParser();
 			
+			/* Parse the file */
 			saxParser.parse(filename,  this);
 			
 		} catch (ParserConfigurationException | SAXException | IOException e) {
