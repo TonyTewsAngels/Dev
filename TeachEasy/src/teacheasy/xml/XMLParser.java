@@ -6,6 +6,8 @@
  */
 package teacheasy.xml;
 
+import java.io.IOException;
+
 import teacheasy.data.Lesson;
 import teacheasy.data.Page;
 import teacheasy.data.PageObject;
@@ -30,5 +32,43 @@ public class XMLParser extends DefaultHandler{
 	/** Constructor Method */
 	public XMLParser() {
 		
+	}
+	
+	/** Parses an XML file */
+	public void parse(String filename) {
+		try {
+			SAXParserFactory factory = SAXParserFactory.newInstance();
+			SAXParser saxParser = factory.newSAXParser();
+			
+			saxParser.parse(filename,  this);
+			
+		} catch (ParserConfigurationException | SAXException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/** Called by parser at the start of an element */
+	public void startElement(String uri, String localName, String qName, Attributes attrs) throws SAXException{
+		System.out.println("Element");
+	}
+	
+	/** Called by parser at the end of an element */
+	public void endElement(String uri, String localName, String qName) throws SAXException{
+		System.out.println("Element End");
+	}
+	
+	/** Called by parser when characters have been read */
+	public void characters(char ch[], int start, int length) throws SAXException {
+		System.out.println("Characters");
+	}
+	
+	/** Called by parser at the start of a document */
+	public void startDocument() throws SAXException {
+		System.out.println("Document");
+	}
+	
+	/** Called by parser at the start of a document */
+	public void endDocument() throws SAXException {
+		System.out.println("Document End");
 	}
 }
