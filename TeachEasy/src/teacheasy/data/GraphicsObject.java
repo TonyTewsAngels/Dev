@@ -33,7 +33,6 @@ public class GraphicsObject extends PageObject {
 	
 	public GraphicsObject(float nXStart, float nYStart) {
 		super(PageObjectType.GRAPHIC, nXStart, nYStart);
-		// TODO Auto-generated constructor stub
 	}
 	
 	/* Getters and Setters for Graphics variables */
