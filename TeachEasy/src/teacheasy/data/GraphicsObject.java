@@ -31,8 +31,19 @@ public class GraphicsObject extends PageObject {
 	private float outlineThickness;
 	private boolean shadow;
 	
-	public GraphicsObject(float nXStart, float nYStart) {
+	public GraphicsObject(GraphicType nType, float nXStart, float nYStart, float nXEnd, 
+						  float nYEnd, float nRotation, int nFillColour,   
+						  boolean nOutline, float nOutlineThickness, boolean nShadow) {
 		super(PageObjectType.GRAPHIC, nXStart, nYStart);
+		
+		this.type = nType;
+		this.XEnd = nXEnd;
+		this.YEnd = nYEnd;
+		this.rotation = nRotation;
+		this.fillColour = nFillColour;
+		this.outline = nOutline;
+		this.outlineThickness = nOutlineThickness;
+		this.shadow = nShadow;
 	}
 	
 	/* Getters and Setters for Graphics variables */
