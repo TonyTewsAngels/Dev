@@ -31,4 +31,9 @@ public class XMLHandler {
 		/* Instantiate the Writer */
 		xmlWriter = new XMLWriter();
 	}
+	
+	/** Parse an xml file */
+	public void parseXML(String filename) {
+		xmlParser.parse(filename);
+	}
 }

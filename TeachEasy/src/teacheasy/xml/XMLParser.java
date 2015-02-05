@@ -51,17 +51,17 @@ public class XMLParser extends DefaultHandler{
 	
 	/** Called by parser at the start of an element */
 	public void startElement(String uri, String localName, String qName, Attributes attrs) throws SAXException{
-		System.out.println("Element");
+		System.out.println(qName);
 	}
 	
 	/** Called by parser at the end of an element */
 	public void endElement(String uri, String localName, String qName) throws SAXException{
-		System.out.println("Element End");
+		System.out.println("/" + qName);
 	}
 	
 	/** Called by parser when characters have been read */
 	public void characters(char ch[], int start, int length) throws SAXException {
-		System.out.println("Characters");
+		System.out.println(new String(ch, start, length));
 	}
 	
 	/** Called by parser at the start of a document */

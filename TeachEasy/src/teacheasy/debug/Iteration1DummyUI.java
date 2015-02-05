@@ -26,6 +26,9 @@ public class Iteration1DummyUI {
 		xmlHandler = new XMLHandler();
 		
 		// Create GUI Frame
+		
+		// Test Parser
+		xmlHandler.parseXML("testXML.xml");
 	}
 
 	/** Main Function called when application is run */
