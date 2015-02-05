@@ -1,4 +1,8 @@
 package teacheasy.data;
+/**
+ * @version 1.0 05 Feb 2015
+ * @author sh1157 and sr896
+ */
 
 /** Class to hold Button Data */
 public class ButtonData extends PageObject {
