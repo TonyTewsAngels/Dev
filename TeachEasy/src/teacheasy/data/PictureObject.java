@@ -23,16 +23,16 @@ public class PictureObject extends PageObject {
 		return url;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setUrl(String nUrl) {
+		this.url = nUrl;
 	}
 
 	public String getUri() {
 		return uri;
 	}
 
-	public void setUri(String uri) {
-		this.uri = uri;
+	public void setUri(String nUri) {
+		this.uri = nUri;
 	}
 
 	public float getyScaleFactor() {
@@ -47,8 +47,8 @@ public class PictureObject extends PageObject {
 		return rotation;
 	}
 
-	public void setRotation(float rotation) {
-		this.rotation = rotation;
+	public void setRotation(float nRotation) {
+		this.rotation = nRotation;
 	}
 
 	public float getxScaleFactor() {
