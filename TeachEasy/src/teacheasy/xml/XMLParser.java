@@ -31,7 +31,7 @@ public class XMLParser extends DefaultHandler{
 	
 	/** Constructor Method */
 	public XMLParser() {
-		
+		currentLesson = new Lesson();
 	}
 	
 	/** Parses an XML file */
@@ -47,6 +47,11 @@ public class XMLParser extends DefaultHandler{
 		} catch (ParserConfigurationException | SAXException | IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/** Returns the lesson parsed from xml */
+	public Lesson getLesson() {
+		return currentLesson;
 	}
 	
 	/** Called by parser at the start of an element */
