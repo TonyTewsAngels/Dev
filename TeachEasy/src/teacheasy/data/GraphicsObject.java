@@ -27,7 +27,7 @@ public class GraphicsObject extends PageObject {
 	}
 	
 	
-	/** Getters and Setters for Graphics variables */
+	/* Getters and Setters for Graphics variables */
 	
 	public GraphicType getType() {
 		return type;
