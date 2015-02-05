@@ -61,7 +61,7 @@ public class XMLParser extends DefaultHandler{
 	
 	/** Called by parser when characters have been read */
 	public void characters(char ch[], int start, int length) throws SAXException {
-		System.out.println(new String(ch, start, length));
+			System.out.println(new String(ch, start, length));
 	}
 	
 	/** Called by parser at the start of a document */
