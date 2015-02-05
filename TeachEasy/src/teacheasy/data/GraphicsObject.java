@@ -1,5 +1,17 @@
+/*
+ * Lewis Thresh & Calum Armstrong
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
+ * 
+ */
 package teacheasy.data;
 
+/**
+ * This class extends PageObject and encapsulates a single graphics object.
+ * 
+ * @version 	1.0 05 Feb 2015
+ * @author 		Lewis Thresh & Calum Armstrong
+ */
 public class GraphicsObject extends PageObject {
 
 	/** Enumeration of the various graphic types */
@@ -9,7 +21,6 @@ public class GraphicsObject extends PageObject {
 		TRIANGLE
 	}
 	
-
 	/** Graphics Variables */
 	private GraphicType type;
 	private float XEnd;
@@ -20,12 +31,10 @@ public class GraphicsObject extends PageObject {
 	private float outlineThickness;
 	private boolean shadow;
 	
-	
 	public GraphicsObject(float nXStart, float nYStart) {
 		super(PageObjectType.GRAPHIC, nXStart, nYStart);
 		// TODO Auto-generated constructor stub
 	}
-	
 	
 	/* Getters and Setters for Graphics variables */
 	
