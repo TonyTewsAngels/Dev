@@ -30,7 +30,7 @@ public class Page {
         
 	    /* Instantiate the page object container */
         pageObjects = new ArrayList<PageObject>();
-        }
+    }
 	
 	/** Add a new object to the page */
     public void addObject(PageObject pageObject) {
@@ -41,7 +41,7 @@ public class Page {
     public void removeObject(int index) {
         pageObjects.remove(index);
         //TODO Index error handling?
-        }
+    }
 	
 	/** Get an object on the page */
     public PageObject getObject(int index) {
