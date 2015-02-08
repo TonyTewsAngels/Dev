@@ -35,7 +35,7 @@ public class Page {
 	/** Add a new object to the page */
     public void addObject(PageObject pageObject) {
         pageObjects.add(pageObject);
-	}
+    }
     
 	/** Remove an object from the page */
     public void removeObject(int index) {
