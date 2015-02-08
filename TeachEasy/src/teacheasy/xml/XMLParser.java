@@ -31,7 +31,7 @@ public class XMLParser extends DefaultHandler{
 	
 	/** Constructor Method */
 	public XMLParser() {
-		
+		currentLesson = new Lesson();
 	}
 	
 	/** Parses an XML file */
@@ -49,9 +49,14 @@ public class XMLParser extends DefaultHandler{
 		}
 	}
 	
+	/** Returns the lesson parsed from xml */
+	public Lesson getLesson() {
+		return currentLesson;
+	}
+	
 	/** Called by parser at the start of an element */
 	public void startElement(String uri, String localName, String qName, Attributes attrs) throws SAXException{
-		System.out.println(qName);
+		System.out.println("e:" + qName);
 	}
 	
 	/** Called by parser at the end of an element */
@@ -61,7 +66,10 @@ public class XMLParser extends DefaultHandler{
 	
 	/** Called by parser when characters have been read */
 	public void characters(char ch[], int start, int length) throws SAXException {
-			System.out.println(new String(ch, start, length));
+		String s = new String(ch, start, length).trim();
+		if(!s.equals("")) {
+			System.out.println("ch: [" + s + "]");
+		}
 	}
 	
 	/** Called by parser at the start of a document */
