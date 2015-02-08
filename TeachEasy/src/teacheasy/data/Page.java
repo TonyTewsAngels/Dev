@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class Page { 
     
-    private String backgroundColour;
+    private String backgroundColour; // 8 digit hex code, RGBA
     
 	/** Container for the objects on this page */
 	public List<PageObject> pageObjects;
