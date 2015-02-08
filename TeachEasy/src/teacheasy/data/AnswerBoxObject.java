@@ -12,14 +12,14 @@ package teacheasy.data;
  * @author	sr896 and sh1157
  * @version	1.1 08 Feb 2015
  */
-public class AnswerBoxData extends PageObject {
+public class AnswerBoxObject extends PageObject {
 	private int characterLimit;
 	private int marks;
 	private String correctAnswers;
 	private boolean retry;
 	
 	/** Constructor Method */
-	public AnswerBoxData(float nXStart, float nYStart, int nCharacterLimit,
+	public AnswerBoxObject(float nXStart, float nYStart, int nCharacterLimit,
 						 int nMarks, String nCorrectAnswers, boolean nRetry) {
 		
 		/* Call Superconstructor */
