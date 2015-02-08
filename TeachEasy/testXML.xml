@@ -8,17 +8,17 @@
 		<LessonName>Algebra 1</LessonName>
 	</Info>
 	<DefaultSettings>
-		<BackgroundColour>#0000ff</BackgroundColour>
+		<BackgroundColour>#00000000</BackgroundColour>
 		<Font>Arial</Font>
 		<FontSize>24pt</FontSize>
-		<FontColour>#ffcccc</FontColour>
-		<LineColour>#00ff00</LineColour>
-		<FillColour>#ff0000</FillColour>
+		<FontColour>#ffcccc00</FontColour>
+		<LineColour>#00ff0000</LineColour>
+		<FillColour>#ff000000</FillColour>
 	</DefaultSettings>
 	<GradeSettings>
 		<PassBoundary passmessage="Well done lad" failmessage="Work harder">2</PassBoundary>
 	</GradeSettings>
-	<Page number="1" backgroundcolour="#00cc00">
+	<Page number="1" backgroundcolour="#00cc0000">
 		<Text font="Times-Roman" fontsize="20pt" fontcolour="#ffffff" xstart="0.6" ystart="0.2">
 			The Title with
 			<b>Bold Font</b>
