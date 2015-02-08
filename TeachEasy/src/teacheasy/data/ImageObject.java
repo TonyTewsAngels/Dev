@@ -9,7 +9,7 @@ package teacheasy.data;
 /**
  * A class to hold Picture Data
  * @author 	sh1157 sr896
- * @version 1.1 08 Feb 2015
+ * @version	1.1 08 Feb 2015
  */
 public class ImageObject extends PageObject {
 	String url;
