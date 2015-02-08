@@ -18,11 +18,16 @@ import java.util.List;
  */
 public class Page { 
     
+    private String backgroundColour;
+    
 	/** Container for the objects on this page */
 	public List<PageObject> pageObjects;
 	
 	/** Constructor Method */
-	public Page() {
+	public Page(String nBackgroundColour) {
+	    /* Instantiate class level variables */
+	    this.backgroundColour = nBackgroundColour;
+	    
 	    /* Instantiate the page object container */
 		pageObjects = new ArrayList<PageObject>();
 	}
@@ -59,5 +64,15 @@ public class Page {
 	/** Get page object count */
 	public int getObjectCount() {
 	    return pageObjects.size();
+	}
+	
+	/** Get the page background colour */
+	public String getPageColour() {
+	    return backgroundColour;
+	}
+	
+	/** Set the page background colour */
+	public void setPageColour(String nBackgroundColour) {
+	    this.backgroundColour = nBackgroundColour;
 	}
 }
