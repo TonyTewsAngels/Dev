@@ -12,7 +12,7 @@ package teacheasy.data;
  * @version 1.0 05 Feb 2015
  * @author sh1157 and sr896
  * */
-public class ButtonData extends PageObject {
+public class ButtonObject extends PageObject {
 	
 	/** Enumeration of the button interaction types */
 	public static enum ButtonInteractionType {
@@ -31,7 +31,7 @@ public class ButtonData extends PageObject {
 	private ButtonInteractionType interaction;
 	
 	/** Constructor for ButtonData */
-	public ButtonData(float nXStart, float nYStart, float nXEnd, float nYEnd,
+	public ButtonObject(float nXStart, float nYStart, float nXEnd, float nYEnd,
 					  float nOutlineThickness, boolean nOutline, boolean nShadow,
 					  boolean nVisible, String nText, int nFunction, 
 					  ButtonInteractionType nInteraction) {
