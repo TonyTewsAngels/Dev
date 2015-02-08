@@ -30,7 +30,7 @@ public class Lesson {
     public LessonDefaultSettings defaultSettings;
 
     /** Grade Settings Object */
-	public LessonGradeSettings gradeSettings;
+    public LessonGradeSettings gradeSettings;
 
     /** Constructor Method */
     public Lesson(String author, String version, String comment,
@@ -54,7 +54,7 @@ public class Lesson {
         /* Instantiate the grade settings */
         gradeSettings = new LessonGradeSettings(passMark, passMessage,
                                     failMessage);
-	}
+    }
 	
     /** Blank constructor (debug purposes only! */
     public Lesson() {
@@ -67,10 +67,10 @@ public class Lesson {
         
         /* Instantiate the default settings */
         defaultSettings = new LessonDefaultSettings(12, "Arial",
-                                    "#00000000", "#00000000",
-                                    "#00000000", "#00000000");
+                                                    "#00000000", "#00000000",
+                                                    "#00000000", "#00000000");
         
         /* Instantiate the grade settings */
         gradeSettings = new LessonGradeSettings(1, "pass", "fail");
-	}
+    }
 }
