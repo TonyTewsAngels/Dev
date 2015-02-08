@@ -57,6 +57,7 @@ public class ImageObject extends PageObject {
 		return xScaleFactor;
 	}
 	
+	/** Method to set the x scale factor */
 	public void setxScaleFactor(float nXScaleFactor) {
 		this.xScaleFactor = nXScaleFactor;
 	}
