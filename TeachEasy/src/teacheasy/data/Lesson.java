@@ -33,27 +33,21 @@ public class Lesson {
     public LessonGradeSettings gradeSettings;
 
     /** Constructor Method */
-    public Lesson(String author, String version, String comment,
-                  String dateCreated, int totalMarks, String lessonName,
-                  String dfBackgroundColour, String dfFont, int dfFontSize,
-                  String dfFontColour, String dfLineColour, String dfFillColour,
-                  int passMark, String passMessage, String failMessage) {
+    public Lesson(LessonInfo nLessonInfo, 
+                  LessonDefaultSettings nDFSettings,
+                  LessonGradeSettings nGradeSettings) {
 		
         /* Instantiate the pages container */
         pages = new ArrayList<Page>();
     		
         /* Instantiate the metadata object */
-        lessonInfo = new LessonInfo(lessonName, author, version,
-                                    comment, dateCreated, totalMarks);
+        this.lessonInfo = nLessonInfo;
 
         /* Instantiate the default settings */
-        defaultSettings = new LessonDefaultSettings(dfFontSize, dfFont,
-                                    dfBackgroundColour, dfFontColour,
-                                    dfLineColour, dfFillColour);
+        this.defaultSettings = nDFSettings;
 		
         /* Instantiate the grade settings */
-        gradeSettings = new LessonGradeSettings(passMark, passMessage,
-                                    failMessage);
+        this.gradeSettings = nGradeSettings;
     }
 	
     /** Blank constructor (debug purposes only! */
