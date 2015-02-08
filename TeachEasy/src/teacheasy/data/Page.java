@@ -23,7 +23,7 @@ public class Page {
 	/** Container for the objects on this page */
     public List<PageObject> pageObjects;
     
-	/** Constructor Method */
+    /** Constructor Method */
     public Page(String nBackgroundColour) {
         /* Instantiate class level variables */
         this.backgroundColour = nBackgroundColour;
@@ -32,18 +32,18 @@ public class Page {
         pageObjects = new ArrayList<PageObject>();
     }
 	
-	/** Add a new object to the page */
+    /** Add a new object to the page */
     public void addObject(PageObject pageObject) {
         pageObjects.add(pageObject);
     }
     
-	/** Remove an object from the page */
+    /** Remove an object from the page */
     public void removeObject(int index) {
         pageObjects.remove(index);
         //TODO Index error handling?
     }
 	
-	/** Get an object on the page */
+    /** Get an object on the page */
     public PageObject getObject(int index) {
         return pageObjects.get(index);
         //TODO Index error handling?    
@@ -66,12 +66,12 @@ public class Page {
         return pageObjects.size();
     }
     
-	/** Get the page background colour */
+    /** Get the page background colour */
     public String getPageColour() {
         return backgroundColour;
     }
     
-	/** Set the page background colour */
+    /** Set the page background colour */
     public void setPageColour(String nBackgroundColour) {
         this.backgroundColour = nBackgroundColour;
     }
