@@ -7,10 +7,13 @@
 package teacheasy.xml;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import teacheasy.data.Lesson;
 import teacheasy.data.Page;
 import teacheasy.data.PageObject;
+import teacheasy.data.lessondata.*;
 
 import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
@@ -26,11 +29,26 @@ import javax.xml.parsers.SAXParser;
  * @author 		Alistair Jewers
  */
 public class XMLParser extends DefaultHandler{
-	/** Lesson being constructed */
-	Lesson currentLesson;
+    /** The current element */
+    private String currentElement;
+    
+	/** The lesson being constructed */
+	private Lesson currentLesson;
+	
+	/** Metatdata for the lesson under construction */
+	private LessonInfo constructLessonInfo;
+	
+	/** Default settings for the lesson under construction */
+	private LessonDefaultSettings constructDFSettings;
+	
+	/** Grade settings for the lesson under construction */
+	private LessonGradeSettings constructGradeSettings;
+	
+	private List<String> elementList;
 	
 	/** Constructor Method */
 	public XMLParser() {
+	    elementList = new ArrayList<String>();
 		currentLesson = new Lesson();
 	}
 	
@@ -55,20 +73,32 @@ public class XMLParser extends DefaultHandler{
 	}
 	
 	/** Called by parser at the start of an element */
-	public void startElement(String uri, String localName, String qName, Attributes attrs) throws SAXException{
-		System.out.println("e:" + qName);
+	public void startElement(String uri, String localName, String qName, Attributes attrs) throws SAXException{		
+		elementList.add(qName);
+		
+		for(int i = 0; i < elementList.size(); i++) {
+		    System.out.print(elementList.get(i) + " ");
+		}
+		
+		System.out.println("");
 	}
 	
 	/** Called by parser at the end of an element */
 	public void endElement(String uri, String localName, String qName) throws SAXException{
-		System.out.println("/" + qName);
+		elementList.remove(elementList.size() - 1);
+		
+		for(int i = 0; i < elementList.size(); i++) {
+            System.out.print(elementList.get(i) + " ");
+        }
+        
+        System.out.println("/" + qName);
 	}
 	
 	/** Called by parser when characters have been read */
 	public void characters(char ch[], int start, int length) throws SAXException {
 		String s = new String(ch, start, length).trim();
 		if(!s.equals("")) {
-			System.out.println("ch: [" + s + "]");
+			//System.out.println("ch: [" + s + "]");
 		}
 	}
 	
