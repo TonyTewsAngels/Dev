@@ -28,7 +28,7 @@ public class Page {
         /* Instantiate class level variables */
         this.backgroundColour = nBackgroundColour;
         
-	    /* Instantiate the page object container */
+        /* Instantiate the page object container */
         pageObjects = new ArrayList<PageObject>();
     }
 	
