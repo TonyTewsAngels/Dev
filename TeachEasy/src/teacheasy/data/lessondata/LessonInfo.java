@@ -8,7 +8,7 @@ package teacheasy.data.lessondata;
 
 /**
  * A class to encapsulate the
- * metatdata for a lesson.
+ * metadata for a lesson.
  * 
  * @author Alistair Jewers
  * @version 1.0 08 Feb 2015
