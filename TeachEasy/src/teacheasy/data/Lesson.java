@@ -42,15 +42,35 @@ public class Lesson {
 		/* Instantiate the pages container */
 		pages = new ArrayList<Page>();
 		
-		/* Instantiate the metadata objects */
+		/* Instantiate the metadata object */
 		lessonInfo = new LessonInfo(lessonName, author, version,
 		                            comment, dateCreated, totalMarks);
 		
+		/* Instantiate the default settings */
 		defaultSettings = new LessonDefaultSettings(dfFontSize, dfFont,
 		                            dfBackgroundColour, dfFontColour,
 		                            dfLineColour, dfFillColour);
 		
+		/* Instantiate the grade settings */
 		gradeSettings = new LessonGradeSettings(passMark, passMessage,
 		                            failMessage);
+	}
+	
+	/** Blank constructor (debug purposes only! */
+	public Lesson() {
+	    /* Instantiate the pages container */
+        pages = new ArrayList<Page>();
+        
+        /* Instantiate the metadata object */
+        lessonInfo = new LessonInfo("Lesson", "Author", "1.0",
+                                    "Comment", "01/01/2001", 1);
+        
+        /* Instantiate the default settings */
+        defaultSettings = new LessonDefaultSettings(12, "Arial",
+                                    "#00000000", "#00000000",
+                                    "#00000000", "#00000000");
+        
+        /* Instantiate the grade settings */
+        gradeSettings = new LessonGradeSettings(1, "pass", "fail");
 	}
 }
