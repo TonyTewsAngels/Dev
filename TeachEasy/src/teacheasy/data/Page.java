@@ -13,14 +13,14 @@ import java.util.List;
  * This class encapsulates a single page
  * within a Lesson.
  * 
- * @version 	1.1 08 Feb 2015
- * @author 		Alistair Jewers
+ * @version     1.1 08 Feb 2015
+ * @author      Alistair Jewers
  */
 public class Page { 
     
     private String backgroundColour; // 8 digit hex code, RGBA
     
-	/** Container for the objects on this page */
+    /** Container for the objects on this page */
     public List<PageObject> pageObjects;
     
     /** Constructor Method */
