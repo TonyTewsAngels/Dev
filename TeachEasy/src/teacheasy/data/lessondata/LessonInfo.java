@@ -1,5 +1,18 @@
+/*
+ * Alistair Jewers
+ * 
+ * Copyright (C) Sofia Software Solutions
+ * 
+ */
 package teacheasy.data.lessondata;
 
+/**
+ * A class to encapsulate the
+ * metatdata for a lesson.
+ * 
+ * @author Alistair Jewers
+ * @version 1.0 08 Feb 2015
+ */
 public class LessonInfo {
     private String lessonName;
     private String author;
