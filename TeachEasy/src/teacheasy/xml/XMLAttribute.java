@@ -77,4 +77,14 @@ public enum XMLAttribute {
     /* Pass boundary element */
     PASSMESSAGE,
     FAILMESSAGE,
+    
+    INVALID;
+    
+    public static XMLAttribute check(String str) {
+        try {
+            return valueOf(str);
+        } catch (Exception ex) {
+            return INVALID;
+        }
+    }
 }

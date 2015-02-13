@@ -48,5 +48,14 @@ public enum XMLElement {
             VISIBLE,
             INTERACTION,
         MULTIPLECHOICE,
-            ANSWER
+            ANSWER,
+    INVALID;
+    
+    public static XMLElement check(String str) {
+        try {
+            return valueOf(str);
+        } catch (Exception ex) {
+            return INVALID;
+        }
+    }
 }
