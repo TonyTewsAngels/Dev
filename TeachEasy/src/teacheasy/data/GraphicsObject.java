@@ -16,9 +16,9 @@ public class GraphicsObject extends PageObject {
 
 	/** Enumeration of the various graphic types */
 	public static enum GraphicType {
-		CIRCLE,
-		SQUARE,
-		TRIANGLE
+		OVAL,
+		RECTANGLE,
+		LINE
 	}
 	
 	/** Graphics Variables */
@@ -26,22 +26,24 @@ public class GraphicsObject extends PageObject {
 	private float XEnd;
 	private float YEnd;
 	private float rotation;
-	private int fillColour;
-	private boolean outline;
+	private String graphicColor;
+	private boolean solid;
 	private float outlineThickness;
 	private boolean shadow;
 	
+	/** Constructor Method */
 	public GraphicsObject(GraphicType nType, float nXStart, float nYStart, float nXEnd, 
-						  float nYEnd, float nRotation, int nFillColour,   
-						  boolean nOutline, float nOutlineThickness, boolean nShadow) {
+						  float nYEnd, float nRotation, String nGraphicColor,   
+						  boolean nSolid, float nOutlineThickness, boolean nShadow) {
+	    
 		super(PageObjectType.GRAPHIC, nXStart, nYStart);
 		
 		this.type = nType;
 		this.XEnd = nXEnd;
 		this.YEnd = nYEnd;
 		this.rotation = nRotation;
-		this.fillColour = nFillColour;
-		this.outline = nOutline;
+		this.graphicColor = nGraphicColor;
+		this.solid = nSolid;
 		this.outlineThickness = nOutlineThickness;
 		this.shadow = nShadow;
 	}
@@ -80,20 +82,20 @@ public class GraphicsObject extends PageObject {
 		this.rotation = nRotation;
 	}
 
-	public int getFillColour() {
-		return fillColour;
+	public String getGraphicColour() {
+		return graphicColor;
 	}
 
-	public void setFillColour(int nFillColour) {
-		this.fillColour = nFillColour;
+	public void setGraphicColor(String nGraphicColor) {
+		this.graphicColor = nGraphicColor;
 	}
 
-	public boolean isOutline() {
-		return outline;
+	public boolean isSolid() {
+		return solid;
 	}
 
-	public void setOutline(boolean nOutline) {
-		this.outline = nOutline;
+	public void setSolid(boolean nSolid) {
+		this.solid = nSolid;
 	}
 
 	public float getOutlineThickness() {
