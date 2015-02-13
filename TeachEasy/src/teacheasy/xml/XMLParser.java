@@ -128,6 +128,9 @@ public class XMLParser extends DefaultHandler{
                 break;
 
             /* Grade Settings Elements */
+            case PASSBOUNDARY:
+                currentLesson.gradeSettings.setPassBoundary(Integer.parseInt(readBuffer));
+                break;
             default:
                 break;
 		}
@@ -156,5 +159,7 @@ public class XMLParser extends DefaultHandler{
         System.out.println("Font: " + currentLesson.defaultSettings.getFont());
         System.out.println("Font Size: " + currentLesson.defaultSettings.getFontSize());
         System.out.println("Font Color: " + currentLesson.defaultSettings.getFontColour() + "\n");
+        
+        System.out.println("Pass Boundary: " + currentLesson.gradeSettings.getPassBoundary());
     }
 }
