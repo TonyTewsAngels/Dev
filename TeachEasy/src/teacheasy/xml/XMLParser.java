@@ -28,32 +28,31 @@ import javax.xml.parsers.SAXParser;
  * @version 	1.0 05 Feb 2015
  * @author 		Alistair Jewers
  */
-public class XMLParser extends DefaultHandler{
+public class XMLParser extends DefaultHandler{    
     /** The current element */
     private String currentElement;
     
 	/** The lesson being constructed */
 	private Lesson currentLesson;
 	
-	/** Metatdata for the lesson under construction */
-	private LessonInfo constructLessonInfo;
-	
-	/** Default settings for the lesson under construction */
-	private LessonDefaultSettings constructDFSettings;
-	
-	/** Grade settings for the lesson under construction */
-	private LessonGradeSettings constructGradeSettings;
-	
+	/** An array list describing the current position in the XML nest */
 	private List<String> elementList;
 	
 	/** Constructor Method */
 	public XMLParser() {
+	    /* Instantiate the xml position tracking array list */
 	    elementList = new ArrayList<String>();
+	    
+	    /* Instantiate an empty lesson */
 		currentLesson = new Lesson();
 	}
 	
 	/** Parses an XML file */
 	public void parse(String filename) {
+	    
+	    /* Instantiate a new empty lesson */
+	    currentLesson = new Lesson();
+	    
 		try {
 			/* Create an instance of the SAX Parser */
 			SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -98,7 +97,7 @@ public class XMLParser extends DefaultHandler{
 	public void characters(char ch[], int start, int length) throws SAXException {
 		String s = new String(ch, start, length).trim();
 		if(!s.equals("")) {
-			//System.out.println("ch: [" + s + "]");
+			System.out.println("ch: [" + s + "]");
 		}
 	}
 	
@@ -110,5 +109,9 @@ public class XMLParser extends DefaultHandler{
 	/** Called by parser at the start of a document */
 	public void endDocument() throws SAXException {
 		System.out.println("Document End");
+	}
+	
+	public void handleText(String text) {
+	    
 	}
 }
