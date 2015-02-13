@@ -12,44 +12,32 @@ package teacheasy.data;
  * @version	1.1 08 Feb 2015
  */
 public class ImageObject extends PageObject {
-	String url;
-	String uri;
-	float xScaleFactor, yScaleFactor;
-	float rotation;
+	private String sourcefile;
+	private float xScaleFactor, yScaleFactor;
+	private float rotation;
 	
 	/** Constructor Method */
-	public ImageObject (float nXStart, float nYStart, String nUrl, String nUri,
+	public ImageObject (float nXStart, float nYStart, String nSourcefile,
 						float nXScaleFactor, float nYScaleFactor, float nRotation) {
 		
 		/* Must call the constructor method of superclass */
 		super(PageObjectType.PICTURE, nXStart, nYStart);
 		
 		/* Instantiate class level variables */
-		this.url = nUrl;
-		this.uri = nUri;
+		this.sourcefile = nSourcefile;
 		this.xScaleFactor = nXScaleFactor;
 		this.yScaleFactor = nYScaleFactor;
 		this.rotation = nRotation;
 	}
 	
 	/** Method to get the URL */
-	public String getUrl() {
-		return url;
+	public String getSourcefile() {
+		return sourcefile;
 	}
 	
 	/** Method to set the URL */
-	public void setUrl(String nUrl) {
-		this.url = nUrl;
-	}
-	
-	/** Method to get the URI */
-	public String getUri() {
-		return uri;
-	}
-	
-	/** Method to set the URI */
-	public void setUri(String nUri) {
-		this.uri = nUri;
+	public void setSourcefile(String nSourcefile) {
+		this.sourcefile = nSourcefile;
 	}
 	
 	/** Method to get the x scale factor */
