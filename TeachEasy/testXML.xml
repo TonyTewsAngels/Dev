@@ -1,47 +1,47 @@
-<Lesson>
-	<Info>
-		<Author>Mr Cash</Author>
-		<Version>1.0</Version>
-		<Comment>Template XML</Comment>
-		<DateCreated>04/02/15</DateCreated>		
-		<TotalMarks>346336346464</TotalMarks>
-		<LessonName>Algebra 1</LessonName>
-	</Info>
-	<DefaultSettings>
-		<BackgroundColour>#0000ff</BackgroundColour>
-		<Font>Arial</Font>
-		<FontSize>24pt</FontSize>
-		<FontColour>#ffcccc</FontColour>
-		<LineColour>#00ff00</LineColour>
-		<FillColour>#ff0000</FillColour>
-	</DefaultSettings>
-	<GradeSettings>
-		<PassBoundary passmessage="Well done lad" failmessage="Work harder">2</PassBoundary>
-	</GradeSettings>
-	<Page number="1" backgroundcolour="#00cc00">
-		<Text font="Times-Roman" fontsize="20pt" fontcolour="#ffffff" xstart="0.6" ystart="0.2">
-			The Title with
-			<b>Bold Font</b>
-			and some
-			<i>Italicised Font</i>
-			to go with it.
-		</Text>
-		<Audio uri="C:\Users\sadjlsd\audiofile.wav" url="none" viewprogress="false" buttonxlocation="0.5" buttonylocation="0.1"/>
-		<Graphic type="circle" xstart="0.1" ystart="0.1" xend="0.3" yend="0.3" rotation="0" fillcolour="#FFFFFF" outline="false" outlinethickness="0.5pt" shadow="false"/>
-		<Image uri="C:\Users\sadjlsd\imagefile.jpeg" url="none" xlocation="0.9" ylocation="0.6" xscalefactor="1" yscalefactor="1" rotation="0"/>
-		<Video uri="C:\Users\sadjlsd\videofile.mp4" url="none" videoscreenshot="C:\Users\sadjlsd\videoicon.jpeg" xstart="0.1" ystart="0.1" xend="0.3" yend="0.3"/>
-		<AnswerBox xstart="0.1" ystart="0.1" characterlimit="6" correctanswer="springs~spring" marks="3" retry="false"/>
-		<Button xstart="0.1" ystart="0.1" xend="0.3" yend="0.3" text="Next Page" outline="false" outlinethickness="0.5pt" shadow="false">
-			<Function>1</Function>
-			<Visible>True</Visible>
-			<Interaction>Normal</Interaction>
-		</Button>
-		<MultipleChoice type="Checkbox" orientation="vertical" marks="1" retry="false">
-			<Answer correct="false">Fish</Answer>
-			<Answer correct="True">Zebra</Answer>
-		</MultipleChoice>
-	</Page>
-</Lesson>
+<slideshow>
+	<documentinfo>
+		<author>Mr Cash</author>
+		<version>1.1</version>
+		<comment>A comment about the lesson</comment>
+		<groupid>4</groupid>
+		<datecreated>13/02/15</datecreated>		
+		<totalmarks>20</totalmarks>
+		<lessonname>Algebra 1</lessonname>
+	</documentinfo>
+	<defaultsettings>
+		<backgroundcolor>#ff00ff00</backgroundcolor>
+		<font>arial</font>
+		<fontsize>24</fontsize>
+		<fontcolor>#ffcccc00</fontcolor>
+	</defaultsettings>
+	<gradesettings>
+		<passboundary passmessage="Well done lad" failmessage="Work harder">10</passboundary>
+	</gradesettings>
+	<slide number="1" backgroundcolour="#ffcc00cc">
+		<text sourcefile="null" xstart="0.6" ystart="0.2" font="arial" fontsize="20" fontcolour="#ffffffff">
+			<richtext bold="true">Bold Text</richtext>
+			<richtext>Not Bold Text</richtext>
+			<richtext italic="true">Italic text</richtext>
+		</text>
+		<image sourcefile="C:\Users\sadjlsd\imagefile.jpg" xstart="0.5" ystart="0.5" scale="1.0" yscale="1" rotation="0"/>
+		<audio sourcefile="gavel.wav" viewprogress="false" buttonxlocation="0.5" buttonylocation="0.1"/>
+		<video sourcefile="avengers.mkv" videoscreenshot="C:\Users\sadjlsd\videoicon.jpeg" xstart="0.1" ystart="0.1"/>
+		<graphic type="oval/rectangle/line" xstart="0.5" ystart="0.5" xend="0.7" yend="0.7" solid="true" graphiccolor="#11223344" rotation="0" outlinethickness="0.5pt" shadow="false">
+			<cyclicshading shadingcolor="#88776655" />
+		</graphic>
+		<answerbox xstart="0.1" ystart="0.1" characterlimit="6" correctanswer="springs~spring" marks="5" retry="false"/>
+		<button xstart="0.1" ystart="0.1" xend="0.3" yend="0.3" outline="false" outlinethickness="0.5pt" shadow="false">
+			<buttontext>Next Page</buttontext>
+			<function>1</function>
+			<visible>True</visible>
+			<interaction>Normal</interaction>
+		</button>
+		<multiplechoice type="checkbox" orientation="vertical" marks="1" retry="false">
+			<answer correct="false">Fish</answer>
+			<answer correct="true">Zebra</answer>
+		</multiplechoice>
+	</slide>
+</slideshow>
 
 		
 		
