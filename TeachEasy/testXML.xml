@@ -17,7 +17,7 @@
 	<gradesettings>
 		<passboundary passmessage="Well done lad" failmessage="Work harder">10</passboundary>
 	</gradesettings>
-	<slide number="1" backgroundcolour="#ffcc00cc">
+	<slide number="1" backgroundcolor="#ffcc00cc">
 		<text sourcefile="null" xstart="0.6" ystart="0.2" font="arial" fontsize="20" fontcolour="#ffffffff">
 			<richtext bold="true">Bold Text</richtext>
 			<richtext>Not Bold Text</richtext>

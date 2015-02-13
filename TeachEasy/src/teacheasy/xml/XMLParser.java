@@ -82,6 +82,9 @@ public class XMLParser extends DefaultHandler{
 		elementList.add(qName);
 		
 		switch (XMLElement.check(qName.toUpperCase())) {
+		    case SLIDE:
+		        handleSlideElement(uri, attrs);
+		        break;
 		    case IMAGE:
 		        
 		        break;
@@ -142,6 +145,10 @@ public class XMLParser extends DefaultHandler{
             case PASSBOUNDARY:
                 currentLesson.gradeSettings.setPassBoundary(Integer.parseInt(readBuffer));
                 break;
+                
+            case SLIDE:
+                currentLesson.pages.add(currentPage);
+                break;
             default:
                 break;
 		}
@@ -171,11 +178,26 @@ public class XMLParser extends DefaultHandler{
         System.out.println("Font Size: " + currentLesson.defaultSettings.getFontSize());
         System.out.println("Font Color: " + currentLesson.defaultSettings.getFontColour() + "\n");
         
-        System.out.println("Pass Boundary: " + currentLesson.gradeSettings.getPassBoundary());
+        System.out.println("Pass Boundary: " + currentLesson.gradeSettings.getPassBoundary() + "\n");
+        
+        System.out.println("Page Count: " + currentLesson.pages.size() + "\n");
+        
+        System.out.println("Page 1, BG Color: " + currentLesson.pages.get(0).getPageColour());
     }
 	
 	/** Called to handle an image element in the XML */
 	private void handleImageElement(Attributes attrs) {
 	    
+	}
+	
+	/** Called to handle a slide element in the XML */
+	private void handleSlideElement(String uri, Attributes attrs) {	    
+	    String bgcolor = attrs.getValue("backgroundcolor");
+	    
+	    if(bgcolor != null) {
+	        currentPage = new Page(bgcolor);
+	    } else {
+	        currentPage = new Page(new String("#ffffffff"));
+	    }
 	}
 }
