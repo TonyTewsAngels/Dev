@@ -1,14 +1,29 @@
+/*
+ * Alistair Jewers
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
+ * 
+ */
 package teacheasy.data;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class encapsulates the data for
+ * a multiple choice object.
+ * 
+ * @version     1.0 13 Feb 2015
+ * @author      Alistair Jewers
+ */
 public class MultipleChoiceObject extends PageObject {
+    /** Enumeration of the possible orientations */
     public static enum Orientation {
         VERTICAL,
         HORIZONTAL
     }
     
+    /** Enumeration of the possible multiple choice types */
     public static enum MultiChoiceType {
         CHECKBOX,
         RADIO,
