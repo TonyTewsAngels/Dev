@@ -32,7 +32,10 @@ public class XMLParser extends DefaultHandler{
 	/** The lesson being constructed */
 	private Lesson currentLesson;
 	
-	/** XML Standard Indicator */
+	/** The page being constructed */
+	private Page currentPage;
+	
+	/** XML PWS Indicator */
 	private boolean standard = false;
 	
 	/** An array list describing the current position in the XML nest */
@@ -77,6 +80,14 @@ public class XMLParser extends DefaultHandler{
 	/** Called by parser at the start of an element */
 	public void startElement(String uri, String localName, String qName, Attributes attrs) throws SAXException{		
 		elementList.add(qName);
+		
+		switch (XMLElement.check(qName.toUpperCase())) {
+		    case IMAGE:
+		        
+		        break;
+		    default:
+		        break;
+		}
 	}
 	
 	/** Called by parser at the end of an element */
@@ -162,4 +173,9 @@ public class XMLParser extends DefaultHandler{
         
         System.out.println("Pass Boundary: " + currentLesson.gradeSettings.getPassBoundary());
     }
+	
+	/** Called to handle an image element in the XML */
+	private void handleImageElement(Attributes attrs) {
+	    
+	}
 }
