@@ -79,6 +79,10 @@ public class XMLParser extends DefaultHandler{
 		    System.out.print(elementList.get(i) + " ");
 		}
 		
+		for(int i = 0; i < attrs.getLength(); i++) {
+		    System.out.print("[" + attrs.getLocalName(i) + "=" + attrs.getValue(i) + "]");
+		}
+		
 		System.out.println("");
 	}
 	
@@ -111,7 +115,7 @@ public class XMLParser extends DefaultHandler{
 		System.out.println("Document End");
 	}
 	
-	public void handleText(String text) {
+	public void handleCharacters(String text) {
 	    
 	}
 }
