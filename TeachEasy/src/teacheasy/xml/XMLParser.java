@@ -11,9 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import teacheasy.data.*;
-import teacheasy.data.Lesson;
-import teacheasy.data.Page;
-import teacheasy.data.PageObject;
+import teacheasy.data.GraphicsObject.GraphicType;
 import teacheasy.data.lessondata.*;
 
 import org.xml.sax.*;
@@ -35,6 +33,9 @@ public class XMLParser extends DefaultHandler{
 	
 	/** The page being constructed */
 	private Page currentPage;
+	
+	/** The graphics object being constructed */
+	private GraphicsObject currentGraphic;
 	
 	/** XML PWS Indicator */
 	private boolean standard = false;
@@ -105,6 +106,12 @@ public class XMLParser extends DefaultHandler{
 		    case VIDEO:
 		        handleVideoElement(attrs);
 		        break;
+		    case GRAPHIC:
+		        handleGraphicElement(attrs);
+		        break;
+		    case CYCLICSHADING:
+		        handleCyclicShadingElement(attrs);
+		        break;
 		    default:
 		        break;
 		}
@@ -166,6 +173,11 @@ public class XMLParser extends DefaultHandler{
             /* Slide Element */
             case SLIDE:
                 currentLesson.pages.add(currentPage);
+                break;
+                
+            /* Media Elements */
+            case GRAPHIC:
+                currentPage.pageObjects.add(currentGraphic);
                 break;
             default:
                 break;
@@ -314,6 +326,113 @@ public class XMLParser extends DefaultHandler{
         } catch (NullPointerException | NumberFormatException e) {
             errorList.add(new String("Video; Could not parse float value"));
         }
+    }
+    
+    /** Called to handle a Graphics element in the XML */
+    private void handleGraphicElement(Attributes attrs) {
+        /* Variables to hold the attribute strings */
+        String type = attrs.getValue("type");
+        String xstart = attrs.getValue("xstart");
+        String ystart = attrs.getValue("ystart");
+        String xend = attrs.getValue("xend");
+        String yend = attrs.getValue("yend");
+        String solid = attrs.getValue("solid");
+        String graphiccolor = attrs.getValue("graphiccolor");
+        String rotation = attrs.getValue("rotation");
+        String outlinethickness = attrs.getValue("outlinethickness");
+        String shadow = attrs.getValue("shadow");
+        
+        GraphicType gType;
+        
+        /* Check for null attributes */
+        if(type == null) {
+            errorList.add(new String("Graphic; Missing Type String"));
+            return;
+        } else {
+            switch(GraphicType.check(type.toUpperCase())) {
+                case OVAL:
+                    gType = GraphicType.OVAL;
+                    break;
+                case RECTANGLE:
+                    gType = GraphicType.RECTANGLE;
+                    break;
+                default:
+                    gType = GraphicType.LINE;
+                    break;
+            }
+        }
+        
+        if(xstart == null) {
+            errorList.add(new String("Graphic; Missing X Start"));
+            return;
+        }
+        
+        if(ystart == null) {
+            errorList.add(new String("Graphic; Missing Y Start"));
+            return;
+        }
+        
+        if(xend == null) {
+            errorList.add(new String("Graphic; Missing X End"));
+            return;
+        }
+        
+        if(yend == null) {
+            errorList.add(new String("Graphic; Missing Y End"));
+            return;
+        }
+        
+        if(solid == null) {
+            errorList.add(new String("Graphic; Missing Solid"));
+            return;
+        }
+        
+        if(graphiccolor == null) {
+            errorList.add(new String("Graphic; Missing Graphic Color"));
+            return;
+        }
+        
+        if(rotation == null) {
+            rotation = new String("0.0");
+        }
+        
+        if(outlinethickness == null) {
+            outlinethickness = new String("1.0");
+        }
+        
+        if(shadow == null) {
+            shadow = new String("false");
+        }
+        
+        /* Create the object, checking for parsisng errors */
+        try {
+            currentGraphic = new GraphicsObject(gType, 
+                                                Float.parseFloat(xstart),
+                                                Float.parseFloat(ystart),
+                                                Float.parseFloat(xend),
+                                                Float.parseFloat(yend),
+                                                Float.parseFloat(rotation),
+                                                graphiccolor,
+                                                Boolean.parseBoolean(solid),
+                                                Float.parseFloat(outlinethickness),
+                                                Boolean.parseBoolean(shadow));
+        } catch (NullPointerException | NumberFormatException e) {
+            errorList.add(new String("Video; Could not parse float value"));
+        }
+    }
+    
+    /** Called to handle a Cyclic Shading element in the XML */
+    private void handleCyclicShadingElement(Attributes attrs) {
+        /* Variables to hold the attribute strings */
+        String shadingcolor = attrs.getValue("shadingcolor");
+        
+        if(shadingcolor == null) {
+            errorList.add(new String("CyclicShading: Missing shading color"));
+            return;
+        }
+        
+        currentGraphic.setShading(GraphicsObject.Shading.CYCLIC);
+        currentGraphic.setShadingColor(shadingcolor);
     }
 	
 	/** Called to handle a slide element in the XML */
