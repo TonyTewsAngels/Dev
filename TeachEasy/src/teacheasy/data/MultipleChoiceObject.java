@@ -9,6 +9,8 @@ package teacheasy.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import teacheasy.xml.XMLElement;
+
 /**
  * This class encapsulates the data for
  * a multiple choice object.
@@ -20,14 +22,30 @@ public class MultipleChoiceObject extends PageObject {
     /** Enumeration of the possible orientations */
     public static enum Orientation {
         VERTICAL,
-        HORIZONTAL
+        HORIZONTAL;
+        
+        public static Orientation check(String str) {
+            try {
+                return valueOf(str);
+            } catch (Exception ex) {
+                return VERTICAL;
+            }
+        }
     }
     
     /** Enumeration of the possible multiple choice types */
     public static enum MultiChoiceType {
         CHECKBOX,
         RADIO,
-        DROPDOWNLIST
+        DROPDOWNLIST;
+        
+        public static MultiChoiceType check(String str) {
+            try {
+                return valueOf(str);
+            } catch (Exception ex) {
+                return CHECKBOX;
+            }
+        }
     }
     
     public List<String> correctAnswers;

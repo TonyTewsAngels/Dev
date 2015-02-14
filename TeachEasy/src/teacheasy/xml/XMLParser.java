@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import teacheasy.data.*;
-import teacheasy.data.GraphicsObject.GraphicType;
+import teacheasy.data.GraphicsObject.*;
+import teacheasy.data.MultipleChoiceObject.*;
 import teacheasy.data.lessondata.*;
 
 import org.xml.sax.*;
@@ -36,6 +37,12 @@ public class XMLParser extends DefaultHandler{
 	
 	/** The graphics object being constructed */
 	private GraphicsObject currentGraphic;
+	
+	/** The multiple choice object currently being constructed */
+	private MultipleChoiceObject currentMultiChoice;
+	
+	/** The answer currently being constructed */
+	private boolean currentAnswer;
 	
 	/** XML PWS Indicator */
 	private boolean standard = false;
@@ -123,8 +130,10 @@ public class XMLParser extends DefaultHandler{
                 // handleButtonElement(attrs);
                 break;
 		    case MULTIPLECHOICE:
-                // handleMultipleChoiceElement(attrs);
+                handleMultipleChoiceElement(attrs);
                 break;
+		    case ANSWER:
+		        currentAnswer = Boolean.parseBoolean(attrs.getValue("correct"));
 		    default:
 		        break;
 		}
@@ -192,6 +201,15 @@ public class XMLParser extends DefaultHandler{
             case GRAPHIC:
                 currentPage.pageObjects.add(currentGraphic);
                 break;
+            case MULTIPLECHOICE:
+                currentPage.pageObjects.add(currentMultiChoice);
+                break;
+            case ANSWER:
+                if(currentAnswer) {
+                    currentMultiChoice.correctAnswers.add(readBuffer);
+                } else {
+                    currentMultiChoice.incorrectAnswers.add(readBuffer);
+                }
             default:
                 break;
 		}
@@ -250,7 +268,7 @@ public class XMLParser extends DefaultHandler{
             rotation = new String("0.0");
         }
 	    
-	    /* Create the object, checking for parsisng errors */
+	    /* Create the object, checking for parsing errors */
 	    try {
 	        currentPage.addObject(new ImageObject(Float.parseFloat(xstart),
 	                                              Float.parseFloat(ystart),
@@ -291,7 +309,7 @@ public class XMLParser extends DefaultHandler{
             viewprogress = new String("true");
         }
         
-        /* Create the object, checking for parsisng errors */
+        /* Create the object, checking for parsing errors */
         try {
             currentPage.addObject(new AudioObject(Float.parseFloat(xstart),
                                                   Float.parseFloat(ystart),
@@ -330,7 +348,7 @@ public class XMLParser extends DefaultHandler{
             videoscreenshot = new String("null");
         }
         
-        /* Create the object, checking for parsisng errors */
+        /* Create the object, checking for parsing errors */
         try {
             currentPage.addObject(new VideoObject(sourcefile, 
                                                   Float.parseFloat(xstart),
@@ -362,17 +380,7 @@ public class XMLParser extends DefaultHandler{
             errorList.add(new String("Graphic; Missing Type String"));
             return;
         } else {
-            switch(GraphicType.check(type.toUpperCase())) {
-                case OVAL:
-                    gType = GraphicType.OVAL;
-                    break;
-                case RECTANGLE:
-                    gType = GraphicType.RECTANGLE;
-                    break;
-                default:
-                    gType = GraphicType.LINE;
-                    break;
-            }
+            gType = GraphicType.check(type.toUpperCase());
         }
         
         if(xstart == null) {
@@ -417,7 +425,7 @@ public class XMLParser extends DefaultHandler{
             shadow = new String("false");
         }
         
-        /* Create the object, checking for parsisng errors */
+        /* Create the object, checking for parsing errors */
         try {
             currentGraphic = new GraphicsObject(gType, 
                                                 Float.parseFloat(xstart),
@@ -488,7 +496,7 @@ public class XMLParser extends DefaultHandler{
             retry = new String("True");
         }
         
-        /* Create the object, checking for parsisng errors */
+        /* Create the object, checking for parsing errors */
         try {
             currentPage.addObject(new AnswerBoxObject(Float.parseFloat(xstart),
                                                       Float.parseFloat(ystart),
@@ -496,6 +504,66 @@ public class XMLParser extends DefaultHandler{
                                                       Integer.parseInt(marks),
                                                       correctanswer,
                                                       Boolean.parseBoolean(retry)));
+        } catch (NullPointerException | NumberFormatException e) {
+            errorList.add(new String("Answer Box; Could not parse a value"));
+        }
+    }
+    
+    /** Called to handle an answer box element in the XML */
+    private void handleMultipleChoiceElement(Attributes attrs) {
+        /* Variables to hold the attribute strings */
+        String xstart = attrs.getValue("xstart");
+        String ystart = attrs.getValue("ystart");
+        String type = attrs.getValue("type");
+        String orientation = attrs.getValue("orientation");
+        String marks = attrs.getValue("marks");
+        String retry = attrs.getValue("retry");
+        
+        Orientation mcOrientation;
+        MultiChoiceType mcType;
+        
+        /* Check for null attributes */        
+        if(xstart == null) {
+            errorList.add(new String("Multi Choice; Missing X Start"));
+            return;
+        }
+        
+        if(ystart == null) {
+            errorList.add(new String("Multi Choice; Missing Y Start"));
+            return;
+        }
+        
+        if(type == null) {
+            errorList.add(new String("Multi Choice; Missing Type"));
+            return;
+        } else {
+            mcType = MultiChoiceType.check(type.toUpperCase());
+        }
+        
+        if(orientation == null) {
+            errorList.add(new String("Multi Choice; Orientation"));
+            return;
+        } else {
+            mcOrientation = Orientation.check(orientation.toUpperCase());
+        }
+        
+        if(marks == null) {
+            errorList.add(new String("Multi Choice; Missing Marks"));
+            return;
+        }
+        
+        if(retry == null) {
+            retry = new String("True");
+        }
+        
+        /* Create the object, checking for parsing errors */
+        try {
+            currentMultiChoice = new MultipleChoiceObject(Float.parseFloat(xstart),
+                                                          Float.parseFloat(ystart),
+                                                          mcOrientation,
+                                                          mcType,
+                                                          Integer.parseInt(marks),
+                                                          Boolean.parseBoolean(retry));
         } catch (NullPointerException | NumberFormatException e) {
             errorList.add(new String("Answer Box; Could not parse a value"));
         }

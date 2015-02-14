@@ -33,7 +33,7 @@
 		<button xstart="0.1" ystart="0.1" xend="0.3" yend="0.3" outline="false" outlinethickness="0.5pt" shadow="false" function="1" visible="true" interaction="normal">
 			Button Text
 		</button>
-		<multiplechoice type="checkbox" orientation="vertical" marks="1" retry="false">
+		<multiplechoice xstart="0.2" ystart="0.2" type="checkbox" orientation="vertical" marks="1" retry="false">
 			<answer correct="false">Fish</answer>
 			<answer correct="true">Zebra</answer>
 		</multiplechoice>
