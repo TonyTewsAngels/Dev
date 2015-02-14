@@ -110,4 +110,16 @@ public class MultipleChoiceObject extends PageObject {
         this.retry = nRetry;
     }
     
+    /** Prints information about the object to the console */
+    public void debugPrint() {
+        super.debugPrint();
+        
+        for(int i = 0; i < correctAnswers.size(); i++) {
+            System.out.println("\tCorrect Aswer: " + correctAnswers.get(i));
+        }
+        
+        for(int i = 0; i < incorrectAnswers.size(); i++) {
+            System.out.println("\tIncorrect Aswer: " + incorrectAnswers.get(i));
+        }
+    }
 }

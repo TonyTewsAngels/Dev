@@ -46,4 +46,9 @@ public abstract class PageObject {
 		this.xStart = nXStart;
 		this.yStart = nYStart;
 	}
+	
+	/** Prints information about the object to the console */
+	public void debugPrint() {
+	    System.out.println("Object Type: " + type);
+	}
 }

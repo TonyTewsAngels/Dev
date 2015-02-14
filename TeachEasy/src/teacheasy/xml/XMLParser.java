@@ -633,11 +633,19 @@ public class XMLParser extends DefaultHandler{
 	/** Called to handle a slide element in the XML */
 	private void handleSlideElement(Attributes attrs) {	    
 	    String bgcolor = attrs.getValue("backgroundcolor");
+	    String number = attrs.getValue("number");
+	    int pNumber;
 	    
-	    if(bgcolor != null) {
-	        currentPage = new Page(bgcolor);
+	    try {
+	         pNumber = Integer.parseInt(number);
+	    } catch (NullPointerException | NumberFormatException e) {
+	        pNumber = 0;
+	    }
+	    
+	    if(bgcolor != null && number != null) {
+	        currentPage = new Page(pNumber, bgcolor);
 	    } else {
-	        currentPage = new Page(new String("#ffffffff"));
+	        currentPage = new Page(0, new String("#ffffffff"));
 	    }
 	}
 }

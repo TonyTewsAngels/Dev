@@ -87,9 +87,7 @@ public class Lesson {
         System.out.println("Page Count: " + pages.size() + "\n");
         
         for(int i = 0; i < pages.size(); i++) {
-            Page page = pages.get(i);
-            System.out.println("Page " + i + ": BG Color = " + page.getPageColour());
-            System.out.println(page.pageObjects.size() + " object(s).");
+            pages.get(i).debugPrint();
         }
     }
 }

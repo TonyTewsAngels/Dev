@@ -18,14 +18,16 @@ import java.util.List;
  */
 public class Page { 
     
+    private int number;
     private String backgroundColour; // 8 digit hex code, RGBA
     
     /** Container for the objects on this page */
     public List<PageObject> pageObjects;
     
     /** Constructor Method */
-    public Page(String nBackgroundColour) {
+    public Page(int nNumber, String nBackgroundColour) {
         /* Instantiate class level variables */
+        this.number = nNumber;
         this.backgroundColour = nBackgroundColour;
         
         /* Instantiate the page object container */
@@ -71,8 +73,23 @@ public class Page {
         return backgroundColour;
     }
     
+    /** Get the page number */
+    public int getNumber() {
+        return number;
+    }
+    
     /** Set the page background colour */
     public void setPageColour(String nBackgroundColour) {
         this.backgroundColour = nBackgroundColour;
+    }
+    
+    /** Prints the Page object data to console */
+    public void debugPrint() {
+        System.out.println("Page " + number + ": \tBG Color = " + getPageColour());
+        System.out.println("\t\t" + pageObjects.size() + " object(s).");
+        
+        for(int i = 0; i < pageObjects.size(); i++) {
+            pageObjects.get(i).debugPrint();
+        }
     }
 }
