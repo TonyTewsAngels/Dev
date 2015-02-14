@@ -97,6 +97,9 @@ public class XMLParser extends DefaultHandler{
 		        handleSlideElement(attrs);
 		        break;
 		        
+		    case TEXT:
+		        // handleTextElement(attrs);
+		        break;
 		    case IMAGE:
 		        handleImageElement(attrs);
 		        break;
@@ -112,6 +115,16 @@ public class XMLParser extends DefaultHandler{
 		    case CYCLICSHADING:
 		        handleCyclicShadingElement(attrs);
 		        break;
+		        
+		    case ANSWERBOX:
+		        handleAnswerBoxElement(attrs);
+		        break;
+		    case BUTTON:
+                // handleButtonElement(attrs);
+                break;
+		    case MULTIPLECHOICE:
+                // handleMultipleChoiceElement(attrs);
+                break;
 		    default:
 		        break;
 		}
@@ -433,6 +446,59 @@ public class XMLParser extends DefaultHandler{
         
         currentGraphic.setShading(GraphicsObject.Shading.CYCLIC);
         currentGraphic.setShadingColor(shadingcolor);
+    }
+    
+    /** Called to handle an answer box element in the XML */
+    private void handleAnswerBoxElement(Attributes attrs) {
+        /* Variables to hold the attribute strings */
+        String xstart = attrs.getValue("xstart");
+        String ystart = attrs.getValue("ystart");
+        String characterlimit = attrs.getValue("characterlimit");
+        String correctanswer = attrs.getValue("correctanswer");
+        String marks = attrs.getValue("marks");
+        String retry = attrs.getValue("retry");
+        
+        /* Check for null attributes */        
+        if(xstart == null) {
+            errorList.add(new String("Answer Box; Missing X Start"));
+            return;
+        }
+        
+        if(ystart == null) {
+            errorList.add(new String("Answer Box; Missing Y Start"));
+            return;
+        }
+        
+        if(characterlimit == null) {
+            errorList.add(new String("Answer Box; Missing Character Limit"));
+            return;
+        }
+        
+        if(correctanswer == null) {
+            errorList.add(new String("Answer Box; Missing Correct Answer(s)"));
+            return;
+        }
+        
+        if(marks == null) {
+            errorList.add(new String("Answer Box; Missing Marks"));
+            return;
+        }
+        
+        if(retry == null) {
+            retry = new String("True");
+        }
+        
+        /* Create the object, checking for parsisng errors */
+        try {
+            currentPage.addObject(new AnswerBoxObject(Float.parseFloat(xstart),
+                                                      Float.parseFloat(ystart),
+                                                      Integer.parseInt(characterlimit),
+                                                      Integer.parseInt(marks),
+                                                      correctanswer,
+                                                      Boolean.parseBoolean(retry)));
+        } catch (NullPointerException | NumberFormatException e) {
+            errorList.add(new String("Answer Box; Could not parse a value"));
+        }
     }
 	
 	/** Called to handle a slide element in the XML */

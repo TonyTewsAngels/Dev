@@ -20,7 +20,7 @@ public class AnswerBoxObject extends PageObject {
 	
 	/** Constructor Method */
 	public AnswerBoxObject(float nXStart, float nYStart, int nCharacterLimit,
-						 int nMarks, String nCorrectAnswers, boolean nRetry) {
+						   int nMarks, String nCorrectAnswers, boolean nRetry) {
 		
 		/* Call Superconstructor */
 		super(PageObjectType.ANSWER_BOX, nXStart, nYStart);
