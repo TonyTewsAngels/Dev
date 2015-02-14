@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import teacheasy.data.*;
 import teacheasy.data.Lesson;
 import teacheasy.data.Page;
 import teacheasy.data.PageObject;
@@ -44,6 +45,9 @@ public class XMLParser extends DefaultHandler{
 	/** The most recently read string of characters */
 	private String readBuffer;
 	
+	/** List of errors that occured during parsing */
+	private ArrayList<String> errorList;
+	
 	/** Constructor Method */
 	public XMLParser() {
 	    /* Instantiate the xml position tracking array list */
@@ -54,10 +58,13 @@ public class XMLParser extends DefaultHandler{
 	}
 	
 	/** Parses an XML file */
-	public void parse(String filename) {
+	public ArrayList<String> parse(String filename) {
 	    
 	    /* Instantiate a new empty lesson */
 	    currentLesson = new Lesson();
+	    
+	    /* Instantiate the error list */
+	    errorList = new ArrayList<String>();
 	    
 		try {
 			/* Create an instance of the SAX Parser */
@@ -70,6 +77,9 @@ public class XMLParser extends DefaultHandler{
 		} catch (ParserConfigurationException | SAXException | IOException e) {
 			e.printStackTrace();
 		}
+		
+		/* Return the error list */
+		return errorList;
 	}
 	
 	/** Returns the lesson parsed from xml */
@@ -83,10 +93,10 @@ public class XMLParser extends DefaultHandler{
 		
 		switch (XMLElement.check(qName.toUpperCase())) {
 		    case SLIDE:
-		        handleSlideElement(uri, attrs);
+		        handleSlideElement(attrs);
 		        break;
 		    case IMAGE:
-		        
+		        handleImageElement(attrs);
 		        break;
 		    default:
 		        break;
@@ -146,6 +156,7 @@ public class XMLParser extends DefaultHandler{
                 currentLesson.gradeSettings.setPassBoundary(Integer.parseInt(readBuffer));
                 break;
                 
+            /* Slide Element */
             case SLIDE:
                 currentLesson.pages.add(currentPage);
                 break;
@@ -182,16 +193,66 @@ public class XMLParser extends DefaultHandler{
         
         System.out.println("Page Count: " + currentLesson.pages.size() + "\n");
         
-        System.out.println("Page 1, BG Color: " + currentLesson.pages.get(0).getPageColour());
+        for(int i = 0; i < currentLesson.pages.size(); i++) {
+            Page page = currentLesson.pages.get(i);
+            System.out.println("Page " + i + ": BG Color = " + page.getPageColour());
+            System.out.println(page.pageObjects.size() + " object(s).");
+        }
     }
 	
 	/** Called to handle an image element in the XML */
 	private void handleImageElement(Attributes attrs) {
+	    /* Variables to hold the attribute strings */
+	    String sourcefile = attrs.getValue("sourcefile");
+	    String xstart = attrs.getValue("xstart");
+	    String ystart = attrs.getValue("ystart");
+	    String xscale = attrs.getValue("scale");
+	    String yscale = attrs.getValue("yscale");
+	    String rotation = attrs.getValue("rotation");
 	    
+	    /* Check for null attributes */
+	    if(sourcefile == null) {
+	        errorList.add(new String("Image; Missing Sourcefile"));
+	        return;
+	    }
+	    
+	    if(xstart == null) {
+            errorList.add(new String("Image; Missing X Start"));
+            return;
+        }
+	    
+	    if(ystart == null) {
+            errorList.add(new String("Image; Missing Y Start"));
+            return;
+        }
+	    
+	    if(xscale == null) {
+            xscale = "1.0";
+        }
+	    
+	    if(yscale == null) {
+            yscale = new String(xscale);
+        }
+	    
+	    if(rotation == null) {
+            rotation = new String("0.0");
+        }
+	    
+	    /* Create the object, checking for parisng errors */
+	    try {
+	        currentPage.addObject(new ImageObject(Float.parseFloat(xstart),
+	                                              Float.parseFloat(ystart),
+	                                              sourcefile,
+	                                              Float.parseFloat(xscale),
+	                                              Float.parseFloat(yscale),
+	                                              Float.parseFloat(rotation)));
+	    } catch (NullPointerException | NumberFormatException e) {
+	        errorList.add(new String("Image; Could not parse float value"));
+	    }
 	}
 	
 	/** Called to handle a slide element in the XML */
-	private void handleSlideElement(String uri, Attributes attrs) {	    
+	private void handleSlideElement(Attributes attrs) {	    
 	    String bgcolor = attrs.getValue("backgroundcolor");
 	    
 	    if(bgcolor != null) {

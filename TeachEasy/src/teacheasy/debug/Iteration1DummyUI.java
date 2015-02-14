@@ -6,6 +6,8 @@
  */
 package teacheasy.debug;
 
+import java.util.ArrayList;
+
 import teacheasy.xml.XMLHandler;
 
 /**
@@ -28,7 +30,11 @@ public class Iteration1DummyUI {
 		// Create GUI Frame
 		
 		// Test Parser
-		xmlHandler.parseXML("testXML.xml");
+		ArrayList<String> errorList = xmlHandler.parseXML("testXML.xml");
+		
+		for(int i = 0; i < errorList.size(); i++) {
+		    System.out.println(errorList.get(i));
+		}
 	}
 
 	/** Main Function called when application is run */
