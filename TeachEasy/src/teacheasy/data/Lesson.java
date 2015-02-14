@@ -50,7 +50,7 @@ public class Lesson {
         this.gradeSettings = nGradeSettings;
     }
 	
-    /** Blank constructor (debug purposes only!) */
+    /** Blank constructor */
     public Lesson() {
         /* Instantiate the pages container */
         pages = new ArrayList<Page>();
@@ -66,5 +66,30 @@ public class Lesson {
         
         /* Instantiate the grade settings */
         gradeSettings = new LessonGradeSettings(1, "pass", "fail");
+    }
+    
+    /** Prints the Lesson object data to console */
+    public void debugPrint() {
+        System.out.println("Author: " + lessonInfo.getAuthor());
+        System.out.println("Version: " + lessonInfo.getVersion());
+        System.out.println("Comment: " + lessonInfo.getComment());
+        System.out.println("Date Created: " + lessonInfo.getDateCreated());
+        System.out.println("Total Marks: " + lessonInfo.getTotalMarks());
+        System.out.println("Lesson Name: " + lessonInfo.getLessonName() + "\n");
+        
+        System.out.println("BG Color: " + defaultSettings.getBackgroundColour());
+        System.out.println("Font: " + defaultSettings.getFont());
+        System.out.println("Font Size: " + defaultSettings.getFontSize());
+        System.out.println("Font Color: " + defaultSettings.getFontColour() + "\n");
+        
+        System.out.println("Pass Boundary: " + gradeSettings.getPassBoundary() + "\n");
+        
+        System.out.println("Page Count: " + pages.size() + "\n");
+        
+        for(int i = 0; i < pages.size(); i++) {
+            Page page = pages.get(i);
+            System.out.println("Page " + i + ": BG Color = " + page.getPageColour());
+            System.out.println(page.pageObjects.size() + " object(s).");
+        }
     }
 }

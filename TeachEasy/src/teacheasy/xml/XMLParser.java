@@ -181,27 +181,7 @@ public class XMLParser extends DefaultHandler{
 	
 	/** Called by parser at the start of a document */
 	public void endDocument() throws SAXException {
-	    System.out.println("Author: " + currentLesson.lessonInfo.getAuthor());
-	    System.out.println("Version: " + currentLesson.lessonInfo.getVersion());
-	    System.out.println("Comment: " + currentLesson.lessonInfo.getComment());
-	    System.out.println("Date Created: " + currentLesson.lessonInfo.getDateCreated());
-	    System.out.println("Total Marks: " + currentLesson.lessonInfo.getTotalMarks());
-	    System.out.println("Lesson Name: " + currentLesson.lessonInfo.getLessonName() + "\n");
-	    
-	    System.out.println("BG Color: " + currentLesson.defaultSettings.getBackgroundColour());
-        System.out.println("Font: " + currentLesson.defaultSettings.getFont());
-        System.out.println("Font Size: " + currentLesson.defaultSettings.getFontSize());
-        System.out.println("Font Color: " + currentLesson.defaultSettings.getFontColour() + "\n");
-        
-        System.out.println("Pass Boundary: " + currentLesson.gradeSettings.getPassBoundary() + "\n");
-        
-        System.out.println("Page Count: " + currentLesson.pages.size() + "\n");
-        
-        for(int i = 0; i < currentLesson.pages.size(); i++) {
-            Page page = currentLesson.pages.get(i);
-            System.out.println("Page " + i + ": BG Color = " + page.getPageColour());
-            System.out.println(page.pageObjects.size() + " object(s).");
-        }
+	    currentLesson.debugPrint();
     }
 	
 	/** Called to handle an image element in the XML */
