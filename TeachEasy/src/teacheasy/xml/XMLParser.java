@@ -95,8 +95,12 @@ public class XMLParser extends DefaultHandler{
 		    case SLIDE:
 		        handleSlideElement(attrs);
 		        break;
+		        
 		    case IMAGE:
 		        handleImageElement(attrs);
+		        break;
+		    case AUDIO:
+		        handleAudioElement(attrs);
 		        break;
 		    default:
 		        break;
@@ -212,7 +216,7 @@ public class XMLParser extends DefaultHandler{
 	    
 	    /* Check for null attributes */
 	    if(sourcefile == null) {
-	        errorList.add(new String("Image; Missing Sourcefile"));
+	        errorList.add(new String("Image; Missing Sourcefile String"));
 	        return;
 	    }
 	    
@@ -238,7 +242,7 @@ public class XMLParser extends DefaultHandler{
             rotation = new String("0.0");
         }
 	    
-	    /* Create the object, checking for parisng errors */
+	    /* Create the object, checking for parsisng errors */
 	    try {
 	        currentPage.addObject(new ImageObject(Float.parseFloat(xstart),
 	                                              Float.parseFloat(ystart),
@@ -250,6 +254,45 @@ public class XMLParser extends DefaultHandler{
 	        errorList.add(new String("Image; Could not parse float value"));
 	    }
 	}
+	
+	/** Called to handle an audio element in the XML */
+    private void handleAudioElement(Attributes attrs) {
+        /* Variables to hold the attribute strings */
+        String sourcefile = attrs.getValue("sourcefile");
+        String xstart = attrs.getValue("xstart");
+        String ystart = attrs.getValue("ystart");
+        String viewprogress = attrs.getValue("viewprogress");
+        
+        /* Check for null attributes */
+        if(sourcefile == null) {
+            errorList.add(new String("Audio; Missing Sourcefile String"));
+            return;
+        }
+        
+        if(xstart == null) {
+            errorList.add(new String("Audio; Missing X Start"));
+            return;
+        }
+        
+        if(ystart == null) {
+            errorList.add(new String("Audio; Missing Y Start"));
+            return;
+        }
+        
+        if(viewprogress == null) {
+            viewprogress = new String("true");
+        }
+        
+        /* Create the object, checking for parsisng errors */
+        try {
+            currentPage.addObject(new AudioObject(Float.parseFloat(xstart),
+                                                  Float.parseFloat(ystart),
+                                                  Boolean.parseBoolean(viewprogress),
+                                                  sourcefile));
+        } catch (NullPointerException | NumberFormatException e) {
+            errorList.add(new String("Audio; Could not parse float value"));
+        }
+    }
 	
 	/** Called to handle a slide element in the XML */
 	private void handleSlideElement(Attributes attrs) {	    
