@@ -44,6 +44,9 @@ public class XMLParser extends DefaultHandler{
 	/** The answer currently being constructed */
 	private boolean currentAnswer;
 	
+	/** The button currently being constructed */
+	private ButtonObject currentButton;
+	
 	/** XML PWS Indicator */
 	private boolean standard = false;
 	
@@ -53,7 +56,7 @@ public class XMLParser extends DefaultHandler{
 	/** The most recently read string of characters */
 	private String readBuffer;
 	
-	/** List of errors that occured during parsing */
+	/** List of errors that occurred during parsing */
 	private ArrayList<String> errorList;
 	
 	/** Constructor Method */
@@ -121,13 +124,12 @@ public class XMLParser extends DefaultHandler{
 		        break;
 		    case CYCLICSHADING:
 		        handleCyclicShadingElement(attrs);
-		        break;
-		        
+		        break; 
 		    case ANSWERBOX:
 		        handleAnswerBoxElement(attrs);
 		        break;
 		    case BUTTON:
-                // handleButtonElement(attrs);
+                handleButtonElement(attrs);
                 break;
 		    case MULTIPLECHOICE:
                 handleMultipleChoiceElement(attrs);
@@ -210,6 +212,11 @@ public class XMLParser extends DefaultHandler{
                 } else {
                     currentMultiChoice.incorrectAnswers.add(readBuffer);
                 }
+                break;
+            case BUTTON:
+                currentButton.setText(readBuffer);
+                currentPage.pageObjects.add(currentButton);
+                break;
             default:
                 break;
 		}
@@ -564,6 +571,60 @@ public class XMLParser extends DefaultHandler{
                                                           mcType,
                                                           Integer.parseInt(marks),
                                                           Boolean.parseBoolean(retry));
+        } catch (NullPointerException | NumberFormatException e) {
+            errorList.add(new String("Answer Box; Could not parse a value"));
+        }
+    }
+    
+    /** Called to handle a button element in the XML */
+    private void handleButtonElement(Attributes attrs) {
+        /* Variables to hold the attribute strings */
+        String xstart = attrs.getValue("xstart");
+        String ystart = attrs.getValue("ystart");
+        String xend = attrs.getValue("xend");
+        String yend = attrs.getValue("yend");
+        String function = attrs.getValue("function");
+        String visible = attrs.getValue("visible");
+        
+        /* Check for null attributes */        
+        if(xstart == null) {
+            errorList.add(new String("Button; Missing X Start"));
+            return;
+        }
+        
+        if(ystart == null) {
+            errorList.add(new String("Button; Missing Y Start"));
+            return;
+        }
+        
+        if(xend == null) {
+            errorList.add(new String("Button; Missing X End"));
+            return;
+        }
+        
+        if(yend == null) {
+            errorList.add(new String("Button; Missing Y End"));
+            return;
+        }
+        
+        if(function == null) {
+            errorList.add(new String("Button; Missing Function"));
+            return;
+        }
+        
+        if(visible == null) {
+            visible = new String("true");
+        }
+        
+        /* Create the object, checking for parsing errors */
+        try {
+            currentButton = new ButtonObject(Float.parseFloat(xstart),
+                                             Float.parseFloat(ystart),
+                                             Float.parseFloat(xend),
+                                             Float.parseFloat(yend),
+                                             Boolean.parseBoolean(visible),
+                                             "text",
+                                             Integer.parseInt(function));
         } catch (NullPointerException | NumberFormatException e) {
             errorList.add(new String("Answer Box; Could not parse a value"));
         }
