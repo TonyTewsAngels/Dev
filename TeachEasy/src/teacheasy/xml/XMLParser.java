@@ -102,6 +102,9 @@ public class XMLParser extends DefaultHandler{
 		    case AUDIO:
 		        handleAudioElement(attrs);
 		        break;
+		    case VIDEO:
+		        handleVideoElement(attrs);
+		        break;
 		    default:
 		        break;
 		}
@@ -271,6 +274,45 @@ public class XMLParser extends DefaultHandler{
                                                   sourcefile));
         } catch (NullPointerException | NumberFormatException e) {
             errorList.add(new String("Audio; Could not parse float value"));
+        }
+    }
+    
+    /** Called to handle a video element in the XML */
+    private void handleVideoElement(Attributes attrs) {
+        /* Variables to hold the attribute strings */
+        String sourcefile = attrs.getValue("sourcefile");
+        String xstart = attrs.getValue("xstart");
+        String ystart = attrs.getValue("ystart");
+        String videoscreenshot = attrs.getValue("videoscreenshot");
+        
+        /* Check for null attributes */
+        if(sourcefile == null) {
+            errorList.add(new String("Video; Missing Sourcefile String"));
+            return;
+        }
+        
+        if(xstart == null) {
+            errorList.add(new String("Video; Missing X Start"));
+            return;
+        }
+        
+        if(ystart == null) {
+            errorList.add(new String("Video; Missing Y Start"));
+            return;
+        }
+        
+        if(videoscreenshot == null) {
+            videoscreenshot = new String("null");
+        }
+        
+        /* Create the object, checking for parsisng errors */
+        try {
+            currentPage.addObject(new VideoObject(sourcefile, 
+                                                  Float.parseFloat(xstart),
+                                                  Float.parseFloat(ystart),
+                                                  videoscreenshot));
+        } catch (NullPointerException | NumberFormatException e) {
+            errorList.add(new String("Video; Could not parse float value"));
         }
     }
 	

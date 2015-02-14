@@ -18,7 +18,7 @@ public class VideoObject extends PageObject{
     private String screenshotFile;
 
     /** Constructor method */
-    public VideoObject(String nSourcefile, String nScreenshotFile, float nXStart, float nYStart) {
+    public VideoObject(String nSourcefile,  float nXStart, float nYStart, String nScreenshotFile) {
         super(PageObjectType.VIDEO, nXStart, nYStart);
         
         this.setSourcefile(nSourcefile);
