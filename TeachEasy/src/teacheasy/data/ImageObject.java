@@ -69,6 +69,39 @@ public class ImageObject extends PageObject {
 	/** Method to set the rotation */
 	public void setRotation(float nRotation) {
 		this.rotation = nRotation;
-	}	
+	}
+	
+	/** Prints information about the object to the screen */
+	public void debugPrint() {
+	    super.debugPrint();
+	    
+	    System.out.println(", Sourcefile " + sourcefile + 
+	                       ", xScale " + xScaleFactor + 
+	                       ", yScale " + yScaleFactor + 
+	                       ", Rotation " + rotation + ".\n");
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

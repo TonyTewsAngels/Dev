@@ -39,8 +39,8 @@ public class GraphicsObject extends PageObject {
 	
 	/** Graphics Variables */
 	private GraphicType type;
-	private float XEnd;
-	private float YEnd;
+	private float xEnd;
+	private float yEnd;
 	private float rotation;
 	private String graphicColor;
 	private boolean solid;
@@ -58,8 +58,8 @@ public class GraphicsObject extends PageObject {
 		super(PageObjectType.GRAPHIC, nXStart, nYStart);
 		
 		this.type = nType;
-		this.XEnd = nXEnd;
-		this.YEnd = nYEnd;
+		this.xEnd = nXEnd;
+		this.yEnd = nYEnd;
 		this.rotation = nRotation;
 		this.graphicColor = nGraphicColor;
 		this.solid = nSolid;
@@ -81,19 +81,19 @@ public class GraphicsObject extends PageObject {
 	}
 
 	public float getXEnd() {
-		return XEnd;
+		return xEnd;
 	}
 	
 	public void setXEnd(float nXEnd) {
-		XEnd = nXEnd;
+		xEnd = nXEnd;
 	}
 	
 	public float getYEnd() {
-		return YEnd;
+		return yEnd;
 	}
 
 	public void setYEnd(float nYEnd) {
-		YEnd = nYEnd;
+		yEnd = nYEnd;
 	}
 
 	public float getRotation() {
@@ -151,4 +151,20 @@ public class GraphicsObject extends PageObject {
 	public void setShadingColor(String nShadingColor) {
 	    this.shadingColor = nShadingColor;
 	}
+	
+	/** Prints information about the object to the screen */
+    public void debugPrint() {
+        super.debugPrint();
+        
+        System.out.println(", xEnd " + xEnd + 
+                           ", yEnd " + yEnd + 
+                           ", Rotation " + rotation +
+                           ", Color " + graphicColor + 
+                           ", Solid " + solid + 
+                           ", Outline Thickness " + outlineThickness +
+                           ", Shadow " + shadow + 
+                           ", Shading " + shading +
+                           ", Shading Colour " + shadingColor +
+                           ".\n");
+    }
 }

@@ -71,5 +71,15 @@ public class AnswerBoxObject extends PageObject {
 	public void setRetry(boolean retry) {
 		this.retry = retry;
 	}
+	
+	/** Prints information about the object to the screen */
+    public void debugPrint() {
+        super.debugPrint();
+        
+        System.out.println(", Character Limit " + characterLimit + 
+                           ", Marks " + marks + 
+                           ", Correct Answers " + correctAnswers +
+                           ", Retry " + retry + ".\n");
+    }
 }
 

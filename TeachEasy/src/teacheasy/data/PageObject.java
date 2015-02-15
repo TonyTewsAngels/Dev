@@ -49,6 +49,6 @@ public abstract class PageObject {
 	
 	/** Prints information about the object to the console */
 	public void debugPrint() {
-	    System.out.println("Object Type: " + type);
+	    System.out.print(type + ": \n" + "xStart " + xStart + ", yStart " + yStart);
 	}
 }

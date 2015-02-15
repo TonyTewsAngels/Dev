@@ -83,4 +83,15 @@ public class ButtonObject extends PageObject {
 	public void setFunction(int nFunction) {
 		this.function = nFunction;
 	}
+	
+	/** Prints information about the object to the screen */
+    public void debugPrint() {
+        super.debugPrint();
+        
+        System.out.println(", xEnd " + xEnd + 
+                           ", yEnd " + yEnd + 
+                           ", Visible " + visible +
+                           ", Button Text " + text + 
+                           ", Function " + function + ".\n");
+    }
 }

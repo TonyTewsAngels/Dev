@@ -32,9 +32,13 @@ public class Iteration1DummyUI {
 		// Test Parser
 		ArrayList<String> errorList = xmlHandler.parseXML("testXML.xml");
 		
+		System.out.println(errorList.size() + " error(s)\n");
+		
 		for(int i = 0; i < errorList.size(); i++) {
 		    System.out.println(errorList.get(i));
 		}
+		
+		xmlHandler.getLesson().debugPrint();
 	}
 
 	/** Main Function called when application is run */

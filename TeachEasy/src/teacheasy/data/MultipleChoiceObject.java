@@ -114,6 +114,11 @@ public class MultipleChoiceObject extends PageObject {
     public void debugPrint() {
         super.debugPrint();
         
+        System.out.println(", Orientation " + orientation + 
+                           ", Type " + type + 
+                           ", Marks " + marks + 
+                           ", Retry " + retry + ".");
+        
         for(int i = 0; i < correctAnswers.size(); i++) {
             System.out.println("\tCorrect Aswer: " + correctAnswers.get(i));
         }
@@ -121,5 +126,7 @@ public class MultipleChoiceObject extends PageObject {
         for(int i = 0; i < incorrectAnswers.size(); i++) {
             System.out.println("\tIncorrect Aswer: " + incorrectAnswers.get(i));
         }
+        
+        System.out.println("");
     }
 }

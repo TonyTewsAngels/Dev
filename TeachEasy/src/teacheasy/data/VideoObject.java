@@ -44,4 +44,12 @@ public class VideoObject extends PageObject{
     public void setScreenshotFile(String nScreenshotFile) {
         this.screenshotFile = nScreenshotFile;
     }
+    
+    /** Prints information about the object to the screen */
+    public void debugPrint() {
+        super.debugPrint();
+        
+        System.out.println(", Sourcefile " + sourcefile + 
+                           ", Screen Shot " + screenshotFile + ".\n");
+    }
 }
