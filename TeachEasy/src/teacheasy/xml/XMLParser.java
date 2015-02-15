@@ -234,7 +234,7 @@ public class XMLParser extends DefaultHandler{
 	
 	/** Called by parser at the start of a document */
 	public void endDocument() throws SAXException {
-	    currentLesson.debugPrint();
+	    
     }
 	
 	/** Called to handle an image element in the XML */
