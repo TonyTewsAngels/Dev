@@ -69,11 +69,7 @@ public class XMLParser extends DefaultHandler{
 	}
 	
 	/** Parses an XML file */
-	public ArrayList<String> parse(String filename) {
-	    
-	    /* Instantiate a new empty lesson */
-	    currentLesson = new Lesson();
-	    
+	public ArrayList<String> parse(String filename) {	    
 	    /* Instantiate the error list */
 	    errorList = new ArrayList<String>();
 	    
@@ -103,6 +99,10 @@ public class XMLParser extends DefaultHandler{
 		elementList.add(qName);
 		
 		switch (XMLElement.check(qName.toUpperCase())) {
+		    case SLIDESHOW:
+		        currentLesson = new Lesson();
+		        break;
+		
 		    case SLIDE:
 		        handleSlideElement(attrs);
 		        break;

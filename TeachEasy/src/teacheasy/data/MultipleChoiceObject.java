@@ -9,8 +9,6 @@ package teacheasy.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import teacheasy.xml.XMLElement;
-
 /**
  * This class encapsulates the data for
  * a multiple choice object.
