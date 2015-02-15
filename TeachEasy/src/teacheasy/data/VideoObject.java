@@ -18,7 +18,7 @@ public class VideoObject extends PageObject{
     private String screenshotFile;
 
     /** Constructor method */
-    public VideoObject(String nSourcefile, String nScreenshotFile, float nXStart, float nYStart) {
+    public VideoObject(String nSourcefile,  float nXStart, float nYStart, String nScreenshotFile) {
         super(PageObjectType.VIDEO, nXStart, nYStart);
         
         this.setSourcefile(nSourcefile);
@@ -43,5 +43,13 @@ public class VideoObject extends PageObject{
     /** Set function for screenshot string */
     public void setScreenshotFile(String nScreenshotFile) {
         this.screenshotFile = nScreenshotFile;
+    }
+    
+    /** Prints information about the object to the screen */
+    public void debugPrint() {
+        super.debugPrint();
+        
+        System.out.println(", Sourcefile " + sourcefile + 
+                           ", Screen Shot " + screenshotFile + ".\n");
     }
 }

@@ -10,9 +10,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import teacheasy.data.Lesson;
-import teacheasy.data.Page;
-import teacheasy.data.PageObject;
+import teacheasy.data.*;
+import teacheasy.data.GraphicsObject.*;
+import teacheasy.data.MultipleChoiceObject.*;
 import teacheasy.data.lessondata.*;
 
 import org.xml.sax.*;
@@ -35,6 +35,18 @@ public class XMLParser extends DefaultHandler{
 	/** The page being constructed */
 	private Page currentPage;
 	
+	/** The graphics object being constructed */
+	private GraphicsObject currentGraphic;
+	
+	/** The multiple choice object currently being constructed */
+	private MultipleChoiceObject currentMultiChoice;
+	
+	/** The answer currently being constructed */
+	private boolean currentAnswer;
+	
+	/** The button currently being constructed */
+	private ButtonObject currentButton;
+	
 	/** XML PWS Indicator */
 	private boolean standard = false;
 	
@@ -43,6 +55,9 @@ public class XMLParser extends DefaultHandler{
 	
 	/** The most recently read string of characters */
 	private String readBuffer;
+	
+	/** List of errors that occurred during parsing */
+	private ArrayList<String> errorList;
 	
 	/** Constructor Method */
 	public XMLParser() {
@@ -54,10 +69,9 @@ public class XMLParser extends DefaultHandler{
 	}
 	
 	/** Parses an XML file */
-	public void parse(String filename) {
-	    
-	    /* Instantiate a new empty lesson */
-	    currentLesson = new Lesson();
+	public ArrayList<String> parse(String filename) {	    
+	    /* Instantiate the error list */
+	    errorList = new ArrayList<String>();
 	    
 		try {
 			/* Create an instance of the SAX Parser */
@@ -70,6 +84,9 @@ public class XMLParser extends DefaultHandler{
 		} catch (ParserConfigurationException | SAXException | IOException e) {
 			e.printStackTrace();
 		}
+		
+		/* Return the error list */
+		return errorList;
 	}
 	
 	/** Returns the lesson parsed from xml */
@@ -82,9 +99,43 @@ public class XMLParser extends DefaultHandler{
 		elementList.add(qName);
 		
 		switch (XMLElement.check(qName.toUpperCase())) {
-		    case IMAGE:
-		        
+		    case SLIDESHOW:
+		        currentLesson = new Lesson();
 		        break;
+		
+		    case SLIDE:
+		        handleSlideElement(attrs);
+		        break;
+		        
+		    case TEXT:
+		        // handleTextElement(attrs);
+		        break;
+		    case IMAGE:
+		        handleImageElement(attrs);
+		        break;
+		    case AUDIO:
+		        handleAudioElement(attrs);
+		        break;
+		    case VIDEO:
+		        handleVideoElement(attrs);
+		        break;
+		    case GRAPHIC:
+		        handleGraphicElement(attrs);
+		        break;
+		    case CYCLICSHADING:
+		        handleCyclicShadingElement(attrs);
+		        break; 
+		    case ANSWERBOX:
+		        handleAnswerBoxElement(attrs);
+		        break;
+		    case BUTTON:
+                handleButtonElement(attrs);
+                break;
+		    case MULTIPLECHOICE:
+                handleMultipleChoiceElement(attrs);
+                break;
+		    case ANSWER:
+		        currentAnswer = Boolean.parseBoolean(attrs.getValue("correct"));
 		    default:
 		        break;
 		}
@@ -142,6 +193,30 @@ public class XMLParser extends DefaultHandler{
             case PASSBOUNDARY:
                 currentLesson.gradeSettings.setPassBoundary(Integer.parseInt(readBuffer));
                 break;
+                
+            /* Slide Element */
+            case SLIDE:
+                currentLesson.pages.add(currentPage);
+                break;
+                
+            /* Media Elements */
+            case GRAPHIC:
+                currentPage.pageObjects.add(currentGraphic);
+                break;
+            case MULTIPLECHOICE:
+                currentPage.pageObjects.add(currentMultiChoice);
+                break;
+            case ANSWER:
+                if(currentAnswer) {
+                    currentMultiChoice.correctAnswers.add(readBuffer);
+                } else {
+                    currentMultiChoice.incorrectAnswers.add(readBuffer);
+                }
+                break;
+            case BUTTON:
+                currentButton.setText(readBuffer);
+                currentPage.pageObjects.add(currentButton);
+                break;
             default:
                 break;
 		}
@@ -159,23 +234,418 @@ public class XMLParser extends DefaultHandler{
 	
 	/** Called by parser at the start of a document */
 	public void endDocument() throws SAXException {
-	    System.out.println("Author: " + currentLesson.lessonInfo.getAuthor());
-	    System.out.println("Version: " + currentLesson.lessonInfo.getVersion());
-	    System.out.println("Comment: " + currentLesson.lessonInfo.getComment());
-	    System.out.println("Date Created: " + currentLesson.lessonInfo.getDateCreated());
-	    System.out.println("Total Marks: " + currentLesson.lessonInfo.getTotalMarks());
-	    System.out.println("Lesson Name: " + currentLesson.lessonInfo.getLessonName() + "\n");
 	    
-	    System.out.println("BG Color: " + currentLesson.defaultSettings.getBackgroundColour());
-        System.out.println("Font: " + currentLesson.defaultSettings.getFont());
-        System.out.println("Font Size: " + currentLesson.defaultSettings.getFontSize());
-        System.out.println("Font Color: " + currentLesson.defaultSettings.getFontColour() + "\n");
-        
-        System.out.println("Pass Boundary: " + currentLesson.gradeSettings.getPassBoundary());
     }
 	
 	/** Called to handle an image element in the XML */
 	private void handleImageElement(Attributes attrs) {
+	    /* Variables to hold the attribute strings */
+	    String sourcefile = attrs.getValue("sourcefile");
+	    String xstart = attrs.getValue("xstart");
+	    String ystart = attrs.getValue("ystart");
+	    String xscale = attrs.getValue("scale");
+	    String yscale = attrs.getValue("yscale");
+	    String rotation = attrs.getValue("rotation");
 	    
+	    /* Check for null attributes */
+	    if(sourcefile == null) {
+	        errorList.add(new String("Image; Missing Sourcefile String"));
+	        return;
+	    }
+	    
+	    if(xstart == null) {
+            errorList.add(new String("Image; Missing X Start"));
+            return;
+        }
+	    
+	    if(ystart == null) {
+            errorList.add(new String("Image; Missing Y Start"));
+            return;
+        }
+	    
+	    if(xscale == null) {
+            xscale = "1.0";
+        }
+	    
+	    if(yscale == null) {
+            yscale = new String(xscale);
+        }
+	    
+	    if(rotation == null) {
+            rotation = new String("0.0");
+        }
+	    
+	    /* Create the object, checking for parsing errors */
+	    try {
+	        currentPage.addObject(new ImageObject(Float.parseFloat(xstart),
+	                                              Float.parseFloat(ystart),
+	                                              sourcefile,
+	                                              Float.parseFloat(xscale),
+	                                              Float.parseFloat(yscale),
+	                                              Float.parseFloat(rotation)));
+	    } catch (NullPointerException | NumberFormatException e) {
+	        errorList.add(new String("Image; Could not parse float value"));
+	    }
+	}
+	
+	/** Called to handle an audio element in the XML */
+    private void handleAudioElement(Attributes attrs) {
+        /* Variables to hold the attribute strings */
+        String sourcefile = attrs.getValue("sourcefile");
+        String xstart = attrs.getValue("xstart");
+        String ystart = attrs.getValue("ystart");
+        String viewprogress = attrs.getValue("viewprogress");
+        
+        /* Check for null attributes */
+        if(sourcefile == null) {
+            errorList.add(new String("Audio; Missing Sourcefile String"));
+            return;
+        }
+        
+        if(xstart == null) {
+            errorList.add(new String("Audio; Missing X Start"));
+            return;
+        }
+        
+        if(ystart == null) {
+            errorList.add(new String("Audio; Missing Y Start"));
+            return;
+        }
+        
+        if(viewprogress == null) {
+            viewprogress = new String("true");
+        }
+        
+        /* Create the object, checking for parsing errors */
+        try {
+            currentPage.addObject(new AudioObject(Float.parseFloat(xstart),
+                                                  Float.parseFloat(ystart),
+                                                  Boolean.parseBoolean(viewprogress),
+                                                  sourcefile));
+        } catch (NullPointerException | NumberFormatException e) {
+            errorList.add(new String("Audio; Could not parse float value"));
+        }
+    }
+    
+    /** Called to handle a video element in the XML */
+    private void handleVideoElement(Attributes attrs) {
+        /* Variables to hold the attribute strings */
+        String sourcefile = attrs.getValue("sourcefile");
+        String xstart = attrs.getValue("xstart");
+        String ystart = attrs.getValue("ystart");
+        String videoscreenshot = attrs.getValue("videoscreenshot");
+        
+        /* Check for null attributes */
+        if(sourcefile == null) {
+            errorList.add(new String("Video; Missing Sourcefile String"));
+            return;
+        }
+        
+        if(xstart == null) {
+            errorList.add(new String("Video; Missing X Start"));
+            return;
+        }
+        
+        if(ystart == null) {
+            errorList.add(new String("Video; Missing Y Start"));
+            return;
+        }
+        
+        if(videoscreenshot == null) {
+            videoscreenshot = new String("null");
+        }
+        
+        /* Create the object, checking for parsing errors */
+        try {
+            currentPage.addObject(new VideoObject(sourcefile, 
+                                                  Float.parseFloat(xstart),
+                                                  Float.parseFloat(ystart),
+                                                  videoscreenshot));
+        } catch (NullPointerException | NumberFormatException e) {
+            errorList.add(new String("Video; Could not parse float value"));
+        }
+    }
+    
+    /** Called to handle a Graphics element in the XML */
+    private void handleGraphicElement(Attributes attrs) {
+        /* Variables to hold the attribute strings */
+        String type = attrs.getValue("type");
+        String xstart = attrs.getValue("xstart");
+        String ystart = attrs.getValue("ystart");
+        String xend = attrs.getValue("xend");
+        String yend = attrs.getValue("yend");
+        String solid = attrs.getValue("solid");
+        String graphiccolor = attrs.getValue("graphiccolor");
+        String rotation = attrs.getValue("rotation");
+        String outlinethickness = attrs.getValue("outlinethickness");
+        String shadow = attrs.getValue("shadow");
+        
+        GraphicType gType;
+        
+        /* Check for null attributes */
+        if(type == null) {
+            errorList.add(new String("Graphic; Missing Type String"));
+            return;
+        } else {
+            gType = GraphicType.check(type.toUpperCase());
+        }
+        
+        if(xstart == null) {
+            errorList.add(new String("Graphic; Missing X Start"));
+            return;
+        }
+        
+        if(ystart == null) {
+            errorList.add(new String("Graphic; Missing Y Start"));
+            return;
+        }
+        
+        if(xend == null) {
+            errorList.add(new String("Graphic; Missing X End"));
+            return;
+        }
+        
+        if(yend == null) {
+            errorList.add(new String("Graphic; Missing Y End"));
+            return;
+        }
+        
+        if(solid == null) {
+            errorList.add(new String("Graphic; Missing Solid"));
+            return;
+        }
+        
+        if(graphiccolor == null) {
+            errorList.add(new String("Graphic; Missing Graphic Color"));
+            return;
+        }
+        
+        if(rotation == null) {
+            rotation = new String("0.0");
+        }
+        
+        if(outlinethickness == null) {
+            outlinethickness = new String("1.0");
+        }
+        
+        if(shadow == null) {
+            shadow = new String("false");
+        }
+        
+        /* Create the object, checking for parsing errors */
+        try {
+            currentGraphic = new GraphicsObject(gType, 
+                                                Float.parseFloat(xstart),
+                                                Float.parseFloat(ystart),
+                                                Float.parseFloat(xend),
+                                                Float.parseFloat(yend),
+                                                Float.parseFloat(rotation),
+                                                graphiccolor,
+                                                Boolean.parseBoolean(solid),
+                                                Float.parseFloat(outlinethickness),
+                                                Boolean.parseBoolean(shadow));
+        } catch (NullPointerException | NumberFormatException e) {
+            errorList.add(new String("Video; Could not parse float value"));
+        }
+    }
+    
+    /** Called to handle a Cyclic Shading element in the XML */
+    private void handleCyclicShadingElement(Attributes attrs) {
+        /* Variables to hold the attribute strings */
+        String shadingcolor = attrs.getValue("shadingcolor");
+        
+        if(shadingcolor == null) {
+            errorList.add(new String("CyclicShading: Missing shading color"));
+            return;
+        }
+        
+        currentGraphic.setShading(GraphicsObject.Shading.CYCLIC);
+        currentGraphic.setShadingColor(shadingcolor);
+    }
+    
+    /** Called to handle an answer box element in the XML */
+    private void handleAnswerBoxElement(Attributes attrs) {
+        /* Variables to hold the attribute strings */
+        String xstart = attrs.getValue("xstart");
+        String ystart = attrs.getValue("ystart");
+        String characterlimit = attrs.getValue("characterlimit");
+        String correctanswer = attrs.getValue("correctanswer");
+        String marks = attrs.getValue("marks");
+        String retry = attrs.getValue("retry");
+        
+        /* Check for null attributes */        
+        if(xstart == null) {
+            errorList.add(new String("Answer Box; Missing X Start"));
+            return;
+        }
+        
+        if(ystart == null) {
+            errorList.add(new String("Answer Box; Missing Y Start"));
+            return;
+        }
+        
+        if(characterlimit == null) {
+            errorList.add(new String("Answer Box; Missing Character Limit"));
+            return;
+        }
+        
+        if(correctanswer == null) {
+            errorList.add(new String("Answer Box; Missing Correct Answer(s)"));
+            return;
+        }
+        
+        if(marks == null) {
+            errorList.add(new String("Answer Box; Missing Marks"));
+            return;
+        }
+        
+        if(retry == null) {
+            retry = new String("True");
+        }
+        
+        /* Create the object, checking for parsing errors */
+        try {
+            currentPage.addObject(new AnswerBoxObject(Float.parseFloat(xstart),
+                                                      Float.parseFloat(ystart),
+                                                      Integer.parseInt(characterlimit),
+                                                      Integer.parseInt(marks),
+                                                      correctanswer,
+                                                      Boolean.parseBoolean(retry)));
+        } catch (NullPointerException | NumberFormatException e) {
+            errorList.add(new String("Answer Box; Could not parse a value"));
+        }
+    }
+    
+    /** Called to handle an answer box element in the XML */
+    private void handleMultipleChoiceElement(Attributes attrs) {
+        /* Variables to hold the attribute strings */
+        String xstart = attrs.getValue("xstart");
+        String ystart = attrs.getValue("ystart");
+        String type = attrs.getValue("type");
+        String orientation = attrs.getValue("orientation");
+        String marks = attrs.getValue("marks");
+        String retry = attrs.getValue("retry");
+        
+        Orientation mcOrientation;
+        MultiChoiceType mcType;
+        
+        /* Check for null attributes */        
+        if(xstart == null) {
+            errorList.add(new String("Multi Choice; Missing X Start"));
+            return;
+        }
+        
+        if(ystart == null) {
+            errorList.add(new String("Multi Choice; Missing Y Start"));
+            return;
+        }
+        
+        if(type == null) {
+            errorList.add(new String("Multi Choice; Missing Type"));
+            return;
+        } else {
+            mcType = MultiChoiceType.check(type.toUpperCase());
+        }
+        
+        if(orientation == null) {
+            errorList.add(new String("Multi Choice; Orientation"));
+            return;
+        } else {
+            mcOrientation = Orientation.check(orientation.toUpperCase());
+        }
+        
+        if(marks == null) {
+            errorList.add(new String("Multi Choice; Missing Marks"));
+            return;
+        }
+        
+        if(retry == null) {
+            retry = new String("True");
+        }
+        
+        /* Create the object, checking for parsing errors */
+        try {
+            currentMultiChoice = new MultipleChoiceObject(Float.parseFloat(xstart),
+                                                          Float.parseFloat(ystart),
+                                                          mcOrientation,
+                                                          mcType,
+                                                          Integer.parseInt(marks),
+                                                          Boolean.parseBoolean(retry));
+        } catch (NullPointerException | NumberFormatException e) {
+            errorList.add(new String("Answer Box; Could not parse a value"));
+        }
+    }
+    
+    /** Called to handle a button element in the XML */
+    private void handleButtonElement(Attributes attrs) {
+        /* Variables to hold the attribute strings */
+        String xstart = attrs.getValue("xstart");
+        String ystart = attrs.getValue("ystart");
+        String xend = attrs.getValue("xend");
+        String yend = attrs.getValue("yend");
+        String function = attrs.getValue("function");
+        String visible = attrs.getValue("visible");
+        
+        /* Check for null attributes */        
+        if(xstart == null) {
+            errorList.add(new String("Button; Missing X Start"));
+            return;
+        }
+        
+        if(ystart == null) {
+            errorList.add(new String("Button; Missing Y Start"));
+            return;
+        }
+        
+        if(xend == null) {
+            errorList.add(new String("Button; Missing X End"));
+            return;
+        }
+        
+        if(yend == null) {
+            errorList.add(new String("Button; Missing Y End"));
+            return;
+        }
+        
+        if(function == null) {
+            errorList.add(new String("Button; Missing Function"));
+            return;
+        }
+        
+        if(visible == null) {
+            visible = new String("true");
+        }
+        
+        /* Create the object, checking for parsing errors */
+        try {
+            currentButton = new ButtonObject(Float.parseFloat(xstart),
+                                             Float.parseFloat(ystart),
+                                             Float.parseFloat(xend),
+                                             Float.parseFloat(yend),
+                                             Boolean.parseBoolean(visible),
+                                             "text",
+                                             Integer.parseInt(function));
+        } catch (NullPointerException | NumberFormatException e) {
+            errorList.add(new String("Answer Box; Could not parse a value"));
+        }
+    }
+	
+	/** Called to handle a slide element in the XML */
+	private void handleSlideElement(Attributes attrs) {	    
+	    String bgcolor = attrs.getValue("backgroundcolor");
+	    String number = attrs.getValue("number");
+	    int pNumber;
+	    
+	    try {
+	         pNumber = Integer.parseInt(number);
+	    } catch (NullPointerException | NumberFormatException e) {
+	        pNumber = 0;
+	    }
+	    
+	    if(bgcolor != null && number != null) {
+	        currentPage = new Page(pNumber, bgcolor);
+	    } else {
+	        currentPage = new Page(0, new String("#ffffffff"));
+	    }
 	}
 }

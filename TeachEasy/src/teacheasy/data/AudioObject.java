@@ -45,5 +45,13 @@ public class AudioObject extends PageObject {
 	public void setSourcefile(String nSourcefile) {
 		this.sourcefile = nSourcefile;
 	}
+	
+	/** Prints information about the object to the screen */
+	public void debugPrint() {
+        super.debugPrint();
+        
+        System.out.println(", Sourcefile " + sourcefile + 
+                           ", View Progress " + viewProgress + ".\n");
+    }
 }
 

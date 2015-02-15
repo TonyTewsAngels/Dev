@@ -17,26 +17,23 @@
 	<gradesettings>
 		<passboundary passmessage="Well done lad" failmessage="Work harder">10</passboundary>
 	</gradesettings>
-	<slide number="1" backgroundcolour="#ffcc00cc">
-		<text sourcefile="null" xstart="0.6" ystart="0.2" font="arial" fontsize="20" fontcolour="#ffffffff">
+	<slide number="1" backgroundcolor="#ffcc00cc">
+		<text sourcefile="null" xstart="0.6" ystart="0.2" font="arial" fontsize="20" fontcolor="#ffffffff">
 			<richtext bold="true">Bold Text</richtext>
 			<richtext>Not Bold Text</richtext>
-			<richtext italic="true">Italic text</richtext>
+			<richtext italic="true" newline="true">Italic text.</richtext>
 		</text>
 		<image sourcefile="C:\Users\sadjlsd\imagefile.jpg" xstart="0.5" ystart="0.5" scale="1.0" yscale="1" rotation="0"/>
-		<audio sourcefile="gavel.wav" viewprogress="false" buttonxlocation="0.5" buttonylocation="0.1"/>
-		<video sourcefile="avengers.mkv" videoscreenshot="C:\Users\sadjlsd\videoicon.jpeg" xstart="0.1" ystart="0.1"/>
-		<graphic type="oval/rectangle/line" xstart="0.5" ystart="0.5" xend="0.7" yend="0.7" solid="true" graphiccolor="#11223344" rotation="0" outlinethickness="0.5pt" shadow="false">
+		<audio sourcefile="gavel.wav" xstart="0.5" ystart="0.1" viewprogress="false"/>
+		<video sourcefile="avengers.mkv" xstart="0.1" ystart="0.1" videoscreenshot="C:\Users\sadjlsd\videoicon.jpeg"/>
+		<graphic type="oval" xstart="0.5" ystart="0.5" xend="0.7" yend="0.7" solid="true" graphiccolor="#11223344" rotation="0" outlinethickness="0.5" shadow="false">
 			<cyclicshading shadingcolor="#88776655" />
 		</graphic>
 		<answerbox xstart="0.1" ystart="0.1" characterlimit="6" correctanswer="springs~spring" marks="5" retry="false"/>
-		<button xstart="0.1" ystart="0.1" xend="0.3" yend="0.3" outline="false" outlinethickness="0.5pt" shadow="false">
-			<buttontext>Next Page</buttontext>
-			<function>1</function>
-			<visible>True</visible>
-			<interaction>Normal</interaction>
+		<button xstart="0.1" ystart="0.1" xend="0.3" yend="0.3" function="1" visible="true" interaction="normal">
+			Button Text
 		</button>
-		<multiplechoice type="checkbox" orientation="vertical" marks="1" retry="false">
+		<multiplechoice xstart="0.2" ystart="0.2" type="checkbox" orientation="vertical" marks="1" retry="false">
 			<answer correct="false">Fish</answer>
 			<answer correct="true">Zebra</answer>
 		</multiplechoice>

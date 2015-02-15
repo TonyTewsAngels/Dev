@@ -20,7 +20,7 @@ public class AnswerBoxObject extends PageObject {
 	
 	/** Constructor Method */
 	public AnswerBoxObject(float nXStart, float nYStart, int nCharacterLimit,
-						 int nMarks, String nCorrectAnswers, boolean nRetry) {
+						   int nMarks, String nCorrectAnswers, boolean nRetry) {
 		
 		/* Call Superconstructor */
 		super(PageObjectType.ANSWER_BOX, nXStart, nYStart);
@@ -71,5 +71,15 @@ public class AnswerBoxObject extends PageObject {
 	public void setRetry(boolean retry) {
 		this.retry = retry;
 	}
+	
+	/** Prints information about the object to the screen */
+    public void debugPrint() {
+        super.debugPrint();
+        
+        System.out.println(", Character Limit " + characterLimit + 
+                           ", Marks " + marks + 
+                           ", Correct Answers " + correctAnswers +
+                           ", Retry " + retry + ".\n");
+    }
 }
 

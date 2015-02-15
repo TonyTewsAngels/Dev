@@ -6,6 +6,8 @@
  */
 package teacheasy.data;
 
+import teacheasy.xml.XMLElement;
+
 /**
  * This class extends PageObject and encapsulates a single graphics object.
  * 
@@ -18,18 +20,35 @@ public class GraphicsObject extends PageObject {
 	public static enum GraphicType {
 		OVAL,
 		RECTANGLE,
-		LINE
+		LINE;
+		
+		public static GraphicType check(String str) {
+	        try {
+	            return valueOf(str);
+	        } catch (Exception ex) {
+	            return LINE;
+	        }
+	    }
+	}
+	
+	/** Enumeration of the various shading types */
+	public static enum Shading {
+	    NONE,
+	    CYCLIC
 	}
 	
 	/** Graphics Variables */
 	private GraphicType type;
-	private float XEnd;
-	private float YEnd;
+	private float xEnd;
+	private float yEnd;
 	private float rotation;
 	private String graphicColor;
 	private boolean solid;
 	private float outlineThickness;
 	private boolean shadow;
+	
+	private Shading shading;
+	private String shadingColor;
 	
 	/** Constructor Method */
 	public GraphicsObject(GraphicType nType, float nXStart, float nYStart, float nXEnd, 
@@ -39,13 +58,16 @@ public class GraphicsObject extends PageObject {
 		super(PageObjectType.GRAPHIC, nXStart, nYStart);
 		
 		this.type = nType;
-		this.XEnd = nXEnd;
-		this.YEnd = nYEnd;
+		this.xEnd = nXEnd;
+		this.yEnd = nYEnd;
 		this.rotation = nRotation;
 		this.graphicColor = nGraphicColor;
 		this.solid = nSolid;
 		this.outlineThickness = nOutlineThickness;
 		this.shadow = nShadow;
+		
+		this.shading = Shading.NONE;
+		this.shadingColor = new String("#ff000000");
 	}
 	
 	/* Getters and Setters for Graphics variables */
@@ -59,19 +81,19 @@ public class GraphicsObject extends PageObject {
 	}
 
 	public float getXEnd() {
-		return XEnd;
+		return xEnd;
 	}
 	
 	public void setXEnd(float nXEnd) {
-		XEnd = nXEnd;
+		xEnd = nXEnd;
 	}
 	
 	public float getYEnd() {
-		return YEnd;
+		return yEnd;
 	}
 
 	public void setYEnd(float nYEnd) {
-		YEnd = nYEnd;
+		yEnd = nYEnd;
 	}
 
 	public float getRotation() {
@@ -113,5 +135,36 @@ public class GraphicsObject extends PageObject {
 	public void setShadow(boolean nShadow) {
 		this.shadow = nShadow;
 	}
-
+	
+	public Shading getShading() {
+	    return shading;
+	}
+	
+	public void setShading(Shading nShading) {
+	    this.shading = nShading;
+	}
+	
+	public String getShadingColor() {
+	    return shadingColor;
+	}
+	
+	public void setShadingColor(String nShadingColor) {
+	    this.shadingColor = nShadingColor;
+	}
+	
+	/** Prints information about the object to the screen */
+    public void debugPrint() {
+        super.debugPrint();
+        
+        System.out.println(", xEnd " + xEnd + 
+                           ", yEnd " + yEnd + 
+                           ", Rotation " + rotation +
+                           ", Color " + graphicColor + 
+                           ", Solid " + solid + 
+                           ", Outline Thickness " + outlineThickness +
+                           ", Shadow " + shadow + 
+                           ", Shading " + shading +
+                           ", Shading Colour " + shadingColor +
+                           ".\n");
+    }
 }
