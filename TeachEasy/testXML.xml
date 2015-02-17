@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <slideshow>
 	<documentinfo>
 		<author>Mr Cash</author>
@@ -30,7 +31,7 @@
 			<cyclicshading shadingcolor="#88776655" />
 		</graphic>
 		<answerbox xstart="0.1" ystart="0.1" characterlimit="6" correctanswer="springs~spring" marks="5" retry="false"/>
-		<button xstart="0.1" ystart="0.1" xend="0.3" yend="0.3" function="1" visible="true" interaction="normal">
+		<button xstart="0.1" ystart="0.1" xend="0.3" yend="0.3" function="1" visible="true">
 			Button Text
 		</button>
 		<multiplechoice xstart="0.2" ystart="0.2" type="checkbox" orientation="vertical" marks="1" retry="false">

@@ -14,7 +14,7 @@ import teacheasy.xml.XMLElement;
  * @version 	1.0 05 Feb 2015
  * @author 		Lewis Thresh & Calum Armstrong
  */
-public class GraphicsObject extends PageObject {
+public class GraphicObject extends PageObject {
 
 	/** Enumeration of the various graphic types */
 	public static enum GraphicType {
@@ -38,7 +38,7 @@ public class GraphicsObject extends PageObject {
 	}
 	
 	/** Graphics Variables */
-	private GraphicType type;
+	private GraphicType graphicType;
 	private float xEnd;
 	private float yEnd;
 	private float rotation;
@@ -51,13 +51,13 @@ public class GraphicsObject extends PageObject {
 	private String shadingColor;
 	
 	/** Constructor Method */
-	public GraphicsObject(GraphicType nType, float nXStart, float nYStart, float nXEnd, 
+	public GraphicObject(GraphicType nType, float nXStart, float nYStart, float nXEnd, 
 						  float nYEnd, float nRotation, String nGraphicColor,   
 						  boolean nSolid, float nOutlineThickness, boolean nShadow) {
 	    
 		super(PageObjectType.GRAPHIC, nXStart, nYStart);
 		
-		this.type = nType;
+		this.graphicType = nType;
 		this.xEnd = nXEnd;
 		this.yEnd = nYEnd;
 		this.rotation = nRotation;
@@ -72,12 +72,12 @@ public class GraphicsObject extends PageObject {
 	
 	/* Getters and Setters for Graphics variables */
 	
-	public GraphicType getType() {
-		return type;
+	public GraphicType getGraphicType() {
+		return graphicType;
 	}
 	
 	public void setType(GraphicType nType) {
-		this.type = nType;
+		this.graphicType = nType;
 	}
 
 	public float getXEnd() {

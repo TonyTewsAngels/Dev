@@ -6,6 +6,8 @@
  */
 package teacheasy.data;
 
+import teacheasy.xml.XMLElement;
+
 /**
  * This class encapsulates a single object 
  * on a page.
@@ -18,7 +20,7 @@ public abstract class PageObject {
 	/** Enumeration of the various page object types */
 	public static enum PageObjectType {
 		TEXT,
-		PICTURE,
+		IMAGE,
 		GRAPHIC,
 		AUDIO,
 		VIDEO,
@@ -45,6 +47,21 @@ public abstract class PageObject {
 		this.type = nType;
 		this.xStart = nXStart;
 		this.yStart = nYStart;
+	}
+	
+	/** Get the xstart position */
+	public float getXStart() {
+	    return xStart;
+	}
+	
+	/** Get the ystart position */
+	public float getYStart() {
+	    return yStart;
+	}
+	
+	/** Get the type of this page object */
+	public PageObjectType getType() {
+	    return type;
 	}
 	
 	/** Prints information about the object to the console */

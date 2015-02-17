@@ -8,6 +8,7 @@ package teacheasy.debug;
 
 import java.util.ArrayList;
 
+import teacheasy.data.Lesson;
 import teacheasy.xml.XMLHandler;
 
 /**
@@ -38,7 +39,11 @@ public class Iteration1DummyUI {
 		    System.out.println(errorList.get(i));
 		}
 		
-		xmlHandler.getLesson().debugPrint();
+		Lesson lesson = xmlHandler.getLesson();
+		
+		lesson.debugPrint();
+		
+		xmlHandler.writeLesson(lesson);
 	}
 
 	/** Main Function called when application is run */
