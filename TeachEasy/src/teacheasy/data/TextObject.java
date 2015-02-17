@@ -16,160 +16,66 @@ import java.util.List;
  * @author 	Daniel Berhe & Jake Ransom
  */
 public class TextObject extends PageObject {
-    
     private List<RichText> text;
+    private String sourceFile;
+    private String font;
+	private int fontSize;
+	private String color;
 	
-	private int 	fontSize;
-	private String  fontColour;
-	private String  textFont;
-	private boolean superscript;
-	private boolean subscript;
-	private boolean bold;
-	private boolean italics;
-	private boolean underline;
-	private String  textFragment;
-	
-	ArrayList <String> list; 
-	
-	public TextObject(float nXStart, float nYStart) {
+	/** Constructor method */
+	public TextObject(float nXStart, float nYStart, String nSourceFile, 
+	                  String nFont, int nFontSize, String nColor) {
 		super(PageObjectType.TEXT, nXStart, nYStart);
 		
-		list = new ArrayList <String> ();
-		list.add(textFragment);
+		this.sourceFile = nSourceFile;
+		this.font = nFont;
+		this.fontSize = nFontSize;
+		this.color = nColor;
 		
-		
-	}
-	/**
-	 * 
-	 * @return
-	 */
-	public int getFontSize() {
-		return fontSize;
+		text = new ArrayList<RichText>();
 	}
 	
-	/**
-	 * 
-	 * @param newfontSize
-	 */
-	public void setFontSize(int newfontSize) {
-		this.fontSize = newfontSize;
+	/** Add a rich text fragment */
+	public void addText(RichText nText, int index) {
+	    text.add(index, nText);
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
-	public String getFontColour() {
-		return fontColour;
+	/** Remove a rich text fragment */
+	public void removeText(int index) {
+	    text.remove(index);
 	}
+
+	/* Get and set functions */
 	
-	/**
-	 * 
-	 * @param newfontColour
-	 */
-	public void setFontColour(String newfontColour) {
-		this.fontColour = newfontColour;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public String getTextFont() {
-		return textFont;
-	}
-	
-	/**
-	 * 
-	 * @param newtextFont
-	 */
-	public void setTextFont(String newtextFont) {
-		this.textFont = newtextFont;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean get_superscript()
-	{
-		return superscript;
-	}
-	
-	/**
-	 * 
-	 * @param superscript
-	 */
-	public void set_superscript(boolean superscript)
-	{
-		this.superscript = superscript;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean get_subscript()
-	{
-		return subscript;
-	}
-	
-	/**
-	 * 
-	 * @param superscript
-	 */
-	public void set_subscript(boolean superscript)
-	{
-		this.superscript = superscript;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean get_bold(){
-		return bold;
-	}
-	
-	/**
-	 * 
-	 * @param bold
-	 */
-	public void set_bold(boolean bold){
-		this.bold = bold;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean italics(){
-		return italics;
-	}
-	
-	/**
-	 * 
-	 * @param italics
-	 */
-	public void set_italics(boolean italics){
-		this.italics = italics;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean get_underline(){
-		return underline;
-	}
-	
-	/**
-	 * 
-	 * @param underline
-	 */
-	public void set_underline(boolean underline){
-		this.underline = underline;
-	}
-	
-	
+    public String getSourceFile() {
+        return sourceFile;
+    }
+
+    public void setSourceFile(String nSourceFile) {
+        this.sourceFile = nSourceFile;
+    }
+
+    public String getFont() {
+        return font;
+    }
+
+    public void setFont(String nFont) {
+        this.font = nFont;
+    }
+
+    public int getFontSize() {
+        return fontSize;
+    }
+
+    public void setFontSize(int nFontSize) {
+        this.fontSize = nFontSize;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String nColor) {
+        this.color = nColor;
+    }
 }
