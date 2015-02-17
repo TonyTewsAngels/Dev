@@ -35,6 +35,9 @@ public class XMLParser extends DefaultHandler{
 	/** The page being constructed */
 	private Page currentPage;
 	
+	/** The text object currently being constructed */
+	private TextObject currentText;
+	
 	/** The graphics object being constructed */
 	private GraphicObject currentGraphic;
 	
@@ -108,7 +111,7 @@ public class XMLParser extends DefaultHandler{
 		        break;
 		        
 		    case TEXT:
-		        // handleTextElement(attrs);
+		        handleTextElement(attrs);
 		        break;
 		    case IMAGE:
 		        handleImageElement(attrs);
@@ -237,6 +240,72 @@ public class XMLParser extends DefaultHandler{
 	    
     }
 	
+	/** Called to handle a text element in the XML */
+    private void handleTextElement(Attributes attrs) {
+        /* Variables to hold the attribute strings */
+        String sourcefile = attrs.getValue("sourcefile");
+        String xstart = attrs.getValue("xstart");
+        String ystart = attrs.getValue("ystart");
+        String font = attrs.getValue("font");
+        String fontsize = attrs.getValue("fontsize");
+        String fontcolor = attrs.getValue("fontcolor");
+        
+        /* Check for null attributes */
+        if(sourcefile == null) {
+            sourcefile = new String("null");
+            return;
+        }
+        
+        if(xstart == null) {
+            errorList.add(new String("Text; Missing X Start"));
+            return;
+        }
+        
+        if(ystart == null) {
+            errorList.add(new String("Text; Missing Y Start"));
+            return;
+        }
+        
+        if(font == null) {
+            String defaultFont = currentLesson.defaultSettings.getFont();
+            if(defaultFont != null) {
+                font = defaultFont;
+            } else {
+                font = "arial";
+            }
+        }
+        
+        if(fontsize == null) {
+            try {
+                int defaultFontSize = currentLesson.defaultSettings.getFontSize();
+                fontsize = String.valueOf(defaultFontSize);
+            } catch (NullPointerException e) {
+                fontsize = "11";
+            }
+        }
+        
+        if(fontcolor == null) {
+            String defaultFontColor = currentLesson.defaultSettings.getFontColour();
+            if(defaultFontColor != null) {
+                fontcolor = defaultFontColor;
+            } else {
+                fontcolor = "#ffffffff";
+            }
+        }
+        
+        /* Create the object, checking for parsing errors */
+        try {
+            currentText = new TextObject(Float.parseFloat(xstart),
+                                         Float.parseFloat(ystart),
+                                         sourcefile,
+                                         font,
+                                         Integer.parseInt(fontsize),
+                                         fontcolor);
+        } catch (NullPointerException | NumberFormatException e) {
+            errorList.add(new String("Image; Could not parse float value"));
+        }
+    }
+
 	/** Called to handle an image element in the XML */
 	private void handleImageElement(Attributes attrs) {
 	    /* Variables to hold the attribute strings */
