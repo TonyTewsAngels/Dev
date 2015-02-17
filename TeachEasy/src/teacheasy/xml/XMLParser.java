@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import teacheasy.data.*;
-import teacheasy.data.GraphicsObject.*;
+import teacheasy.data.GraphicObject.*;
 import teacheasy.data.MultipleChoiceObject.*;
 import teacheasy.data.lessondata.*;
 
@@ -36,7 +36,7 @@ public class XMLParser extends DefaultHandler{
 	private Page currentPage;
 	
 	/** The graphics object being constructed */
-	private GraphicsObject currentGraphic;
+	private GraphicObject currentGraphic;
 	
 	/** The multiple choice object currently being constructed */
 	private MultipleChoiceObject currentMultiChoice;
@@ -434,7 +434,7 @@ public class XMLParser extends DefaultHandler{
         
         /* Create the object, checking for parsing errors */
         try {
-            currentGraphic = new GraphicsObject(gType, 
+            currentGraphic = new GraphicObject(gType, 
                                                 Float.parseFloat(xstart),
                                                 Float.parseFloat(ystart),
                                                 Float.parseFloat(xend),
@@ -459,7 +459,7 @@ public class XMLParser extends DefaultHandler{
             return;
         }
         
-        currentGraphic.setShading(GraphicsObject.Shading.CYCLIC);
+        currentGraphic.setShading(GraphicObject.Shading.CYCLIC);
         currentGraphic.setShadingColor(shadingcolor);
     }
     

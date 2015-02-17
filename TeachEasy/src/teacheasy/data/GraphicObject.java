@@ -14,7 +14,7 @@ import teacheasy.xml.XMLElement;
  * @version 	1.0 05 Feb 2015
  * @author 		Lewis Thresh & Calum Armstrong
  */
-public class GraphicsObject extends PageObject {
+public class GraphicObject extends PageObject {
 
 	/** Enumeration of the various graphic types */
 	public static enum GraphicType {
@@ -51,7 +51,7 @@ public class GraphicsObject extends PageObject {
 	private String shadingColor;
 	
 	/** Constructor Method */
-	public GraphicsObject(GraphicType nType, float nXStart, float nYStart, float nXEnd, 
+	public GraphicObject(GraphicType nType, float nXStart, float nYStart, float nXEnd, 
 						  float nYEnd, float nRotation, String nGraphicColor,   
 						  boolean nSolid, float nOutlineThickness, boolean nShadow) {
 	    

@@ -24,6 +24,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import teacheasy.data.*;
+import teacheasy.data.GraphicObject.Shading;
 import teacheasy.data.lessondata.*;
 
 /**
@@ -169,14 +170,24 @@ public class XMLWriter {
 	                addImage(imageObject, pageElement, doc);
 	                break;
 	            case GRAPHIC:
+	                GraphicObject graphicObject = (GraphicObject) pageObject;
+	                addGraphic(graphicObject, pageElement, doc);
 	                break;
                 case AUDIO:
+                    AudioObject audioObject = (AudioObject) pageObject;
+                    addAudio(audioObject, pageElement, doc);
                     break;
                 case VIDEO:
+                    VideoObject videoObject = (VideoObject) pageObject;
+                    addVideo(videoObject, pageElement, doc);
                     break;
                 case ANSWER_BOX:
+                    AnswerBoxObject answerBoxObject = (AnswerBoxObject) pageObject;
+                    addAnswerBox(answerBoxObject, pageElement, doc);
                     break;
                 case MULTIPLE_CHOICE:
+                    MultipleChoiceObject multipleChoiceObject = (MultipleChoiceObject) pageObject;
+                    addMultipleChoice(multipleChoiceObject, pageElement, doc);
                     break;
                 case BUTTON:
                     break;
@@ -199,14 +210,86 @@ public class XMLWriter {
 	}
 	
 	/** Add an audio clip */
+	public void addAudio(AudioObject audio, Element pageElement, Document doc) {
+	    Element audioElement = doc.createElement("audio");
+	    audioElement.setAttribute("sourcefile", audio.getSourcefile());
+	    audioElement.setAttribute("xstart", String.valueOf(audio.getXStart()));
+	    audioElement.setAttribute("ystart", String.valueOf(audio.getYStart()));
+        audioElement.setAttribute("viewprogress", String.valueOf(audio.isViewProgress()));
+        pageElement.appendChild(audioElement);
+	}
 	
 	/** Add a graphics element */
+	public void addGraphic(GraphicObject graphic, Element pageElement, Document doc) {
+	    Element graphicElement = doc.createElement("graphic");
+	    graphicElement.setAttribute("type", graphic.getGraphicType().toString().toLowerCase());
+	    graphicElement.setAttribute("xstart", String.valueOf(graphic.getXStart()));
+	    graphicElement.setAttribute("ystart", String.valueOf(graphic.getYStart()));
+	    graphicElement.setAttribute("xend", String.valueOf(graphic.getXEnd()));
+        graphicElement.setAttribute("yend", String.valueOf(graphic.getYEnd()));
+        graphicElement.setAttribute("sold", String.valueOf(graphic.isSolid()));
+        graphicElement.setAttribute("graphiccolor", graphic.getGraphicColour());
+        graphicElement.setAttribute("rotation", String.valueOf(graphic.getRotation()));
+        graphicElement.setAttribute("outlinethickness", String.valueOf(graphic.getOutlineThickness()));
+        graphicElement.setAttribute("shadow", String.valueOf(graphic.isShadow()));
+        
+        if(graphic.getShading() == Shading.CYCLIC) {
+            Element shadingElement = doc.createElement("cyclicshading");
+            shadingElement.setAttribute("shadingcolor", graphic.getShadingColor());
+            graphicElement.appendChild(shadingElement);
+        }
+        
+        pageElement.appendChild(graphicElement);
+	}
 	
 	/** Add a video */
+	public void addVideo(VideoObject video, Element pageElement, Document doc) {
+	    Element videoElement = doc.createElement("video");
+	    videoElement.setAttribute("sourcefile", video.getSourcefile());
+	    videoElement.setAttribute("xstart", String.valueOf(video.getXStart()));
+        videoElement.setAttribute("ystart", String.valueOf(video.getYStart()));
+        videoElement.setAttribute("videoscreenshot", video.getScreenshotFile());
+        pageElement.appendChild(videoElement);
+	}
 	
 	/** Add an answer box */
+	public void addAnswerBox(AnswerBoxObject answerBox, Element pageElement, Document doc) {
+	    Element answerBoxElement = doc.createElement("answerbox");
+	    answerBoxElement.setAttribute("xstart", String.valueOf(answerBox.getXStart()));
+        answerBoxElement.setAttribute("ystart", String.valueOf(answerBox.getXStart()));
+        answerBoxElement.setAttribute("characterlimit", String.valueOf(answerBox.getCharacterLimit()));
+        answerBoxElement.setAttribute("correctanswer", answerBox.getCorrectAnswers());
+        answerBoxElement.setAttribute("marks", String.valueOf(answerBox.getMarks()));
+        answerBoxElement.setAttribute("retry", String.valueOf(answerBox.isRetry()));
+        pageElement.appendChild(answerBoxElement);
+	}
 	
 	/** Add a multiple choice question */
+	public void addMultipleChoice(MultipleChoiceObject multipleChoice, Element pageElement, Document doc) {
+	    Element multipleChoiceElement = doc.createElement("multiplechoice");
+	    multipleChoiceElement.setAttribute("xstart", String.valueOf(multipleChoice.getXStart()));
+	    multipleChoiceElement.setAttribute("ystart", String.valueOf(multipleChoice.getYStart()));
+	    multipleChoiceElement.setAttribute("type", multipleChoice.getMultiChoiceType().toString().toLowerCase());
+	    multipleChoiceElement.setAttribute("orientation", multipleChoice.getOrientation().toString().toLowerCase());
+	    multipleChoiceElement.setAttribute("marks", String.valueOf(multipleChoice.getMarks()));
+	    multipleChoiceElement.setAttribute("retry", String.valueOf(multipleChoice.isRetry()));
+	    
+	    for(int i = 0; i < multipleChoice.correctAnswers.size(); i++) {
+	        Element answerElement = doc.createElement("answer");
+	        answerElement.setAttribute("correct", "true");
+	        answerElement.appendChild(doc.createTextNode(multipleChoice.correctAnswers.get(i)));
+	        multipleChoiceElement.appendChild(answerElement);
+	    }
+	    
+	    for(int i = 0; i < multipleChoice.incorrectAnswers.size(); i++) {
+            Element answerElement = doc.createElement("answer");
+            answerElement.setAttribute("correct", "false");
+            answerElement.appendChild(doc.createTextNode(multipleChoice.incorrectAnswers.get(i)));
+            multipleChoiceElement.appendChild(answerElement);
+        }
+	    
+	    pageElement.appendChild(multipleChoiceElement);
+	}
 	
 	/** Add a button */
 }
