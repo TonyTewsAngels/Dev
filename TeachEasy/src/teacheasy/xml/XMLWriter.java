@@ -190,6 +190,8 @@ public class XMLWriter {
                     addMultipleChoice(multipleChoiceObject, pageElement, doc);
                     break;
                 case BUTTON:
+                    ButtonObject buttonObject = (ButtonObject) pageObject;
+                    addButton(buttonObject, pageElement, doc);
                     break;
 	            default:
 	                break;
@@ -292,4 +294,14 @@ public class XMLWriter {
 	}
 	
 	/** Add a button */
+	public void addButton(ButtonObject button, Element pageElement, Document doc) {
+	    Element buttonElement = doc.createElement("button");
+	    buttonElement.setAttribute("xstart", String.valueOf(button.getXStart()));
+	    buttonElement.setAttribute("ystart", String.valueOf(button.getYStart()));
+	    buttonElement.setAttribute("xend", String.valueOf(button.getxEnd()));
+        buttonElement.setAttribute("yend", String.valueOf(button.getxEnd()));
+        buttonElement.setAttribute("function", String.valueOf(button.getFunction()));
+        buttonElement.setAttribute("visible", String.valueOf(button.isVisible()));
+        pageElement.appendChild(buttonElement);
+	}
 }
