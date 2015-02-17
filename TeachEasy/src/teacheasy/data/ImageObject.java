@@ -22,7 +22,7 @@ public class ImageObject extends PageObject {
 						float nXScaleFactor, float nYScaleFactor, float nRotation) {
 		
 		/* Must call the constructor method of superclass */
-		super(PageObjectType.PICTURE, nXStart, nYStart);
+		super(PageObjectType.IMAGE, nXStart, nYStart);
 		
 		/* Instantiate class level variables */
 		this.sourcefile = nSourcefile;

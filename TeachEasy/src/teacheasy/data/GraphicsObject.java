@@ -38,7 +38,7 @@ public class GraphicsObject extends PageObject {
 	}
 	
 	/** Graphics Variables */
-	private GraphicType type;
+	private GraphicType graphicType;
 	private float xEnd;
 	private float yEnd;
 	private float rotation;
@@ -57,7 +57,7 @@ public class GraphicsObject extends PageObject {
 	    
 		super(PageObjectType.GRAPHIC, nXStart, nYStart);
 		
-		this.type = nType;
+		this.graphicType = nType;
 		this.xEnd = nXEnd;
 		this.yEnd = nYEnd;
 		this.rotation = nRotation;
@@ -72,12 +72,12 @@ public class GraphicsObject extends PageObject {
 	
 	/* Getters and Setters for Graphics variables */
 	
-	public GraphicType getType() {
-		return type;
+	public GraphicType getGraphicType() {
+		return graphicType;
 	}
 	
 	public void setType(GraphicType nType) {
-		this.type = nType;
+		this.graphicType = nType;
 	}
 
 	public float getXEnd() {

@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <slideshow>
-  <documentinfo/>
-  <defaultsettings/>
-  <gradesettings/>
-  <slide backgroundcolor="#ffcc00cc" number="1"/>
+    <documentinfo>
+        <author>Mr Cash</author>
+        <version>1.1</version>
+        <comment>A comment about the lesson</comment>
+        <groupid>4</groupid>
+        <datecreated>13/02/15</datecreated>
+        <totalmarks>20</totalmarks>
+        <lessonname>Algebra 1</lessonname>
+    </documentinfo>
+    <defaultsettings>
+        <backgroundcolor>#ffcccc00</backgroundcolor>
+        <font>arial</font>
+        <fontsize>24</fontsize>
+        <fontcolor>#00000000</fontcolor>
+    </defaultsettings>
+    <gradesettings>
+        <passboundary failmessage="fail" passmessage="pass">10</passboundary>
+    </gradesettings>
+    <slide backgroundcolor="#ffcc00cc" number="1">
+        <image rotation="0.0" scale="1.0" sourcefile="C:\Users\sadjlsd\imagefile.jpg" xstart="0.5" yscale="1.0" ystart="0.5"/>
+    </slide>
 </slideshow>

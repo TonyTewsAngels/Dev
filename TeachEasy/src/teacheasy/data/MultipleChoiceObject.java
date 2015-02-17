@@ -50,7 +50,7 @@ public class MultipleChoiceObject extends PageObject {
     public List<String> incorrectAnswers;
     
     private Orientation orientation;
-    private MultiChoiceType type;
+    private MultiChoiceType multiChoiceType;
     private int marks;
     private boolean retry;
     
@@ -69,7 +69,7 @@ public class MultipleChoiceObject extends PageObject {
         
         /* Instantiate class level variables */
         this.orientation = nOrientation;
-        this.type = nType;
+        this.multiChoiceType = nType;
         this.marks = nMarks;
         this.retry = nRetry;
     }
@@ -84,12 +84,12 @@ public class MultipleChoiceObject extends PageObject {
         this.orientation = nOrientation;
     }
 
-    public MultiChoiceType getType() {
-        return type;
+    public MultiChoiceType getMultiChoiceType() {
+        return multiChoiceType;
     }
 
     public void setType(MultiChoiceType nType) {
-        this.type = nType;
+        this.multiChoiceType = nType;
     }
 
     public int getMarks() {
@@ -113,7 +113,7 @@ public class MultipleChoiceObject extends PageObject {
         super.debugPrint();
         
         System.out.println(", Orientation " + orientation + 
-                           ", Type " + type + 
+                           ", Type " + multiChoiceType + 
                            ", Marks " + marks + 
                            ", Retry " + retry + ".");
         
