@@ -22,6 +22,7 @@ public class RichText {
         STRIKETHROUGH,
         SUPERSCRIPT,
         SUBSCRIPT,
+        NEWLINE,
         INVALID;
         
         public static TextSetting check(String str) {
@@ -44,6 +45,7 @@ public class RichText {
     private boolean strikethrough = false;
     private boolean superscript = false;
     private boolean subscript = false;
+    private boolean newLine = false;
     
     /** Constructor method */
     public RichText(String nText, String nFont, int nFontSize, String nColor, String... settings) {
@@ -73,6 +75,9 @@ public class RichText {
                     break;
                 case SUBSCRIPT:
                     this.subscript = true;
+                    break;
+                case NEWLINE:
+                    this.newLine = true;
                     break;
                 default:
                     break;
@@ -160,5 +165,13 @@ public class RichText {
 
     public void setSubscript(boolean nSubscript) {
         this.subscript = nSubscript;
+    }
+
+    public boolean isNewLine() {
+        return newLine;
+    }
+
+    public void setNewLine(boolean nNewLine) {
+        this.newLine = nNewLine;
     }
 }

@@ -40,6 +40,11 @@ public class TextObject extends PageObject {
 	    text.add(index, nText);
 	}
 	
+	/** Add a rich text fragment at the end */
+    public void addText(RichText nText) {
+        text.add(nText);
+    }
+	
 	/** Remove a rich text fragment */
 	public void removeText(int index) {
 	    text.remove(index);
@@ -77,5 +82,23 @@ public class TextObject extends PageObject {
 
     public void setColor(String nColor) {
         this.color = nColor;
+    }
+    
+    public void debugPrint() {
+        super.debugPrint();
+        
+        System.out.println(", Font " + font + 
+                           ", Font Size " + fontSize + 
+                           ", Color " + color +
+                           ", Sourcefile " + sourceFile + ".\n");
+        for(int i = 0; i < text.size(); i++) {
+            if(text.get(i).isNewLine()) {
+                System.out.print("\n");
+            }
+            
+            System.out.print(text.get(i).getText());
+        }
+        
+        System.out.print("\n\n");
     }
 }

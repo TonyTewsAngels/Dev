@@ -38,6 +38,9 @@ public class XMLParser extends DefaultHandler{
 	/** The text object currently being constructed */
 	private TextObject currentText;
 	
+	/** The text fragment currently being constructed */
+	private RichText currentTextFragment;
+	
 	/** The graphics object being constructed */
 	private GraphicObject currentGraphic;
 	
@@ -100,6 +103,7 @@ public class XMLParser extends DefaultHandler{
 	/** Called by parser at the start of an element */
 	public void startElement(String uri, String localName, String qName, Attributes attrs) throws SAXException{		
 		elementList.add(qName);
+		readBuffer = null;
 		
 		switch (XMLElement.check(qName.toUpperCase())) {
 		    case SLIDESHOW:
@@ -112,6 +116,9 @@ public class XMLParser extends DefaultHandler{
 		        
 		    case TEXT:
 		        handleTextElement(attrs);
+		        break;
+		    case RICHTEXT:
+		        handleRichTextElement(attrs);
 		        break;
 		    case IMAGE:
 		        handleImageElement(attrs);
@@ -203,6 +210,12 @@ public class XMLParser extends DefaultHandler{
                 break;
                 
             /* Media Elements */
+            case TEXT:
+                handleTextEnd(readBuffer);
+                break;
+            case RICHTEXT:
+                handleRichTextEnd(readBuffer);
+                break;
             case GRAPHIC:
                 currentPage.pageObjects.add(currentGraphic);
                 break;
@@ -303,6 +316,112 @@ public class XMLParser extends DefaultHandler{
                                          fontcolor);
         } catch (NullPointerException | NumberFormatException e) {
             errorList.add(new String("Image; Could not parse float value"));
+        }
+    }
+    
+    /** Called to handle the end of a text element in the XML */
+    private void handleTextEnd(String readBuffer) {
+        if(readBuffer != null) {
+            currentText.addText(new RichText(readBuffer, 
+                                             currentText.getFont(), 
+                                             currentText.getFontSize(), 
+                                             currentText.getColor()));
+        }
+        
+        currentPage.addObject(currentText);
+    }
+    
+    /** Called to handle a rich text element in the XML */
+    private void handleRichTextElement(Attributes attrs) {
+        String font = attrs.getValue("font");
+        String fontsize = attrs.getValue("fontsize");
+        String fontcolor = attrs.getValue("fontcolor");
+        
+        String bold = attrs.getValue("bold");
+        String italic = attrs.getValue("italic");
+        String underline = attrs.getValue("underline");
+        String strikethrough = attrs.getValue("strikethrough");
+        String superscript = attrs.getValue("superscript");
+        String subscript = attrs.getValue("subscript");
+        String newline = attrs.getValue("newline");
+        
+        ArrayList<String> settings = new ArrayList<String>();
+        
+        if(font == null) {
+            String defaultFont = currentLesson.defaultSettings.getFont();
+            if(defaultFont != null) {
+                font = new String(defaultFont);
+            } else {
+                font = new String("arial");
+            }
+        }
+        
+        if(fontsize == null) {
+            /*try {
+                int defaultFontSize = currentLesson.defaultSettings.getFontSize();
+                fontsize = String.valueOf(defaultFontSize);
+            } catch (NullPointerException e) {
+                fontsize = "11";
+            }*/
+            fontsize = new String("11");
+        }
+        
+        if(fontcolor == null) {
+            String defaultFontColor = currentLesson.defaultSettings.getFontColour();
+            if(defaultFontColor != null) {
+                fontcolor = new String(defaultFontColor);
+            } else {
+                fontcolor = new String("#ffffffff");
+            }
+        }
+        
+        if(Boolean.parseBoolean(bold) == true) {
+            settings.add("bold");
+        }
+        
+        if(Boolean.parseBoolean(italic) == true) {
+            settings.add("italic");
+        }
+        
+        if(Boolean.parseBoolean(underline) == true) {
+            settings.add("underline");
+        }
+        
+        if(Boolean.parseBoolean(strikethrough) == true) {
+            settings.add("strikethrough");
+        }
+        
+        if(Boolean.parseBoolean(superscript) == true) {
+            settings.add("superscript");
+        }
+        
+        if(Boolean.parseBoolean(subscript) == true) {
+            settings.add("subscript");
+        }
+        
+        if(Boolean.parseBoolean(newline) == true) {
+            settings.add("newline");
+        }
+        
+        String[] settingsArray = settings.toArray(new String[settings.size()]);
+        
+        try {
+            currentTextFragment = new RichText("null",
+                                               font,
+                                               Integer.parseInt(fontsize), 
+                                               fontcolor,
+                                               settingsArray);
+        } catch (NullPointerException | NumberFormatException e) {
+            e.printStackTrace();
+            errorList.add(new String("Text; Could not parse value"));
+        }
+    }
+    
+    /** Called to handle the end of a rich text element in the XML */
+    private void handleRichTextEnd(String readBuffer) {
+        if(readBuffer != null) {
+            currentTextFragment.setText(readBuffer);
+            currentText.addText(currentTextFragment);
         }
     }
 
