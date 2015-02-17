@@ -1,13 +1,23 @@
+/*
+ * Daniel Behre & Jake Ransom
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
+ * 
+ */
 package teacheasy.data;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- @version 	1.0 05 Feb 2015
- @author 	Daniel Berhe & Jake Ransom*/
-
-
+ *This class encapsulates the data for a text object.
+ *
+ * @version 	1.0 05 Feb 2015
+ * @author 	Daniel Berhe & Jake Ransom
+ */
 public class TextObject extends PageObject {
+    
+    private List<RichText> text;
 	
 	private int 	fontSize;
 	private String  fontColour;

@@ -1,6 +1,20 @@
+/*
+ * Alistair Jewers
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
+ * 
+ */
 package teacheasy.data;
 
+/**
+ * This class encapsulates a fragment of text and it's
+ * various settings.
+ * 
+ * @author Alistair Jewers
+ * @version 1.0 17 Feb 2015
+ */
 public class RichText {
+    /** Enumeration of the possible emphasis settings */
     public enum TextSetting {
         BOLD,
         ITALIC,
@@ -19,6 +33,7 @@ public class RichText {
         }
     }
     
+    /** Class level variables */
     private String text;
     private String font;
     private int fontSize;
@@ -30,12 +45,15 @@ public class RichText {
     private boolean superscript = false;
     private boolean subscript = false;
     
+    /** Constructor method */
     public RichText(String nText, String nFont, int nFontSize, String nColor, String... settings) {
+        /* Instantiate class level variables */
         this.text = new String(nText);
         this.font = nFont;
         this.fontSize = nFontSize;
         this.color = nColor;
         
+        /* Check and instantiate the emphasis settings */
         for(String arg : settings) {
             switch(TextSetting.check(arg.toUpperCase())) {
                 case BOLD:
@@ -62,6 +80,8 @@ public class RichText {
         }
     }
 
+    /* Get and set functions */
+    
     public String getText() {
         return text;
     }
