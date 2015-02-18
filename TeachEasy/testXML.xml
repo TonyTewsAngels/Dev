@@ -36,7 +36,9 @@
 		</button>
 		<multiplechoice xstart="0.2" ystart="0.2" type="checkbox" orientation="vertical" marks="1" retry="false">
 			<answer correct="false">Fish</answer>
+			<answer correct="true">Bear</answer>
 			<answer correct="true">Zebra</answer>
+			<answer correct="false">Komodo Dragon</answer>
 		</multiplechoice>
 	</slide>
 </slideshow>

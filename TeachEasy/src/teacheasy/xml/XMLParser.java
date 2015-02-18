@@ -102,18 +102,22 @@ public class XMLParser extends DefaultHandler{
 	
 	/** Called by parser at the start of an element */
 	public void startElement(String uri, String localName, String qName, Attributes attrs) throws SAXException{		
-		elementList.add(qName);
+		/* Add the new element to the list */
+	    elementList.add(qName);
+	    
+	    /* Clear the readbuffer */
 		readBuffer = null;
 		
+		/* Find out what attribute has just started */
 		switch (XMLElement.check(qName.toUpperCase())) {
 		    case SLIDESHOW:
 		        currentLesson = new Lesson();
 		        break;
-		
 		    case SLIDE:
 		        handleSlideElement(attrs);
 		        break;
-		        
+		    
+		    /* Media elements */
 		    case TEXT:
 		        handleTextElement(attrs);
 		        break;
