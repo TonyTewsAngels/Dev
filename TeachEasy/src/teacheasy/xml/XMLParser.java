@@ -248,14 +248,10 @@ public class XMLParser extends DefaultHandler{
 	}
 	
 	/** Called by parser at the start of a document */
-	public void startDocument() throws SAXException {
-	    
-	}
+	public void startDocument() throws SAXException { /* Do Nothing */ }
 	
 	/** Called by parser at the start of a document */
-	public void endDocument() throws SAXException {
-	    
-    }
+	public void endDocument() throws SAXException { /* Do Nothing */ }
 	
 	/** Called to handle a text element in the XML */
     private void handleTextElement(Attributes attrs) {
@@ -325,18 +321,21 @@ public class XMLParser extends DefaultHandler{
     
     /** Called to handle the end of a text element in the XML */
     private void handleTextEnd(String readBuffer) {
-        if(readBuffer != null) {
+        /* Check for any non-rich text */
+        if(readBuffer != null && !readBuffer.equals("")) {
             currentText.textFragments.add(new RichText(readBuffer, 
                                               currentText.getFont(), 
                                               currentText.getFontSize(), 
                                               currentText.getColor()));
         }
         
+        /* Add the text object to the page */
         currentPage.addObject(currentText);
     }
     
     /** Called to handle a rich text element in the XML */
     private void handleRichTextElement(Attributes attrs) {
+        /* Get attributes */
         String font = attrs.getValue("font");
         String fontsize = attrs.getValue("fontsize");
         String fontcolor = attrs.getValue("fontcolor");
@@ -349,8 +348,10 @@ public class XMLParser extends DefaultHandler{
         String subscript = attrs.getValue("subscript");
         String newline = attrs.getValue("newline");
         
+        /* create an array list to hold the emphasis settings */
         ArrayList<String> settings = new ArrayList<String>();
         
+        /* Check for null attributes, insert defaults as necessary */
         if(font == null) {
             String defaultFont = currentLesson.defaultSettings.getFont();
             if(defaultFont != null) {
@@ -361,13 +362,12 @@ public class XMLParser extends DefaultHandler{
         }
         
         if(fontsize == null) {
-            /*try {
+            try {
                 int defaultFontSize = currentLesson.defaultSettings.getFontSize();
                 fontsize = String.valueOf(defaultFontSize);
             } catch (NullPointerException e) {
                 fontsize = "11";
-            }*/
-            fontsize = new String("11");
+            }
         }
         
         if(fontcolor == null) {
@@ -379,6 +379,8 @@ public class XMLParser extends DefaultHandler{
             }
         }
         
+        
+        /* Add the emphasis settings */
         if(Boolean.parseBoolean(bold) == true) {
             settings.add("bold");
         }
@@ -407,8 +409,10 @@ public class XMLParser extends DefaultHandler{
             settings.add("newline");
         }
         
+        /* Convert the emphasis settings to an array */
         String[] settingsArray = settings.toArray(new String[settings.size()]);
         
+        /* Start building the text fragment. Check for parsing errors */
         try {
             currentTextFragment = new RichText("null",
                                                font,
@@ -423,6 +427,7 @@ public class XMLParser extends DefaultHandler{
     
     /** Called to handle the end of a rich text element in the XML */
     private void handleRichTextEnd(String readBuffer) {
+        /* Get the text for the text fragment */
         if(readBuffer != null) {
             currentTextFragment.setText(readBuffer);
             currentText.textFragments.add(currentTextFragment);

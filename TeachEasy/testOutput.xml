@@ -20,10 +20,9 @@
     </gradesettings>
     <slide backgroundcolor="#ffcc00cc" number="1">
         <text font="arial" fontcolor="#ffffffff" fontsize="20" sourcefile="null" xstart="0.6" ystart="0.2">
-            <richtext bold="true" font="arial" fontcolor="#ffffffff" fontsize="11">Bold Text</richtext>
-            <richtext font="arial" fontcolor="#ffffffff" fontsize="11">Not Bold Text</richtext>
-            <richtext font="arial" fontcolor="#ffffffff" fontsize="11" italic="true" newline="true">Italic text.</richtext>
-            <richtext font="arial" fontcolor="#ffffffff" fontsize="20"/>
+            <richtext bold="true" font="arial" fontcolor="#ffffffff" fontsize="24">Bold Text</richtext>
+            <richtext font="arial" fontcolor="#ffffffff" fontsize="24">Not Bold Text</richtext>
+            <richtext font="arial" fontcolor="#ffffffff" fontsize="24" italic="true" newline="true">Italic text.</richtext>
         </text>
         <image rotation="0.0" scale="1.0" sourcefile="C:\Users\sadjlsd\imagefile.jpg" xstart="0.5" yscale="1.0" ystart="0.5"/>
         <audio sourcefile="gavel.wav" viewprogress="false" xstart="0.5" ystart="0.1"/>
