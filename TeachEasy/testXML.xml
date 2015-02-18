@@ -13,7 +13,7 @@
 		<backgroundcolor>#ff00ff00</backgroundcolor>
 		<font>arial</font>
 		<fontsize>24</fontsize>
-		<fontcolor>#ffcccc00</fontcolor>
+		<fontcolor>#ffffffff</fontcolor>
 	</defaultsettings>
 	<gradesettings>
 		<passboundary passmessage="Well done lad" failmessage="Work harder">10</passboundary>

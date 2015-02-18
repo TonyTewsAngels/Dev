@@ -196,7 +196,7 @@ public class XMLParser extends DefaultHandler{
                 currentLesson.defaultSettings.setFontSize(Integer.parseInt(readBuffer));
                 break;
             case FONTCOLOR:
-                currentLesson.defaultSettings.setBackgroundColour(readBuffer);
+                currentLesson.defaultSettings.setFontColour(readBuffer);
                 break;
 
             /* Grade Settings Elements */
@@ -322,10 +322,10 @@ public class XMLParser extends DefaultHandler{
     /** Called to handle the end of a text element in the XML */
     private void handleTextEnd(String readBuffer) {
         if(readBuffer != null) {
-            currentText.addText(new RichText(readBuffer, 
-                                             currentText.getFont(), 
-                                             currentText.getFontSize(), 
-                                             currentText.getColor()));
+            currentText.textFragments.add(new RichText(readBuffer, 
+                                              currentText.getFont(), 
+                                              currentText.getFontSize(), 
+                                              currentText.getColor()));
         }
         
         currentPage.addObject(currentText);
@@ -421,7 +421,7 @@ public class XMLParser extends DefaultHandler{
     private void handleRichTextEnd(String readBuffer) {
         if(readBuffer != null) {
             currentTextFragment.setText(readBuffer);
-            currentText.addText(currentTextFragment);
+            currentText.textFragments.add(currentTextFragment);
         }
     }
 

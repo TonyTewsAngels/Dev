@@ -157,7 +157,8 @@ public class XMLWriter {
 	        
 	        switch(pageObject.getType()) {
 	            case TEXT:
-	                
+	                TextObject textObject = (TextObject) pageObject;
+	                addText(textObject, pageElement, doc);
 	                break;
 	            case IMAGE:
 	                ImageObject imageObject = (ImageObject) pageObject;
@@ -191,6 +192,60 @@ public class XMLWriter {
 	                break;
 	        }
 	    }
+	}
+	
+	/** Add a text box */
+	public void addText(TextObject text, Element pageElement, Document doc) {
+	    Element textElement = doc.createElement("text");
+	    textElement.setAttribute("sourcefile", text.getSourceFile());
+	    textElement.setAttribute("xstart", String.valueOf(text.getXStart()));
+	    textElement.setAttribute("ystart", String.valueOf(text.getYStart()));
+	    textElement.setAttribute("font", text.getFont());
+	    textElement.setAttribute("fontsize", String.valueOf(text.getFontSize()));
+	    textElement.setAttribute("fontcolor", text.getColor());
+	    
+	    for(int i = 0; i < text.textFragments.size(); i++) {
+            RichText richText = text.textFragments.get(i);
+            
+            Element richTextElement = doc.createElement("richtext");
+            richTextElement.setAttribute("font", richText.getFont());
+            richTextElement.setAttribute("fontsize", String.valueOf(richText.getFontSize()));
+            richTextElement.setAttribute("fontcolor", richText.getColor());
+            
+            if(richText.isBold()) {
+                richTextElement.setAttribute("bold", "true"); 
+            }
+            
+            if(richText.isItalic()) {
+                richTextElement.setAttribute("italic", "true"); 
+            }
+            
+            if(richText.isUnderline()) {
+                richTextElement.setAttribute("underline", "true"); 
+            }
+            
+            if(richText.isStrikethrough()) {
+                richTextElement.setAttribute("strikethrough", "true"); 
+            }
+            
+            if(richText.isSuperscript()) {
+                richTextElement.setAttribute("superscript", "true"); 
+            }
+            
+            if(richText.isSubscript()) {
+                richTextElement.setAttribute("subscript", "true"); 
+            }
+            
+            if(richText.isNewLine()) {
+                richTextElement.setAttribute("newline", "true"); 
+            }
+            
+            richTextElement.appendChild(doc.createTextNode(richText.getText()));
+            
+            textElement.appendChild(richTextElement);
+	    }
+	    
+	    pageElement.appendChild(textElement);
 	}
 	
 	/** Add an image */
@@ -296,6 +351,9 @@ public class XMLWriter {
         buttonElement.setAttribute("yend", String.valueOf(button.getxEnd()));
         buttonElement.setAttribute("function", String.valueOf(button.getFunction()));
         buttonElement.setAttribute("visible", String.valueOf(button.isVisible()));
+        
+        buttonElement.appendChild(doc.createTextNode(button.getText()));
+        
         pageElement.appendChild(buttonElement);
 	}
 }
