@@ -331,29 +331,39 @@ public class XMLWriter {
 	
 	/** Add a video */
 	public void addVideo(VideoObject video, Element pageElement, Document doc) {
+	    /* Create video element and add it to the page element */
 	    Element videoElement = doc.createElement("video");
+        pageElement.appendChild(videoElement);
+        
+        /* Set the attributes */
 	    videoElement.setAttribute("sourcefile", video.getSourcefile());
 	    videoElement.setAttribute("xstart", String.valueOf(video.getXStart()));
         videoElement.setAttribute("ystart", String.valueOf(video.getYStart()));
         videoElement.setAttribute("videoscreenshot", video.getScreenshotFile());
-        pageElement.appendChild(videoElement);
 	}
 	
 	/** Add an answer box */
 	public void addAnswerBox(AnswerBoxObject answerBox, Element pageElement, Document doc) {
+	    /* Create answer box element and add it to the page element */
 	    Element answerBoxElement = doc.createElement("answerbox");
+	    pageElement.appendChild(answerBoxElement);
+	    
+	    /* Set attributes */
 	    answerBoxElement.setAttribute("xstart", String.valueOf(answerBox.getXStart()));
         answerBoxElement.setAttribute("ystart", String.valueOf(answerBox.getXStart()));
         answerBoxElement.setAttribute("characterlimit", String.valueOf(answerBox.getCharacterLimit()));
         answerBoxElement.setAttribute("correctanswer", answerBox.getCorrectAnswers());
         answerBoxElement.setAttribute("marks", String.valueOf(answerBox.getMarks()));
         answerBoxElement.setAttribute("retry", String.valueOf(answerBox.isRetry()));
-        pageElement.appendChild(answerBoxElement);
 	}
 	
 	/** Add a multiple choice question */
 	public void addMultipleChoice(MultipleChoiceObject multipleChoice, Element pageElement, Document doc) {
+	    /* Create multiple choice element and add it to the page element */
 	    Element multipleChoiceElement = doc.createElement("multiplechoice");
+	    pageElement.appendChild(multipleChoiceElement);
+	    
+	    /* Set attributes */
 	    multipleChoiceElement.setAttribute("xstart", String.valueOf(multipleChoice.getXStart()));
 	    multipleChoiceElement.setAttribute("ystart", String.valueOf(multipleChoice.getYStart()));
 	    multipleChoiceElement.setAttribute("type", multipleChoice.getMultiChoiceType().toString().toLowerCase());
@@ -361,26 +371,36 @@ public class XMLWriter {
 	    multipleChoiceElement.setAttribute("marks", String.valueOf(multipleChoice.getMarks()));
 	    multipleChoiceElement.setAttribute("retry", String.valueOf(multipleChoice.isRetry()));
 	    
+	    /* Add the correct answers */
 	    for(int i = 0; i < multipleChoice.correctAnswers.size(); i++) {
+	        /* Create the answer element and add it to the multiple choice element */
 	        Element answerElement = doc.createElement("answer");
+	        multipleChoiceElement.appendChild(answerElement);
+	        
+	        /* Set the attributes and text */
 	        answerElement.setAttribute("correct", "true");
 	        answerElement.appendChild(doc.createTextNode(multipleChoice.correctAnswers.get(i)));
-	        multipleChoiceElement.appendChild(answerElement);
 	    }
 	    
+	    /* Add the incorrect answers */
 	    for(int i = 0; i < multipleChoice.incorrectAnswers.size(); i++) {
+	        /* Create the answer element and add it to the multiple choice element */
             Element answerElement = doc.createElement("answer");
+            multipleChoiceElement.appendChild(answerElement);
+            
+            /* Set the attributes and text */
             answerElement.setAttribute("correct", "false");
             answerElement.appendChild(doc.createTextNode(multipleChoice.incorrectAnswers.get(i)));
-            multipleChoiceElement.appendChild(answerElement);
         }
-	    
-	    pageElement.appendChild(multipleChoiceElement);
 	}
 	
 	/** Add a button */
 	public void addButton(ButtonObject button, Element pageElement, Document doc) {
+	    /* Create the button element and add it to the page element */
 	    Element buttonElement = doc.createElement("button");
+	    pageElement.appendChild(buttonElement);
+	    
+	    /* Set the attributes */
 	    buttonElement.setAttribute("xstart", String.valueOf(button.getXStart()));
 	    buttonElement.setAttribute("ystart", String.valueOf(button.getYStart()));
 	    buttonElement.setAttribute("xend", String.valueOf(button.getxEnd()));
@@ -388,8 +408,7 @@ public class XMLWriter {
         buttonElement.setAttribute("function", String.valueOf(button.getFunction()));
         buttonElement.setAttribute("visible", String.valueOf(button.isVisible()));
         
+        /* Set the text */
         buttonElement.appendChild(doc.createTextNode(button.getText()));
-        
-        pageElement.appendChild(buttonElement);
 	}
 }
