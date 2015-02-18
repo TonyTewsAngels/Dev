@@ -36,38 +36,45 @@ public class XMLWriter {
 	
 	/** Constructor Method */
 	public XMLWriter() {
-		
+		/* No setup required */
 	}
 	
 	/** Write an XML file based on a lesson data object */
 	public void writeXML(Lesson lesson) {
 	    try {
+	        /* Create the document */
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             Document doc = docBuilder.newDocument();
             doc.setXmlStandalone(false);
             
+            /* Create the root lesson element */
             Element lessonElement = doc.createElement("slideshow");
             doc.appendChild(lessonElement);
             
+            /* Add the standard metadata elements to the lesson element */
             addLessonInfo(lesson.lessonInfo, lessonElement, doc);
             addDefaultSettings(lesson.defaultSettings, lessonElement, doc);
             addGradeSettings(lesson.gradeSettings, lessonElement, doc);
             
+            /* Add each page to the lesson element in turn */
             for(int i = 0; i < lesson.pages.size(); i++) {
                 addPage(lesson.pages.get(i), lessonElement, doc);
-            }
+            }            
             
-            
+            /* Create a transformer to output the file */
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             
+            /* Set extra transformer settings for indentation */
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
             
+            /* Setup the location for the file */
             DOMSource source = new DOMSource(doc);
             StreamResult result = new StreamResult(new File("testOutput.xml"));
      
+            /* Output the xml file */
             transformer.transform(source, result);
             
         } catch (ParserConfigurationException | TransformerException e) {
@@ -76,11 +83,13 @@ public class XMLWriter {
 	    
 	}
 	
-	/** Adds the lesson info element */
+	/** Add the lesson info element to the xml file */
 	public void addLessonInfo(LessonInfo lessonInfo, Element lessonElement, Document doc) {
+	    /* Create the lesson info element and add it to the lesson element */
 	    Element lessonInfoElement = doc.createElement("documentinfo");
 	    lessonElement.appendChild(lessonInfoElement);
 	    
+	    /* Create and add the child elements to the lesson info element and set their text */
 	    Element author = doc.createElement("author");
 	    author.appendChild(doc.createTextNode(lessonInfo.getAuthor()));
 	    lessonInfoElement.appendChild(author);
@@ -110,11 +119,13 @@ public class XMLWriter {
         lessonInfoElement.appendChild(lessonName);
 	}
 	
-	/** Adds the default settings element */
+	/** Add the default settings element to the xml file */
 	public void addDefaultSettings(LessonDefaultSettings defaultSettings, Element lessonElement, Document doc) {
-        Element defaultSettingsElement = doc.createElement("defaultsettings");
+	    /* Create the default settings element and add it to the lesson element*/
+	    Element defaultSettingsElement = doc.createElement("defaultsettings");
         lessonElement.appendChild(defaultSettingsElement);
         
+        /* Create and add the child elements and their text */
         Element backgroundColor = doc.createElement("backgroundcolor");
         backgroundColor.appendChild(doc.createTextNode(defaultSettings.getBackgroundColour()));
         defaultSettingsElement.appendChild(backgroundColor);
@@ -132,11 +143,13 @@ public class XMLWriter {
         defaultSettingsElement.appendChild(fontColor);
     }
 	
-	/** Adds the grade settings element */
+	/** Add the grade settings element */
 	public void addGradeSettings(LessonGradeSettings gradeSettings, Element lessonElement, Document doc) {
-        Element gradeSettingsElement = doc.createElement("gradesettings");
+	    /* Create the grade settings element and add it to the lesson element*/
+	    Element gradeSettingsElement = doc.createElement("gradesettings");
         lessonElement.appendChild(gradeSettingsElement);
         
+        /* Create and add the pass boundary element with its attributes and text */
         Element passBoundary = doc.createElement("passboundary");
         passBoundary.setAttribute("passmessage", gradeSettings.getPassMessage());
         passBoundary.setAttribute("failmessage", gradeSettings.getFailMessage());
@@ -144,17 +157,22 @@ public class XMLWriter {
         gradeSettingsElement.appendChild(passBoundary);
     }
 	
-	/** Add a page */
+	/** Add a page element to the xml file*/
 	public void addPage(Page page, Element lessonElement, Document doc) {
+	    /* Create the page element and add it to the lesson element */
 	    Element pageElement = doc.createElement("slide"); 
 	    lessonElement.appendChild(pageElement);
 	    
+	    /* Set the attributes for the page */
 	    pageElement.setAttribute("number", String.valueOf(page.getNumber()));
 	    pageElement.setAttribute("backgroundcolor", page.getPageColour());
 	    
+	    /* Add each of the page object elements to the page element */
 	    for(int i = 0; i < page.pageObjects.size(); i++) {
+	        /* Get the general page object */
 	        PageObject pageObject = page.pageObjects.get(i);
 	        
+	        /* Determine the type, cast and add */
 	        switch(pageObject.getType()) {
 	            case TEXT:
 	                TextObject textObject = (TextObject) pageObject;
@@ -194,9 +212,13 @@ public class XMLWriter {
 	    }
 	}
 	
-	/** Add a text box */
+	/** Add a text box element */
 	public void addText(TextObject text, Element pageElement, Document doc) {
+	    /* Create the text box element and add it to the page element */
 	    Element textElement = doc.createElement("text");
+	    pageElement.appendChild(textElement);
+	    
+	    /* Set the attributes based on the data in memory */
 	    textElement.setAttribute("sourcefile", text.getSourceFile());
 	    textElement.setAttribute("xstart", String.valueOf(text.getXStart()));
 	    textElement.setAttribute("ystart", String.valueOf(text.getYStart()));
@@ -204,14 +226,21 @@ public class XMLWriter {
 	    textElement.setAttribute("fontsize", String.valueOf(text.getFontSize()));
 	    textElement.setAttribute("fontcolor", text.getColor());
 	    
+	    /* Add the rich text elements as children */
 	    for(int i = 0; i < text.textFragments.size(); i++) {
+	        /* Get the data for the rich text object */
             RichText richText = text.textFragments.get(i);
             
+            /* Create the rich text element and add it to the text element */
             Element richTextElement = doc.createElement("richtext");
+            textElement.appendChild(richTextElement);
+            
+            /* Set the attributes for the rich text element */
             richTextElement.setAttribute("font", richText.getFont());
             richTextElement.setAttribute("fontsize", String.valueOf(richText.getFontSize()));
             richTextElement.setAttribute("fontcolor", richText.getColor());
             
+            /* Add the emphasis attributes as necessary */
             if(richText.isBold()) {
                 richTextElement.setAttribute("bold", "true"); 
             }
@@ -240,39 +269,46 @@ public class XMLWriter {
                 richTextElement.setAttribute("newline", "true"); 
             }
             
+            /* Add the text string */
             richTextElement.appendChild(doc.createTextNode(richText.getText()));
-            
-            textElement.appendChild(richTextElement);
 	    }
-	    
-	    pageElement.appendChild(textElement);
 	}
 	
-	/** Add an image */
+	/** Add an image element */
 	public void addImage(ImageObject image, Element pageElement, Document doc) {
+	    /* Create the image element and add it to the page element */
 	    Element imageElement = doc.createElement("image");
+	    pageElement.appendChild(imageElement);
+	    
+	    /* Set the attributes */
 	    imageElement.setAttribute("sourcefile", image.getSourcefile());
 	    imageElement.setAttribute("xstart", String.valueOf(image.getXStart()));
 	    imageElement.setAttribute("ystart", String.valueOf(image.getYStart()));
 	    imageElement.setAttribute("scale", String.valueOf(image.getxScaleFactor()));
 	    imageElement.setAttribute("yscale", String.valueOf(image.getyScaleFactor()));
 	    imageElement.setAttribute("rotation", String.valueOf(image.getRotation()));
-	    pageElement.appendChild(imageElement);
 	}
 	
 	/** Add an audio clip */
 	public void addAudio(AudioObject audio, Element pageElement, Document doc) {
+	    /* Create the audio element and add it to the page element */
 	    Element audioElement = doc.createElement("audio");
+        pageElement.appendChild(audioElement);
+
+        /* Set the attributes */
 	    audioElement.setAttribute("sourcefile", audio.getSourcefile());
 	    audioElement.setAttribute("xstart", String.valueOf(audio.getXStart()));
 	    audioElement.setAttribute("ystart", String.valueOf(audio.getYStart()));
         audioElement.setAttribute("viewprogress", String.valueOf(audio.isViewProgress()));
-        pageElement.appendChild(audioElement);
 	}
 	
 	/** Add a graphics element */
 	public void addGraphic(GraphicObject graphic, Element pageElement, Document doc) {
+	    /* Create the graphic element and add it to the page element */
 	    Element graphicElement = doc.createElement("graphic");
+        pageElement.appendChild(graphicElement);
+        
+        /* Set the attributes */
 	    graphicElement.setAttribute("type", graphic.getGraphicType().toString().toLowerCase());
 	    graphicElement.setAttribute("xstart", String.valueOf(graphic.getXStart()));
 	    graphicElement.setAttribute("ystart", String.valueOf(graphic.getYStart()));
@@ -284,13 +320,13 @@ public class XMLWriter {
         graphicElement.setAttribute("outlinethickness", String.valueOf(graphic.getOutlineThickness()));
         graphicElement.setAttribute("shadow", String.valueOf(graphic.isShadow()));
         
+        /* add shading element if necessary */
         if(graphic.getShading() == Shading.CYCLIC) {
             Element shadingElement = doc.createElement("cyclicshading");
-            shadingElement.setAttribute("shadingcolor", graphic.getShadingColor());
             graphicElement.appendChild(shadingElement);
+            
+            shadingElement.setAttribute("shadingcolor", graphic.getShadingColor());
         }
-        
-        pageElement.appendChild(graphicElement);
 	}
 	
 	/** Add a video */
