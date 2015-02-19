@@ -13,6 +13,8 @@ public class VideoEmbedding extends Application {
   @Override public void start(Stage stage) throws Exception {
     WebView webview = new WebView();
     webview.getEngine().load(
+    /*Vimeo and Youtube not working yet*/
+    		
       //"http://player.vimeo.com/video/24577973?player_id=player&autoplay=1&title=0&byline=0&portrait=0&api=1&maxheight=480&maxwidth=800"
       //"http://www.youtube.com/embed/KKYYAbGpw6A"
     		"http://www.dailymotion.com/embed/video/x2h6dse"
