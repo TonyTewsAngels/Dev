@@ -16,7 +16,7 @@ import java.util.List;
  * @author 	Daniel Berhe & Jake Ransom
  */
 public class TextObject extends PageObject {
-    private List<RichText> text;
+    public List<RichText> textFragments;
     private String sourceFile;
     private String font;
 	private int fontSize;
@@ -32,17 +32,7 @@ public class TextObject extends PageObject {
 		this.fontSize = nFontSize;
 		this.color = nColor;
 		
-		text = new ArrayList<RichText>();
-	}
-	
-	/** Add a rich text fragment */
-	public void addText(RichText nText, int index) {
-	    text.add(index, nText);
-	}
-	
-	/** Remove a rich text fragment */
-	public void removeText(int index) {
-	    text.remove(index);
+		textFragments = new ArrayList<RichText>();
 	}
 
 	/* Get and set functions */
@@ -77,5 +67,23 @@ public class TextObject extends PageObject {
 
     public void setColor(String nColor) {
         this.color = nColor;
+    }
+    
+    public void debugPrint() {
+        super.debugPrint();
+        
+        System.out.println(", Font " + font + 
+                           ", Font Size " + fontSize + 
+                           ", Color " + color +
+                           ", Sourcefile " + sourceFile + ".\n");
+        for(int i = 0; i < textFragments.size(); i++) {
+            if(textFragments.get(i).isNewLine()) {
+                System.out.print("\n");
+            }
+            
+            System.out.print(textFragments.get(i).getText());
+        }
+        
+        System.out.print("\n\n");
     }
 }

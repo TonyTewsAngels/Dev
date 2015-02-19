@@ -35,6 +35,12 @@ public class XMLParser extends DefaultHandler{
 	/** The page being constructed */
 	private Page currentPage;
 	
+	/** The text object currently being constructed */
+	private TextObject currentText;
+	
+	/** The text fragment currently being constructed */
+	private RichText currentTextFragment;
+	
 	/** The graphics object being constructed */
 	private GraphicObject currentGraphic;
 	
@@ -96,19 +102,27 @@ public class XMLParser extends DefaultHandler{
 	
 	/** Called by parser at the start of an element */
 	public void startElement(String uri, String localName, String qName, Attributes attrs) throws SAXException{		
-		elementList.add(qName);
+		/* Add the new element to the list */
+	    elementList.add(qName);
+	    
+	    /* Clear the readbuffer */
+		readBuffer = null;
 		
+		/* Find out what attribute has just started */
 		switch (XMLElement.check(qName.toUpperCase())) {
 		    case SLIDESHOW:
 		        currentLesson = new Lesson();
 		        break;
-		
 		    case SLIDE:
 		        handleSlideElement(attrs);
 		        break;
-		        
+		    
+		    /* Media elements */
 		    case TEXT:
-		        // handleTextElement(attrs);
+		        handleTextElement(attrs);
+		        break;
+		    case RICHTEXT:
+		        handleRichTextElement(attrs);
 		        break;
 		    case IMAGE:
 		        handleImageElement(attrs);
@@ -186,7 +200,7 @@ public class XMLParser extends DefaultHandler{
                 currentLesson.defaultSettings.setFontSize(Integer.parseInt(readBuffer));
                 break;
             case FONTCOLOR:
-                currentLesson.defaultSettings.setBackgroundColour(readBuffer);
+                currentLesson.defaultSettings.setFontColour(readBuffer);
                 break;
 
             /* Grade Settings Elements */
@@ -200,6 +214,12 @@ public class XMLParser extends DefaultHandler{
                 break;
                 
             /* Media Elements */
+            case TEXT:
+                handleTextEnd(readBuffer);
+                break;
+            case RICHTEXT:
+                handleRichTextEnd(readBuffer);
+                break;
             case GRAPHIC:
                 currentPage.pageObjects.add(currentGraphic);
                 break;
@@ -228,15 +248,192 @@ public class XMLParser extends DefaultHandler{
 	}
 	
 	/** Called by parser at the start of a document */
-	public void startDocument() throws SAXException {
-	    
-	}
+	public void startDocument() throws SAXException { /* Do Nothing */ }
 	
 	/** Called by parser at the start of a document */
-	public void endDocument() throws SAXException {
-	    
-    }
+	public void endDocument() throws SAXException { /* Do Nothing */ }
 	
+	/** Called to handle a text element in the XML */
+    private void handleTextElement(Attributes attrs) {
+        /* Variables to hold the attribute strings */
+        String sourcefile = attrs.getValue("sourcefile");
+        String xstart = attrs.getValue("xstart");
+        String ystart = attrs.getValue("ystart");
+        String font = attrs.getValue("font");
+        String fontsize = attrs.getValue("fontsize");
+        String fontcolor = attrs.getValue("fontcolor");
+        
+        /* Check for null attributes */
+        if(sourcefile == null) {
+            sourcefile = new String("null");
+            return;
+        }
+        
+        if(xstart == null) {
+            errorList.add(new String("Text; Missing X Start"));
+            return;
+        }
+        
+        if(ystart == null) {
+            errorList.add(new String("Text; Missing Y Start"));
+            return;
+        }
+        
+        if(font == null) {
+            String defaultFont = currentLesson.defaultSettings.getFont();
+            if(defaultFont != null) {
+                font = defaultFont;
+            } else {
+                font = "arial";
+            }
+        }
+        
+        if(fontsize == null) {
+            try {
+                int defaultFontSize = currentLesson.defaultSettings.getFontSize();
+                fontsize = String.valueOf(defaultFontSize);
+            } catch (NullPointerException e) {
+                fontsize = "11";
+            }
+        }
+        
+        if(fontcolor == null) {
+            String defaultFontColor = currentLesson.defaultSettings.getFontColour();
+            if(defaultFontColor != null) {
+                fontcolor = defaultFontColor;
+            } else {
+                fontcolor = "#ffffffff";
+            }
+        }
+        
+        /* Create the object, checking for parsing errors */
+        try {
+            currentText = new TextObject(Float.parseFloat(xstart),
+                                         Float.parseFloat(ystart),
+                                         sourcefile,
+                                         font,
+                                         Integer.parseInt(fontsize),
+                                         fontcolor);
+        } catch (NullPointerException | NumberFormatException e) {
+            errorList.add(new String("Image; Could not parse float value"));
+        }
+    }
+    
+    /** Called to handle the end of a text element in the XML */
+    private void handleTextEnd(String readBuffer) {
+        /* Check for any non-rich text */
+        if(readBuffer != null && !readBuffer.equals("")) {
+            currentText.textFragments.add(new RichText(readBuffer, 
+                                              currentText.getFont(), 
+                                              currentText.getFontSize(), 
+                                              currentText.getColor()));
+        }
+        
+        /* Add the text object to the page */
+        currentPage.addObject(currentText);
+    }
+    
+    /** Called to handle a rich text element in the XML */
+    private void handleRichTextElement(Attributes attrs) {
+        /* Get attributes */
+        String font = attrs.getValue("font");
+        String fontsize = attrs.getValue("fontsize");
+        String fontcolor = attrs.getValue("fontcolor");
+        
+        String bold = attrs.getValue("bold");
+        String italic = attrs.getValue("italic");
+        String underline = attrs.getValue("underline");
+        String strikethrough = attrs.getValue("strikethrough");
+        String superscript = attrs.getValue("superscript");
+        String subscript = attrs.getValue("subscript");
+        String newline = attrs.getValue("newline");
+        
+        /* create an array list to hold the emphasis settings */
+        ArrayList<String> settings = new ArrayList<String>();
+        
+        /* Check for null attributes, insert defaults as necessary */
+        if(font == null) {
+            String defaultFont = currentLesson.defaultSettings.getFont();
+            if(defaultFont != null) {
+                font = new String(defaultFont);
+            } else {
+                font = new String("arial");
+            }
+        }
+        
+        if(fontsize == null) {
+            try {
+                int defaultFontSize = currentLesson.defaultSettings.getFontSize();
+                fontsize = String.valueOf(defaultFontSize);
+            } catch (NullPointerException e) {
+                fontsize = "11";
+            }
+        }
+        
+        if(fontcolor == null) {
+            String defaultFontColor = currentLesson.defaultSettings.getFontColour();
+            if(defaultFontColor != null) {
+                fontcolor = new String(defaultFontColor);
+            } else {
+                fontcolor = new String("#ffffffff");
+            }
+        }
+        
+        
+        /* Add the emphasis settings */
+        if(Boolean.parseBoolean(bold) == true) {
+            settings.add("bold");
+        }
+        
+        if(Boolean.parseBoolean(italic) == true) {
+            settings.add("italic");
+        }
+        
+        if(Boolean.parseBoolean(underline) == true) {
+            settings.add("underline");
+        }
+        
+        if(Boolean.parseBoolean(strikethrough) == true) {
+            settings.add("strikethrough");
+        }
+        
+        if(Boolean.parseBoolean(superscript) == true) {
+            settings.add("superscript");
+        }
+        
+        if(Boolean.parseBoolean(subscript) == true) {
+            settings.add("subscript");
+        }
+        
+        if(Boolean.parseBoolean(newline) == true) {
+            settings.add("newline");
+        }
+        
+        /* Convert the emphasis settings to an array */
+        String[] settingsArray = settings.toArray(new String[settings.size()]);
+        
+        /* Start building the text fragment. Check for parsing errors */
+        try {
+            currentTextFragment = new RichText("null",
+                                               font,
+                                               Integer.parseInt(fontsize), 
+                                               fontcolor,
+                                               settingsArray);
+        } catch (NullPointerException | NumberFormatException e) {
+            e.printStackTrace();
+            errorList.add(new String("Text; Could not parse value"));
+        }
+    }
+    
+    /** Called to handle the end of a rich text element in the XML */
+    private void handleRichTextEnd(String readBuffer) {
+        /* Get the text for the text fragment */
+        if(readBuffer != null) {
+            currentTextFragment.setText(readBuffer);
+            currentText.textFragments.add(currentTextFragment);
+        }
+    }
+
 	/** Called to handle an image element in the XML */
 	private void handleImageElement(Attributes attrs) {
 	    /* Variables to hold the attribute strings */
