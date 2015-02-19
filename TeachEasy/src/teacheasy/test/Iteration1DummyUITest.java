@@ -25,11 +25,36 @@ public class Iteration1DummyUITest {
 
 	//Parsing file that doesn't exist returns error
 	@Test
-	public void checkWriterCreatesXML() {
+	public void checkParserWithNonexistentXML() {
 		//Parse the XML file
 		ArrayList<String> errorList = parser.parse("iDontExist.xml");
+		System.out.println("Test 1:" + errorList);
 		assertTrue(errorList.size() != 0);
 	}
 	
-	//Parsing file with incorrectly formatted data returns error
+	//Check that no error is returned if there is no audio, 
+	//video or image data in a parsed XML file
+	@Test
+	public void checkParserWithMissingDataXML() {
+		ArrayList<String> errorList;
+		errorList = parser.parse("missingImageAudioVideoData.xml");
+		System.out.println("Test 2:" + errorList);
+		assertTrue(errorList.size() == 0);
+	}
+	
+	//TESTS TO DO TOMORROW:
+	//PARSER:
+	//Check if image no file/location
+	//Check defaults
+	//Check video no file/location
+	//Check text no location
+	//Same with other objects
+	//Essentially check that all necessary information gives error in list
+	//Check if documentinfo missing throws error since it is always needed
+	
+	//WRITER:
+	
+	
+	
+	//
 }
