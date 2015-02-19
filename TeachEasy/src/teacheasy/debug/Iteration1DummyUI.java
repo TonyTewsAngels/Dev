@@ -45,6 +45,10 @@ public class Iteration1DummyUI {
 		
 		xmlHandler.writeLesson(lesson);
 	}
+	
+	public void makeFrame() {
+	    
+	}
 
 	/** Main Function called when application is run */
 	public static void main(String[] args) {
