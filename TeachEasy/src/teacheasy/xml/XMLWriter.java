@@ -7,6 +7,7 @@
 package teacheasy.xml;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -33,14 +34,26 @@ import teacheasy.data.lessondata.*;
  * @author 		Alistair Jewers
  */
 public class XMLWriter {
+    /** List of errors that occurred during writing */
+    private ArrayList<String> errorList;
 	
 	/** Constructor Method */
 	public XMLWriter() {
-		/* No setup required */
+		/* No Setup Required */
 	}
 	
 	/** Write an XML file based on a lesson data object */
-	public void writeXML(Lesson lesson) {
+	public ArrayList<String> writeXML(Lesson lesson, String filename) {
+	    /* Instantiate the error list */
+	    errorList = new ArrayList<String>();
+	    
+	    /* Check the file type */
+	    if(!filename.endsWith(".xml")) {
+	        errorList.add(new String("File name does not end with .xml"));
+	        return errorList;
+	    }
+	    
+	    /* Try to write the document */
 	    try {
 	        /* Create the document */
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -72,7 +85,7 @@ public class XMLWriter {
             
             /* Setup the location for the file */
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File("testOutput.xml"));
+            StreamResult result = new StreamResult(new File(filename));
      
             /* Output the xml file */
             transformer.transform(source, result);
@@ -81,6 +94,8 @@ public class XMLWriter {
             e.printStackTrace();
         }
 	    
+	    /* Return the error list */
+	    return errorList;
 	}
 	
 	/** Add the lesson info element to the xml file */

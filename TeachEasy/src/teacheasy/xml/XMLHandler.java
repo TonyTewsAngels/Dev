@@ -47,7 +47,7 @@ public class XMLHandler {
 	}
 	
 	/** Write a lesson to xml */
-	public void writeLesson(Lesson lesson) {
-	    xmlWriter.writeXML(lesson);
+	public ArrayList<String> writeXML(Lesson lesson, String filename) {
+	    return xmlWriter.writeXML(lesson, filename);
 	}
 }
