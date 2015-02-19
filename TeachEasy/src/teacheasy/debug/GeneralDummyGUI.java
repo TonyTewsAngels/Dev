@@ -88,5 +88,4 @@ public class GeneralDummyGUI extends Application {
             }
         }
     }  
-    
 }

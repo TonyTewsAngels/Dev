@@ -6,6 +6,7 @@
  */
 package teacheasy.xml;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +86,11 @@ public class XMLParser extends DefaultHandler{
 			SAXParser saxParser = factory.newSAXParser();
 			
 			/* Parse the file */
-			saxParser.parse(filename,  this);
+			if(new File(filename).isFile()) {
+			    saxParser.parse(filename,  this);
+			} else {
+			    errorList.add(new String("File Does Not Exist"));
+			}
 			
 		} catch (ParserConfigurationException | SAXException | IOException e) {
 			e.printStackTrace();
