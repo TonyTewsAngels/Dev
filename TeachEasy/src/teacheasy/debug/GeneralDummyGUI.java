@@ -9,7 +9,14 @@ package teacheasy.debug;
 import javafx.application.Application;
 import javafx.event.*;
 import javafx.geometry.Rectangle2D;
+import javafx.geometry.Insets;
+import javafx.scene.shape.Shape;
+import javafx.scene.text.*;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.scene.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -23,7 +30,7 @@ import javafx.*;
  * @version 1.0 19 Feb 2015
  */
 public class GeneralDummyGUI extends Application {
-
+	Text text;
     /**
      * Override the start method inside the JavaFX Application
      * class. This is called to start the program.
@@ -49,16 +56,32 @@ public class GeneralDummyGUI extends Application {
         /* Create a button */
         Button GUIBtn = new Button();
         
+        /* Create Color Picker */
+        ColorPicker colorPicker = new ColorPicker();
+        
+        /* Create Some text and set it up*/
+        text = new Text(400, 500,"Test the Color Picker");
+        text.setFont(Font.font ("Verdana", 20));
+        text.setId("text");
+        //text.setFill(colorPicker.getValue());
+        
         /* Setup the button */
-        GUIBtn.relocate(100.0, 100.0);
+        GUIBtn.relocate(500.0, 500.0);
         GUIBtn.setText("Say 'GUI'");
         GUIBtn.setId("GUIButton");
+        
+        /*Setup the Color Picker */
+        colorPicker.setValue(Color.BLACK);
+        colorPicker.setId("colorPicker");
         
         /* Set the button to use the button event handler */
         GUIBtn.setOnAction(new buttonEventHandler());
         
+        /* Set the Color picker to use the action handler */
+        colorPicker.setOnAction(new colorPickerHandler());
+        
         /* Add the button to the group */
-        group.getChildren().addAll(GUIBtn);
+        group.getChildren().addAll(GUIBtn, colorPicker, text);
         
         /* Show the window */
         primaryStage.show(); 
@@ -69,6 +92,21 @@ public class GeneralDummyGUI extends Application {
      */
     public static void main(String args[]) {
         launch();
+    }
+    /**
+     * Color Picker Handler Class
+     */
+    public class colorPickerHandler implements EventHandler<ActionEvent> {
+    	@Override
+    	public void handle(ActionEvent t) {
+	    	/* Cast the source of the event to the Color Picker */
+	    	ColorPicker colorPicker = (ColorPicker)t.getSource();
+	    	
+	    	/* Act based on the ID of the Color Picker */
+	    	if(colorPicker.getId().equals("colorPicker")) {
+				text.setFill(colorPicker.getValue());
+	    	}
+    	}
     }
     
     /**
