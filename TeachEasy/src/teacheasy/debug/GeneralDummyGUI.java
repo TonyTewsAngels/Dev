@@ -87,5 +87,6 @@ public class GeneralDummyGUI extends Application {
                 System.out.println("Other");
             }
         }
-    }     
+    }  
+    
 }
