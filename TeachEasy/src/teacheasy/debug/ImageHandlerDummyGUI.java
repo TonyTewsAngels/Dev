@@ -16,10 +16,10 @@ import javafx.stage.Stage;
 import javafx.*;
 
 /**
- * This class is a dummy GUI for people to play with
- * to get to grips with JavaFX.
+ * This class is a dummy GUI for the purpose
+ * of testing out Java FX image support.
  * 
- * @author amj523
+ * @author Alistair Jewers
  * @version 1.0 19 Feb 2015
  */
 public class ImageHandlerDummyGUI extends Application {

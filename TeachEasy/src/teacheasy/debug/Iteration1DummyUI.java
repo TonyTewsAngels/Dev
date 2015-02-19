@@ -52,30 +52,14 @@ public class Iteration1DummyUI extends Application {
 		
 		/* Instantiate an empty lesson */
 		lesson = new Lesson();
-		
-		// Create GUI Frame
-		//launch();
-		
-		/* Test Parser
-		ArrayList<String> errorList = xmlHandler.parseXML("testXML.xml");
-		
-		System.out.println(errorList.size() + " error(s)\n");
-		
-		for(int i = 0; i < errorList.size(); i++) {
-		    System.out.println(errorList.get(i));
-		}
-		
-		Lesson lesson = xmlHandler.getLesson();
-		
-		lesson.debugPrint();
-		
-		xmlHandler.writeLesson(lesson);*/
 	}
 
 	/** Main Function called when application is run */
 	public static void main(String[] args) {
+	    /* Constructor */
 		new Iteration1DummyUI();
 		
+		/* Launch the java FX application */
 		launch();
 	}
 
@@ -96,6 +80,7 @@ public class Iteration1DummyUI extends Application {
         /* Create the buttons */
         Button parseBtn = new Button();
         Button writeBtn = new Button();
+        Button printBtn = new Button();
         
         /* Create the text area */
         text = new TextArea();
@@ -109,6 +94,10 @@ public class Iteration1DummyUI extends Application {
         writeBtn.setText("Write XML");
         writeBtn.setId("XMLWrite");
         
+        printBtn.relocate(375.0, 100.0);
+        printBtn.setText("Print Lesson");
+        printBtn.setId("LessonPrint");
+        
         /* Setup the text boxes */
         parseBox.relocate(40.0, 75.0);
         
@@ -120,9 +109,10 @@ public class Iteration1DummyUI extends Application {
         /* Set the button to use the button event handler */
         parseBtn.setOnAction(new buttonEventHandler());
         writeBtn.setOnAction(new buttonEventHandler());
+        printBtn.setOnAction(new buttonEventHandler());
         
         /* Add the button to the group */
-        group.getChildren().addAll(parseBox, writeBox, parseBtn, writeBtn, text);
+        group.getChildren().addAll(parseBox, writeBox, parseBtn, writeBtn, printBtn, text);
         
         /* Show the window */
         primaryStage.show(); 
@@ -183,6 +173,8 @@ public class Iteration1DummyUI extends Application {
                 parseXML(parseBox.getCharacters().toString());
             } else if(button.getId().equals("XMLWrite")) {
                 writeXML(writeBox.getCharacters().toString());
+            } else if(button.getId().equals("LessonPrint")) {
+                lesson.debugPrint();
             }
         }
     }
