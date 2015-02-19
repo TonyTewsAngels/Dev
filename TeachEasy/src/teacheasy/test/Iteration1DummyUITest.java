@@ -3,6 +3,7 @@ package teacheasy.test;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -22,16 +23,13 @@ public class Iteration1DummyUITest {
 		writer = new XMLWriter();
 	}
 
-	//This test will check that if a valid XML file
-	//is parsed it returns correct information
-	//The XML file "testXML.xml" is formatted correctly
+	//Parsing file that doesn't exist returns error
 	@Test
 	public void checkWriterCreatesXML() {
 		//Parse the XML file
-		parser.parse("textXML.xml");
-		Lesson lesson = parser.getLesson();
-		writer.writeXML(lesson, "autoTest.xml");
-		assert(new File("autoTest.xml").exists());
+		ArrayList<String> errorList = parser.parse("iDontExist.xml");
+		assertTrue(errorList.size() != 0);
 	}
 	
+	//Parsing file with incorrectly formatted data returns error
 }
