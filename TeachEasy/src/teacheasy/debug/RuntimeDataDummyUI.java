@@ -44,8 +44,16 @@ public class RuntimeDataDummyUI extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        /* Get the screen size */
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+        
         /* Set the stage */
         primaryStage.setTitle("Runtime");
+        primaryStage.setX(bounds.getMinX());
+        primaryStage.setY(bounds.getMinY());
+        primaryStage.setWidth(bounds.getMaxX());
+        primaryStage.setHeight(bounds.getMaxY());
         
         /* Set up the grid */
         GridPane grid = new GridPane();
@@ -53,11 +61,12 @@ public class RuntimeDataDummyUI extends Application {
         grid.setGridLinesVisible(true);
         
         /* Set the scene */
-        Scene scene = new Scene(grid, 800, 450);
+        Scene scene = new Scene(grid, bounds.getMaxX(), bounds.getMaxY());
         primaryStage.setScene(scene);
         
         /* Construct the menu */
         MenuBar menuBar = new MenuBar();
+        menuBar.setPrefWidth(bounds.getMaxX());
         Menu menuFile = new Menu("File");
         Menu menuEdit = new Menu("Edit");
         Menu menuPreview = new Menu("Preview");
@@ -83,6 +92,7 @@ public class RuntimeDataDummyUI extends Application {
         /* Create the text area */
         textArea = new TextArea();
         textArea.setEditable(false);
+        textArea.setPrefHeight(bounds.getMaxY() - 100);
         
         /* Add the text area to the grid */
         grid.add(textArea, 0, 1);
@@ -108,7 +118,7 @@ public class RuntimeDataDummyUI extends Application {
         /* Show the stage */
         primaryStage.show();
         
-        /* Redraw the text */
+        /* Redraw the window */
         redraw();
     }
     
@@ -204,7 +214,7 @@ public class RuntimeDataDummyUI extends Application {
         runTimeData.setPageCount(lesson.pages.size());
         runTimeData.setLessonOpen(true);
         
-        /* Redraw the text */
+        /* Redraw the window */
         redraw();
     }
     
@@ -216,7 +226,7 @@ public class RuntimeDataDummyUI extends Application {
         /* Set the lesson to an empty lesson */
         lesson = new Lesson();
         
-        /* Re-draw */
+        /* Re-draw the window */
         redraw();
     }
     
