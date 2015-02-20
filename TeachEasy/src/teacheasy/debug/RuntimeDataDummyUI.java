@@ -1,6 +1,10 @@
 package teacheasy.debug;
 
+import java.io.File;
+import java.util.ArrayList;
+
 import teacheasy.data.Lesson;
+import teacheasy.data.Page;
 import teacheasy.runtime.RunTimeData;
 import teacheasy.xml.XMLHandler;
 import javafx.application.Application;
@@ -14,6 +18,7 @@ import javafx.scene.paint.*;
 import javafx.scene.shape.*;
 import javafx.scene.text.*;
 import javafx.stage.*;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class RuntimeDataDummyUI extends Application {
     /* Current Lesson */
@@ -27,6 +32,9 @@ public class RuntimeDataDummyUI extends Application {
     
     /* GUI Objects */
     TextArea textArea;
+    FileChooser fileChooser;
+    Button nextPageButton;
+    Button prevPageButton;
     
     public RuntimeDataDummyUI() {
         lesson = new Lesson();
@@ -54,7 +62,19 @@ public class RuntimeDataDummyUI extends Application {
         Menu menuEdit = new Menu("Edit");
         Menu menuPreview = new Menu("Preview");
         Menu menuHelp = new Menu("Help");
-        menuFile.getItems().add(new MenuItem("Open"));
+        
+        /* Add an open button to the file menu */
+        MenuItem menuItemOpen = new MenuItem("Open");
+        menuFile.getItems().add(menuItemOpen);
+        menuItemOpen.setId("FileOpen");
+        menuItemOpen.setOnAction(new MenuEventHandler());
+        
+        /* Add a close button to the file menu */
+        MenuItem menuItemClose = new MenuItem("Close");
+        menuFile.getItems().add(menuItemClose);
+        menuItemClose.setId("FileClose");
+        menuItemClose.setOnAction(new MenuEventHandler());
+        
         menuBar.getMenus().addAll(menuFile, menuEdit, menuPreview, menuHelp);
         
         /* Add the menu to the grid */
@@ -71,14 +91,14 @@ public class RuntimeDataDummyUI extends Application {
         HBox buttonRow = new HBox();
         buttonRow.setAlignment(Pos.CENTER);
         buttonRow.setSpacing(20);
-        Button nextPageButton = new Button("Next Page");
-        Button prevPageButton = new Button("Prev Page");
+        nextPageButton = new Button("Next Page");
+        prevPageButton = new Button("Prev Page");
         
         nextPageButton.setId("NextButton");
         prevPageButton.setId("PrevButton");
         
-        nextPageButton.setOnAction(new buttonEventHandler());
-        prevPageButton.setOnAction(new buttonEventHandler());
+        nextPageButton.setOnAction(new ButtonEventHandler());
+        prevPageButton.setOnAction(new ButtonEventHandler());
 
         buttonRow.getChildren().addAll(prevPageButton, nextPageButton);
        
@@ -89,30 +109,115 @@ public class RuntimeDataDummyUI extends Application {
         primaryStage.show();
         
         /* Redraw the text */
-        redrawText();
+        redraw();
     }
     
-    public void redrawText() {
+    public void redraw() {
         /* Clear the text */
         textArea.clear();
         
         /* Check if a lesson is open */
         if(runTimeData.isLessonOpen()) {
+            /* Write the info for the lesson */
             textArea.appendText("Lesson: " + lesson.lessonInfo.getLessonName() + "\n");
-            textArea.appendText("Current Page: " + runTimeData.getPage() + "\n");
+            textArea.appendText("Current Page: " + (runTimeData.getPage() + 1) + "\n");
             textArea.appendText("Page Count: " + runTimeData.getPageCount() + "\n");
+            
+            /* Write the info for the current page */
+            Page page = lesson.pages.get(runTimeData.getPage());
+            
+            for(int i = 0; i < page.pageObjects.size(); i++) {
+                textArea.appendText(page.pageObjects.get(i).getType() + ", ");
+            }
+            
+            textArea.deleteText(textArea.getLength() - 2, textArea.getLength());
+            textArea.appendText(".\n");
         } else {
             /* No lesson is open */
             textArea.appendText("No Lesson Currently Open. \n");
         }
+        
+        /* 
+         * If there is a lesson open enable the relevant page 
+         * buttons, if not disable both.
+         */
+        if(runTimeData.isLessonOpen()) {
+            if(!runTimeData.isNextPage()) {
+                nextPageButton.setDisable(true);
+            } else {
+                nextPageButton.setDisable(false);
+            }
+            
+            if(!runTimeData.isPrevPage()) {
+                prevPageButton.setDisable(true);
+            } else {
+                prevPageButton.setDisable(false);
+            }
+        } else {
+            nextPageButton.setDisable(true);
+            prevPageButton.setDisable(true);
+        }
     }
     
+    /** Next page button functionality */
     public void nextPageButtonPressed() {
-        System.out.println("Next");
+        runTimeData.nextPage();
+        redraw();
     }
     
+    /** Previous page button functionality */
     public void prevPageButtonPressed() {
-        System.out.println("Prev");
+        runTimeData.prevPage();
+        redraw();
+    }
+    
+    /** Open file menu option functionality */
+    public void fileOpenPressed() {
+        /* Create a file chooser */
+        fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Files", "*.xml"));
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        
+        /* Get the file to open */
+        File file = fileChooser.showOpenDialog(new Stage());
+        
+        /* Check that the file is not null */
+        if(file == null) {
+            return;
+        }
+        
+        /* Parse the file */
+        ArrayList<String> errorList = xmlHandler.parseXML(file.getAbsolutePath());
+        
+        /* Check for errors */
+        if(errorList.size() > 0) {
+            for(int i = 0; i < errorList.size(); i++) {
+                textArea.appendText(errorList.get(i) + "\n");
+            }
+            
+            /* If errors are found do not load the lesson */
+            return;
+        }
+        
+        /* Get the lesson */
+        lesson = xmlHandler.getLesson();
+        runTimeData.setPageCount(lesson.pages.size());
+        runTimeData.setLessonOpen(true);
+        
+        /* Redraw the text */
+        redraw();
+    }
+    
+    /** Close file menu option functionality */
+    public void fileClosePressed() {
+        /* Set the lesson open flag to false */
+        runTimeData.setLessonOpen(false);
+        
+        /* Set the lesson to an empty lesson */
+        lesson = new Lesson();
+        
+        /* Re-draw */
+        redraw();
     }
     
     public static void main(String args[]) {
@@ -124,7 +229,7 @@ public class RuntimeDataDummyUI extends Application {
     /**
      * Button Event Handler Class
      */
-    public class buttonEventHandler implements EventHandler<ActionEvent> {
+    public class ButtonEventHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent e) {
             /* Cast the source of the event to a button */
@@ -136,6 +241,22 @@ public class RuntimeDataDummyUI extends Application {
             } else if(button.getId().equals("PrevButton")) {
                 prevPageButtonPressed();
             }
+        }
+    }
+    
+    /**
+     * Menu Event Handler Class
+     */
+    public class MenuEventHandler implements EventHandler<ActionEvent> {
+        @Override
+        public void handle(ActionEvent e) {
+            MenuItem menuItem = (MenuItem) e.getSource();
+            
+            if(menuItem.getId().equals("FileOpen")) {
+                fileOpenPressed();
+            } else if(menuItem.getId().equals("FileClose")) {
+                fileClosePressed();
+            } 
         }
     } 
 }
