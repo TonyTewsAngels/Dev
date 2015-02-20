@@ -18,12 +18,14 @@ public class RunTimeData {
     /* Class level variables */
     private int pageCount;
     private int page;
+    private boolean lessonOpen;
 
     /** Constructor method */
     public RunTimeData(int nPageCount) {
         /* Instantiate class level variables */
         this.pageCount = nPageCount;
         this.page = 0;
+        this.lessonOpen = false;
     }
     
     /** Get the current page */
@@ -72,5 +74,25 @@ public class RunTimeData {
         } else {
             return false;
         }
+    }
+    
+    /** Get the page count */
+    public int getPageCount() {
+        return pageCount;
+    }
+    
+    /** Set the page count */
+    public void setPageCount(int nPageCount) {
+        this.pageCount = nPageCount;
+    }
+    
+    /** Check if there is an open lesson */
+    public boolean isLessonOpen() {
+        return lessonOpen;
+    }
+    
+    /** Set the lesson open flag */
+    public void setLessonOpen(boolean flag) {
+        lessonOpen = flag;
     }
 }
