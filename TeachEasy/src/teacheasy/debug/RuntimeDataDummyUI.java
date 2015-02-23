@@ -22,19 +22,19 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 public class RuntimeDataDummyUI extends Application {
     /* Current Lesson */
-    Lesson lesson;
+    private Lesson lesson;
     
     /* Runtime Data */
-    RunTimeData runTimeData;
+    private RunTimeData runTimeData;
     
     /* XML Handler */
-    XMLHandler xmlHandler;
+    private XMLHandler xmlHandler;
     
     /* GUI Objects */
-    TextArea textArea;
-    FileChooser fileChooser;
-    Button nextPageButton;
-    Button prevPageButton;
+    private TextArea textArea;
+    private FileChooser fileChooser;
+    private Button nextPageButton;
+    private Button prevPageButton;
     
     public RuntimeDataDummyUI() {
         lesson = new Lesson();
