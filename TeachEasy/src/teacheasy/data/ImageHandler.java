@@ -1,64 +1,60 @@
+/*
+ * This class inserts an image with specified image name, size, location(x and y) and rotation degrees.
+ *
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
+ * @Authors: Daniel Berhe & Jake Ransom
+ * @Verion:  1.0 23/02/2015
+ */
 package teacheasy.data;
 
-import javafx.application.Application;
-//import javafx.geometry.Rectangle2D;
+
 import javafx.scene.Group;
 import javafx.scene.Scene; 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
 public class ImageHandler {
 	
 	private ImageView iv1;
-	double targetLocationX ;
-	double targetLocationY;
-	
-	
+
     public void start(Stage stage) {
-		stage.setTitle("Drag & Drop trial");
-		Image image1 = new Image("file:cat.jpg");
-		Image image2 = new Image("file:dog.jpg");
-	
-	    
-		/*ImageView source = new ImageView(image1);
-	    ImageView target = new ImageView(image2);
-		target.relocate(200, 200);
-		source.setRotationAxis(Rotate.Y_AXIS);*/
-	
+
 		Group root = new Group();
 		Scene scene = new Scene(root, 800, 800);
-		scene.setFill(Color.LIGHTBLUE);
-		insertImage("cat.jpg", 200,200,300,0,root);
+		
+		insertImage("cat.jpg", 200,200,300,90,root);
   
-        //root.getChildren().add(source);
-        // root.getChildren().add(target);
         stage.setScene(scene);
         stage.show();
         
         
     }
 
-	private void insertImage(String imageName,double locationX, double locationY, int size, double rotationDegree,
-			 			     Group group){
+    /**
+     * 
+     * @param imageName: name of the image as saved on disk
+     * @param locationX: desired x location of the image
+     * @param locationY: desired y location of the image
+     * @param size: actual image size multiplier. Eg, size 2 is twice as big as the original image
+     * @param rotationDegree: to rotate the image in clockwise direction
+     * @param group: group layout
+     */
+	private void insertImage(String imageName,double locationX, double locationY, double size,
+							 double rotationDegree,Group group){
+		double imageWidth;
 		
 		Image image = new Image("file:" + imageName);
-		
+		imageWidth = image.getWidth();
 		iv1 = new ImageView(image);
 		iv1 = new ImageView();
 		iv1.setImage(image);
-		iv1.setFitWidth(size);
+		iv1.setFitWidth(imageWidth * size);
 		iv1.setPreserveRatio(true);
 		iv1.setRotate(rotationDegree);
 		iv1.relocate(locationX, locationY);
 		group.getChildren().add(iv1);
 	}
-
-	
-	
 }
 	
