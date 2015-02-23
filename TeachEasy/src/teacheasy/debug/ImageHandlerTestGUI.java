@@ -42,22 +42,34 @@ public class ImageHandlerTestGUI extends Application {
     	ImageHandler imageHandler = new ImageHandler();
     	ImageView imageToShow = new ImageView();
     	File sourceFile = new File("C:\\Users\\Public\\Pictures\\Sample Pictures\\Hydrangeas.jpg");
-    	float xScale = (float) 1.0;
-    	float yScale = (float) 1.0;
-    	double xStart = 60;
+    	float xScale = (float) 0.5;
+    	float yScale = (float) 0.5;
+    	double xStart = 0;
     	double yStart = 0;
-    	imageToShow = imageHandler.getImage(sourceFile, xStart, yStart, xScale, yScale, 0);
+    	int rotation = 0;
+    	imageToShow = imageHandler.getImage(sourceFile, xStart, yStart, xScale, yScale, rotation);
+    	
+
+    	ImageView imageToShow2 = new ImageView();
+    	File sourceFile2 = new File("C:\\Users\\Public\\Pictures\\Sample Pictures\\Desert.jpg");
+    	float xScale2 = (float) 0.5;
+    	float yScale2 = (float) 0.5;
+    	double xStart2 = 1024;
+    	double yStart2 = 0;
+    	int rotation2 = 0;
+    	imageToShow2 = imageHandler.getImage(sourceFile2, xStart2, yStart2, xScale2, yScale2, rotation2);
 
     	
     	/* Instantiate the scene and group */
         Group group = new Group();
-        Scene scene = new Scene(group, imageToShow.getImage().getWidth()+xStart, imageToShow.getImage().getHeight()+yStart);
-        System.out.println("image width()"+imageToShow.getImage().getWidth());
-        System.out.println("image height()"+imageToShow.getImage().getHeight());
+        Scene scene = new Scene(group, 1680, 900);
                 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         double screenWidth = screenSize.getWidth();
         double screenHeight = screenSize.getHeight();
+        System.out.println("Screen Width: "+screenWidth);
+        System.out.println("Screen Height: "+screenHeight);
+        
         
         /* Setup the window */
         primaryStage.setTitle("Hello World!");
@@ -69,7 +81,7 @@ public class ImageHandlerTestGUI extends Application {
 
         
         /* Add the button to the group */
-        group.getChildren().addAll(imageToShow);
+        group.getChildren().addAll(imageToShow, imageToShow2);
         
         /* Show the window */
         primaryStage.show(); 
