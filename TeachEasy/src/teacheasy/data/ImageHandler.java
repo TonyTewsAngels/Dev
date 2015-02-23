@@ -12,66 +12,53 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
-public class ImageHandler extends Application {
- @Override public void start(Stage stage) {
-
-	// Load Image
-	Image image1 = new Image("file:catderp.jpg");
-	Image image2 = new Image("file:dog.jpg");
+public class ImageHandler {
 	
-	//display Image 
-	ImageView iv1 = new ImageView(image1);
-	iv1.setImage(image1);
-	iv1.setFitWidth(500);
-    iv1.setPreserveRatio(true);
-    iv1.setSmooth(true);
-    iv1.relocate(500, 0);
-
+	private ImageView iv1;
+	double targetLocationX ;
+	double targetLocationY;
 	
-	ImageView iv2 = new ImageView(image2);
-	iv2.setImage(image2);
-	iv2.setFitWidth(500);
-    iv2.setPreserveRatio(true);
-    iv2.setSmooth(true);
-    iv2.relocate(0, 0);
-    
-    ImageView iv3 = new ImageView(image1);
-	iv3.setImage(image1);
-	iv3.setFitWidth(500);
-    iv3.setPreserveRatio(true);
-    iv3.setSmooth(true);
-    iv3.relocate(0, 370);
-    
-    
-    ImageView iv4 = new ImageView(image2);
-	iv4.setImage(image2);
-	iv4.setFitWidth(500);
-    iv4.setPreserveRatio(true);
-    iv4.setSmooth(true);
-    iv4.relocate(500, 280);
-
 	
-	stage.setTitle("Image View Test");
-    Group root = new Group();
-    Scene scene = new Scene(root);
-    scene.setFill(Color.BLACK);
-    //HBox box = new HBox();
-    /*box.getChildren().add(iv1);
-    box.getChildren().add(iv2);
-    box.getChildren().add(iv3);*/
-    //VBox box = new VBox();
-    /*box.getChildren().add(iv1);
-    box.getChildren().add(iv2);
-    box.getChildren().add(iv3);*/
-    root.getChildren().addAll(iv1, iv2, iv3, iv4);
-    stage.setWidth(415);
-    stage.setHeight(200);
-    stage.setScene(scene); 
-    stage.sizeToScene(); 
-    stage.show();
+    public void start(Stage stage) {
+		stage.setTitle("Drag & Drop trial");
+		Image image1 = new Image("file:cat.jpg");
+		Image image2 = new Image("file:dog.jpg");
+	
+	    
+		/*ImageView source = new ImageView(image1);
+	    ImageView target = new ImageView(image2);
+		target.relocate(200, 200);
+		source.setRotationAxis(Rotate.Y_AXIS);*/
+	
+		Group root = new Group();
+		Scene scene = new Scene(root, 800, 800);
+		scene.setFill(Color.LIGHTBLUE);
+		insertImage("cat.jpg", 200,200,300,0,root);
+  
+        //root.getChildren().add(source);
+        // root.getChildren().add(target);
+        stage.setScene(scene);
+        stage.show();
+        
+        
+    }
+
+	private void insertImage(String imageName,double locationX, double locationY, int size, double rotationDegree,
+			 			     Group group){
+		
+		Image image = new Image("file:" + imageName);
+		
+		iv1 = new ImageView(image);
+		iv1 = new ImageView();
+		iv1.setImage(image);
+		iv1.setFitWidth(size);
+		iv1.setPreserveRatio(true);
+		iv1.setRotate(rotationDegree);
+		iv1.relocate(locationX, locationY);
+		group.getChildren().add(iv1);
 	}
+
 	
-	public static void main(String[] args){
-		launch();
-	}
+	
 }
+	
