@@ -1,6 +1,10 @@
 package teacheasy.debug;
 
-import teacheasy.debug.ImageHandlerDummyGUI.buttonEventHandler;
+import java.io.File;
+
+import teacheasy.debug.GeneralDummyGUI.buttonEventHandler;
+import teacheasy.data.AudioHandler;
+
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -8,21 +12,22 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class EventHandlerTestDummyGUI extends Application {
-    TestHandler testHandler;
+    AudioHandler audioHandler;
     
     @Override
     public void start(Stage primaryStage) {       
         /* Instantiate the scene and group */
         Group group = new Group();
-        Scene scene = new Scene(group, 500, 500);
+        Scene scene = new Scene(group, 1000, 500);
         
         /* Setup the window */
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
+        /* Define the file to use in the audio player */
+        File file = new File("M:\\w2k\\3RD YEAR\\SWEng\\SampleAudioFiles\\tail toddle.mp3");
+        /* Create the audio player */
+        audioHandler = new AudioHandler(group, file, true);
         
-        testHandler = new TestHandler(group);
-        
-        testHandler.addButton(group, 200, 200);
         
         /* Show the window */
         primaryStage.show(); 
