@@ -20,33 +20,28 @@ import javafx.scene.text.*;
 import javafx.stage.*;
 import javafx.stage.FileChooser.ExtensionFilter;
 
-public class RuntimeDataDummyUI extends Application {
-    /* Current Lesson */
-    private Lesson lesson;
-    
+public class RuntimeDataDummyUI extends Application { 
     /* Runtime Data */
     private RunTimeData runTimeData;
     
-    /* XML Handler */
-    private XMLHandler xmlHandler;
-    
     /* GUI Objects */
-    private TextArea textArea;
-    private FileChooser fileChooser;
+    private Group group;
     private Button nextPageButton;
     private Button prevPageButton;
     
+    /* Screen size */
+    private Rectangle2D bounds;
+    
+    /** Constructor method */
     public RuntimeDataDummyUI() {
-        lesson = new Lesson();
         runTimeData = new RunTimeData(0);
-        xmlHandler = new XMLHandler();
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         /* Get the screen size */
         Screen screen = Screen.getPrimary();
-        Rectangle2D bounds = screen.getVisualBounds();
+        bounds = screen.getVisualBounds();
         
         /* Set the stage */
         primaryStage.setTitle("Runtime");
@@ -90,12 +85,10 @@ public class RuntimeDataDummyUI extends Application {
         grid.add(menuBar, 0, 0);
         
         /* Create the text area */
-        textArea = new TextArea();
-        textArea.setEditable(false);
-        textArea.setPrefHeight(bounds.getMaxY() - 100);
+        group = new Group();
         
         /* Add the text area to the grid */
-        grid.add(textArea, 0, 1);
+        grid.add(group, 0, 1);
         
         /* Create page buttons */
         HBox buttonRow = new HBox();
@@ -123,29 +116,8 @@ public class RuntimeDataDummyUI extends Application {
     }
     
     public void redraw() {
-        /* Clear the text */
-        textArea.clear();
-        
-        /* Check if a lesson is open */
-        if(runTimeData.isLessonOpen()) {
-            /* Write the info for the lesson */
-            textArea.appendText("Lesson: " + lesson.lessonInfo.getLessonName() + "\n");
-            textArea.appendText("Current Page: " + (runTimeData.getPage() + 1) + "\n");
-            textArea.appendText("Page Count: " + runTimeData.getPageCount() + "\n");
-            
-            /* Write the info for the current page */
-            Page page = lesson.pages.get(runTimeData.getPage());
-            
-            for(int i = 0; i < page.pageObjects.size(); i++) {
-                textArea.appendText(page.pageObjects.get(i).getType() + ", ");
-            }
-            
-            textArea.deleteText(textArea.getLength() - 2, textArea.getLength());
-            textArea.appendText(".\n");
-        } else {
-            /* No lesson is open */
-            textArea.appendText("No Lesson Currently Open. \n");
-        }
+        /* Call the rendering method */
+        runTimeData.redraw(group, bounds);
         
         /* 
          * If there is a lesson open enable the relevant page 
@@ -181,50 +153,27 @@ public class RuntimeDataDummyUI extends Application {
         redraw();
     }
     
-    /** Open file menu option functionality */
+    /** File->Open menu option functionality */
     public void fileOpenPressed() {
         /* Create a file chooser */
-        fileChooser = new FileChooser();
+        FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Files", "*.xml"));
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         
         /* Get the file to open */
         File file = fileChooser.showOpenDialog(new Stage());
         
-        /* Check that the file is not null */
-        if(file == null) {
-            return;
-        }
-        
-        /* Parse the file */
-        ArrayList<String> errorList = xmlHandler.parseXML(file.getAbsolutePath());
-        
-        /* Check for errors */
-        if(errorList.size() > 0) {
-            for(int i = 0; i < errorList.size(); i++) {
-                textArea.appendText(errorList.get(i) + "\n");
-            }
-            
-            /* If errors are found do not load the lesson */
-            return;
-        }
-        
-        /* Get the lesson */
-        lesson = xmlHandler.getLesson();
-        runTimeData.setPageCount(lesson.pages.size());
-        runTimeData.setLessonOpen(true);
+        /* Open the file */
+        runTimeData.openLesson(file);
         
         /* Redraw the window */
         redraw();
     }
     
-    /** Close file menu option functionality */
+    /** File->Close menu option functionality */
     public void fileClosePressed() {
-        /* Set the lesson open flag to false */
-        runTimeData.setLessonOpen(false);
-        
-        /* Set the lesson to an empty lesson */
-        lesson = new Lesson();
+        /* Close the current lesson */
+        runTimeData.closeLesson();
         
         /* Re-draw the window */
         redraw();
@@ -260,8 +209,10 @@ public class RuntimeDataDummyUI extends Application {
     public class MenuEventHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent e) {
+            /* Cast the source of the event to a menu item */
             MenuItem menuItem = (MenuItem) e.getSource();
             
+            /* Act based on the ID of the menu item */
             if(menuItem.getId().equals("FileOpen")) {
                 fileOpenPressed();
             } else if(menuItem.getId().equals("FileClose")) {
