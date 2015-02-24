@@ -13,6 +13,7 @@ import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
@@ -23,6 +24,7 @@ import javafx.scene.media.MediaErrorEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.media.MediaPlayer.Status;
+import javafx.util.Duration;
 
 /**
  * This class encapsulates the video handler,
@@ -32,47 +34,84 @@ import javafx.scene.media.MediaPlayer.Status;
  * @version 1.0 24 Feb 2015
  */
 public class VideoHandler {
-    /* Reference to the content pane on which to draw videos */
+    /* Reference to the group on which to draw videos */
     Group group;
-    Button button;
+    
+    /* Debug */
+    Button playButton;
+    Button stopButton;
+    
+    /* Array list of the currently open videos */
     List<MediaView> videos;
+    
+    /* Array list of the currently open video frames */
+    List<Group> videoFrames;
     
     /** Constructor Method */
     public VideoHandler(Group nGroup) {
+        /* Set the group reference */
         this.group = nGroup;
-        button = new Button("Button");
         
+        /* Debug */
+        playButton = new Button("Play");
+        playButton.setOnAction(new ButtonEventHandler());
+        
+        stopButton = new Button("Stop");
+        stopButton.setOnAction(new ButtonEventHandler());
+        
+        /* Instantiate the array list of videos */
         videos = new ArrayList<MediaView>();
+        videoFrames = new ArrayList<Group>();
     }
     
     /** Add a video frame to a group */
     public void createVideo(double x, double y, double width, String sourcefile) {
+        /* Check that the file exists and is .mp4 */
         File file = new File(sourcefile);
         if(!file.exists()) {
             return;
+        } else if(!file.getAbsolutePath().endsWith(".mp4")) {
+            return;
         }
         
+        /* Load the file as a media object */
         Media media = new Media(file.toURI().toString());
         
+        /* Create a media player for the object */
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         
-        mediaPlayer.setAutoPlay(true);
+        /* Create a media view for the object */
         MediaView newVideo = new MediaView(mediaPlayer);
         
-        newVideo.relocate(x, y);
+        /* Set up the media view */
         newVideo.setFitWidth(width);
-        newVideo.setOnMouseEntered(new MouseEventHandler());
-        newVideo.setOnMouseExited(new MouseEventHandler());
+
+        /* Create a group */
+        Group videoGroup = new Group();
+        videoGroup.relocate(x, y);
+        videoGroup.getChildren().add(newVideo);
+        videoGroup.setOnMouseEntered(new MouseEventHandler());
+        videoGroup.setOnMouseExited(new MouseEventHandler());
+        videoGroup.setId("" + videos.size());
         
+        /* Add the media view to the list */
         videos.add(newVideo);
-        group.getChildren().add(newVideo);
+        
+        /* Add the video frame to the list */
+        videoFrames.add(videoGroup);
+        
+        /* Add it to the group */
+        group.getChildren().add(videoGroup);
     }
     
     public void clearVideos() {
-        for(int i = 0; i < videos.size(); i++) {
-           group.getChildren().remove(videos.get(i));
+        /* Remove all the media views (videos) from the group */
+        for(int i = 0; i < videoFrames.size(); i++) {
+           group.getChildren().remove(videoFrames.get(i));
         }
         
+        /* Clear the array lists */
+        videoFrames.clear();
         videos.clear();
     }
     
@@ -82,10 +121,56 @@ public class VideoHandler {
     public class MouseEventHandler implements EventHandler<MouseEvent> {
         @Override
         public void handle(MouseEvent e) {
+            Group videoFrame = (Group) e.getSource();
+            
             if(e.getEventType() == MouseEvent.MOUSE_ENTERED) {
-                System.out.println("Mouse entered");
+                /* Add the play/pause button */
+                playButton.setId(videoFrame.getId() + "pause");
+                videoFrame.getChildren().add(playButton);
+                
+                /* Add the stop button */
+                stopButton.setId(videoFrame.getId() + "stop");
+                stopButton.relocate(100, 0);
+                videoFrame.getChildren().add(stopButton);
+                
             } else if(e.getEventType() == MouseEvent.MOUSE_EXITED) {
-                System.out.println("Mouse exited");
+                /* Remove the controls */
+                videoFrame.getChildren().remove(playButton);
+                videoFrame.getChildren().remove(stopButton);
+            }
+        }
+    }
+    
+    /**
+     * Button Event Handler Class
+     */
+    public class ButtonEventHandler implements EventHandler<ActionEvent> {
+        @Override
+        public void handle(ActionEvent e) {
+            /* Get the button that was pressed */
+            Button button = (Button) e.getSource();
+            
+            /* Get the id of the button pressed */
+            String id = button.getId();
+            
+            /* Separate the numerical ID from the type */
+            int nId = Integer.parseInt(id.substring(0, 1));
+            String type = id.substring(1, id.length());
+            
+            /* Act according to type */
+            if(type.equals("pause")) {
+                if(videos.get(nId).getMediaPlayer().getStatus() == MediaPlayer.Status.PLAYING) {
+                    videos.get(nId).getMediaPlayer().pause();
+                    playButton.setText("Play");
+                } else if(videos.get(nId).getMediaPlayer().getStatus() == MediaPlayer.Status.PAUSED ||
+                          videos.get(nId).getMediaPlayer().getStatus() == MediaPlayer.Status.STOPPED ||
+                          videos.get(nId).getMediaPlayer().getStatus() == MediaPlayer.Status.READY) {
+                    videos.get(nId).getMediaPlayer().play();
+                    playButton.setText("Pause");
+                }
+            } else if (type.equals("stop")) {
+                videos.get(nId).getMediaPlayer().pause();
+                videos.get(nId).getMediaPlayer().seek(new Duration(0.00));
             }
         }
     }
