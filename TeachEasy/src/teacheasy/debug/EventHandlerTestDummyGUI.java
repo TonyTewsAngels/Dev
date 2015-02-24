@@ -1,6 +1,5 @@
 package teacheasy.debug;
 
-import teacheasy.debug.ImageHandlerDummyGUI.buttonEventHandler;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
