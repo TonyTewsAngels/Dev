@@ -175,13 +175,16 @@ public class VideoHandler {
             if(type.equals("play")) {
                 if(videos.get(nId).getMediaPlayer().getStatus() == MediaPlayer.Status.PLAYING) {
                     videos.get(nId).getMediaPlayer().pause();
+                    playButton.setText("Play");
                 } else if(videos.get(nId).getMediaPlayer().getStatus() == MediaPlayer.Status.PAUSED ||
                           videos.get(nId).getMediaPlayer().getStatus() == MediaPlayer.Status.STOPPED ||
                           videos.get(nId).getMediaPlayer().getStatus() == MediaPlayer.Status.READY) {
                     videos.get(nId).getMediaPlayer().play();
+                    playButton.setText("Pause");
                 }
             } else if (type.equals("stop")) {
                 videos.get(nId).getMediaPlayer().stop();
+                playButton.setText("Play");
             }
         }
     }
