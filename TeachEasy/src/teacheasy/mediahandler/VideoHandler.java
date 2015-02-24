@@ -7,6 +7,8 @@
 package teacheasy.mediahandler;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -30,14 +32,17 @@ import javafx.scene.media.MediaPlayer.Status;
  * @version 1.0 24 Feb 2015
  */
 public class VideoHandler {
+    /* Reference to the content pane on which to draw videos */
     Group group;
-    GridPane grid;
     Button button;
+    List<MediaView> videos;
     
     /** Constructor Method */
     public VideoHandler(Group nGroup) {
         this.group = nGroup;
         button = new Button("Button");
+        
+        videos = new ArrayList<MediaView>();
     }
     
     /** Add a video frame to a group */
@@ -52,28 +57,35 @@ public class VideoHandler {
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         
         mediaPlayer.setAutoPlay(true);
-        MediaView mediaView = new MediaView(mediaPlayer);
+        MediaView newVideo = new MediaView(mediaPlayer);
         
-        mediaView.relocate(x, y);
-        mediaView.setFitWidth(width);
-        mediaView.setOnMouseEntered(new MouseEventHandler());
-        mediaView.setOnMouseExited(new MouseEventHandler());
+        newVideo.relocate(x, y);
+        newVideo.setFitWidth(width);
+        newVideo.setOnMouseEntered(new MouseEventHandler());
+        newVideo.setOnMouseExited(new MouseEventHandler());
         
-        group.getChildren().add(mediaView);
+        videos.add(newVideo);
+        group.getChildren().add(newVideo);
+    }
+    
+    public void clearVideos() {
+        for(int i = 0; i < videos.size(); i++) {
+           group.getChildren().remove(videos.get(i));
+        }
+        
+        videos.clear();
     }
     
     /**
-     * Menu Event Handler Class
+     * Mouse Event Handler Class
      */
     public class MouseEventHandler implements EventHandler<MouseEvent> {
         @Override
         public void handle(MouseEvent e) {
             if(e.getEventType() == MouseEvent.MOUSE_ENTERED) {
                 System.out.println("Mouse entered");
-                group.getChildren().add(button);
             } else if(e.getEventType() == MouseEvent.MOUSE_EXITED) {
                 System.out.println("Mouse exited");
-                group.getChildren().remove(button);
             }
         }
     }
