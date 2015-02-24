@@ -19,9 +19,9 @@ public class VideoHandlerDummyGUI extends Application {
             /* Setup the window */
             primaryStage.setTitle("Hello World!");
             primaryStage.setScene(scene);
-            
-            videoHandler = new VideoHandler();
-            videoHandler.createVideo(group, 100, 100, "null");
+
+            videoHandler = new VideoHandler(group);
+            videoHandler.createVideo(5, 5, 490, "C:/SWEngVideo/avengers-featurehp.mp4");
             
             /* Show the window */
             primaryStage.show(); 
