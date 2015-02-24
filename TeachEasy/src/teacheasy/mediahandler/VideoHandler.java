@@ -115,6 +115,20 @@ public class VideoHandler {
         videos.clear();
     }
     
+    /** Helper function to set the correct button labels */
+    private void setButtonLabels(int videoId) {
+        /* Set the button text */
+        if(videos.get(videoId).getMediaPlayer().getStatus() == MediaPlayer.Status.PLAYING) {
+            playButton.setText("Pause");
+        } else {
+            playButton.setText("Play");
+        }
+        
+        /* Set the button IDs */
+        playButton.setId(videoId + "play");
+        stopButton.setId(videoId + "stop");
+    }
+    
     /**
      * Mouse Event Handler Class
      */
@@ -125,11 +139,11 @@ public class VideoHandler {
             
             if(e.getEventType() == MouseEvent.MOUSE_ENTERED) {
                 /* Add the play/pause button */
-                playButton.setId(videoFrame.getId() + "pause");
+                setButtonLabels(Integer.parseInt(videoFrame.getId()));
                 videoFrame.getChildren().add(playButton);
                 
                 /* Add the stop button */
-                stopButton.setId(videoFrame.getId() + "stop");
+                setButtonLabels(Integer.parseInt(videoFrame.getId()));
                 stopButton.relocate(100, 0);
                 videoFrame.getChildren().add(stopButton);
                 
@@ -158,19 +172,16 @@ public class VideoHandler {
             String type = id.substring(1, id.length());
             
             /* Act according to type */
-            if(type.equals("pause")) {
+            if(type.equals("play")) {
                 if(videos.get(nId).getMediaPlayer().getStatus() == MediaPlayer.Status.PLAYING) {
                     videos.get(nId).getMediaPlayer().pause();
-                    playButton.setText("Play");
                 } else if(videos.get(nId).getMediaPlayer().getStatus() == MediaPlayer.Status.PAUSED ||
                           videos.get(nId).getMediaPlayer().getStatus() == MediaPlayer.Status.STOPPED ||
                           videos.get(nId).getMediaPlayer().getStatus() == MediaPlayer.Status.READY) {
                     videos.get(nId).getMediaPlayer().play();
-                    playButton.setText("Pause");
                 }
             } else if (type.equals("stop")) {
-                videos.get(nId).getMediaPlayer().pause();
-                videos.get(nId).getMediaPlayer().seek(new Duration(0.00));
+                videos.get(nId).getMediaPlayer().stop();
             }
         }
     }
