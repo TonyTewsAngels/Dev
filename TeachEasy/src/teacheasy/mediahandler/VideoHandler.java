@@ -30,6 +30,9 @@ import javafx.scene.media.MediaErrorEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.media.MediaPlayer.Status;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -235,10 +238,14 @@ public class VideoHandler {
     /** Make the a video fullscreen */
     public void fullscreen(int videoId) {
         GridPane videoFrame = videoFrames.get(videoId);
+        MediaView video = videos.get(videoId);
         
         group.getChildren().remove(videoFrame);
         
         Scene scene = new Scene(videoFrame);
+        scene.setFill(Color.BLACK);
+        videoFrame.relocate(0, 0);
+        video.setFitWidth(Screen.getPrimary().getBounds().getMaxX());
         
         Stage stage = new Stage();
         stage.setScene(scene);
