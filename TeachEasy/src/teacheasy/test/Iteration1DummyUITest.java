@@ -91,11 +91,4 @@ public class Iteration1DummyUITest {
 		assertTrue(errorList.size() != 0);
 	}
 	
-	
-	//WRITER:
-	
-	
-	
-	//Check to see if it is possible to set pass boundary higher than possible marks
-	
 }
