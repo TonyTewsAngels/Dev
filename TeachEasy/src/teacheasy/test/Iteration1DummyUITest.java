@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.util.ArrayList;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -21,7 +22,6 @@ public class Iteration1DummyUITest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		handler = new XMLHandler();
 		parser = new XMLParser();
 		writer = new XMLWriter();
 	}
@@ -127,7 +127,7 @@ public class Iteration1DummyUITest {
 		parser.parse("/testXML/testXML.xml");
 		Lesson lesson = parser.getLesson();
 		Page page = lesson.pages.get(0);
-		for (int i = 0; i <page.pageObjects.size(); i++) {
+		for (int i = 0; i < page.pageObjects.size(); i++) {
 			PageObject pageObject = page.pageObjects.get(0);
 			switch (pageObject.getType()) {
 			case TEXT:
@@ -204,11 +204,36 @@ public class Iteration1DummyUITest {
 				
 				assertTrue(multipleChoice.getMultiChoiceType() == MultiChoiceType.CHECKBOX);
 				
-				assertTrue(multipleChoice.correctAnswers.get(0).equals("Fish"));
-				assertTrue(multipleChoice.correctAnswers.get(1).equals("Bear"));
-				assertTrue(multipleChoice.correctAnswers.get(2).equals("Zebra"));
-				assertTrue(multipleChoice.correctAnswers.get(3).equals("Komodo Dragon"));
+				assertTrue(multipleChoice.incorrectAnswers.get(0).equals("Fish"));
+				assertTrue(multipleChoice.correctAnswers.get(0).equals("Bear"));
+				assertTrue(multipleChoice.correctAnswers.get(1).equals("Zebra"));
+				assertTrue(multipleChoice.incorrectAnswers.get(1).equals("Komodo Dragon"));
 				break;				
+			default:
+				break;
+			}
+		}
+	}
+	
+	//Check to see if defaults are stored correctly
+	@Test
+	public void checkDefaultStoredCorrectly() {
+		ArrayList<String> errorList = parser.parse("/testXML/testingDefaults.xml");
+		Lesson lesson = parser.getLesson();
+		Page page = lesson.pages.get(0);
+		for (int i = 0; i < page.pageObjects.size(); i++) {
+			PageObject pageObject = page.pageObjects.get(0);
+			
+			assertTrue(page.getPageColour().equals("#ff00ff00"));
+			
+			switch (pageObject.getType()) {
+			case TEXT:
+				TextObject text = (TextObject)pageObject;
+				//Check defaults have been correctly recognised
+				assertTrue(text.getFont().equals("arial"));
+				assertTrue(text.getFontSize() == 24);
+				assertTrue(text.getColor().equals("#ffffffff"));
+				
 			default:
 				break;
 			}
