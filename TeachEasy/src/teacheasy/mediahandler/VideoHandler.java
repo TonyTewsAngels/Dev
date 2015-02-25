@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaErrorEvent;
 import javafx.scene.media.MediaPlayer;
@@ -37,15 +38,16 @@ public class VideoHandler {
     /* Reference to the group on which to draw videos */
     Group group;
     
-    /* Debug */
+    /* Debug TODO */
     Button playButton;
     Button stopButton;
+    HBox buttonRow;
     
     /* Array list of the currently open videos */
     List<MediaView> videos;
     
     /* Array list of the currently open video frames */
-    List<Group> videoFrames;
+    List<GridPane> videoFrames;
     
     /** Constructor Method */
     public VideoHandler(Group nGroup) {
@@ -61,11 +63,11 @@ public class VideoHandler {
         
         /* Instantiate the array list of videos */
         videos = new ArrayList<MediaView>();
-        videoFrames = new ArrayList<Group>();
+        videoFrames = new ArrayList<GridPane>();
     }
     
     /** Add a video frame to a group */
-    public void createVideo(double x, double y, double width, String sourcefile) {
+    public void createVideo(double x, double y, double width, String sourcefile, boolean autoPlay, boolean loop) {
         /* Check that the file exists and is .mp4 */
         File file = new File(sourcefile);
         if(!file.exists()) {
@@ -80,6 +82,12 @@ public class VideoHandler {
         /* Create a media player for the object */
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         
+        /* Set up the media player */
+        mediaPlayer.setAutoPlay(autoPlay);
+        if(loop) {
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        }
+        
         /* Create a media view for the object */
         MediaView newVideo = new MediaView(mediaPlayer);
         
@@ -87,9 +95,9 @@ public class VideoHandler {
         newVideo.setFitWidth(width);
 
         /* Create a group */
-        Group videoGroup = new Group();
+        GridPane videoGroup = new GridPane();
         videoGroup.relocate(x, y);
-        videoGroup.getChildren().add(newVideo);
+        videoGroup.add(newVideo, 0, 0);
         videoGroup.setOnMouseEntered(new MouseEventHandler());
         videoGroup.setOnMouseExited(new MouseEventHandler());
         videoGroup.setId("" + videos.size());
@@ -129,28 +137,45 @@ public class VideoHandler {
         stopButton.setId(videoId + "~stop");
     }
     
+    /** Adds the controls to a video frame */
+    private void addControls(GridPane videoFrame) {
+        int id = Integer.parseInt(videoFrame.getId());
+        buttonRow = new HBox();
+        buttonRow.setAlignment(Pos.BOTTOM_CENTER);
+        
+        /* Set the button labels */
+        setButtonLabels(id);
+        
+        /* Add the play/pause button */
+        buttonRow.getChildren().add(playButton);
+        
+        /* Add the stop button */
+        buttonRow.getChildren().add(stopButton);
+        
+        /* Add the button row to the video frame */
+        videoFrame.getChildren().add(buttonRow);
+    }
+    
+    /** Removes the controls from a video frame */
+    private void removeControls(GridPane videoFrame) {
+        /* Remove the controls */
+        videoFrame.getChildren().remove(buttonRow);
+    }
+    
     /**
      * Mouse Event Handler Class
      */
     public class MouseEventHandler implements EventHandler<MouseEvent> {
         @Override
         public void handle(MouseEvent e) {
-            Group videoFrame = (Group) e.getSource();
+            GridPane videoFrame = (GridPane) e.getSource();
             
             if(e.getEventType() == MouseEvent.MOUSE_ENTERED) {
-                /* Add the play/pause button */
-                setButtonLabels(Integer.parseInt(videoFrame.getId()));
-                videoFrame.getChildren().add(playButton);
-                
-                /* Add the stop button */
-                setButtonLabels(Integer.parseInt(videoFrame.getId()));
-                stopButton.relocate(100, 0);
-                videoFrame.getChildren().add(stopButton);
-                
+                /* Add the controls */
+                addControls(videoFrame);
             } else if(e.getEventType() == MouseEvent.MOUSE_EXITED) {
                 /* Remove the controls */
-                videoFrame.getChildren().remove(playButton);
-                videoFrame.getChildren().remove(stopButton);
+                removeControls(videoFrame);
             }
         }
     }
@@ -175,15 +200,18 @@ public class VideoHandler {
             /* Act according to type */
             if(type.equals("play")) {
                 if(videos.get(nId).getMediaPlayer().getStatus() == MediaPlayer.Status.PLAYING) {
+                    /* If the video was playing, pause it and change the button label to play */
                     videos.get(nId).getMediaPlayer().pause();
                     playButton.setText("Play");
                 } else if(videos.get(nId).getMediaPlayer().getStatus() == MediaPlayer.Status.PAUSED ||
                           videos.get(nId).getMediaPlayer().getStatus() == MediaPlayer.Status.STOPPED ||
                           videos.get(nId).getMediaPlayer().getStatus() == MediaPlayer.Status.READY) {
+                    /* If the video wasn't playing, play it and change the button label to pause */
                     videos.get(nId).getMediaPlayer().play();
                     playButton.setText("Pause");
                 }
             } else if (type.equals("stop")) {
+                /* Stop the video and set the button label to play */
                 videos.get(nId).getMediaPlayer().stop();
                 playButton.setText("Play");
             }
