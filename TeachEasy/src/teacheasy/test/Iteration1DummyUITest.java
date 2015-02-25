@@ -133,65 +133,65 @@ public class Iteration1DummyUITest {
 			case TEXT:
 				TextObject text = (TextObject)pageObject;
 				//Check positions
-				assertTrue(text.getXStart() == 0.6);
-				assertTrue(text.getYStart() == 0.2);
+				assertTrue(text.getXStart() == 0.6f);
+				assertTrue(text.getYStart() == 0.2f);
 				//Check font 
-				assertTrue(text.getFont() == "arial");
+				assertTrue(text.getFont().equals("arial"));
 				break;
 			case IMAGE:
 				ImageObject image = (ImageObject)pageObject;
 				//Check positions
-				assertTrue(image.getXStart() == 0.5);
-				assertTrue(image.getYStart() == 0.5);
+				assertTrue(image.getXStart() == 0.5f);
+				assertTrue(image.getYStart() == 0.5f);
 				//Check source file
-				assertTrue(image.getSourcefile() == "C:/Users/sadjlsd/imagefile.jpg");
+				assertTrue(image.getSourcefile().equals("C:/Users/sadjlsd/imagefile.jpg"));
 				//Check rotation
-				assertTrue(image.getRotation() == 0);
+				assertTrue(image.getRotation() == 0.0f);
 				break;
 			case AUDIO:
 				AudioObject audio = (AudioObject)pageObject;
 				//Check positions
-				assertTrue(audio.getXStart() == 0.5);
-				assertTrue(audio.getYStart() == 0.1);
+				assertTrue(audio.getXStart() == 0.5f);
+				assertTrue(audio.getYStart() == 0.1f);
 				//Check source file
-				assertTrue(audio.getSourcefile() == "gavel.wav");
+				assertTrue(audio.getSourcefile().equals("gavel.wav"));
 				break;
 			case VIDEO:
 				VideoObject video = (VideoObject)pageObject;
 				//Check positions
-				assertTrue(video.getXStart() == 0.1);
-				assertTrue(video.getYStart() == 0.1);
+				assertTrue(video.getXStart() == 0.1f);
+				assertTrue(video.getYStart() == 0.1f);
 				//Check source file and screenshot
-				assertTrue(video.getScreenshotFile() == "C:/Users/sadjlsd/videoicon.jpeg");
-				assertTrue(video.getSourcefile() == "avengers.mkv");
+				assertTrue(video.getScreenshotFile().equals("C:/Users/sadjlsd/videoicon.jpeg"));
+				assertTrue(video.getSourcefile().equals("avengers.mkv"));
 				break;
 			case GRAPHIC:
 				GraphicObject graphics = (GraphicObject)pageObject;
 				//Check positions
-				assertTrue(graphics.getXStart() == 0.5);
-				assertTrue(graphics.getXEnd() == 0.7);
-				assertTrue(graphics.getYStart() == 0.5);
-				assertTrue(graphics.getYEnd() == 0.7);
+				assertTrue(graphics.getXStart() == 0.5f);
+				assertTrue(graphics.getXEnd() == 0.7f);
+				assertTrue(graphics.getYStart() == 0.5f);
+				assertTrue(graphics.getYEnd() == 0.7f);
 				//Check other parameters
 				assertTrue(graphics.getGraphicType() == GraphicType.OVAL);
-				assertTrue(graphics.getOutlineThickness() == 0.5);
-				assertTrue(graphics.getGraphicColour() == "#11223344");
+				assertTrue(graphics.getOutlineThickness() == 0.5f);
+				assertTrue(graphics.getGraphicColour().equals("#11223344"));
 				break;
 			case ANSWER_BOX:
 				AnswerBoxObject answerbox = (AnswerBoxObject)pageObject;
 				//Check positions
-				assertTrue(answerbox.getXStart() == 0.1);
-				assertTrue(answerbox.getYStart() == 0.1);
+				assertTrue(answerbox.getXStart() == 0.1f);
+				assertTrue(answerbox.getYStart() == 0.1f);
 				
-				assertTrue(answerbox.getCorrectAnswers() == "springs~spring");
+				assertTrue(answerbox.getCorrectAnswers().equals("springs~spring"));
 				assertTrue(answerbox.isRetry() == false);
 				assertTrue(answerbox.getMarks() == 5);
 				break;
 			case BUTTON:
 				ButtonObject button = (ButtonObject)pageObject;
 				//Check positions
-				assertTrue(button.getXStart() == 0.1);
-				assertTrue(button.getYStart() == 0.1);
+				assertTrue(button.getXStart() == 0.1f);
+				assertTrue(button.getYStart() == 0.1f);
 				
 				assertTrue(button.isVisible() == true);
 				assertTrue(button.getFunction() == 1);
@@ -199,15 +199,15 @@ public class Iteration1DummyUITest {
 			case MULTIPLE_CHOICE:
 				MultipleChoiceObject multipleChoice = (MultipleChoiceObject)pageObject;
 				//Check positions
-				assertTrue(multipleChoice.getXStart() == 0.2);
-				assertTrue(multipleChoice.getYStart() == 0.2);
+				assertTrue(multipleChoice.getXStart() == 0.2f);
+				assertTrue(multipleChoice.getYStart() == 0.2f);
 				
 				assertTrue(multipleChoice.getMultiChoiceType() == MultiChoiceType.CHECKBOX);
 				
-				assertTrue(multipleChoice.correctAnswers.get(0) == "Fish");
-				assertTrue(multipleChoice.correctAnswers.get(1) == "Bear");
-				assertTrue(multipleChoice.correctAnswers.get(2) == "Zebra");
-				assertTrue(multipleChoice.correctAnswers.get(3) == "Komodo Dragon");
+				assertTrue(multipleChoice.correctAnswers.get(0).equals("Fish"));
+				assertTrue(multipleChoice.correctAnswers.get(1).equals("Bear"));
+				assertTrue(multipleChoice.correctAnswers.get(2).equals("Zebra"));
+				assertTrue(multipleChoice.correctAnswers.get(3).equals("Komodo Dragon"));
 				break;				
 			default:
 				break;
