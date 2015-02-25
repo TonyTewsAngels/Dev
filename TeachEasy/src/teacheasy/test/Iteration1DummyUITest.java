@@ -22,6 +22,8 @@ public class Iteration1DummyUITest {
 		parser = new XMLParser();
 		writer = new XMLWriter();
 	}
+	
+	//The following tests are for the parser
 
 	//Parsing file that doesn't exist returns error
 	@Test
@@ -115,4 +117,6 @@ public class Iteration1DummyUITest {
 		System.out.println("Check graphics locations:" + errorList);
 		assertTrue(errorList.size() != 0);
 	}
+	
+	//The following tests are for the writer
 }
