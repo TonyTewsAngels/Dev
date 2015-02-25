@@ -9,8 +9,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import teacheasy.data.lessondata.*;
-import teacheasy.data.Page;
-import teacheasy.data.PageObject;
+import teacheasy.data.GraphicObject.GraphicType;
 import teacheasy.data.*;
 import teacheasy.xml.*;
 
@@ -143,8 +142,8 @@ public class Iteration1DummyUITest {
 				//Check positions
 				assertTrue(image.getXStart() == 0.5);
 				assertTrue(image.getYStart() == 0.5);
-				//Check sourcefile
-				assertTrue(image.getSourcefile() == "C:\\Users\\sadjlsd\\imagefile.jpg");
+				//Check source file
+				assertTrue(image.getSourcefile() == "C:/Users/sadjlsd/imagefile.jpg");
 				//Check rotation
 				assertTrue(image.getRotation() == 0);
 				break;
@@ -153,17 +152,38 @@ public class Iteration1DummyUITest {
 				//Check positions
 				assertTrue(audio.getXStart() == 0.5);
 				assertTrue(audio.getYStart() == 0.1);
-				//Check sourcefile
+				//Check source file
 				assertTrue(audio.getSourcefile() == "gavel.wav");
 				break;
 			case VIDEO:
 				VideoObject video = (VideoObject)pageObject;
+				//Check positions
+				assertTrue(video.getXStart() == 0.1);
+				assertTrue(video.getYStart() == 0.1);
+				//Check source file and screenshot
+				assertTrue(video.getScreenshotFile() == "C:/Users/sadjlsd/videoicon.jpeg");
+				assertTrue(video.getSourcefile() == "avengers.mkv");
 				break;
 			case GRAPHIC:
 				GraphicObject graphics = (GraphicObject)pageObject;
+				//Check positions
+				assertTrue(graphics.getXStart() == 0.5);
+				assertTrue(graphics.getXEnd() == 0.7);
+				assertTrue(graphics.getYStart() == 0.5);
+				assertTrue(graphics.getYEnd() == 0.7);
+				//Check other parameters
+				assertTrue(graphics.getGraphicType() == GraphicType.OVAL);
+				assertTrue(graphics.getOutlineThickness() == 0.5);
+				assertTrue(graphics.getGraphicColour() == "#11223344");
 				break;
 			case ANSWER_BOX:
-				AnswerBoxObject answer = (AnswerBoxObject)pageObject;
+				AnswerBoxObject answerbox = (AnswerBoxObject)pageObject;
+				//Check positions
+				assertTrue(answerbox.getXStart() == 0.1);
+				assertTrue(answerbox.getYStart() == 0.1);
+				
+				assertTrue(answerbox.getCorrectAnswers() == "springs~spring");
+				
 				break;
 			case BUTTON:
 				ButtonObject button = (ButtonObject)pageObject;
