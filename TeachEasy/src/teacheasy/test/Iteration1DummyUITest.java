@@ -214,14 +214,12 @@ public class Iteration1DummyUITest {
 	//Check to see if defaults are stored correctly
 	@Test
 	public void checkDefaultStoredCorrectly() {
-		ArrayList<String> errorList = parser.parse("\\userfs\\sr896\\w2k\\Electronic Engineering\\3rd\\SWEng\\SWEng_workspace\\Dev\\TeachEasy\\testXML\\testingDefaults.xml");
+		ArrayList<String> errorList = parser.parse("testXML/testingDefaults.xml");
 		Lesson lesson = parser.getLesson();
 		Page page = lesson.pages.get(0);
 		for (int i = 0; i < page.pageObjects.size(); i++) {
 			PageObject pageObject = page.pageObjects.get(i);
-
-			System.out.println(">>>>>" + page.getPageColour());
-			System.out.println(">>>>>>" + errorList);
+			
 			assertTrue(page.getPageColour().equals("#ff00ff00"));
 			
 			switch (pageObject.getType()) {
