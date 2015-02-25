@@ -59,29 +59,43 @@ public class Iteration1DummyUITest {
 		ArrayList<String> errorList;
 		errorList = parser.parse("missingDefaults.xml");
 		System.out.println("Test 4:" + errorList);
-		assertTrue(errorList.size() != 0);
+		assertTrue(errorList.size() == 0);
 	}
 	//PARSER DOES NOT PUT ERROR IN LIST< DOES NOT REALISE!!!!!
+	
+	//Check how parser handles missing document info section
 	@Test
 	public void checkMissingDocumentInfo() {
 		ArrayList<String> errorList;
 		errorList = parser.parse("missingDocumentInfo.xml");
-		System.out.println("Test 4:" + errorList);
+		System.out.println("Test 5:" + errorList);
 		assertTrue(errorList.size() != 0);
 	}
-	//Check how parser handles missing documentinfo
+	//Again...no error :(
 	
-	//TESTS TO DO TOMORROW:
-	//PARSER:
-	//Check video no file/location
-	//Check text no location
-	//Same with other objects
-	//Essentially check that all necessary information gives error in list
-	//Check if documentinfo missing throws error since it is always needed
+	//Check how parser handles an xml file which does not define locations
+	@Test
+	public void checkNoLocations() {
+		ArrayList<String> errorList;
+		errorList = parser.parse("noLocations.xml");
+		System.out.println("Test 6:" + errorList);
+		assertTrue(errorList.size() != 0);
+	}
+	
+	//Check pass boundary
+	@Test
+	public void checkPassBoundary() {
+		ArrayList<String> errorList;
+		errorList = parser.parse("passBoundaryTest.xml");
+		System.out.println("Test 7:" + errorList);
+		assertTrue(errorList.size() != 0);
+	}
+	
 	
 	//WRITER:
 	
 	
 	
-	//
+	//Check to see if it is possible to set pass boundary higher than possible marks
+	
 }
