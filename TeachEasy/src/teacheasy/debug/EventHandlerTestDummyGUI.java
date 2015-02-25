@@ -3,7 +3,7 @@ package teacheasy.debug;
 import java.io.File;
 
 import teacheasy.debug.GeneralDummyGUI.buttonEventHandler;
-import teacheasy.data.AudioHandler;
+import teacheasy.mediahandler.AudioHandler;
 
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -24,9 +24,10 @@ public class EventHandlerTestDummyGUI extends Application {
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
         /* Define the file to use in the audio player */
-        File file = new File("M:\\w2k\\3RD YEAR\\SWEng\\SampleAudioFiles\\tail toddle.mp3");
+        File file = new File("E:/Users/Alex/Music/Floorplan - Sanctified EP/01-floorplan-we_magnify_his_name.mp3");
         /* Create the audio player */
-        audioHandler = new AudioHandler(group, file, true);
+        audioHandler = new AudioHandler(group);
+        audioHandler.createAudio(group, file, true);
         
         
         /* Show the window */

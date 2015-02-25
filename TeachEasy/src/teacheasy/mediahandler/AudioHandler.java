@@ -4,7 +4,7 @@
  * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
  * 
  */
-package teacheasy.data;
+package teacheasy.mediahandler;
 
 import java.io.File;
 import javafx.application.Application;
@@ -34,17 +34,40 @@ import javafx.util.Duration;
  */
 
 public class AudioHandler {
-	/* Public declarations so that the event listeners can use them */
-	public MediaPlayer player;
-	public Button playButton, muteButton;
-	public Slider volumeSlider, progressSlider;
-	public double oldVolume;
-	public Duration duration;
-	public double durationMillis;
+	/* reference to the group */
+	Group group;
+	
+	/* MediaPlayer, Buttons and Sliders*/
+	MediaPlayer player;
+	Button playPauseButton, muteButton;
+	Slider volumeSlider, progressSlider;
+	
+	/* Variables */
+	double oldVolume;
+	Duration duration;
+	double durationMillis;
 
-	public AudioHandler(Group group, File file, boolean autoPlay) {
+	public AudioHandler(Group nGroup){
+		/* Set the group reference */
+		this.group = nGroup;
+		
+		/* Two buttons with default text */
+		playPauseButton = new Button ("Play");
+		playPauseButton.setOnAction(new playHandler());
+		
+		muteButton = new Button("Mute");
+		muteButton.setOnAction(new muteHandler());
+		
+		/* Sliders for volume and progress */
+		volumeSlider = new Slider();
+		
+		progressSlider = new Slider();
+		
+	}
+	
+	public void createAudio(Group group, File sourceFile, boolean autoPlay) {
 		/* Reformat the file to a string to be used as a Media object */
-		final Media audio = new Media(file.toURI().toString());
+		final Media audio = new Media(sourceFile.toURI().toString());
 
 		/* Create the MediaPlayer using the chosen file */
 		player = new MediaPlayer(audio);
@@ -53,25 +76,22 @@ public class AudioHandler {
 		player.setAutoPlay(autoPlay);
 
 		/* Create the MediaView using the "player" MediaPlayer */
-		MediaView mediaView = new MediaView(player);
+		MediaView audioView = new MediaView(player);
 
 		if (player.isAutoPlay() == true) {
-			playButton = new Button("Pause");
+			playPauseButton.setText("Pause");
 		} else {
-			playButton = new Button("Play");
+			playPauseButton.setText("Play");
 		}
 
 	
-		playButton.setPrefSize(200, 80);
-		playButton.relocate(100, 100);
-		playButton.setOnAction(new playHandler());
+		playPauseButton.setPrefSize(200, 80);
+		playPauseButton.relocate(100, 100);
 
-		muteButton = new Button("Mute");
 		muteButton.setPrefSize(200, 80);
 		muteButton.relocate(100, 182);
-		muteButton.setOnAction(new muteHandler());
 
-		volumeSlider = new Slider();
+		
 		volumeSlider.setMin(0);
 		volumeSlider.setMax(100);
 		volumeSlider.setValue(100);
@@ -81,8 +101,8 @@ public class AudioHandler {
 		volumeSlider.setBlockIncrement(5);
 		volumeSlider.setSnapToTicks(true);
 		volumeSlider.setOrientation(Orientation.VERTICAL);
-		volumeSlider.setPrefSize(40, 200);
-		volumeSlider.relocate(350, 100);
+		volumeSlider.setPrefSize(40, 170);
+		volumeSlider.relocate(400, 100);
 
 		/* ActionListener for the volume slider */
 		volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
@@ -94,10 +114,14 @@ public class AudioHandler {
 
 		});
 
-		progressSlider = new Slider();
 		progressSlider.setMin(0);
-		progressSlider.setPrefSize(500, 40);
-		progressSlider.relocate(100, 350);
+		progressSlider.setMax(audio.getDuration().toMinutes());
+		progressSlider.setValue(0);
+		progressSlider.setShowTickMarks(false);
+		progressSlider.setShowTickLabels(false);
+		progressSlider.set
+		progressSlider.setPrefSize(340, 40);
+		progressSlider.relocate(100, 300);
 
 		player.setOnReady(new Runnable() {
 			@Override
@@ -125,15 +149,6 @@ public class AudioHandler {
 					}
 				});
 		
-//		player.setOnPlaying(new Runnable(){
-//			@Override
-//			public void run() {
-//				double currentTime = player.getCurrentTime().toMillis();
-//				double perCent = (currentTime / durationMillis);
-//				progressSlider.setValue(perCent * 100.0);
-//			}
-//		});
-		
 		player.currentTimeProperty().addListener(new InvalidationListener() {
             public void invalidated(Observable ov) {
                 updateValues();
@@ -142,8 +157,8 @@ public class AudioHandler {
 
 		
 		/* Add all parts to the group */
-		group.getChildren().addAll(playButton, muteButton, volumeSlider,
-				progressSlider, mediaView);
+		group.getChildren().addAll(playPauseButton, muteButton, volumeSlider,
+				progressSlider, audioView);
 
 	}
 	
@@ -168,12 +183,12 @@ public class AudioHandler {
 	public class playHandler implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
-			if ("Pause".equals(playButton.getText())) {
+			if ("Pause".equals(playPauseButton.getText())) {
 				player.pause();
-				playButton.setText("Play");
+				playPauseButton.setText("Play");
 			} else {
 				player.play();
-				playButton.setText("Pause");
+				playPauseButton.setText("Pause");
 			}
 		}
 	}
