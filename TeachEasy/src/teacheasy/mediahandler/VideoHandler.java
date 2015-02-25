@@ -10,6 +10,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -17,6 +19,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -38,10 +41,13 @@ public class VideoHandler {
     /* Reference to the group on which to draw videos */
     Group group;
     
-    /* Debug TODO */
+    /* Controls */
+    HBox controls;
     Button playButton;
     Button stopButton;
-    HBox buttonRow;
+    Slider scanBar;
+    ScanListener scanBarListener;
+    
     
     /* Array list of the currently open videos */
     List<MediaView> videos;
@@ -54,12 +60,21 @@ public class VideoHandler {
         /* Set the group reference */
         this.group = nGroup;
         
-        /* Debug */
+        /* Controls */
         playButton = new Button("Play");
         playButton.setOnAction(new ButtonEventHandler());
         
         stopButton = new Button("Stop");
         stopButton.setOnAction(new ButtonEventHandler());
+        
+        scanBar = new Slider();
+        scanBar.setMin(0);
+        scanBar.setMax(100);
+        scanBar.setValue(0);
+        scanBar.setShowTickLabels(false);
+        scanBar.setShowTickMarks(false);
+        scanBarListener = new ScanListener(0);
+        scanBar.valueProperty().addListener(scanBarListener);
         
         /* Instantiate the array list of videos */
         videos = new ArrayList<MediaView>();
@@ -135,31 +150,44 @@ public class VideoHandler {
         /* Set the button IDs */
         playButton.setId(videoId + "~play");
         stopButton.setId(videoId + "~stop");
+        scanBar.setId(videoId+"~scan");
     }
     
     /** Adds the controls to a video frame */
     private void addControls(GridPane videoFrame) {
+        /* Get the ID of the video frame */
         int id = Integer.parseInt(videoFrame.getId());
-        buttonRow = new HBox();
-        buttonRow.setAlignment(Pos.BOTTOM_CENTER);
+        
+        /* Set up the control bar */
+        controls = new HBox();
+        controls.setAlignment(Pos.BOTTOM_CENTER);
         
         /* Set the button labels */
         setButtonLabels(id);
         
-        /* Add the play/pause button */
-        buttonRow.getChildren().add(playButton);
+        /* Set the scan listener target */
+        scanBarListener.setId(id);
         
-        /* Add the stop button */
-        buttonRow.getChildren().add(stopButton);
+        /* Add the buttons to the control bar */
+        controls.getChildren().addAll(playButton, stopButton, scanBar);
+        controls.setPrefWidth(videoFrame.getWidth());
         
-        /* Add the button row to the video frame */
-        videoFrame.getChildren().add(buttonRow);
+        /* Add the control bar to the video frame */
+        videoFrame.getChildren().add(controls);
     }
     
     /** Removes the controls from a video frame */
     private void removeControls(GridPane videoFrame) {
         /* Remove the controls */
-        videoFrame.getChildren().remove(buttonRow);
+        videoFrame.getChildren().remove(controls);
+    }
+    
+    /** Scan to a location in the video */
+    private void scan(int videoId, double percent) {
+        double duration = videos.get(videoId).getMediaPlayer().getMedia().getDuration().toSeconds();
+        double newPosition = duration * (percent/100);
+        
+        videos.get(videoId).getMediaPlayer().seek(new Duration(newPosition*1000));
     }
     
     /**
@@ -215,6 +243,27 @@ public class VideoHandler {
                 videos.get(nId).getMediaPlayer().stop();
                 playButton.setText("Play");
             }
+        }
+    }
+    
+    /**
+     * Scan event handler class
+     */
+    public class ScanListener implements ChangeListener<Number> {
+        private int videoId;
+        
+        public ScanListener(int nId) {
+            videoId = nId;
+        }
+        
+        public void setId(int nId) {
+            this.videoId = nId;
+        }
+        
+        @Override
+        public void changed(ObservableValue<? extends Number> ov,
+                            Number old_val, Number new_val) {
+            scan(videoId, new_val.doubleValue());
         }
     }
 }

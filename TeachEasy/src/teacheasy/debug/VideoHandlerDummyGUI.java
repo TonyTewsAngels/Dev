@@ -25,7 +25,6 @@ public class VideoHandlerDummyGUI extends Application {
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
         
-        
         button = new Button("Button");
         button.relocate(600, 600);
         button.setId("Button1");
@@ -37,7 +36,13 @@ public class VideoHandlerDummyGUI extends Application {
         videoHandler = new VideoHandler(group);
         
         /* Use the video handler to create a video */
-        videoHandler.createVideo(5, 5, 900, "M:/Year 3/SWENG/Videos/avengers-featurehp.mp4", false, false);
+        videoHandler.createVideo(5, 5, 800, "M:/Year 3/SWENG/Videos/avengers-featurehp.mp4", false, false);
+        
+        /* Use the video handler to create a video */
+        videoHandler.createVideo(5, 5, 400, "M:/Year 3/SWENG/Videos/avengers-featurehp.mp4", false, false);
+        
+        /* Use the video handler to create a video */
+        videoHandler.createVideo(5, 5, 200, "M:/Year 3/SWENG/Videos/avengers-featurehp.mp4", false, false);
         
         /* Show the window */
         primaryStage.show(); 
