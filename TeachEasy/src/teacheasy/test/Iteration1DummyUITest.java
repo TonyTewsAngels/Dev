@@ -183,10 +183,16 @@ public class Iteration1DummyUITest {
 				assertTrue(answerbox.getYStart() == 0.1);
 				
 				assertTrue(answerbox.getCorrectAnswers() == "springs~spring");
-				
+				assertTrue(answerbox.isRetry() == false);
+				assertTrue(answerbox.getMarks() == 5);
 				break;
 			case BUTTON:
 				ButtonObject button = (ButtonObject)pageObject;
+				//Check positions
+				assertTrue(button.getXStart() == 0.1);
+				assertTrue(button.getYStart() == 0.1);
+				
+				assertTrue(button.getType() == )
 				break;
 			case MULTIPLE_CHOICE:
 				MultipleChoiceObject multipleChoice = (MultipleChoiceObject)pageObject;
