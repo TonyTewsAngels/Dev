@@ -17,6 +17,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
@@ -29,6 +30,7 @@ import javafx.scene.media.MediaErrorEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.media.MediaPlayer.Status;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
@@ -49,6 +51,7 @@ public class VideoHandler {
     private Slider scanBar;
     private ScanListener scanBarListener;
     private VideoListener videoListener;
+    private Button fullscreenButton;
     
     
     /* Array list of the currently open videos */
@@ -69,6 +72,10 @@ public class VideoHandler {
         /* Stop Control */
         stopButton = new Button("Stop");
         stopButton.setOnAction(new ButtonEventHandler());
+        
+        /* Fullscreen Control */
+        fullscreenButton = new Button("[ ]");
+        fullscreenButton.setOnAction(new ButtonEventHandler());
         
         /* Scan Control */
         scanBar = new Slider();
@@ -161,6 +168,7 @@ public class VideoHandler {
         /* Set the button IDs */
         playButton.setId(videoId + "~play");
         stopButton.setId(videoId + "~stop");
+        fullscreenButton.setId(videoId+"~fullscreen");
         scanBar.setId(videoId+"~scan");
     }
     
@@ -184,7 +192,7 @@ public class VideoHandler {
         setScan(id);
         
         /* Add the buttons to the control bar */
-        controls.getChildren().addAll(playButton, stopButton, scanBar);
+        controls.getChildren().addAll(playButton, stopButton, scanBar, fullscreenButton);
         controls.setPrefWidth(videoFrame.getWidth());
         
         /* Add the control bar to the video frame */
@@ -222,6 +230,21 @@ public class VideoHandler {
         
         /* Set the scan bar value */
         scanBar.setValue(percentage);
+    }
+    
+    /** Make the a video fullscreen */
+    public void fullscreen(int videoId) {
+        GridPane videoFrame = videoFrames.get(videoId);
+        
+        group.getChildren().remove(videoFrame);
+        
+        Scene scene = new Scene(videoFrame);
+        
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("");
+        stage.setFullScreen(true);
+        stage.show();
     }
     
     /**
@@ -277,6 +300,8 @@ public class VideoHandler {
                 /* Stop the video and set the button label to play */
                 videos.get(nId).getMediaPlayer().stop();
                 playButton.setText("Play");
+            } else if (type.equals("fullscreen")) {
+                fullscreen(nId);
             }
         }
     }
