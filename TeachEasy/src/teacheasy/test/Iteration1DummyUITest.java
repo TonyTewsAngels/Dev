@@ -42,10 +42,37 @@ public class Iteration1DummyUITest {
 		assertTrue(errorList.size() == 0);
 	}
 	
+	//Check that the parser doesn't crash if an XML file
+	//has image with no file or location
+	@Test
+	public void checkParserWithNoImageLocation() {
+		ArrayList<String> errorList;
+		errorList = parser.parse("missingImageLocation.xml");
+		System.out.println("Test 3:" + errorList);
+		//Check that there IS an error in the list
+		assertTrue(errorList.size() != 0);
+	}
+	
+	//Check how the parser handles missing default settings
+	@Test
+	public void checkParserDefaults() {
+		ArrayList<String> errorList;
+		errorList = parser.parse("missingDefaults.xml");
+		System.out.println("Test 4:" + errorList);
+		assertTrue(errorList.size() != 0);
+	}
+	//PARSER DOES NOT PUT ERROR IN LIST< DOES NOT REALISE!!!!!
+	@Test
+	public void checkMissingDocumentInfo() {
+		ArrayList<String> errorList;
+		errorList = parser.parse("missingDocumentInfo.xml");
+		System.out.println("Test 4:" + errorList);
+		assertTrue(errorList.size() != 0);
+	}
+	//Check how parser handles missing documentinfo
+	
 	//TESTS TO DO TOMORROW:
 	//PARSER:
-	//Check if image no file/location
-	//Check defaults
 	//Check video no file/location
 	//Check text no location
 	//Same with other objects

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<slideshow>
+    <documentinfo>
+        <author>Author</author>
+        <version>1.0</version>
+        <comment>Comment</comment>
+        <groupid>4</groupid>
+        <datecreated>01/01/2001</datecreated>
+        <totalmarks>1</totalmarks>
+        <lessonname>Lesson</lessonname>
+    </documentinfo>
+    <defaultsettings>
+        <backgroundcolor>#00000000</backgroundcolor>
+        <font>Arial</font>
+        <fontsize>12</fontsize>
+        <fontcolor>#00000000</fontcolor>
+    </defaultsettings>
+    <gradesettings>
+        <passboundary failmessage="fail" passmessage="pass">1</passboundary>
+    </gradesettings>
+</slideshow>
