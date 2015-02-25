@@ -1,32 +1,26 @@
 /*
- * This class inserts an image with specified image name, size, location(x and y) and rotation degrees.
  *
  * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
- * @Authors: Daniel Berhe & Jake Ransom
- * @Verion:  1.0 23/02/2015
  */
 package teacheasy.data;
 
 import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
+/**This class inserts an image with specified image name, size, location(x and y) and rotation degrees.
+ * 
+ * @Authors: Daniel Berhe & Jake Ransom
+ * @Verion:  1.0 23/02/2015
+ * 
+ * */
 public class ImageHandler {
 
-	private ImageView iv1;
 
-	public void start(Stage stage) {
+	private Group group;
 
-		Group root = new Group();
-		Scene scene = new Scene(root, 800, 800);
-
-		insertImage("cat.jpg", 200, 200, 300, 90, root);
-
-		stage.setScene(scene);
-		stage.show();
-
+	public ImageHandler(Group nGroup){
+		group = nGroup;
 	}
 
 	/**
@@ -37,27 +31,30 @@ public class ImageHandler {
 	 *            : desired x location of the image
 	 * @param locationY
 	 *            : desired y location of the image
-	 * @param size
-	 *            : actual image size multiplier. Eg, size 2 is twice as big as
+	 * @param widthSize
+	 *            : actual image with multiplier. Eg, size 2 is twice as big as
 	 *            the original image
+	 * @param heightSize: actual image height multiplier
 	 * @param rotationDegree
 	 *            : to rotate the image in clockwise direction
 	 * @param group
 	 *            : group layout
 	 */
-	private void insertImage(String imageName, double locationX,
-			double locationY, double size, double rotationDegree, Group group) {
+	public void insertImage(String imageName, double locationX,
+			double locationY, double widthSize, double heightSize, double rotationDegree) {
 		double imageWidth;
+		double imageHeight;
 
 		Image image = new Image("file:" + imageName);
 		imageWidth = image.getWidth();
-		iv1 = new ImageView(image);
-		iv1 = new ImageView();
-		iv1.setImage(image);
-		iv1.setFitWidth(imageWidth * size);
-		iv1.setPreserveRatio(true);
-		iv1.setRotate(rotationDegree);
-		iv1.relocate(locationX, locationY);
-		group.getChildren().add(iv1);
+		imageHeight = image.getHeight();
+		ImageView imageView = new ImageView(image);
+		imageView = new ImageView();
+		imageView.setImage(image);
+		imageView.setFitWidth(imageWidth * widthSize);
+        imageView.setFitHeight(imageHeight *heightSize);
+		imageView.setRotate(rotationDegree);
+		imageView.relocate(locationX, locationY);
+		group.getChildren().add(imageView);
 	}
 }
