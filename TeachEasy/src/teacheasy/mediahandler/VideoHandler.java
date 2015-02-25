@@ -125,8 +125,8 @@ public class VideoHandler {
         }
         
         /* Set the button IDs */
-        playButton.setId(videoId + "play");
-        stopButton.setId(videoId + "stop");
+        playButton.setId(videoId + "~play");
+        stopButton.setId(videoId + "~stop");
     }
     
     /**
@@ -168,8 +168,9 @@ public class VideoHandler {
             String id = button.getId();
             
             /* Separate the numerical ID from the type */
-            int nId = Integer.parseInt(id.substring(0, 1));
-            String type = id.substring(1, id.length());
+            String[] ids = id.split("~");
+            int nId = Integer.parseInt(ids[0]);
+            String type = ids[1];
             
             /* Act according to type */
             if(type.equals("play")) {
