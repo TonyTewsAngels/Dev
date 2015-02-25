@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import teacheasy.data.Lesson;
+import teacheasy.data.lessondata.*;
+import teacheasy.data.Page;
+import teacheasy.data.PageObject;
+import teacheasy.data.*;
 import teacheasy.xml.*;
 
 public class Iteration1DummyUITest {
@@ -118,5 +121,62 @@ public class Iteration1DummyUITest {
 		assertTrue(errorList.size() != 0);
 	}
 	
+	//Check data is correctly stored once it has been parsed
+	@Test
+	public void checkDataIsCorrectlyStored(){
+		parser.parse("/testXML/testXML.xml");
+		Lesson lesson = parser.getLesson();
+		Page page = lesson.pages.get(0);
+		for (int i = 0; i <page.pageObjects.size(); i++) {
+			PageObject pageObject = page.pageObjects.get(0);
+			switch (pageObject.getType()) {
+			case TEXT:
+				TextObject text = (TextObject)pageObject;
+				//Check positions
+				assertTrue(text.getXStart() == 0.6);
+				assertTrue(text.getYStart() == 0.2);
+				//Check font 
+				assertTrue(text.getFont() == "arial");
+				break;
+			case IMAGE:
+				ImageObject image = (ImageObject)pageObject;
+				//Check positions
+				assertTrue(image.getXStart() == 0.5);
+				assertTrue(image.getYStart() == 0.5);
+				//Check sourcefile
+				assertTrue(image.getSourcefile() == "C:\\Users\\sadjlsd\\imagefile.jpg");
+				//Check rotation
+				assertTrue(image.getRotation() == 0);
+				break;
+			case AUDIO:
+				AudioObject audio = (AudioObject)pageObject;
+				//Check positions
+				assertTrue(audio.getXStart() == 0.5);
+				assertTrue(audio.getYStart() == 0.1);
+				//Check sourcefile
+				assertTrue(audio.getSourcefile() == "gavel.wav");
+				break;
+			case VIDEO:
+				VideoObject video = (VideoObject)pageObject;
+				break;
+			case GRAPHIC:
+				GraphicObject graphics = (GraphicObject)pageObject;
+				break;
+			case ANSWER_BOX:
+				AnswerBoxObject answer = (AnswerBoxObject)pageObject;
+				break;
+			case BUTTON:
+				ButtonObject button = (ButtonObject)pageObject;
+				break;
+			case MULTIPLE_CHOICE:
+				MultipleChoiceObject multipleChoice = (MultipleChoiceObject)pageObject;
+				break;				
+			default:
+				break;
+			}
+		}
+	}
+	
+	//Check defaults
 	//The following tests are for the writer
 }
