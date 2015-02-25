@@ -20,6 +20,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -39,42 +40,50 @@ import javafx.util.Duration;
  */
 public class VideoHandler {
     /* Reference to the group on which to draw videos */
-    Group group;
+    private Group group;
     
     /* Controls */
-    HBox controls;
-    Button playButton;
-    Button stopButton;
-    Slider scanBar;
-    ScanListener scanBarListener;
+    private HBox controls;
+    private Button playButton;
+    private Button stopButton;
+    private Slider scanBar;
+    private ScanListener scanBarListener;
+    private VideoListener videoListener;
     
     
     /* Array list of the currently open videos */
-    List<MediaView> videos;
+    private List<MediaView> videos;
     
     /* Array list of the currently open video frames */
-    List<GridPane> videoFrames;
+    private List<GridPane> videoFrames;
     
     /** Constructor Method */
     public VideoHandler(Group nGroup) {
         /* Set the group reference */
         this.group = nGroup;
         
-        /* Controls */
+        /* Play/Pause Control */
         playButton = new Button("Play");
         playButton.setOnAction(new ButtonEventHandler());
         
+        /* Stop Control */
         stopButton = new Button("Stop");
         stopButton.setOnAction(new ButtonEventHandler());
         
+        /* Scan Control */
         scanBar = new Slider();
+        scanBarListener = new ScanListener(0);
+        videoListener = new VideoListener(0);
+        
+        /* Setup Scan Control */
         scanBar.setMin(0);
         scanBar.setMax(100);
         scanBar.setValue(0);
         scanBar.setShowTickLabels(false);
         scanBar.setShowTickMarks(false);
-        scanBarListener = new ScanListener(0);
         scanBar.valueProperty().addListener(scanBarListener);
+        scanBar.setOnMousePressed(new ScanMouseHandler());
+        scanBar.setOnMouseReleased(new ScanMouseHandler());
         
         /* Instantiate the array list of videos */
         videos = new ArrayList<MediaView>();
@@ -99,6 +108,7 @@ public class VideoHandler {
         
         /* Set up the media player */
         mediaPlayer.setAutoPlay(autoPlay);
+        mediaPlayer.currentTimeProperty().addListener(videoListener);
         if(loop) {
             mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         }
@@ -127,6 +137,7 @@ public class VideoHandler {
         group.getChildren().add(videoGroup);
     }
     
+    /** Clear all the videos currently being handled */
     public void clearVideos() {
         /* Remove all the media views (videos) from the group */
         for(int i = 0; i < videoFrames.size(); i++) {
@@ -138,7 +149,7 @@ public class VideoHandler {
         videos.clear();
     }
     
-    /** Helper function to set the correct button labels */
+    /** Set the correct button labels and IDs */
     private void setButtonLabels(int videoId) {
         /* Set the button text */
         if(videos.get(videoId).getMediaPlayer().getStatus() == MediaPlayer.Status.PLAYING) {
@@ -167,6 +178,10 @@ public class VideoHandler {
         
         /* Set the scan listener target */
         scanBarListener.setId(id);
+        videoListener.setId(id);
+        
+        /* Adjust the scan location */
+        setScan(id);
         
         /* Add the buttons to the control bar */
         controls.getChildren().addAll(playButton, stopButton, scanBar);
@@ -184,10 +199,29 @@ public class VideoHandler {
     
     /** Scan to a location in the video */
     private void scan(int videoId, double percent) {
+        /* Get the duration of the clip */
         double duration = videos.get(videoId).getMediaPlayer().getMedia().getDuration().toSeconds();
+        
+        /* Get the new position using the percentage */
         double newPosition = duration * (percent/100);
         
+        /* Set the new position (milliseconds) */
         videos.get(videoId).getMediaPlayer().seek(new Duration(newPosition*1000));
+    }
+    
+    /** Set the scan bar to match the video position */
+    private void setScan(int videoId) {
+        /* Get the duration of the clip */
+        double duration = videos.get(videoId).getMediaPlayer().getMedia().getDuration().toSeconds();
+        
+        /* Get the current position in the clip */
+        double current = videos.get(videoId).getMediaPlayer().getCurrentTime().toSeconds();
+        
+        /* Calculate the percentage */
+        double percentage = (current/duration) * 100;
+        
+        /* Set the scan bar value */
+        scanBar.setValue(percentage);
     }
     
     /**
@@ -196,6 +230,7 @@ public class VideoHandler {
     public class MouseEventHandler implements EventHandler<MouseEvent> {
         @Override
         public void handle(MouseEvent e) {
+            /* Get the video frame by casting the event source */
             GridPane videoFrame = (GridPane) e.getSource();
             
             if(e.getEventType() == MouseEvent.MOUSE_ENTERED) {
@@ -250,20 +285,77 @@ public class VideoHandler {
      * Scan event handler class
      */
     public class ScanListener implements ChangeListener<Number> {
-        private int videoId;
+        /* 
+         * Class level variables to hold the ID of the video affect
+         * and whether or not the scan bar is enabled
+         */
+        private int videoId; 
+        private boolean enable;
         
+        /** Constructor */
         public ScanListener(int nId) {
             videoId = nId;
+            enable = false;
         }
         
+        /** Set the id of the video to affect */
         public void setId(int nId) {
             this.videoId = nId;
         }
         
+        /** Enable or disable the listener */
+        public void setEnabled(boolean nEnable) {
+            enable = nEnable;
+        }
+        
+        /** When the value changes update the position in the video */
         @Override
         public void changed(ObservableValue<? extends Number> ov,
                             Number old_val, Number new_val) {
-            scan(videoId, new_val.doubleValue());
+            if(enable) {
+                scan(videoId, new_val.doubleValue());
+            }
+        }
+    }
+    
+    /**
+     * Scan mouse click handler class
+     */
+    public class ScanMouseHandler implements EventHandler<MouseEvent> {
+        @Override
+        public void handle(MouseEvent e) {
+            if(e.getEventType().equals(MouseEvent.MOUSE_PRESSED)) {
+                /* Enable scanning */
+                scanBarListener.setEnabled(true);
+            } else if(e.getEventType().equals(MouseEvent.MOUSE_RELEASED)) {
+                /* Disable scanning */
+                scanBarListener.setEnabled(false);
+            }
+        }
+    }
+    
+    /**
+     * Video Position Listener
+     */
+    public class VideoListener implements ChangeListener<Duration> {
+        /* ID of the video to listen to */
+        private int videoId;
+        
+        /** Constructor */
+        public VideoListener(int nId) {
+            this.videoId = nId;
+        }
+        
+        /** Set the ID of the video to listen to */
+        public void setId(int nId) {
+            this.videoId = nId;
+        }
+        
+        /** When the postion in the video changes, update the scan bar */
+        @Override
+        public void changed(ObservableValue<? extends Duration> arg0,
+                            Duration arg1, Duration arg2) {
+            setScan(videoId);
         }
     }
 }
