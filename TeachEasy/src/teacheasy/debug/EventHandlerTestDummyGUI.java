@@ -21,10 +21,10 @@ public class EventHandlerTestDummyGUI extends Application {
         Scene scene = new Scene(group, 1000, 500);
         
         /* Setup the window */
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("Audio Test Window");
         primaryStage.setScene(scene);
         /* Define the file to use in the audio player */
-        File file = new File("E:/Users/Alex/Music/Floorplan - Sanctified EP/01-floorplan-we_magnify_his_name.mp3");
+        File file = new File("H:/3RD YEAR/SWEng/SampleAudioFiles/tail toddle.mp3");
         /* Create the audio player */
         audioHandler = new AudioHandler(group);
         audioHandler.createAudio(group, file, true);
