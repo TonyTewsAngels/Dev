@@ -28,7 +28,7 @@ public class Iteration1DummyUITest {
 	public void checkParserWithNonexistentXML() {
 		//Parse the XML file
 		ArrayList<String> errorList = parser.parse("iDontExist.xml");
-		System.out.println("Test 1:" + errorList);
+		System.out.println("non existent file test:" + errorList);
 		assertTrue(errorList.size() != 0);
 	}
 	
@@ -37,8 +37,8 @@ public class Iteration1DummyUITest {
 	@Test
 	public void checkParserWithMissingDataXML() {
 		ArrayList<String> errorList;
-		errorList = parser.parse("missingImageAudioVideoData.xml");
-		System.out.println("Test 2:" + errorList);
+		errorList = parser.parse("testXML/missingImageAudioVideoData.xml");
+		System.out.println("missing media test:" + errorList);
 		assertTrue(errorList.size() == 0);
 	}
 	
@@ -47,8 +47,8 @@ public class Iteration1DummyUITest {
 	@Test
 	public void checkParserWithNoImageLocation() {
 		ArrayList<String> errorList;
-		errorList = parser.parse("missingImageLocation.xml");
-		System.out.println("Test 3:" + errorList);
+		errorList = parser.parse("testXML/missingImageLocation.xml");
+		System.out.println("image location test:" + errorList);
 		//Check that there IS an error in the list
 		assertTrue(errorList.size() != 0);
 	}
@@ -57,28 +57,26 @@ public class Iteration1DummyUITest {
 	@Test
 	public void checkParserDefaults() {
 		ArrayList<String> errorList;
-		errorList = parser.parse("missingDefaults.xml");
-		System.out.println("Test 4:" + errorList);
+		errorList = parser.parse("testXML/missingDefaults.xml");
+		System.out.println("missing defaults test:" + errorList);
 		assertTrue(errorList.size() == 0);
 	}
-	//PARSER DOES NOT PUT ERROR IN LIST< DOES NOT REALISE!!!!!
 	
 	//Check how parser handles missing document info section
 	@Test
 	public void checkMissingDocumentInfo() {
 		ArrayList<String> errorList;
-		errorList = parser.parse("missingDocumentInfo.xml");
-		System.out.println("Test 5:" + errorList);
+		errorList = parser.parse("testXML/missingDocumentInfo.xml");
+		System.out.println("missing document info test:" + errorList);
 		assertTrue(errorList.size() != 0);
 	}
-	//Again...no error :(
 	
 	//Check how parser handles an xml file which does not define locations
 	@Test
 	public void checkNoLocations() {
 		ArrayList<String> errorList;
-		errorList = parser.parse("noLocations.xml");
-		System.out.println("Test 6:" + errorList);
+		errorList = parser.parse("testXML/noLocations.xml");
+		System.out.println("no locations test:" + errorList);
 		assertTrue(errorList.size() != 0);
 	}
 	
@@ -86,9 +84,35 @@ public class Iteration1DummyUITest {
 	@Test
 	public void checkPassBoundary() {
 		ArrayList<String> errorList;
-		errorList = parser.parse("passBoundaryTest.xml");
-		System.out.println("Test 7:" + errorList);
+		errorList = parser.parse("testXML/passBoundaryTest.xml");
+		System.out.println("Pass boundary test:" + errorList);
 		assertTrue(errorList.size() != 0);
 	}
 	
+	//Check if error if a colour is given in wrong format (not hex)
+	@Test
+	public void checkColourFormatting() {
+		ArrayList<String> errorList;
+		errorList = parser.parse("testXML/colourFormatting.xml");
+		System.out.println("Colour formatting test: " + errorList);
+		assertTrue(errorList.size() != 0);
+	}
+	
+	//Check if locations can be greater than 1 or negative
+	@Test
+	public void checkLocationToobig() {
+		ArrayList<String> errorList;
+		errorList = parser.parse("testXML/incorrectLocation.xml");
+		System.out.println("Location greater than 1 and negative test:" + errorList);
+		assertTrue(errorList.size() != 0);
+	}
+	
+	//Check if for graphic x/yend can be smaller than x/ystart
+	@Test
+	public void checkGraphicLocation() {
+		ArrayList<String> errorList;
+		errorList = parser.parse("testXML/graphicsLocation.xml");
+		System.out.println("Check graphics locations:" + errorList);
+		assertTrue(errorList.size() != 0);
+	}
 }
