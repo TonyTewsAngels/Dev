@@ -11,6 +11,7 @@ import org.junit.Test;
 import teacheasy.data.lessondata.*;
 import teacheasy.data.GraphicObject.GraphicType;
 import teacheasy.data.*;
+import teacheasy.data.MultipleChoiceObject.MultiChoiceType;
 import teacheasy.xml.*;
 
 public class Iteration1DummyUITest {
@@ -192,10 +193,21 @@ public class Iteration1DummyUITest {
 				assertTrue(button.getXStart() == 0.1);
 				assertTrue(button.getYStart() == 0.1);
 				
-				assertTrue(button.getType() == )
+				assertTrue(button.isVisible() == true);
+				assertTrue(button.getFunction() == 1);
 				break;
 			case MULTIPLE_CHOICE:
 				MultipleChoiceObject multipleChoice = (MultipleChoiceObject)pageObject;
+				//Check positions
+				assertTrue(multipleChoice.getXStart() == 0.2);
+				assertTrue(multipleChoice.getYStart() == 0.2);
+				
+				assertTrue(multipleChoice.getMultiChoiceType() == MultiChoiceType.CHECKBOX);
+				
+				assertTrue(multipleChoice.correctAnswers.get(0) == "Fish");
+				assertTrue(multipleChoice.correctAnswers.get(1) == "Bear");
+				assertTrue(multipleChoice.correctAnswers.get(2) == "Zebra");
+				assertTrue(multipleChoice.correctAnswers.get(3) == "Komodo Dragon");
 				break;				
 			default:
 				break;
