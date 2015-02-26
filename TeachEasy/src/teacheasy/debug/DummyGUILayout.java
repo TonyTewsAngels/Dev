@@ -19,6 +19,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -57,7 +58,7 @@ public class DummyGUILayout extends Application {
 		/* Instantiate the scene and main Grid layout*/
 		GridPane grid = new GridPane();
 		grid.setStyle("-fx-background-color:red");
-		Scene scene = new Scene(grid, 500, 700);
+		Scene scene = new Scene(grid, 500, 500);
 		
 		/* Set gridPane constraints to resize with window */
 		ColumnConstraints columnConstraints = new ColumnConstraints();
@@ -80,13 +81,20 @@ public class DummyGUILayout extends Application {
 		grid.getRowConstraints().add(row3);
 		
 		/* Instantiate content of main Grid layout */
-		HBox hBoxTop = new HBox();		
+		HBox hBoxTop = new HBox();	
 		Group group = new Group();
+		BorderPane contentPane = new BorderPane();
 		AnchorPane botAnchor = new AnchorPane();
 
+		group.minHeight(200);
+		group.maxHeight(200);
+		group.minWidth(200);
+		group.maxWidth(200);
+		
 		/* Set Pane Colours */
 		hBoxTop.setStyle("-fx-background-color: blue;");
-		group.setStyle("-fx-background-color: Green;");
+		group.setStyle("-fx-blend-mode: hard-light;");
+		contentPane.setStyle("-fx-background-color: Orange;");
 		botAnchor.setStyle("-fx-background-color: yellow;");
 		
 		/* Setup the window */
@@ -111,21 +119,40 @@ public class DummyGUILayout extends Application {
 
         nextBtn.setText("Next");
         nextBtn.setId("hBtn");
- 
         
+        /* Create Menubar */
+        MenuBar menuBar = new MenuBar();
+        Menu menuFile = new Menu("File");
+        Menu menuEdit = new Menu("Edit");
+        Menu menuHelp = new Menu("Help");
+        
+        menuBar.getMenus().addAll(menuFile, menuEdit, menuHelp);
+
         /* Create some text and set it up*/
-        text = new Text(400, 500,"Content Pane");
+        text = new Text(200, 200,"Content Pane");
         text.setFont(Font.font ("Verdana", 20));
         text.setId("text");
         
+        Rectangle r = new Rectangle();
+        r.setWidth(100);
+        r.setHeight(100);
+        r.setFill(Color.GREEN);
+        
+        
+        /* Set the position of group in content pane */
+        contentPane.setCenter(group);
+        
+        
+        
         /* Add content to panes */
-        hBoxTop.getChildren().addAll(fileBtn, editBtn);
-        group.getChildren().addAll(text);
+        hBoxTop.getChildren().addAll(menuBar);
+        group.getChildren().addAll(text,r);
+       // contentPane.getChildren().addAll(group);
         botAnchor.getChildren().addAll(nextBtn, prevBtn);
 
 		/* Add other panes to grid layout */
         grid.add(hBoxTop, 0, 0);
-		grid.add(group, 0, 1);
+		grid.add(contentPane, 0, 1);
 		grid.add(botAnchor, 0, 2);
 		AnchorPane.setRightAnchor(nextBtn, 8.0);
 		AnchorPane.setLeftAnchor(prevBtn, 8.0);
