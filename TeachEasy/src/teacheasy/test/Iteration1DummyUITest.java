@@ -236,4 +236,31 @@ public class Iteration1DummyUITest {
 		}
 	}
 	
+	//Check to see that the writer creates a new XML document
+	@Test
+	public void checkWriterCreatesXML() {
+		parser.parse("testXML/testXML.xml");
+		Lesson lesson = parser.getLesson();
+		writer.writeXML(lesson, "testXML/writerTestXML.xml");
+		File file = new File("testXML/writerTestXML.xml");
+		assertTrue(file.exists());
+		file.delete();
+		assertFalse(file.exists());
+	}
+	
+	//Check to see that the XML file created by the writer contains
+	//the correct data, since it has already been shown that the parser
+	//behaves as wished this can simply be done using the parser]
+	@Test
+	public void checkWriterXMLIsCorrect() {
+		parser.parse("testXML/testXML.xml");
+		Lesson lesson = parser.getLesson();
+		writer.writeXML(lesson, "testXML/writerTestCorrectXML.xml");
+		File file = new File("testXML/writerTestXML.xml");
+		ArrayList<String> errorList = parser.parse("testXML/writerTestCorrectXML.xml");
+		file.delete();
+		assertTrue(errorList.size() == 0);
+	}
+	
+	
 }
