@@ -17,6 +17,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -61,6 +62,9 @@ public class VideoHandler {
     private ScanListener scanBarListener;
     private VideoListener videoListener;
     private Button fullscreenButton;
+    private Button volumeButton;
+    private Slider volumeSlider;
+    private VolumeListener volumeListener;
     
     /* Array list of the currently open videos */
     private List<MediaView> videos;
@@ -91,6 +95,22 @@ public class VideoHandler {
         fullscreenButton = new Button("[ ]");
         fullscreenButton.setOnAction(new ButtonEventHandler());
         
+        /* Volume Control */
+        volumeButton = new Button("Vol");
+        volumeButton.setOnAction(new VolumeButtonListener());
+        volumeSlider = new Slider();
+        volumeListener = new VolumeListener(0);
+        
+        /* Set up volume control */
+        volumeSlider.setMin(0);
+        volumeSlider.setMax(1);
+        volumeSlider.setValue(1);
+        volumeSlider.setMaxHeight(50);
+        volumeSlider.setOrientation(Orientation.VERTICAL);
+        volumeSlider.setShowTickLabels(false);
+        volumeSlider.setShowTickMarks(false);
+        volumeSlider.valueProperty().addListener(volumeListener);
+        
         /* Scan Control */
         scanBar = new Slider();
         scanBarListener = new ScanListener(0);
@@ -100,6 +120,7 @@ public class VideoHandler {
         scanBar.setMin(0);
         scanBar.setMax(100);
         scanBar.setValue(0);
+        scanBar.setPrefWidth(1000);
         scanBar.setShowTickLabels(false);
         scanBar.setShowTickMarks(false);
         scanBar.valueProperty().addListener(scanBarListener);
@@ -162,6 +183,26 @@ public class VideoHandler {
         group.getChildren().add(videoFrame);
     }
     
+    /** Play a video */
+    public void playVideo(int videoId) {
+        videos.get(videoId).getMediaPlayer().play();
+    }
+    
+    /** Pause a video */
+    public void pauseVideo(int videoId) {
+        videos.get(videoId).getMediaPlayer().pause();
+    }
+    
+    /** Stop a video */
+    public void stopVideo(int videoId) {
+        videos.get(videoId).getMediaPlayer().stop();
+    }
+    
+    /** Scan a video */
+    public void scanVideo(int videoId, double percent) {
+        scan(videoId, percent);
+    }
+    
     /** Clear all the videos currently being handled */
     public void clearVideos() {
         /* Remove all the media views (videos) from the group */
@@ -203,6 +244,7 @@ public class VideoHandler {
         /* Set up the control bar */
         controls = new HBox();
         controls.setAlignment(Pos.BOTTOM_CENTER);
+        controls.setSpacing(10);
         
         /* Set the button labels */
         setButtonLabels(id);
@@ -210,13 +252,17 @@ public class VideoHandler {
         /* Set the scan listener target */
         scanBarListener.setId(id);
         videoListener.setId(id);
+        volumeListener.setId(id);
         
         /* Adjust the scan location */
         setScan(id);
         
         /* Add the buttons to the control bar */
-        controls.getChildren().addAll(playButton, stopButton, scanBar, fullscreenButton);
+        controls.getChildren().addAll(playButton, stopButton, scanBar, fullscreenButton, volumeButton);
         controls.setPrefWidth(videoFrame.getWidth());
+        
+        /* Set the volume slider value */
+        volumeSlider.setValue(videos.get(id).getMediaPlayer().getVolume());
         
         /* Add the control bar to the video frame */
         videoFrame.getChildren().add(controls);
@@ -286,15 +332,21 @@ public class VideoHandler {
             /* Remove the video from the main screen */
             group.getChildren().remove(videoFrame);
             
-            /* Setup the fullscreen scene */
+            /* Setup the fullscreen root */
             VBox vBox = new VBox();
-            Scene fsScene = new Scene(vBox);
-            vBox.getChildren().add(videoFrame);
-            fsScene.setFill(Color.BLACK);
-            videoFrame.relocate(0, 0);
-            fsScene.setOnKeyPressed(new FullscreenKeyListener(videoId));
             vBox.setAlignment(Pos.CENTER_LEFT);
+            
+            /* Set up the fullscreen scene */
+            Scene fsScene = new Scene(vBox);
+            fsScene.setFill(Color.BLACK);
+            fsScene.setOnKeyPressed(new FullscreenKeyListener(videoId));
+            
+            /* Adjust the video */
+            videoFrame.relocate(0, 0);
             video.setFitWidth(Screen.getPrimary().getBounds().getMaxX());
+            
+            /* Add the video to the fullscreen scene */
+            vBox.getChildren().add(videoFrame);
             
             /* Create the fullscreen stage */
             fsStage = new Stage();
@@ -302,7 +354,6 @@ public class VideoHandler {
             fsStage.setTitle("");
             fsStage.setFullScreen(true);
             fsStage.show();
-            
             
             /* Set the fullscreen flag true */
             fsInfo.get(videoId).setFullscreen(true);
@@ -393,6 +444,13 @@ public class VideoHandler {
         /** Enable or disable the listener */
         public void setEnabled(boolean nEnable) {
             enable = nEnable;
+            
+            /* Pause the video whilst scanning is enabled, restart when disabled */
+            if(enable) {
+                videos.get(videoId).getMediaPlayer().pause();
+            } else {
+                videos.get(videoId).getMediaPlayer().play();
+            }
         }
         
         /** When the value changes update the position in the video */
@@ -461,6 +519,42 @@ public class VideoHandler {
         public void handle(KeyEvent k) {
             if(k.getCode() == KeyCode.ESCAPE) {
                 fullscreen(videoId);
+            }
+        }
+    }
+    
+    /**
+     * Listener for the volume slider
+     */
+    public class VolumeListener implements ChangeListener<Number> {
+        private int videoId;
+        
+        public VolumeListener(int nId) {
+            this.videoId = nId;
+        }
+        
+        public void setId(int nId) {
+            this.videoId = nId;
+        }
+        
+        @Override
+        public void changed(ObservableValue<? extends Number> val,
+                Number oldVal, Number newVal) {
+            videos.get(videoId).getMediaPlayer().setVolume(newVal.doubleValue());
+        }
+    }
+    
+    /**
+     * Listener for the volume button
+     */
+    public class VolumeButtonListener implements EventHandler<ActionEvent> {
+        @Override
+        public void handle(ActionEvent e) {
+            /* Add or remove the volume slider as necessary */
+            if(controls.getChildren().contains(volumeSlider)) {
+                controls.getChildren().remove(volumeSlider);
+            } else {
+                controls.getChildren().add(volumeSlider);  
             }
         }
     }

@@ -36,17 +36,8 @@ public class VideoHandlerDummyGUI extends Application {
         videoHandler = new VideoHandler(group);
         
         /* Use the video handler to create a video */
-        videoHandler.createVideo(5, 5, 200, "M:/Year 3/SWENG/Videos/avengers-featurehp.mp4", false, false);
-        
-        /* Use the video handler to create a video */
-        videoHandler.createVideo(205, 5, 200, "M:/Year 3/SWENG/Videos/avengers-featurehp.mp4", false, false);
-        /* Use the video handler to create a video */
-        videoHandler.createVideo(405, 5, 200, "M:/Year 3/SWENG/Videos/avengers-featurehp.mp4", false, false);
-        /* Use the video handler to create a video */
-        videoHandler.createVideo(605, 5, 200, "M:/Year 3/SWENG/Videos/avengers-featurehp.mp4", false, false);
-        /* Use the video handler to create a video */
-        videoHandler.createVideo(805, 5, 200, "M:/Year 3/SWENG/Videos/avengers-featurehp.mp4", false, false);
-        
+        videoHandler.createVideo(5, 5, 500, "M:/Year 3/SWENG/Videos/avengers-featurehp.mp4", false, false);
+
         /* Show the window */
         primaryStage.show(); 
     }
