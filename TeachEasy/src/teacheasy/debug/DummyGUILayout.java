@@ -23,6 +23,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -55,7 +56,7 @@ public class DummyGUILayout extends Application {
 		
 		/* Instantiate the scene and main Grid layout*/
 		GridPane grid = new GridPane();
-		//grid.setStyle("-fx-background-color:red");
+		grid.setStyle("-fx-background-color:red");
 		Scene scene = new Scene(grid, 500, 700);
 		
 		/* Set gridPane constraints to resize with window */
@@ -63,22 +64,30 @@ public class DummyGUILayout extends Application {
 		columnConstraints.setFillWidth(true);
 		columnConstraints.setHgrow(Priority.ALWAYS);
 		grid.getColumnConstraints().add(columnConstraints);
+			
+		/* Set row sizes */
+		RowConstraints row1 = new RowConstraints();
+		row1.setMaxHeight(100);
+		grid.getRowConstraints().add(row1);
 		
+		RowConstraints row2 = new RowConstraints();
+		row2.setFillHeight(true);
+		row2.setVgrow(Priority.ALWAYS);
+		grid.getRowConstraints().add(row2);
 		
-		/* Set grid spacing */
-		grid.setVgap(10);
+		RowConstraints row3 = new RowConstraints();
+		row3.setMaxHeight(100);
+		grid.getRowConstraints().add(row3);
 		
 		/* Instantiate content of main Grid layout */
 		HBox hBoxTop = new HBox();		
 		Group group = new Group();
-		HBox hBoxBottom = new HBox();
 		AnchorPane botAnchor = new AnchorPane();
-		
 
 		/* Set Pane Colours */
 		hBoxTop.setStyle("-fx-background-color: blue;");
 		group.setStyle("-fx-background-color: Green;");
-		hBoxBottom.setStyle("-fx-background-color: yellow;");
+		botAnchor.setStyle("-fx-background-color: yellow;");
 		
 		/* Setup the window */
         primaryStage.setTitle("Grid with hbox test");
@@ -90,7 +99,6 @@ public class DummyGUILayout extends Application {
         Button prevBtn = new Button();
         Button nextBtn = new Button();
         
-        
         /* Setup the buttons */
         fileBtn.setText("File");
         fileBtn.setId("fileBtn");
@@ -101,7 +109,7 @@ public class DummyGUILayout extends Application {
         prevBtn.setText("Previous");
         prevBtn.setId("prevBtn");
 
-        nextBtn.setText("hBtn");
+        nextBtn.setText("Next");
         nextBtn.setId("hBtn");
  
         
@@ -110,22 +118,9 @@ public class DummyGUILayout extends Application {
         text.setFont(Font.font ("Verdana", 20));
         text.setId("text");
         
-        /* Dummy content for content pane */
-        
-        for (int i = 0; i < 5; i++) {
-	        Rectangle r = new Rectangle();
-	        r.setY(i * 20);
-	        r.setWidth(100);
-	        r.setHeight(10);
-	        r.setFill(Color.YELLOW);
-	        group.getChildren().addAll(r);
-        }
-   
-        
         /* Add content to panes */
         hBoxTop.getChildren().addAll(fileBtn, editBtn);
-  
-        hBoxBottom.getChildren().addAll(nextBtn,prevBtn);
+        group.getChildren().addAll(text);
         botAnchor.getChildren().addAll(nextBtn, prevBtn);
 
 		/* Add other panes to grid layout */
