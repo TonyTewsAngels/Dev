@@ -24,6 +24,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
 import javafx.scene.input.DragEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -285,12 +287,13 @@ public class VideoHandler {
             group.getChildren().remove(videoFrame);
             
             /* Setup the fullscreen scene */
-            VBox stackPane = new VBox();
-            Scene fsScene = new Scene(stackPane);
-            stackPane.getChildren().add(videoFrame);
+            VBox vBox = new VBox();
+            Scene fsScene = new Scene(vBox);
+            vBox.getChildren().add(videoFrame);
             fsScene.setFill(Color.BLACK);
             videoFrame.relocate(0, 0);
-            videoFrame.setAlignment(Pos.CENTER_LEFT);
+            fsScene.setOnKeyPressed(new FullscreenKeyListener(videoId));
+            vBox.setAlignment(Pos.CENTER_LEFT);
             video.setFitWidth(Screen.getPrimary().getBounds().getMaxX());
             
             /* Create the fullscreen stage */
@@ -299,6 +302,7 @@ public class VideoHandler {
             fsStage.setTitle("");
             fsStage.setFullScreen(true);
             fsStage.show();
+            
             
             /* Set the fullscreen flag true */
             fsInfo.get(videoId).setFullscreen(true);
@@ -440,6 +444,24 @@ public class VideoHandler {
         public void changed(ObservableValue<? extends Duration> arg0,
                             Duration arg1, Duration arg2) {
             setScan(videoId);
+        }
+    }
+    
+    /**
+     * Listener for the esape key in fullscreen
+     */
+    public class FullscreenKeyListener implements EventHandler<KeyEvent> {
+        private int videoId;
+        
+        public FullscreenKeyListener(int nId) {
+            this.videoId = nId;
+        }
+        
+        @Override
+        public void handle(KeyEvent k) {
+            if(k.getCode() == KeyCode.ESCAPE) {
+                fullscreen(videoId);
+            }
         }
     }
 }
