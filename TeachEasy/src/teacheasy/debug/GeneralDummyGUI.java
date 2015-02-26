@@ -1,6 +1,8 @@
 /*
  * Alistair Jewers
  * 
+ * Edited by Lewis Thresh & Sam Hall
+ * 
  * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
  * 
  */
