@@ -18,7 +18,7 @@ public class EventHandlerTestDummyGUI extends Application {
     public void start(Stage primaryStage) {       
         /* Instantiate the scene and group */
         Group group = new Group();
-        Scene scene = new Scene(group, 1000, 500);
+        Scene scene = new Scene(group, 600, 200);
         
         /* Setup the window */
         primaryStage.setTitle("Audio Test Window");
