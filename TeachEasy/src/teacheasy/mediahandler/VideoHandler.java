@@ -27,6 +27,8 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaErrorEvent;
 import javafx.scene.media.MediaPlayer;
@@ -283,7 +285,9 @@ public class VideoHandler {
             group.getChildren().remove(videoFrame);
             
             /* Setup the fullscreen scene */
-            Scene fsScene = new Scene(videoFrame);
+            VBox stackPane = new VBox();
+            Scene fsScene = new Scene(stackPane);
+            stackPane.getChildren().add(videoFrame);
             fsScene.setFill(Color.BLACK);
             videoFrame.relocate(0, 0);
             videoFrame.setAlignment(Pos.CENTER_LEFT);
@@ -391,6 +395,7 @@ public class VideoHandler {
         @Override
         public void changed(ObservableValue<? extends Number> ov,
                             Number old_val, Number new_val) {
+            /* If enabled update the video position */
             if(enable) {
                 scan(videoId, new_val.doubleValue());
             }
