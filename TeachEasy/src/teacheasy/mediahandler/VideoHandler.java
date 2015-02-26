@@ -10,6 +10,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import teacheasy.mediahandler.video.FullscreenInfo;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -56,12 +58,17 @@ public class VideoHandler {
     private VideoListener videoListener;
     private Button fullscreenButton;
     
-    
     /* Array list of the currently open videos */
     private List<MediaView> videos;
     
     /* Array list of the currently open video frames */
     private List<GridPane> videoFrames;
+    
+    /* Fullscreen stage */
+    Stage fsStage;
+    
+    /* Array list of information related to fullscreen for each video */
+    private List<FullscreenInfo> fsInfo;
     
     /** Constructor Method */
     public VideoHandler(Group nGroup) {
@@ -98,6 +105,7 @@ public class VideoHandler {
         /* Instantiate the array list of videos */
         videos = new ArrayList<MediaView>();
         videoFrames = new ArrayList<GridPane>();
+        fsInfo = new ArrayList<FullscreenInfo>();
     }
     
     /** Add a video frame to a group */
@@ -130,33 +138,41 @@ public class VideoHandler {
         newVideo.setFitWidth(width);
 
         /* Create a group */
-        GridPane videoGroup = new GridPane();
-        videoGroup.relocate(x, y);
-        videoGroup.add(newVideo, 0, 0);
-        videoGroup.setOnMouseEntered(new MouseEventHandler());
-        videoGroup.setOnMouseExited(new MouseEventHandler());
-        videoGroup.setId("" + videos.size());
+        GridPane videoFrame = new GridPane();
+        videoFrame.relocate(x, y);
+        videoFrame.add(newVideo, 0, 0);
+        videoFrame.setOnMouseEntered(new MouseEventHandler());
+        videoFrame.setOnMouseExited(new MouseEventHandler());
+        videoFrame.setId("" + videos.size());
         
         /* Add the media view to the list */
         videos.add(newVideo);
         
         /* Add the video frame to the list */
-        videoFrames.add(videoGroup);
+        videoFrames.add(videoFrame);
+        
+        /* Add the fullscreen info to the list */
+        fsInfo.add(new FullscreenInfo(x, y, width, false));
         
         /* Add it to the group */
-        group.getChildren().add(videoGroup);
+        group.getChildren().add(videoFrame);
     }
     
     /** Clear all the videos currently being handled */
     public void clearVideos() {
         /* Remove all the media views (videos) from the group */
         for(int i = 0; i < videoFrames.size(); i++) {
-           group.getChildren().remove(videoFrames.get(i));
+            videos.get(i).getMediaPlayer().dispose();
+            group.getChildren().remove(videoFrames.get(i));
         }
         
         /* Clear the array lists */
         videoFrames.clear();
         videos.clear();
+        fsInfo.clear();
+        
+        /* Reset the video listener target */
+        videoListener.setId(0);
     }
     
     /** Set the correct button labels and IDs */
@@ -235,23 +251,54 @@ public class VideoHandler {
         scanBar.setValue(percentage);
     }
     
-    /** Make the a video fullscreen */
+    /** Toggle video fullscreen */
     public void fullscreen(int videoId) {
+        /* Get the video frame */
         GridPane videoFrame = videoFrames.get(videoId);
+        
+        /* Get the video */
         MediaView video = videos.get(videoId);
         
-        group.getChildren().remove(videoFrame);
+        /* Get the fullscreen info for this video */
+        FullscreenInfo videoFsInfo = fsInfo.get(videoId);
         
-        Scene scene = new Scene(videoFrame);
-        scene.setFill(Color.BLACK);
-        videoFrame.relocate(0, 0);
-        video.setFitWidth(Screen.getPrimary().getBounds().getMaxX());
-        
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.setTitle("");
-        stage.setFullScreen(true);
-        stage.show();
+        /* If the video is already fullscreen, go back. If not, go fullscreen */
+        if(videoFsInfo.isFullscreen()) {
+            /* Relocate to original position */
+            videoFrame.relocate(fsInfo.get(videoId).getOriginalX(), fsInfo.get(videoId).getOriginalY());
+            
+            /* Set to original width */
+            video.setFitWidth(fsInfo.get(videoId).getOriginalWidth());
+            
+            /* Add the video frame back to the main screen */
+            group.getChildren().add(videoFrame);
+            
+            /* Hide the fullscreen video stage */
+            fsStage.hide();
+            
+            /* Set the fullscreen flag false */
+            fsInfo.get(videoId).setFullscreen(false);
+        } else {
+            /* Remove the video from the main screen */
+            group.getChildren().remove(videoFrame);
+            
+            /* Setup the fullscreen scene */
+            Scene fsScene = new Scene(videoFrame);
+            fsScene.setFill(Color.BLACK);
+            videoFrame.relocate(0, 0);
+            videoFrame.setAlignment(Pos.CENTER_LEFT);
+            video.setFitWidth(Screen.getPrimary().getBounds().getMaxX());
+            
+            /* Create the fullscreen stage */
+            fsStage = new Stage();
+            fsStage.setScene(fsScene);
+            fsStage.setTitle("");
+            fsStage.setFullScreen(true);
+            fsStage.show();
+            
+            /* Set the fullscreen flag true */
+            fsInfo.get(videoId).setFullscreen(true);
+        }
     }
     
     /**
@@ -383,7 +430,7 @@ public class VideoHandler {
             this.videoId = nId;
         }
         
-        /** When the postion in the video changes, update the scan bar */
+        /** When the position in the video changes, update the scan bar */
         @Override
         public void changed(ObservableValue<? extends Duration> arg0,
                             Duration arg1, Duration arg2) {
