@@ -128,26 +128,26 @@ public class AudioHandler {
 
 		/* Set size and location of the play/pause button */
 		playPauseButton.setPrefSize(70, 40);
-		playPauseButton.relocate(5, 80);
+		playPauseButton.relocate(5, 35);
 		
 		controlsButton.setPrefSize(70, 40);
-		controlsButton.relocate(5, 35);
+		controlsButton.relocate(5, 80);
 
 		/* Set the size and location of the mute button */
 		muteButton.setPrefSize(70, 40);
 		muteButton.relocate(345, 80);
 		
 		/* Set the size and location of the volume slider */
-		volumeSlider.setPrefSize(240, 140);
-		volumeSlider.relocate(80, 30);
+		volumeSlider.setPrefSize(260, 140);
+		volumeSlider.relocate(80, 35);
 
 
 		/* Set the size and location of the progress slider */
 		progressSlider.setPrefSize(340, 40);
-		progressSlider.relocate(80, 50);
+		progressSlider.relocate(80, 40);
 		
-		elapsedLabel.relocate(80, 45);
-		remainingLabel.relocate(380, 45);
+		elapsedLabel.relocate(80, 35);
+		remainingLabel.relocate(380, 35);
 
 		/* Once the player is ready, get the information about the duration of the audio file */
 		/* Use this to set the max value of the progress slider */
@@ -170,8 +170,6 @@ public class AudioHandler {
 
 		
 		/* Add all parts to the group */
-//		group.getChildren().addAll(playPauseButton, muteButton, volumeSlider,
-//				progressSlider, elapsedLabel, remainingLabel, audioView);
 		group.getChildren().addAll(playPauseButton, controlsButton, audioView);
 
 	}
