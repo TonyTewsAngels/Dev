@@ -41,7 +41,7 @@ public class AudioHandler {
 	
 	/* MediaPlayer, Buttons and Sliders*/
 	MediaPlayer player;
-	Button playPauseButton, muteButton;
+	Button playPauseButton, muteButton, controlsButton;
 	Slider volumeSlider, progressSlider;
 	VolumeListener volumeListener;
 	SeekListener seekListener;
@@ -88,7 +88,7 @@ public class AudioHandler {
 		progressSlider.setMin(0);
 		progressSlider.setMax(100);
 		progressSlider.setValue(0);
-		progressSlider.setBlockIncrement(10);
+		progressSlider.setBlockIncrement(5);
 		progressSlider.setShowTickLabels(false);
 		progressSlider.setShowTickMarks(false);
 		progressSlider.setSnapToTicks(false);
@@ -96,6 +96,10 @@ public class AudioHandler {
 		progressSlider.valueProperty().addListener(seekListener);
 		progressSlider.setOnMousePressed(new AudioSeekHandler());
 		progressSlider.setOnMouseReleased(new AudioSeekHandler());	
+		
+		controlsButton = new Button("Controls");
+		controlsButton.setOnAction(new controlsHandler());
+		
 		
 		elapsedLabel = new Label();
 		remainingLabel = new Label();
@@ -125,6 +129,9 @@ public class AudioHandler {
 		/* Set size and location of the play/pause button */
 		playPauseButton.setPrefSize(60, 40);
 		playPauseButton.relocate(5, 130);
+		
+		controlsButton.setPrefSize(60, 40);
+		controlsButton.relocate(5, 85);
 
 		/* Set the size and location of the mute button */
 		muteButton.setPrefSize(60, 40);
@@ -163,8 +170,9 @@ public class AudioHandler {
 
 		
 		/* Add all parts to the group */
-		group.getChildren().addAll(playPauseButton, muteButton, volumeSlider,
-				progressSlider, elapsedLabel, remainingLabel, audioView);
+//		group.getChildren().addAll(playPauseButton, muteButton, volumeSlider,
+//				progressSlider, elapsedLabel, remainingLabel, audioView);
+		group.getChildren().addAll(playPauseButton, controlsButton, audioView);
 
 	}
 	
@@ -231,6 +239,25 @@ public class AudioHandler {
 				volumeSlider.setValue(oldVolume);
 				player.setMute(false);
 				muteButton.setText("Mute");
+			}
+		}
+	}
+	
+	public class controlsHandler implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent e) {
+			if (group.getChildren().contains(volumeSlider)) {
+				group.getChildren().remove(progressSlider);
+				group.getChildren().remove(volumeSlider);
+				group.getChildren().remove(muteButton);
+				group.getChildren().remove(elapsedLabel);
+				group.getChildren().remove(remainingLabel);
+			} else {
+				group.getChildren().add(progressSlider);
+				group.getChildren().add(volumeSlider);
+				group.getChildren().add(muteButton);
+				group.getChildren().add(elapsedLabel);
+				group.getChildren().add(remainingLabel);
 			}
 		}
 	}
