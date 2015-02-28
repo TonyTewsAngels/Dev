@@ -17,6 +17,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
@@ -44,12 +45,14 @@ public class AudioHandler {
 	Slider volumeSlider, progressSlider;
 	VolumeListener volumeListener;
 	SeekListener seekListener;
+	Label elapsedLabel, remainingLabel;
 	
 	/* Variables */
 	double oldVolume;
 	Duration duration;
 	double durationMillis;
 	boolean pausedByButton;
+	int roundedDuration, durationMins, durationSecs, roundedCurrentTime, currentTimeMins, currentTimeSecs;
 
 	public AudioHandler(Group nGroup){
 		/* Set the group reference */
@@ -93,6 +96,10 @@ public class AudioHandler {
 		progressSlider.valueProperty().addListener(seekListener);
 		progressSlider.setOnMousePressed(new AudioSeekHandler());
 		progressSlider.setOnMouseReleased(new AudioSeekHandler());	
+		
+		elapsedLabel = new Label();
+		remainingLabel = new Label();
+		
 	}
 	
 	public void createAudio(Group group, File sourceFile, boolean autoPlay) {
@@ -131,6 +138,9 @@ public class AudioHandler {
 		/* Set the size and location of the progress slider */
 		progressSlider.setPrefSize(340, 40);
 		progressSlider.relocate(80, 160);
+		
+		elapsedLabel.relocate(90, 140);
+		remainingLabel.relocate(400, 140);
 
 		/* Once the player is ready, get the information about the duration of the audio file */
 		/* Use this to set the max value of the progress slider */
@@ -139,6 +149,15 @@ public class AudioHandler {
 			public void run() {
 				duration = audio.getDuration();
 				durationMillis = duration.toMillis();
+				roundedDuration = (int)Math.round(duration.toSeconds());
+				durationMins = roundedDuration /60;
+				durationSecs = roundedDuration - (60*durationMins);
+				
+				System.out.println(+durationMins);
+				System.out.println(":"+durationSecs);
+				String durationString = String.format("%d:%d" durationMins, durationSecs);
+				elapsedLabel.setText("0");
+				remainingLabel.setText("%d:%d"+durationMins +durationSecs);
 			}
 		});
 
@@ -148,7 +167,7 @@ public class AudioHandler {
 		
 		/* Add all parts to the group */
 		group.getChildren().addAll(playPauseButton, muteButton, volumeSlider,
-				progressSlider, audioView);
+				progressSlider, elapsedLabel, remainingLabel, audioView);
 
 	}
 	
@@ -156,12 +175,15 @@ public class AudioHandler {
 	public class progressUpdater implements ChangeListener<Duration> {		
 		@Override
         public void changed(ObservableValue<? extends Duration> arg0,
-                            Duration arg1, Duration arg2) {
-			
+                            Duration arg1, Duration arg2) {			
 			double currentTime = player.getCurrentTime().toSeconds();
 			double perCent = (currentTime / duration.toSeconds());
 			if (!seekListener.isEnabled()) {
-				progressSlider.setValue(perCent * 100.0);	
+				progressSlider.setValue(perCent * 100.0);
+				roundedCurrentTime = (int)Math.round(currentTime);
+				
+				elapsedLabel.setText(String.valueOf(roundedCurrentTime));
+				remainingLabel.setText(String.valueOf(roundedDuration - roundedCurrentTime));
 			}
         }		
 	}
