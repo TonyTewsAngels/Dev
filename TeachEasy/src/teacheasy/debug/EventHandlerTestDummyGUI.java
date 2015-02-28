@@ -24,7 +24,7 @@ public class EventHandlerTestDummyGUI extends Application {
         primaryStage.setTitle("Audio Test Window");
         primaryStage.setScene(scene);
         /* Define the file to use in the audio player */
-        File file = new File("H:/3RD YEAR/SWEng/SampleAudioFiles/tail toddle.mp3");
+        File file = new File("E:/Users/Alex/Music/Daniel Avery - Drone Logic/03 Drone Logic.mp3");
         /* Create the audio player */
         audioHandler = new AudioHandler(group);
         audioHandler.createAudio(group, file, false);

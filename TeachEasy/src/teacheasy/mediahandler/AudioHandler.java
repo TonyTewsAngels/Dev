@@ -52,7 +52,7 @@ public class AudioHandler {
 	Duration duration;
 	double durationMillis;
 	boolean pausedByButton;
-	int roundedDuration, durationMins, durationSecs, roundedCurrentTime, currentTimeMins, currentTimeSecs;
+	int roundedDuration, durationMins, durationSecs, durationSeconds, roundedCurrentTime, currentTimeMins, currentTimeSecs;
 
 	public AudioHandler(Group nGroup){
 		/* Set the group reference */
@@ -152,12 +152,9 @@ public class AudioHandler {
 				roundedDuration = (int)Math.round(duration.toSeconds());
 				durationMins = roundedDuration /60;
 				durationSecs = roundedDuration - (60*durationMins);
-				
-				System.out.println(+durationMins);
-				System.out.println(":"+durationSecs);
-				String durationString = String.format("%d:%d" durationMins, durationSecs);
-				elapsedLabel.setText("0");
-				remainingLabel.setText("%d:%d"+durationMins +durationSecs);
+
+				elapsedLabel.setText("00:00");
+				remainingLabel.setText(String.format("%02d:%02d",durationMins, durationSecs));
 			}
 		});
 
@@ -177,13 +174,16 @@ public class AudioHandler {
         public void changed(ObservableValue<? extends Duration> arg0,
                             Duration arg1, Duration arg2) {			
 			double currentTime = player.getCurrentTime().toSeconds();
+			int elapsedTimeSecs = (int) Math.round(currentTime);
+			int elapsedTimeMins = elapsedTimeSecs / 60;
+			
 			double perCent = (currentTime / duration.toSeconds());
+			
 			if (!seekListener.isEnabled()) {
 				progressSlider.setValue(perCent * 100.0);
-				roundedCurrentTime = (int)Math.round(currentTime);
 				
-				elapsedLabel.setText(String.valueOf(roundedCurrentTime));
-				remainingLabel.setText(String.valueOf(roundedDuration - roundedCurrentTime));
+				elapsedLabel.setText(String.format("%02d:%02d",elapsedTimeMins, elapsedTimeSecs - elapsedTimeMins*60));
+				remainingLabel.setText(String.format("-%02d:%02d",durationMins-elapsedTimeMins, (roundedDuration-elapsedTimeSecs)%60));
 			}
         }		
 	}
