@@ -211,7 +211,7 @@ public class AudioHandler {
 				player.pause();
 				playPauseButton.setText("Play");
 				pausedByButton = true;
-			} else if (player.getStatus().equals(Status.PAUSED)) {
+			} else {
 				player.play();
 				playPauseButton.setText("Pause");
 				pausedByButton = false;
