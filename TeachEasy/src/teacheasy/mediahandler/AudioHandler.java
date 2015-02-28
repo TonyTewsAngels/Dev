@@ -77,7 +77,7 @@ public class AudioHandler {
 		volumeSlider.setShowTickLabels(true);
 		volumeSlider.setShowTickMarks(true);
 		volumeSlider.setSnapToTicks(true);
-		volumeSlider.setOrientation(Orientation.VERTICAL);		
+		volumeSlider.setOrientation(Orientation.HORIZONTAL);		
 		volumeSlider.valueProperty().addListener(volumeListener);
 				
 		
@@ -127,27 +127,27 @@ public class AudioHandler {
 		}
 
 		/* Set size and location of the play/pause button */
-		playPauseButton.setPrefSize(60, 40);
-		playPauseButton.relocate(5, 130);
+		playPauseButton.setPrefSize(70, 40);
+		playPauseButton.relocate(5, 80);
 		
-		controlsButton.setPrefSize(60, 40);
-		controlsButton.relocate(5, 85);
+		controlsButton.setPrefSize(70, 40);
+		controlsButton.relocate(5, 35);
 
 		/* Set the size and location of the mute button */
-		muteButton.setPrefSize(60, 40);
-		muteButton.relocate(435, 130);
+		muteButton.setPrefSize(70, 40);
+		muteButton.relocate(345, 80);
 		
 		/* Set the size and location of the volume slider */
-		volumeSlider.setPrefSize(40, 170);
-		volumeSlider.relocate(505, 5);
+		volumeSlider.setPrefSize(240, 140);
+		volumeSlider.relocate(80, 30);
 
 
 		/* Set the size and location of the progress slider */
 		progressSlider.setPrefSize(340, 40);
-		progressSlider.relocate(80, 160);
+		progressSlider.relocate(80, 50);
 		
-		elapsedLabel.relocate(90, 140);
-		remainingLabel.relocate(400, 140);
+		elapsedLabel.relocate(80, 45);
+		remainingLabel.relocate(380, 45);
 
 		/* Once the player is ready, get the information about the duration of the audio file */
 		/* Use this to set the max value of the progress slider */
@@ -161,7 +161,7 @@ public class AudioHandler {
 				durationSecs = roundedDuration - (60*durationMins);
 
 				elapsedLabel.setText("00:00");
-				remainingLabel.setText(String.format("%02d:%02d",durationMins, durationSecs));
+				remainingLabel.setText(String.format("-%02d:%02d",durationMins, durationSecs));
 			}
 		});
 
