@@ -28,7 +28,7 @@ import teacheasy.xml.*;
  * @version 1.0 01 Mar 2015
  *
  */
-public class Iteration1DummyUITest {
+public class Iteration1XMLTest {
 	private static XMLHandler handler;
 	private static XMLParser parser;
 	private static XMLWriter writer;
