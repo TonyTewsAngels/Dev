@@ -14,11 +14,11 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
+ * A simple class to test the TestAnswerBoxHandler
  * 
  * @author Daniel Berhe
  * @version 1.0
  * 
- *          A simple class to test the TestAnswerBoxHandler
  */
 public class TestAnswerBoxHandler extends Application {
 
@@ -40,7 +40,6 @@ public class TestAnswerBoxHandler extends Application {
 					System.out.println(correctAnswer);
 					System.out.println(answerBox.marks);
 				}
-
 			}
 		});
 
@@ -55,7 +54,6 @@ public class TestAnswerBoxHandler extends Application {
 					System.out.println(correctAnswer);
 					System.out.println(answerBox2.marks);
 				}
-
 			}
 		});
 		Group root = new Group();
