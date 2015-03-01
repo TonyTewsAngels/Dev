@@ -2,7 +2,7 @@
  *
  * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
  */
-package teacheasy.data;
+package teacheasy.mediahandler;
 
 import javafx.scene.Group;
 import javafx.scene.image.Image;
