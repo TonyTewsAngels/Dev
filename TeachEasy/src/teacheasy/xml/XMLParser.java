@@ -69,6 +69,9 @@ public class XMLParser extends DefaultHandler{
 	/** Flag to indicate the object currentl being constructed is invalid */
 	private boolean invalidConstruct;
 	
+	/** Flag to indicate if document info was found */
+	private boolean documentHasInfo;
+	
 	/** Constructor Method */
 	public XMLParser() {
 	    /* Instantiate the xml position tracking array list */
@@ -79,12 +82,18 @@ public class XMLParser extends DefaultHandler{
 		
 		/* Initialise the invalid construction flag to false */
 		invalidConstruct = false;
+		
+		/* Initialise the document info flag to false */
+		documentHasInfo = false;
 	}
 	
 	/** Parses an XML file */
 	public ArrayList<String> parse(String filename) {	    
 	    /* Instantiate the error list */
 	    errorList = new ArrayList<String>();
+	    
+	    /* Reset the document info flag */
+	    documentHasInfo = false;
 	    
 		try {
 			/* Create an instance of the SAX Parser */
@@ -126,6 +135,9 @@ public class XMLParser extends DefaultHandler{
 		        break;
 		    case SLIDE:
 		        handleSlideElement(attrs);
+		        break;
+		    case DOCUMENTINFO:
+		        documentHasInfo = true;
 		        break;
 		    
 		    /* Media elements */
@@ -178,7 +190,12 @@ public class XMLParser extends DefaultHandler{
                 } else {
                     standard = false;
                 }
-                break;  
+                break;
+                
+            /* End of lesson reached */
+            case SLIDESHOW:
+                if(!documentHasInfo) { errorList.add("Document info not found"); }
+                break;
                 
             /* Document Info Elements */
             case AUTHOR:
