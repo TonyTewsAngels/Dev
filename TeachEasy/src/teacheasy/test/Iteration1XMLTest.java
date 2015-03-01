@@ -52,7 +52,7 @@ public class Iteration1XMLTest {
 	
 	/** 
 	 * Check that no error is returned if there is no audio,  
-	 * video or image data in a parsed XML file
+	 * video or image data in a parsed XML file.
 	 */
 	@Test
 	public void checkParserWithMissingDataXML() {
@@ -64,7 +64,7 @@ public class Iteration1XMLTest {
 	
 	/**
 	 * Check that the parser doesn't crash if an XML file
-	 * has image with no file or location
+	 * has image with no file or location.
 	 */
 	@Test
 	public void checkParserWithNoImageLocation() {
