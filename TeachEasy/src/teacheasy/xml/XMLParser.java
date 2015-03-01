@@ -8,6 +8,7 @@ package teacheasy.xml;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -419,8 +420,8 @@ public class XMLParser extends DefaultHandler{
         
         /* Create the object, checking for parsing errors */
         try {
-            currentText = new TextObject(Float.parseFloat(xstart),
-                                         Float.parseFloat(ystart),
+            currentText = new TextObject(checkPos(xstart, "Text XStartPos: "),
+                                         checkPos(ystart, "Text YStartPos: "),
                                          sourcefile,
                                          font,
                                          Integer.parseInt(fontsize),
@@ -603,8 +604,8 @@ public class XMLParser extends DefaultHandler{
 	    
 	    /* Create the object, checking for parsing errors */
 	    try {
-	        currentPage.addObject(new ImageObject(Float.parseFloat(xstart),
-	                                              Float.parseFloat(ystart),
+	        currentPage.addObject(new ImageObject(checkPos(xstart, "Image XStart: "),
+	                                              checkPos(ystart, "Image YStart: "),
 	                                              sourcefile,
 	                                              Float.parseFloat(xscale),
 	                                              Float.parseFloat(yscale),
@@ -644,8 +645,8 @@ public class XMLParser extends DefaultHandler{
         
         /* Create the object, checking for parsing errors */
         try {
-            currentPage.addObject(new AudioObject(Float.parseFloat(xstart),
-                                                  Float.parseFloat(ystart),
+            currentPage.addObject(new AudioObject(checkPos(xstart, "Audio XStart"),
+                                                  checkPos(ystart, "Audio YStart"),
                                                   Boolean.parseBoolean(viewprogress),
                                                   sourcefile));
         } catch (NullPointerException | NumberFormatException e) {
@@ -684,8 +685,8 @@ public class XMLParser extends DefaultHandler{
         /* Create the object, checking for parsing errors */
         try {
             currentPage.addObject(new VideoObject(sourcefile, 
-                                                  Float.parseFloat(xstart),
-                                                  Float.parseFloat(ystart),
+                                                  checkPos(xstart, "Video XStart"),
+                                                  checkPos(ystart, "Video YStart"),
                                                   videoscreenshot));
         } catch (NullPointerException | NumberFormatException e) {
             errorList.add(new String("Video; Could not parse float value"));
@@ -771,15 +772,15 @@ public class XMLParser extends DefaultHandler{
         /* Create the object, checking for parsing errors */
         try {
             currentGraphic = new GraphicObject(gType, 
-                                                Float.parseFloat(xstart),
-                                                Float.parseFloat(ystart),
-                                                Float.parseFloat(xend),
-                                                Float.parseFloat(yend),
-                                                Float.parseFloat(rotation),
-                                                graphiccolor,
-                                                Boolean.parseBoolean(solid),
-                                                Float.parseFloat(outlinethickness),
-                                                Boolean.parseBoolean(shadow));
+                                               checkPos(xstart, "Graphic XStart: "),
+                                               checkPos(ystart, "Graphic YStart: "),
+                                               checkPos(xend, "Graphic XEnd: "),
+                                               checkPos(yend, "Graphic YEnd: "),
+                                               Float.parseFloat(rotation),
+                                               graphiccolor,
+                                               Boolean.parseBoolean(solid),
+                                               Float.parseFloat(outlinethickness),
+                                               Boolean.parseBoolean(shadow));
         } catch (NullPointerException | NumberFormatException e) {
             errorList.add(new String("Video; Could not parse float value"));
             invalidConstruct = true;
@@ -842,8 +843,8 @@ public class XMLParser extends DefaultHandler{
         
         /* Create the object, checking for parsing errors */
         try {
-            currentPage.addObject(new AnswerBoxObject(Float.parseFloat(xstart),
-                                                      Float.parseFloat(ystart),
+            currentPage.addObject(new AnswerBoxObject(checkPos(xstart, "Answer Box XStart: "),
+                                                      checkPos(ystart, "Answer Box YStart: "),
                                                       Integer.parseInt(characterlimit),
                                                       Integer.parseInt(marks),
                                                       correctanswer,
@@ -902,8 +903,8 @@ public class XMLParser extends DefaultHandler{
         
         /* Create the object, checking for parsing errors */
         try {
-            currentMultiChoice = new MultipleChoiceObject(Float.parseFloat(xstart),
-                                                          Float.parseFloat(ystart),
+            currentMultiChoice = new MultipleChoiceObject(checkPos(xstart, "Multi Choice XStart: "),
+                                                          checkPos(ystart, "Multi Choice YStart: "),
                                                           mcOrientation,
                                                           mcType,
                                                           Integer.parseInt(marks),
@@ -955,10 +956,10 @@ public class XMLParser extends DefaultHandler{
         
         /* Create the object, checking for parsing errors */
         try {
-            currentButton = new ButtonObject(Float.parseFloat(xstart),
-                                             Float.parseFloat(ystart),
-                                             Float.parseFloat(xend),
-                                             Float.parseFloat(yend),
+            currentButton = new ButtonObject(checkPos(xstart, "Multi Choice XStart: "),
+                                             checkPos(ystart, "Multi Choice YStart: "),
+                                             checkPos(xend, "Multi Choice XEnd: "),
+                                             checkPos(yend, "Multi Choice YEnd: "),
                                              Boolean.parseBoolean(visible),
                                              "text",
                                              Integer.parseInt(function));
@@ -1012,5 +1013,29 @@ public class XMLParser extends DefaultHandler{
 	    
 	    /** If all checks pass return true */
 	    return true;
+	}
+	
+	/**
+	 * Helper function to check that a relative position value
+	 * is in the range 0 <= x <= 1. Returns the position value
+	 * if it was in range and could be parsed, returns 0.0f
+	 * otherwise.
+	 */
+	private float checkPos(String spos, String errorStart) {
+	    float pos;
+	    
+	    try {
+	        pos = Float.parseFloat(spos);
+	    } catch(NumberFormatException ex) {
+	        errorList.add(errorStart + "Could not parse value, 0.0 inserted");
+	        return 0.0f;
+	    }
+	    
+	    if(pos >= 0.0f && pos <= 1.0f) {
+	        return pos;
+	    }
+	    
+	    errorList.add(errorStart + "Value out of range, 0.0 inserted");
+	    return 0.0f;
 	}
 }
