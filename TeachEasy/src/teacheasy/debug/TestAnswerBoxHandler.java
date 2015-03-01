@@ -29,8 +29,8 @@ public class TestAnswerBoxHandler extends Application {
 	public void start(Stage stage) {
 
 		answerBox = new AnswerBoxHandler("monday-tuesday-wednesday");
-		answerBox.createAnswerBox(50, 50, 5, false);
-		correctAnswer = true;
+		answerBox.createAnswerBox(50, 50, 15, true);
+		correctAnswer = false;
 		answerBox.answerField.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent ke) {
 				if (ke.getCode().equals(KeyCode.ENTER)
