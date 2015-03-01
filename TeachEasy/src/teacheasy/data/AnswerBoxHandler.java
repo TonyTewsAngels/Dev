@@ -3,7 +3,9 @@
  */
 package teacheasy.data;
 
-import java.awt.TextField;
+import javafx.event.EventHandler;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 
 /**
  * 
@@ -13,7 +15,7 @@ import java.awt.TextField;
  */
 public class AnswerBoxHandler {
 
-	TextField answerField;
+	public TextField answerField;
 	public int marks;
 	boolean retry;
 	String correctAnswers;
@@ -26,29 +28,41 @@ public class AnswerBoxHandler {
 
 	}
 
-	public void createAnswerBox(int nXStart, int nYStart, int nCharacterLimit,
-			boolean nRetry) {
+	public void createAnswerBox(double nXStart, double nYStart,
+			int nCharacterLimit, boolean nRetry) {
 
-		answerField.setLocation(nXStart, nYStart);
-		answerField.setColumns(nCharacterLimit);
+		answerField.relocate(nXStart, nYStart);
+		answerField.addEventHandler(KeyEvent.KEY_TYPED,
+				maxLength(nCharacterLimit));
 		this.retry = nRetry;
 
 	}
 
+	public EventHandler<KeyEvent> maxLength(final Integer i) {
+		return new EventHandler<KeyEvent>() {
+
+			@Override
+			public void handle(KeyEvent arg0) {
+
+				TextField tx = (TextField) arg0.getSource();
+				if (tx.getText().length() >= i) {
+					arg0.consume();
+				}
+
+			}
+
+		};
+	}
+
 	public boolean answerChecker(int nMarks) {
-
 		boolean isCorrect = false;
-
 		String[] listOfCorrectAnswers = correctAnswers.split("-");
-
 		for (int i = 0; i < listOfCorrectAnswers.length; i++) {
 
-			if (answerField.getText() == listOfCorrectAnswers[i]) {
-				isCorrect = true;
+			if (answerField.getText().equals(listOfCorrectAnswers[i])) {
 				marks += nMarks;
-			} else {
-				isCorrect = false;
-
+				isCorrect = true;
+				break;
 			}
 		}
 		answerField.setEditable(retry);
