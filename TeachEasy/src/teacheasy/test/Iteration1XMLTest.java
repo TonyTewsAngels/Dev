@@ -28,7 +28,7 @@ import teacheasy.xml.*;
  * @version 1.0 01 Mar 2015
  *
  */
-public class Iteration1DummyUITest {
+public class Iteration1XMLTest {
 	private static XMLHandler handler;
 	private static XMLParser parser;
 	private static XMLWriter writer;
@@ -52,7 +52,7 @@ public class Iteration1DummyUITest {
 	
 	/** 
 	 * Check that no error is returned if there is no audio,  
-	 * video or image data in a parsed XML file
+	 * video or image data in a parsed XML file.
 	 */
 	@Test
 	public void checkParserWithMissingDataXML() {
@@ -64,7 +64,7 @@ public class Iteration1DummyUITest {
 	
 	/**
 	 * Check that the parser doesn't crash if an XML file
-	 * has image with no file or location
+	 * has image with no file or location.
 	 */
 	@Test
 	public void checkParserWithNoImageLocation() {
