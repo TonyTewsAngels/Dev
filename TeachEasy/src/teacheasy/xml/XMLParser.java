@@ -8,6 +8,7 @@ package teacheasy.xml;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +67,15 @@ public class XMLParser extends DefaultHandler{
 	/** List of errors that occurred during parsing */
 	private ArrayList<String> errorList;
 	
+	/** Flag to indicate the object currentl being constructed is invalid */
+	private boolean invalidConstruct;
+	
+	/** Flag to indicate if document info was found */
+	private boolean documentHasInfo;
+	
+	/** Flag to indicate if default settings were found */
+    private boolean documentHasDefaults;
+	
 	/** Constructor Method */
 	public XMLParser() {
 	    /* Instantiate the xml position tracking array list */
@@ -73,12 +83,27 @@ public class XMLParser extends DefaultHandler{
 	    
 	    /* Instantiate an empty lesson */
 		currentLesson = new Lesson();
+		
+		/* Initialise the invalid construction flag to false */
+		invalidConstruct = false;
+		
+		/* Initialise the document info flag to false */
+		documentHasInfo = false;
+		
+		/* Initialise the document default flag to false */
+		documentHasDefaults = false;
 	}
 	
 	/** Parses an XML file */
 	public ArrayList<String> parse(String filename) {	    
 	    /* Instantiate the error list */
 	    errorList = new ArrayList<String>();
+	    
+	    /* Reset the document info flag */
+	    documentHasInfo = false;
+	    
+	    /* Reset the defult settings flag */
+	    documentHasDefaults = false;
 	    
 		try {
 			/* Create an instance of the SAX Parser */
@@ -121,6 +146,12 @@ public class XMLParser extends DefaultHandler{
 		    case SLIDE:
 		        handleSlideElement(attrs);
 		        break;
+		    case DOCUMENTINFO:
+		        documentHasInfo = true;
+		        break;
+		    case DEFAULTSETTINGS:
+                documentHasDefaults = true;
+                break;
 		    
 		    /* Media elements */
 		    case TEXT:
@@ -172,7 +203,13 @@ public class XMLParser extends DefaultHandler{
                 } else {
                     standard = false;
                 }
-                break;  
+                break;
+                
+            /* End of lesson reached */
+            case SLIDESHOW:
+                if(!documentHasInfo) { errorList.add("Document info not found"); }
+                if(!documentHasDefaults) { errorList.add("Default settings not found"); }
+                break;
                 
             /* Document Info Elements */
             case AUTHOR:
@@ -188,7 +225,7 @@ public class XMLParser extends DefaultHandler{
                 currentLesson.lessonInfo.setDateCreated(readBuffer);
                 break;
             case TOTALMARKS:
-                currentLesson.lessonInfo.setTotalMarks(Integer.parseInt(readBuffer));
+                handleTotalMarks();
                 break;
             case LESSONNAME:
                 currentLesson.lessonInfo.setLessonName(readBuffer);
@@ -196,21 +233,21 @@ public class XMLParser extends DefaultHandler{
                 
             /* Default Settings Elements */
             case BACKGROUNDCOLOR:
-                currentLesson.defaultSettings.setBackgroundColour(readBuffer);
+                handleBackgroundColor();
                 break;
             case FONT:
                 currentLesson.defaultSettings.setFont(readBuffer);
                 break;
             case FONTSIZE:
-                currentLesson.defaultSettings.setFontSize(Integer.parseInt(readBuffer));
+                handleFontSize();
                 break;
             case FONTCOLOR:
-                currentLesson.defaultSettings.setFontColour(readBuffer);
+                handleFontColor();
                 break;
 
             /* Grade Settings Elements */
             case PASSBOUNDARY:
-                currentLesson.gradeSettings.setPassBoundary(Integer.parseInt(readBuffer));
+                handlePassBoundary();
                 break;
                 
             /* Slide Element */
@@ -226,7 +263,11 @@ public class XMLParser extends DefaultHandler{
                 handleRichTextEnd(readBuffer);
                 break;
             case GRAPHIC:
-                currentPage.pageObjects.add(currentGraphic);
+                if(invalidConstruct) {
+                    invalidConstruct = false;
+                } else {
+                    currentPage.pageObjects.add(currentGraphic);
+                }
                 break;
             case MULTIPLECHOICE:
                 currentPage.pageObjects.add(currentMultiChoice);
@@ -258,6 +299,80 @@ public class XMLParser extends DefaultHandler{
 	/** Called by parser at the start of a document */
 	public void endDocument() throws SAXException { /* Do Nothing */ }
 	
+	/** Called to handle the Total Marks element */
+	private void handleTotalMarks() {
+	    int totalMarks;
+	    
+	    try {
+	        totalMarks = Integer.parseInt(readBuffer);
+	    } catch(NumberFormatException ex) {
+	        errorList.add("Could not parse total marks - non integer!");
+	        currentLesson.lessonInfo.setTotalMarks(0);
+	        return;
+	    }
+	    
+	    currentLesson.lessonInfo.setTotalMarks(totalMarks);
+	}
+	
+	/** Called to handle the default Background Color element */
+	private void handleBackgroundColor() {
+	    if(!checkColor(readBuffer)) {
+	        errorList.add("Default Background Color is invalid Color String");
+	        currentLesson.defaultSettings.setBackgroundColour("#00000000");
+	        return;
+	    }
+	    
+	    currentLesson.defaultSettings.setBackgroundColour(readBuffer);
+	}
+	
+	/** Called to handle the default Font Size element */
+	private void handleFontSize() {
+	    int fontSize;
+	    
+	    try {
+	        fontSize = Integer.parseInt(readBuffer);
+	    } catch (NumberFormatException ex) {
+	        errorList.add("Could not parse default Font Size - non integer!");
+	        currentLesson.defaultSettings.setFontSize(11);
+	        return;
+	    }
+	    
+	    currentLesson.defaultSettings.setFontSize(fontSize);
+	}
+	
+	/** Called to handle the default Font Color element */
+	private void handleFontColor() {
+	    if(!checkColor(readBuffer)) {
+            errorList.add("Default Font Color is invalid Color String");
+            currentLesson.defaultSettings.setFontColour("#FFFFFFFF");
+            return;
+        }
+        
+        currentLesson.defaultSettings.setFontColour(readBuffer);
+	}
+	
+	/** Called to handle the Pass Boundary element */
+	private void handlePassBoundary() {
+	    int passBoundary;
+	    int totalMarks = currentLesson.lessonInfo.getTotalMarks();
+	    
+	    try {
+            passBoundary = Integer.parseInt(readBuffer);
+        } catch (NumberFormatException ex) {
+            errorList.add("Could not parse pass boundary - non integer!");
+            currentLesson.gradeSettings.setPassBoundary(totalMarks);
+            return;
+        }
+	    
+	    if(passBoundary > totalMarks) {
+	        errorList.add("Pass boundary higher than total marks! Set to full marks");
+	        currentLesson.gradeSettings.setPassBoundary(totalMarks);
+	        return;
+	    }
+	    
+	    currentLesson.gradeSettings.setPassBoundary(passBoundary);
+	}
+	
 	/** Called to handle a text element in the XML */
     private void handleTextElement(Attributes attrs) {
         /* Variables to hold the attribute strings */
@@ -271,16 +386,17 @@ public class XMLParser extends DefaultHandler{
         /* Check for null attributes */
         if(sourcefile == null) {
             sourcefile = new String("null");
-            return;
         }
         
         if(xstart == null) {
             errorList.add(new String("Text; Missing X Start"));
+            invalidConstruct = true;
             return;
         }
         
         if(ystart == null) {
             errorList.add(new String("Text; Missing Y Start"));
+            invalidConstruct = true;
             return;
         }
         
@@ -309,23 +425,34 @@ public class XMLParser extends DefaultHandler{
             } else {
                 fontcolor = "#ffffffff";
             }
+        } else if(!checkColor(fontcolor)) {
+            errorList.add(new String("Text; Invalid Color String"));
+            invalidConstruct = true;
+            return;
         }
         
         /* Create the object, checking for parsing errors */
         try {
-            currentText = new TextObject(Float.parseFloat(xstart),
-                                         Float.parseFloat(ystart),
+            currentText = new TextObject(checkPos(xstart, "Text XStartPos: "),
+                                         checkPos(ystart, "Text YStartPos: "),
                                          sourcefile,
                                          font,
                                          Integer.parseInt(fontsize),
                                          fontcolor);
         } catch (NullPointerException | NumberFormatException e) {
-            errorList.add(new String("Image; Could not parse float value"));
+            errorList.add(new String("Text; Could not parse value"));
+            invalidConstruct = true;
         }
     }
     
     /** Called to handle the end of a text element in the XML */
     private void handleTextEnd(String readBuffer) {
+        /* Check the text under construction is valid */
+        if(invalidConstruct) {
+            invalidConstruct = false;
+            return;
+        }
+        
         /* Check for any non-rich text */
         if(readBuffer != null && !readBuffer.equals("")) {
             currentText.textFragments.add(new RichText(readBuffer, 
@@ -382,6 +509,10 @@ public class XMLParser extends DefaultHandler{
             } else {
                 fontcolor = new String("#ffffffff");
             }
+        } else if(!checkColor(fontcolor)) {
+            errorList.add(new String("RichText; Invalid Color String"));
+            invalidConstruct = true;
+            return;
         }
         
         
@@ -426,12 +557,19 @@ public class XMLParser extends DefaultHandler{
                                                settingsArray);
         } catch (NullPointerException | NumberFormatException e) {
             e.printStackTrace();
-            errorList.add(new String("Text; Could not parse value"));
+            errorList.add(new String("RichText; Could not parse value"));
+            invalidConstruct = true;
         }
     }
     
     /** Called to handle the end of a rich text element in the XML */
     private void handleRichTextEnd(String readBuffer) {
+        /* Check the rich text under construction is valid */
+        if(invalidConstruct) {
+            // Leave the flag high to invalidate the parent text object
+            return;
+        }
+        
         /* Get the text for the text fragment */
         if(readBuffer != null) {
             currentTextFragment.setText(readBuffer);
@@ -479,8 +617,8 @@ public class XMLParser extends DefaultHandler{
 	    
 	    /* Create the object, checking for parsing errors */
 	    try {
-	        currentPage.addObject(new ImageObject(Float.parseFloat(xstart),
-	                                              Float.parseFloat(ystart),
+	        currentPage.addObject(new ImageObject(checkPos(xstart, "Image XStart: "),
+	                                              checkPos(ystart, "Image YStart: "),
 	                                              sourcefile,
 	                                              Float.parseFloat(xscale),
 	                                              Float.parseFloat(yscale),
@@ -520,8 +658,8 @@ public class XMLParser extends DefaultHandler{
         
         /* Create the object, checking for parsing errors */
         try {
-            currentPage.addObject(new AudioObject(Float.parseFloat(xstart),
-                                                  Float.parseFloat(ystart),
+            currentPage.addObject(new AudioObject(checkPos(xstart, "Audio XStart"),
+                                                  checkPos(ystart, "Audio YStart"),
                                                   Boolean.parseBoolean(viewprogress),
                                                   sourcefile));
         } catch (NullPointerException | NumberFormatException e) {
@@ -560,8 +698,8 @@ public class XMLParser extends DefaultHandler{
         /* Create the object, checking for parsing errors */
         try {
             currentPage.addObject(new VideoObject(sourcefile, 
-                                                  Float.parseFloat(xstart),
-                                                  Float.parseFloat(ystart),
+                                                  checkPos(xstart, "Video XStart"),
+                                                  checkPos(ystart, "Video YStart"),
                                                   videoscreenshot));
         } catch (NullPointerException | NumberFormatException e) {
             errorList.add(new String("Video; Could not parse float value"));
@@ -587,6 +725,7 @@ public class XMLParser extends DefaultHandler{
         /* Check for null attributes */
         if(type == null) {
             errorList.add(new String("Graphic; Missing Type String"));
+            invalidConstruct = true;
             return;
         } else {
             gType = GraphicType.check(type.toUpperCase());
@@ -594,31 +733,40 @@ public class XMLParser extends DefaultHandler{
         
         if(xstart == null) {
             errorList.add(new String("Graphic; Missing X Start"));
+            invalidConstruct = true;
             return;
         }
         
         if(ystart == null) {
             errorList.add(new String("Graphic; Missing Y Start"));
+            invalidConstruct = true;
             return;
         }
         
         if(xend == null) {
             errorList.add(new String("Graphic; Missing X End"));
+            invalidConstruct = true;
             return;
         }
         
         if(yend == null) {
             errorList.add(new String("Graphic; Missing Y End"));
+            invalidConstruct = true;
             return;
         }
         
         if(solid == null) {
             errorList.add(new String("Graphic; Missing Solid"));
+            invalidConstruct = true;
             return;
         }
         
         if(graphiccolor == null) {
             errorList.add(new String("Graphic; Missing Graphic Color"));
+            return;
+        } else if(!checkColor(graphiccolor)) {
+            errorList.add(new String("Graphic; Invalid Color String"));
+            invalidConstruct = true;
             return;
         }
         
@@ -637,17 +785,18 @@ public class XMLParser extends DefaultHandler{
         /* Create the object, checking for parsing errors */
         try {
             currentGraphic = new GraphicObject(gType, 
-                                                Float.parseFloat(xstart),
-                                                Float.parseFloat(ystart),
-                                                Float.parseFloat(xend),
-                                                Float.parseFloat(yend),
-                                                Float.parseFloat(rotation),
-                                                graphiccolor,
-                                                Boolean.parseBoolean(solid),
-                                                Float.parseFloat(outlinethickness),
-                                                Boolean.parseBoolean(shadow));
+                                               checkPos(xstart, "Graphic XStart: "),
+                                               checkPos(ystart, "Graphic YStart: "),
+                                               checkPos(xend, "Graphic XEnd: "),
+                                               checkPos(yend, "Graphic YEnd: "),
+                                               Float.parseFloat(rotation),
+                                               graphiccolor,
+                                               Boolean.parseBoolean(solid),
+                                               Float.parseFloat(outlinethickness),
+                                               Boolean.parseBoolean(shadow));
         } catch (NullPointerException | NumberFormatException e) {
             errorList.add(new String("Video; Could not parse float value"));
+            invalidConstruct = true;
         }
     }
     
@@ -707,8 +856,8 @@ public class XMLParser extends DefaultHandler{
         
         /* Create the object, checking for parsing errors */
         try {
-            currentPage.addObject(new AnswerBoxObject(Float.parseFloat(xstart),
-                                                      Float.parseFloat(ystart),
+            currentPage.addObject(new AnswerBoxObject(checkPos(xstart, "Answer Box XStart: "),
+                                                      checkPos(ystart, "Answer Box YStart: "),
                                                       Integer.parseInt(characterlimit),
                                                       Integer.parseInt(marks),
                                                       correctanswer,
@@ -767,8 +916,8 @@ public class XMLParser extends DefaultHandler{
         
         /* Create the object, checking for parsing errors */
         try {
-            currentMultiChoice = new MultipleChoiceObject(Float.parseFloat(xstart),
-                                                          Float.parseFloat(ystart),
+            currentMultiChoice = new MultipleChoiceObject(checkPos(xstart, "Multi Choice XStart: "),
+                                                          checkPos(ystart, "Multi Choice YStart: "),
                                                           mcOrientation,
                                                           mcType,
                                                           Integer.parseInt(marks),
@@ -820,10 +969,10 @@ public class XMLParser extends DefaultHandler{
         
         /* Create the object, checking for parsing errors */
         try {
-            currentButton = new ButtonObject(Float.parseFloat(xstart),
-                                             Float.parseFloat(ystart),
-                                             Float.parseFloat(xend),
-                                             Float.parseFloat(yend),
+            currentButton = new ButtonObject(checkPos(xstart, "Multi Choice XStart: "),
+                                             checkPos(ystart, "Multi Choice YStart: "),
+                                             checkPos(xend, "Multi Choice XEnd: "),
+                                             checkPos(yend, "Multi Choice YEnd: "),
                                              Boolean.parseBoolean(visible),
                                              "text",
                                              Integer.parseInt(function));
@@ -835,19 +984,76 @@ public class XMLParser extends DefaultHandler{
 	/** Called to handle a slide element in the XML */
 	private void handleSlideElement(Attributes attrs) {	    
 	    String bgcolor = attrs.getValue("backgroundcolor");
+	    String defaultBGColor = currentLesson.defaultSettings.getBackgroundColour();
 	    String number = attrs.getValue("number");
 	    int pNumber;
 	    
 	    try {
 	         pNumber = Integer.parseInt(number);
 	    } catch (NullPointerException | NumberFormatException e) {
-	        pNumber = 0;
+	        errorList.add("Page number could not be parsed, set to -1");
+	        pNumber = -1;
 	    }
 	    
-	    if(bgcolor != null && number != null) {
-	        currentPage = new Page(pNumber, bgcolor);
-	    } else {
-	        currentPage = new Page(0, new String("#ffffffff"));
+	    if(bgcolor == null) {
+	        bgcolor = defaultBGColor;
+	    } else if(!checkColor(bgcolor)) {
+	        errorList.add("Page background color not a valid color string");
+	        bgcolor = defaultBGColor;
 	    }
+	    
+	    currentPage = new Page(pNumber, bgcolor);
+	}
+	
+	/** 
+	 * Helper function to check that a color is given as a 8 digit hex string.
+	 * Returns true if string is valid.
+	 */
+	private boolean checkColor(String hexCol) {	    
+	    /** Check that the first character is a hash to indicate a hex value */
+	    if(!hexCol.startsWith("#")) {
+	        return false;
+	    }
+	    
+	    /** Check that the string has 9 characters */
+	    if(hexCol.length() != 9) {
+	        return false;
+	    }
+	    
+	    /** Check that the last 8 characters are numbers */
+	    for(int i = 1; i < 9; i++) {
+	        String s = String.valueOf(hexCol.charAt(i));
+	        
+	        if(!s.matches("[a-zA-Z0-9]")) {
+	            return false;
+	        }
+	    }
+	    
+	    /** If all checks pass return true */
+	    return true;
+	}
+	
+	/**
+	 * Helper function to check that a relative position value
+	 * is in the range 0 <= x <= 1. Returns the position value
+	 * if it was in range and could be parsed, returns 0.0f
+	 * otherwise.
+	 */
+	private float checkPos(String spos, String errorStart) {
+	    float pos;
+	    
+	    try {
+	        pos = Float.parseFloat(spos);
+	    } catch(NumberFormatException ex) {
+	        errorList.add(errorStart + "Could not parse value, 0.0 inserted");
+	        return 0.0f;
+	    }
+	    
+	    if(pos >= 0.0f && pos <= 1.0f) {
+	        return pos;
+	    }
+	    
+	    errorList.add(errorStart + "Value out of range, 0.0 inserted");
+	    return 0.0f;
 	}
 }
