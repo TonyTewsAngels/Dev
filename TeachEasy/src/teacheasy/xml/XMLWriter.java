@@ -329,7 +329,7 @@ public class XMLWriter {
 	    graphicElement.setAttribute("ystart", String.valueOf(graphic.getYStart()));
 	    graphicElement.setAttribute("xend", String.valueOf(graphic.getXEnd()));
         graphicElement.setAttribute("yend", String.valueOf(graphic.getYEnd()));
-        graphicElement.setAttribute("sold", String.valueOf(graphic.isSolid()));
+        graphicElement.setAttribute("solid", String.valueOf(graphic.isSolid()));
         graphicElement.setAttribute("graphiccolor", graphic.getGraphicColour());
         graphicElement.setAttribute("rotation", String.valueOf(graphic.getRotation()));
         graphicElement.setAttribute("outlinethickness", String.valueOf(graphic.getOutlineThickness()));
