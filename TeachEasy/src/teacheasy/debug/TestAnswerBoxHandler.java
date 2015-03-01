@@ -56,6 +56,7 @@ public class TestAnswerBoxHandler extends Application {
 				}
 			}
 		});
+		
 		Group root = new Group();
 		Scene scene = new Scene(root);
 		scene.setFill(Color.LIGHTBLUE);

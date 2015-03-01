@@ -75,6 +75,7 @@ public class AnswerBoxHandler {
 			if (answerField.getText().equals(listOfCorrectAnswers[i])) {
 				marks += nMarks;
 				isCorrect = true;
+				retry = false;
 				break;
 			}
 		}
