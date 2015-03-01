@@ -42,11 +42,11 @@ public class AnswerBoxHandler {
 		return new EventHandler<KeyEvent>() {
 
 			@Override
-			public void handle(KeyEvent arg0) {
+			public void handle(KeyEvent event) {
 
-				TextField tx = (TextField) arg0.getSource();
+				TextField tx = (TextField) event.getSource();
 				if (tx.getText().length() >= i) {
-					arg0.consume();
+					event.consume();
 				}
 
 			}

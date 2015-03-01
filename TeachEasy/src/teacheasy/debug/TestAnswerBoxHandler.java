@@ -10,7 +10,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -24,6 +23,8 @@ import javafx.stage.Stage;
 public class TestAnswerBoxHandler extends Application {
 
 	AnswerBoxHandler answerBox;
+	AnswerBoxHandler answerBox2;
+
 	boolean correctAnswer;
 
 	public void start(Stage stage) {
@@ -42,24 +43,34 @@ public class TestAnswerBoxHandler extends Application {
 
 			}
 		});
+
+		answerBox2 = new AnswerBoxHandler("york-leeds-london");
+		answerBox2.createAnswerBox(100, 100, 15, false);
+		correctAnswer = false;
+		answerBox2.answerField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent ke) {
+				if (ke.getCode().equals(KeyCode.ENTER)
+						&& answerBox2.answerField.isEditable() == true) {
+					correctAnswer = answerBox2.answerChecker(10);
+					System.out.println(correctAnswer);
+					System.out.println(answerBox2.marks);
+				}
+
+			}
+		});
 		Group root = new Group();
 		Scene scene = new Scene(root);
 		scene.setFill(Color.LIGHTBLUE);
-		HBox box = new HBox();
-		box.setPrefHeight(400);
-		box.setPrefWidth(300);
-		box.getChildren().addAll(answerBox.answerField);
-		root.getChildren().add(box);
+		root.getChildren()
+				.addAll(answerBox.answerField, answerBox2.answerField);
 
 		stage.setTitle("Answer Box Test");
-		stage.setWidth(415);
-		stage.setHeight(200);
 		stage.setScene(scene);
 		stage.sizeToScene();
 		stage.show();
 	}
 
 	public static void main(String[] args) {
-		Application.launch();
+		launch();
 	}
 }
