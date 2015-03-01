@@ -73,6 +73,9 @@ public class XMLParser extends DefaultHandler{
 	/** Flag to indicate if document info was found */
 	private boolean documentHasInfo;
 	
+	/** Flag to indicate if default settings were found */
+    private boolean documentHasDefaults;
+	
 	/** Constructor Method */
 	public XMLParser() {
 	    /* Instantiate the xml position tracking array list */
@@ -86,6 +89,9 @@ public class XMLParser extends DefaultHandler{
 		
 		/* Initialise the document info flag to false */
 		documentHasInfo = false;
+		
+		/* Initialise the document default flag to false */
+		documentHasDefaults = false;
 	}
 	
 	/** Parses an XML file */
@@ -95,6 +101,9 @@ public class XMLParser extends DefaultHandler{
 	    
 	    /* Reset the document info flag */
 	    documentHasInfo = false;
+	    
+	    /* Reset the defult settings flag */
+	    documentHasDefaults = false;
 	    
 		try {
 			/* Create an instance of the SAX Parser */
@@ -140,6 +149,9 @@ public class XMLParser extends DefaultHandler{
 		    case DOCUMENTINFO:
 		        documentHasInfo = true;
 		        break;
+		    case DEFAULTSETTINGS:
+                documentHasDefaults = true;
+                break;
 		    
 		    /* Media elements */
 		    case TEXT:
@@ -196,6 +208,7 @@ public class XMLParser extends DefaultHandler{
             /* End of lesson reached */
             case SLIDESHOW:
                 if(!documentHasInfo) { errorList.add("Document info not found"); }
+                if(!documentHasDefaults) { errorList.add("Default settings not found"); }
                 break;
                 
             /* Document Info Elements */
@@ -335,7 +348,7 @@ public class XMLParser extends DefaultHandler{
             return;
         }
         
-        currentLesson.defaultSettings.setBackgroundColour(readBuffer);
+        currentLesson.defaultSettings.setFontColour(readBuffer);
 	}
 	
 	/** Called to handle the Pass Boundary element */
@@ -971,20 +984,25 @@ public class XMLParser extends DefaultHandler{
 	/** Called to handle a slide element in the XML */
 	private void handleSlideElement(Attributes attrs) {	    
 	    String bgcolor = attrs.getValue("backgroundcolor");
+	    String defaultBGColor = currentLesson.defaultSettings.getBackgroundColour();
 	    String number = attrs.getValue("number");
 	    int pNumber;
 	    
 	    try {
 	         pNumber = Integer.parseInt(number);
 	    } catch (NullPointerException | NumberFormatException e) {
-	        pNumber = 0;
+	        errorList.add("Page number could not be parsed, set to -1");
+	        pNumber = -1;
 	    }
 	    
-	    if(bgcolor != null && number != null) {
-	        currentPage = new Page(pNumber, bgcolor);
-	    } else {
-	        currentPage = new Page(0, new String("#ffffffff"));
+	    if(bgcolor == null) {
+	        bgcolor = defaultBGColor;
+	    } else if(!checkColor(bgcolor)) {
+	        errorList.add("Page background color not a valid color string");
+	        bgcolor = defaultBGColor;
 	    }
+	    
+	    currentPage = new Page(pNumber, bgcolor);
 	}
 	
 	/** 
