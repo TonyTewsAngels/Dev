@@ -1,3 +1,8 @@
+/*
+ * Sam Raeburn
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
+ */
 package teacheasy.test;
 
 import static org.junit.Assert.*;
@@ -15,6 +20,14 @@ import teacheasy.data.*;
 import teacheasy.data.MultipleChoiceObject.MultiChoiceType;
 import teacheasy.xml.*;
 
+/**
+ * This class tests the XML Parser and Writer using
+ * a JUnit automated test system.
+ * 
+ * @author  Sam Raeburn
+ * @version 1.0 01 Mar 2015
+ *
+ */
 public class Iteration1DummyUITest {
 	private static XMLHandler handler;
 	private static XMLParser parser;
@@ -28,7 +41,7 @@ public class Iteration1DummyUITest {
 	
 	//The following tests are for the parser
 
-	//Parsing file that doesn't exist returns error
+	/** Parsing file that doesn't exist returns error */
 	@Test
 	public void checkParserWithNonexistentXML() {
 		//Parse the XML file
@@ -37,8 +50,10 @@ public class Iteration1DummyUITest {
 		assertTrue(errorList.size() != 0);
 	}
 	
-	//Check that no error is returned if there is no audio, 
-	//video or image data in a parsed XML file
+	/** 
+	 * Check that no error is returned if there is no audio,  
+	 * video or image data in a parsed XML file
+	 */
 	@Test
 	public void checkParserWithMissingDataXML() {
 		ArrayList<String> errorList;
@@ -47,8 +62,10 @@ public class Iteration1DummyUITest {
 		assertTrue(errorList.size() == 0);
 	}
 	
-	//Check that the parser doesn't crash if an XML file
-	//has image with no file or location
+	/**
+	 * Check that the parser doesn't crash if an XML file
+	 * has image with no file or location
+	 */
 	@Test
 	public void checkParserWithNoImageLocation() {
 		ArrayList<String> errorList;
@@ -58,7 +75,7 @@ public class Iteration1DummyUITest {
 		assertTrue(errorList.size() != 0);
 	}
 	
-	//Check how the parser handles missing default settings
+	/** Check how the parser handles missing default settings*/
 	@Test
 	public void checkParserDefaults() {
 		ArrayList<String> errorList;
@@ -67,7 +84,7 @@ public class Iteration1DummyUITest {
 		assertTrue(errorList.size() == 0);
 	}
 	
-	//Check how parser handles missing document info section
+	/** Check how parser handles missing document info section */
 	@Test
 	public void checkMissingDocumentInfo() {
 		ArrayList<String> errorList;
@@ -76,7 +93,7 @@ public class Iteration1DummyUITest {
 		assertTrue(errorList.size() != 0);
 	}
 	
-	//Check how parser handles an xml file which does not define locations
+	/** Check how parser handles an xml file which does not define locations */
 	@Test
 	public void checkNoLocations() {
 		ArrayList<String> errorList;
@@ -85,7 +102,7 @@ public class Iteration1DummyUITest {
 		assertTrue(errorList.size() != 0);
 	}
 	
-	//Check pass boundary
+	/** Check pass boundary */
 	@Test
 	public void checkPassBoundary() {
 		ArrayList<String> errorList;
@@ -94,7 +111,7 @@ public class Iteration1DummyUITest {
 		assertTrue(errorList.size() != 0);
 	}
 	
-	//Check if error if a colour is given in wrong format (not hex)
+	/** Check if error if a colour is given in wrong format (not hex) */
 	@Test
 	public void checkColourFormatting() {
 		ArrayList<String> errorList;
@@ -103,7 +120,7 @@ public class Iteration1DummyUITest {
 		assertTrue(errorList.size() != 0);
 	}
 	
-	//Check if locations can be greater than 1 or negative
+	/** Check if locations can be greater than 1 or negative */
 	@Test
 	public void checkLocationToobig() {
 		ArrayList<String> errorList;
@@ -112,7 +129,7 @@ public class Iteration1DummyUITest {
 		assertTrue(errorList.size() != 0);
 	}
 	
-	//Check if for graphic x/yend can be smaller than x/ystart
+	/** Check if for graphic x/yend can be smaller than x/ystart */
 	@Test
 	public void checkGraphicLocation() {
 		ArrayList<String> errorList;
@@ -121,7 +138,7 @@ public class Iteration1DummyUITest {
 		assertTrue(errorList.size() != 0);
 	}
 	
-	//Check data is correctly stored once it has been parsed
+	/** Check data is correctly stored once it has been parsed */
 	@Test
 	public void checkDataIsCorrectlyStored(){
 		parser.parse("/testXML/testXML.xml");
@@ -211,7 +228,7 @@ public class Iteration1DummyUITest {
 		}
 	}
 	
-	//Check to see if defaults are stored correctly
+	/** Check to see if defaults are stored correctly */
 	@Test
 	public void checkDefaultStoredCorrectly() {
 		ArrayList<String> errorList = parser.parse("testXML/testingDefaults.xml");
@@ -236,7 +253,7 @@ public class Iteration1DummyUITest {
 		}
 	}
 	
-	//Check to see that the writer creates a new XML document
+	/** Check to see that the writer creates a new XML document */
 	@Test
 	public void checkWriterCreatesXML() {
 		parser.parse("testXML/testXML.xml");
@@ -248,9 +265,11 @@ public class Iteration1DummyUITest {
 		assertFalse(file.exists());
 	}
 	
-	//Check to see that the XML file created by the writer contains
-	//the correct data, since it has already been shown that the parser
-	//behaves as wished this can simply be done using the parser]
+	/**
+	 * Check to see that the XML file created by the writer contains
+	 * the correct data, since it has already been shown that the parser
+	 * behaves as wished this can simply be done using the parser
+	 */
 	@Test
 	public void checkWriterXMLIsCorrect() {
 		parser.parse("testXML/testXML.xml");
@@ -261,6 +280,5 @@ public class Iteration1DummyUITest {
 		file.delete();
 		assertTrue(errorList.size() == 0);
 	}
-	
-	
 }
+
