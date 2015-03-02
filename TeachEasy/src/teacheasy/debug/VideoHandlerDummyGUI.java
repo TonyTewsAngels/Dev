@@ -1,6 +1,7 @@
 package teacheasy.debug;
 
 import teacheasy.mediahandler.VideoHandler;
+import teacheasy.mediahandler.video.Video;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
