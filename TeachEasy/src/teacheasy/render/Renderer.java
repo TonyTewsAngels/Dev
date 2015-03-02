@@ -46,7 +46,11 @@ public class Renderer {
         imageHandler = new ImageHandler(group);
     }
     
+    /** Render an individual page */
     public void renderPage(Page page) {
+        /* Clear the page */
+        group.getChildren().removeAll();
+        
         /* Add the background */
         Rectangle bg = new Rectangle(bounds.getMaxX(), bounds.getMaxY() - 100, Color.WHITE);
         group.getChildren().add(bg);
@@ -70,8 +74,23 @@ public class Renderer {
         }
     }
     
+    /** Render the screen if no lesson is loaded */
+    public void renderUnLoaded() {
+        /* Clear the page */
+        group.getChildren().removeAll();
+        
+        /* Add the background */
+        Rectangle bg = new Rectangle(bounds.getMaxX(), bounds.getMaxY() - 100, Color.WHITE);
+        group.getChildren().add(bg);
+        
+        /* Add the help message */
+        Text text = new Text("Open a lesson to begin!");
+        text.relocate(10, 10);
+        group.getChildren().add(text);
+    }
+    
+    /** Render a video on a page */
     private void renderVideo(VideoObject video) {
-        // TODO render video
         videoHandler.createVideo(bounds.getMaxX() * video.getXStart(),
                                  bounds.getMaxY() * video.getYStart(),
                                  500,
@@ -80,8 +99,8 @@ public class Renderer {
                                  false);
     }
     
+    /** Render an image on a page */
     private void renderImage(ImageObject image) {
-        // TODO render image
         imageHandler.insertImage(image.getSourcefile(),
                                  bounds.getMaxX() * image.getXStart(), 
                                  bounds.getMaxY() * image.getYStart(),

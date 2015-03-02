@@ -182,16 +182,13 @@ public class RunTimeData {
     }
     
     /** Redraw the content */
-    public void redraw(Group group, Rectangle2D bounds) {
-        /* Clear the previous content */
-        group.getChildren().removeAll(group.getChildren());
-        
+    public void redraw(Group group, Rectangle2D bounds) {        
         if(isLessonOpen()) {
             /* Render the current page */
             renderer.renderPage(lesson.pages.get(currentPage));
         } else {
-            /* Draw welcome message */
-            group.getChildren().add(new Text("Begin by opening a lesson!"));
+            /* Render the no lesson loaded screen */
+            renderer.renderUnLoaded();
         }
     }
 }
