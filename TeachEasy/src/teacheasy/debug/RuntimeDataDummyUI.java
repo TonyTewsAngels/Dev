@@ -49,7 +49,7 @@ public class RuntimeDataDummyUI extends Application {
         primaryStage.setY(bounds.getMinY());
         primaryStage.setWidth(bounds.getMaxX());
         primaryStage.setHeight(bounds.getMaxY());
-        primaryStage.setResizable(false);
+        primaryStage.setResizable(true);
         
         /* Set up the grid */
         GridPane grid = new GridPane();
