@@ -1,4 +1,4 @@
-package teacheasy.data;
+package teacheasy.mediahandler.multichoice;
 
 import java.awt.List;
 import java.util.ArrayList;
@@ -30,21 +30,19 @@ public class multipleChoice{
 	public multipleChoice (Group nGroup , ArrayList<Answer>answers, int defaultPadding , int spacing ){
 		
 		this.group = nGroup;
-		
-		answers.get(i).getText();
-	    answers.get(index).isCorrect();
+	    cB = new ArrayList<CheckBox>();
+	    rB = new ArrayList<RadioButton>();
 	    
-	    this.cB = new ArrayList();
-	    
-	    this.rB = new ArrayList();
-	    
-	    ToggleGroup tGroup = new ToggleGroup();
+	   // switch case statement 
 	    
 	    //Creation of CheckBox's 
 	    for (i = 0; i < answers.size();i++ ){
 	    	CheckBox temp = new CheckBox(answers.get(i).getText());
 	    	cB.add(temp);
 	    }
+	    
+	    
+	    ToggleGroup tGroup = new ToggleGroup();
 	    
 	    //creation of radio buttons 
 	    for(i = 0; i < answers.size(); i++ ){
@@ -57,7 +55,7 @@ public class multipleChoice{
 	    
 	    
 	    
-	    
+	    //if statement
 	    
 	    //set orientation 
 	    
@@ -80,12 +78,9 @@ public class multipleChoice{
 		
 	}
 
-	public void start(Stage arg0) throws Exception {
-		// TODO Auto-generated method stub
-	}
-
 	
-	public void checkBoxes(String answers ){     
+	public void checkCorrect (){     
+		
 	}
 	
 	
