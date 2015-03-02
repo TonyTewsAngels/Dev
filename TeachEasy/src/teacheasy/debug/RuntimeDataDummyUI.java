@@ -34,7 +34,7 @@ public class RuntimeDataDummyUI extends Application {
     
     /** Constructor method */
     public RuntimeDataDummyUI() {
-        runTimeData = new RunTimeData(0);
+        // Do Nothing
     }
 
     @Override
@@ -108,6 +108,9 @@ public class RuntimeDataDummyUI extends Application {
        
         /* Add the page buttons to the grid */
         grid.add(buttonRow, 0, 2);
+        
+        /* Instantiate the runtime data */
+        runTimeData = new RunTimeData(group, bounds);
         
         /* Show the stage */
         primaryStage.show();

@@ -29,6 +29,10 @@ import teacheasy.xml.*;
  * @version 1.0 20 Feb 2015
  */
 public class RunTimeData {
+    /* */
+    private Group group;
+    private Rectangle2D bounds;
+    
     /* Class level variables */
     private int pageCount;
     private int currentPage;
@@ -44,7 +48,11 @@ public class RunTimeData {
     private Renderer renderer;
 
     /** Constructor method */
-    public RunTimeData(Group nGroup, Rectangle2D bounds) {
+    public RunTimeData(Group nGroup, Rectangle2D nBounds) {
+        /* Set the class level variables */
+        this.group = nGroup;
+        this.bounds = nBounds;
+        
         /* Instantiate class level variables */
         this.pageCount = 0;
         this.currentPage = 0;
@@ -55,6 +63,9 @@ public class RunTimeData {
         
         /* Instantiate the xml handler */
         this.xmlHandler = new XMLHandler();
+        
+        /* Instantiate the renderer */
+        renderer = new Renderer(group, bounds);
     }
     
     /** Get the current page */
@@ -165,6 +176,9 @@ public class RunTimeData {
         
         /* Set the lesson to an empty lesson */
         lesson = new Lesson();
+        
+        /* Set the page count back to zero */
+        setPageCount(0);
     }
     
     /** Redraw the content */
@@ -172,29 +186,9 @@ public class RunTimeData {
         /* Clear the previous content */
         group.getChildren().removeAll(group.getChildren());
         
-        /* Draw background */
-        group.getChildren().add(new Rectangle(bounds.getMaxX(), bounds.getMaxY()- 100, Color.WHITE));
-        
-        /* If a lesson is open, render the current page. */
         if(isLessonOpen()) {
-            /* Create title */
-            Text title = new Text(lesson.lessonInfo.getLessonName());
-            title.relocate(5, 0);
-            
-            /* Create Page Number */
-            Text pageNumber = new Text("Page: " + (currentPage + 1));
-            pageNumber.relocate(5, 20);
-            
-            /* Draw the objects on the page*/
-            for(int i = 0; i < getCurrentPage().pageObjects.size(); i++) {
-                Text objectName = new Text(getCurrentPage().pageObjects.get(i).getType().toString());
-                objectName.relocate(5, 100 + i * 20);
-                group.getChildren().add(objectName);
-            }
-            
-            /* Add the elements to the content pane */
-            group.getChildren().addAll(title, pageNumber);
-            
+            /* Render the current page */
+            renderer.renderPage(lesson.pages.get(currentPage));
         } else {
             /* Draw welcome message */
             group.getChildren().add(new Text("Begin by opening a lesson!"));

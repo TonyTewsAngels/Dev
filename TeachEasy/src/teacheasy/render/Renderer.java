@@ -15,6 +15,8 @@ import teacheasy.mediahandler.ImageHandler;
 import teacheasy.mediahandler.VideoHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 /**
@@ -45,6 +47,10 @@ public class Renderer {
     }
     
     public void renderPage(Page page) {
+        /* Add the background */
+        Rectangle bg = new Rectangle(bounds.getMaxX(), bounds.getMaxY() - 100, Color.WHITE);
+        group.getChildren().add(bg);
+        
         /* Loop through all the objects on the page */
         for(int i = 0; i < page.pageObjects.size(); i++) {
             /* Get the object */
