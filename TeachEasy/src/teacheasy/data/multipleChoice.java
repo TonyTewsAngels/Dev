@@ -9,6 +9,8 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -23,32 +25,58 @@ public class multipleChoice{
 	private int index;
 
 	ArrayList<CheckBox> cB;
+	ArrayList<RadioButton> rB; 
     
-	public multipleChoice (ArrayList<Answer> answers, int Defaultpadding , int spacing ){
+	public multipleChoice (Group nGroup , ArrayList<Answer>answers, int defaultPadding , int spacing ){
+		
+		this.group = nGroup;
 		
 		answers.get(i).getText();
 	    answers.get(index).isCorrect();
+	    
 	    this.cB = new ArrayList();
 	    
+	    this.rB = new ArrayList();
+	    
+	    ToggleGroup tGroup = new ToggleGroup();
+	    
+	    //Creation of CheckBox's 
 	    for (i = 0; i < answers.size();i++ ){
-	    	
 	    	CheckBox temp = new CheckBox(answers.get(i).getText());
 	    	cB.add(temp);
-	       // cB.setText(answers.get(i).getText());
-	    	 
 	    }
+	    
+	    //creation of radio buttons 
+	    for(i = 0; i < answers.size(); i++ ){
+	    	RadioButton tempRB = new RadioButton(answers.get(i).getText());
+	    	tempRB.setToggleGroup(tGroup);
+	    	rB.add(tempRB);
+	    }
+	    
+
+	    
+	    
+	    
+	    
+	    
 	    //set orientation 
 	    
 	    // vertical position
 	    VBox verticalPosition = new VBox(spacing);
-        verticalPosition.setPadding(new Insets(Defaultpadding));
+        verticalPosition.setPadding(new Insets(defaultPadding));
         verticalPosition.getChildren().addAll(cB);
+        verticalPosition.getChildren().addAll(rB);
  
         
 		// horizontal position 
         HBox horizontalPosition = new HBox(spacing);
-		horizontalPosition.setPadding( new Insets (Defaultpadding));
+		horizontalPosition.setPadding( new Insets (defaultPadding));
 		horizontalPosition.getChildren().addAll(cB);
+		horizontalPosition.getChildren().addAll(rB);
+		
+		// To be Able to choose Only one radio option
+		
+		
 		
 	}
 
