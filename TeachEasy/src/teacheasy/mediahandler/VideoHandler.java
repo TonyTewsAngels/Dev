@@ -56,7 +56,7 @@ public class VideoHandler {
     private Group group;
     
     /* Array List of the videos currently on the screen */
-    List<Video> videos;
+    private List<Video> videos;
     
     /** Constructor Method */
     public VideoHandler(Group nGroup) {

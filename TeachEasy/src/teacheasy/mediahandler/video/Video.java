@@ -1,3 +1,9 @@
+/*
+ * Alistair Jewers
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
+ * 
+ */
 package teacheasy.mediahandler.video;
 
 import java.io.File;
@@ -26,10 +32,18 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * This class encapsulates an individual video
+ * within the video handler.
+ * 
+ * @author Alistair Jewers
+ * @version 1.0 24 Feb 2015
+ */
 public class Video {
     /* Reference to the group on which to draw videos */
     private Group group;
     
+    /* Video Variables */
     Media media;
     MediaPlayer mediaPlayer;
     MediaView video;
@@ -50,6 +64,7 @@ public class Video {
     /* Fullscreen stage */
     private Stage fsStage;
     
+    /* Fullscreen information */
     private FullscreenInfo fsInfo;
     
     public Video(Group nGroup, double x, double y, double width, String sourcefile, boolean autoPlay, boolean loop) {
@@ -203,12 +218,6 @@ public class Video {
         } else {
             playButton.setText("Play");
         }
-        
-        /* Set the button IDs */
-        playButton.setId("play");
-        stopButton.setId("stop");
-        fullscreenButton.setId("fullscreen");
-        scanBar.setId("scan");
     }
     
     /** Scan to a location in the video */
