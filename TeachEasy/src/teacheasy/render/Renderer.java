@@ -8,6 +8,7 @@ package teacheasy.render;
 
 import java.util.ArrayList;
 
+import teacheasy.data.GraphicObject;
 import teacheasy.data.ImageObject;
 import teacheasy.data.Lesson;
 import teacheasy.data.Page;
@@ -17,6 +18,9 @@ import teacheasy.data.TextObject;
 import teacheasy.data.VideoObject;
 import teacheasy.mediahandler.ImageHandler;
 import teacheasy.mediahandler.VideoHandler;
+import wavemedia.graphic.GraphicsHandler;
+import wavemedia.graphic.Shading;
+import wavemedia.graphic.Shadow;
 import wavemedia.text.Alignment;
 import wavemedia.text.TextAttribute;
 import wavemedia.text.TextHandler;
@@ -40,6 +44,7 @@ public class Renderer {
     private VideoHandler videoHandler;
     private ImageHandler imageHandler;
     private TextHandler textHandler;
+    private GraphicsHandler graphicsHandler;
    
     /** Constructor */
     public Renderer(Group nGroup, Rectangle2D nBounds) {
@@ -53,6 +58,7 @@ public class Renderer {
         videoHandler = new VideoHandler(group);
         imageHandler = new ImageHandler(group);
         textHandler = new TextHandler(group);
+        graphicsHandler = new GraphicsHandler(group);
     }
     
     /** Render an individual page */
@@ -79,6 +85,9 @@ public class Renderer {
                     break;
                 case VIDEO:
                     renderVideo((VideoObject) pageObject);
+                    break;
+                case GRAPHIC:
+                    renderGraphic((GraphicObject) pageObject);
                     break;
                 default:
                     break;
@@ -151,5 +160,26 @@ public class Renderer {
                                  image.getxScaleFactor(), 
                                  image.getyScaleFactor(),
                                  image.getRotation());
+    }
+    
+    /** Render a graphic object on a page */
+    private void renderGraphic(GraphicObject graphic) {
+        switch(graphic.getGraphicType()) {
+            case OVAL:
+                graphicsHandler.drawOval((float)(bounds.getMaxX() * graphic.getXStart()),
+                                         (float)(bounds.getMaxY() * graphic.getYStart()), 
+                                         (float)(bounds.getMaxX() * graphic.getXEnd()), 
+                                         (float)(bounds.getMaxY() * graphic.getYEnd()), 
+                                         new Color(1.0, 0.0, 1.0, 1.0), 
+                                         graphic.isSolid(), 
+                                         new Color(0.0, 0.0, 0.0, 0.0),
+                                         graphic.getOutlineThickness(), 
+                                         Shadow.NONE, 
+                                         graphic.getRotation(), 
+                                         Shading.NONE);
+                break;
+            default:
+                break;
+        }
     }
 }

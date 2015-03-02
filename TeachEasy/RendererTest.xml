@@ -19,7 +19,7 @@
         <passboundary failmessage="fail" passmessage="pass">10</passboundary>
     </gradesettings>
     <slide backgroundcolor="#ffcc00cc" number="1">
-        <image rotation="0.0" scale="1.0" sourcefile="testpic.png" xstart="0.5" yscale="1.0" ystart="0.5"/>
+        <graphic graphiccolor="#ff000000" outlinethickness="0.5" rotation="0.0" shadow="false" solid="true" type="oval" xend="0.7" xstart="0.5" yend="0.7" ystart="0.5"/>
     </slide>
     <slide backgroundcolor="#ffcc00cc" number="2">
         <image rotation="0.0" scale="1.0" sourcefile="testpic.png" xstart="0.1" yscale="1.0" ystart="0.1"/>
