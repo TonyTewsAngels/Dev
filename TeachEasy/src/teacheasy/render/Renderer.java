@@ -6,13 +6,20 @@
  */
 package teacheasy.render;
 
+import java.util.ArrayList;
+
 import teacheasy.data.ImageObject;
 import teacheasy.data.Lesson;
 import teacheasy.data.Page;
 import teacheasy.data.PageObject;
+import teacheasy.data.RichText;
+import teacheasy.data.TextObject;
 import teacheasy.data.VideoObject;
 import teacheasy.mediahandler.ImageHandler;
 import teacheasy.mediahandler.VideoHandler;
+import wavemedia.text.Alignment;
+import wavemedia.text.TextAttribute;
+import wavemedia.text.TextHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
@@ -32,6 +39,7 @@ public class Renderer {
     
     private VideoHandler videoHandler;
     private ImageHandler imageHandler;
+    private TextHandler textHandler;
    
     /** Constructor */
     public Renderer(Group nGroup, Rectangle2D nBounds) {
@@ -44,6 +52,7 @@ public class Renderer {
         /* Instantiate the handlers */
         videoHandler = new VideoHandler(group);
         imageHandler = new ImageHandler(group);
+        textHandler = new TextHandler(group);
     }
     
     /** Render an individual page */
@@ -62,6 +71,9 @@ public class Renderer {
             
             /* Act based on type */
             switch(pageObject.getType()) {
+                case TEXT:
+                    renderText((TextObject) pageObject);
+                    break;
                 case IMAGE:
                     renderImage((ImageObject) pageObject);
                     break;
@@ -87,6 +99,38 @@ public class Renderer {
         Text text = new Text("Open a lesson to begin!");
         text.relocate(10, 10);
         group.getChildren().add(text);
+    }
+    
+    /** Render a text box on a page */
+    private void renderText(TextObject text) {
+        textHandler.clearBuffer();
+        
+        for(int i = 0; i < text.textFragments.size(); i++) {
+           RichText richText = text.textFragments.get(i);
+           
+           ArrayList<TextAttribute> attrs = new ArrayList<TextAttribute>();
+           if(richText.isBold()) attrs.add(TextAttribute.BOLD);
+           if(richText.isItalic()) attrs.add(TextAttribute.ITALIC);
+           if(richText.isUnderline()) attrs.add(TextAttribute.UNDERLINE);
+           if(richText.isSubscript()) attrs.add(TextAttribute.SUBSCRIPT);
+           if(richText.isSuperscript()) attrs.add(TextAttribute.SUPERSCRIPT);
+           if(richText.isStrikethrough()) attrs.add(TextAttribute.STRIKETHROUGH);         
+           
+           textHandler.addStringToBuffer(richText.getText(),
+                                         richText.getFont(),
+                                         richText.getFontSize(),
+                                         richText.getColor(),
+                                         "#00000000",
+                                         attrs.toArray(new TextAttribute[attrs.size()])); 
+        }
+        
+        textHandler.drawBuffer((int)(bounds.getMaxX() * text.getXStart()),
+                               (int)(bounds.getMaxY() * text.getYStart()),
+                               500,
+                               500,
+                               "#00000000",
+                               Alignment.JUSTIFY);
+        
     }
     
     /** Render a video on a page */

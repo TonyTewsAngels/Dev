@@ -21,11 +21,27 @@
     <slide backgroundcolor="#ffcc00cc" number="1">
         <image rotation="0.0" scale="1.0" sourcefile="testpic.png" xstart="0.5" yscale="1.0" ystart="0.5"/>
     </slide>
-    <slide backgroundcolor="#ffcc00cc" number="1">
+    <slide backgroundcolor="#ffcc00cc" number="2">
         <image rotation="0.0" scale="1.0" sourcefile="testpic.png" xstart="0.1" yscale="1.0" ystart="0.1"/>
         <image rotation="12.0" scale="1.0" sourcefile="testpic.png" xstart="0.4" yscale="1.0" ystart="0.4"/>
     </slide>
-    <slide backgroundcolor="#ffcc00cc" number="1">
+    <slide backgroundcolor="#ffcc00cc" number="3">
         <video sourcefile="M:/Year 3/SWENG/Videos/avengers-featurehp.mp4" videoscreenshot="C:\Users\sadjlsd\videoicon.jpeg" xstart="0.1" ystart="0.1"/>
+    </slide>
+    <slide backgroundcolor="#ffffffff" number="4">
+    	<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.1" ystart="0.1">
+            <richtext bold="true" font="arial" fontcolor="#ff000000" fontsize="24">Bold Text</richtext>
+            <richtext font="arial" fontcolor="#ff000000" fontsize="24">Not Bold Text</richtext>
+            <richtext font="arial" fontcolor="#ff000000" fontsize="24" italic="true" newline="true">Italic text.</richtext>
+        </text>
+    </slide>
+    <slide backgroundcolor="#ffffffff" number="5">
+    	<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.1" ystart="0.1">
+			<richtext font="arial" fontcolor="#ff000000" fontsize="24" bold="true" newline="true">Modern Art...</richtext>
+        </text>
+        <image rotation="0.0" scale="1.0" sourcefile="testpic.png" xstart="0.1" yscale="1.0" ystart="0.3"/>
+        <text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.5" ystart="0.7">
+			<richtext font="arial" fontcolor="#ff000000" fontsize="24" bold="true" newline="true">Isn't it shit?</richtext>
+        </text>
     </slide>
 </slideshow>
