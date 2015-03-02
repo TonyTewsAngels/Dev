@@ -16,6 +16,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 import teacheasy.data.*;
+import teacheasy.render.Renderer;
 import teacheasy.xml.*;
 
 /**
@@ -38,11 +39,14 @@ public class RunTimeData {
     
     /* XML Handler */
     private XMLHandler xmlHandler;
+    
+    /* Renderer */
+    private Renderer renderer;
 
     /** Constructor method */
-    public RunTimeData(int nPageCount) {
+    public RunTimeData(Group nGroup, Rectangle2D bounds) {
         /* Instantiate class level variables */
-        this.pageCount = nPageCount;
+        this.pageCount = 0;
         this.currentPage = 0;
         this.lessonOpen = false;
         
