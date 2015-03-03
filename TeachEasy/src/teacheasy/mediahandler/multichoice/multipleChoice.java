@@ -23,8 +23,6 @@ import javafx.stage.Stage;
 public class multipleChoice{
 
 	private Group group ;
-	private int i;
-	private int index;
 
 	ArrayList<MChoiceCheckBox> cB;
 	ArrayList<MChoiceRadio> rB; 
@@ -48,43 +46,47 @@ public class multipleChoice{
 
 		case CHECKBOX:
 			//Creation of CheckBox's 
-			for (i = 0; i < answers.size();i++ ){
+			for (int i = 0; i < answers.size();i++ ){
 				CheckBox temp = new CheckBox(answers.get(i).getText());
 				cB.add(new MChoiceCheckBox(temp, answers.get(i).isCorrect()));
 			}
+
+			//set orientation 
+
+			// creating multiple vertical check boxes 
 			if (orientation == Orientation.VERTICAL){
-				for(i= 0; i < cB.size(); i++ ){
+				for(int i= 0; i < cB.size(); i++ ){
 					verticalPosition.getChildren().add(cB.get(i).getcB());
 				}
 			}else 
-
-				for(i= 0; i < cB.size(); i++ ){
+				//create multiple horizontal check boxes
+				for(int i= 0; i < cB.size(); i++ ){
 					horizontalPosition.getChildren().add(cB.get(i).getcB());
 				}
 
 			break;
 
 		case RADIO:
+			// To be Able to choose Only one radio option
 			ToggleGroup tGroup = new ToggleGroup();
 			//creation of radio buttons 
-			for(i = 0; i < answers.size(); i++ ){
+			for(int i = 0; i < answers.size(); i++ ){
 				RadioButton tempRb = new RadioButton(answers.get(i).getText());
 				tempRb.setToggleGroup(tGroup);
 				rB.add(new MChoiceRadio(tempRb, answers.get(i).isCorrect()));
 			}
 
+			//set orientation 
 			if( orientation == Orientation.VERTICAL)
 
 				// creating multiple vertical radio buttons  
-				for(i= 0; i < rB.size(); i++ ){
+				for(int i= 0; i < rB.size(); i++ ){
 					verticalPosition.getChildren().add(rB.get(i).getrB());
 				}else 
-
 					// create multiple horizontal radio buttons 
-					for(i =0; i< rB.size();i++){
+					for(int i =0; i< rB.size();i++){
 						horizontalPosition.getChildren().add(rB.get(i).getrB());
 					}
-
 			break;
 		case DROPDOWNLIST:
 			break;
@@ -101,13 +103,6 @@ public class multipleChoice{
 
 
 
-		//if statement
-
-		//set orientation 
-
-
-
-		// creating multiple vertical check boxes 
 
 
 
@@ -116,18 +111,9 @@ public class multipleChoice{
 
 
 
-		//create multiple horizontal check boxes 
 
 
 
-		// To be Able to choose Only one radio option
-
-
-
-	}
-
-
-	public void checkCorrect (){     
 
 	}
 
