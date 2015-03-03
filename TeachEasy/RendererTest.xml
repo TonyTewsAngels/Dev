@@ -19,12 +19,15 @@
         <passboundary failmessage="fail" passmessage="pass">10</passboundary>
     </gradesettings>
     <slide backgroundcolor="#ffcc00cc" number="1">
-        <graphic graphiccolor="#55005555" outlinethickness="0.5" rotation="0.0" shadow="false" solid="true" type="oval" xend="0.7" xstart="0.5" yend="0.7" ystart="0.5"/>
-        <graphic graphiccolor="#ffff00ff" outlinethickness="0.5" rotation="0.0" shadow="false" solid="true" type="rectangle" xend="0.2" xstart="0.1" yend="0.2" ystart="0.1"/>
+    	<graphic graphiccolor="#ff000000" outlinethickness="4" rotation="0.0" shadow="false" solid="true" type="line" xend="0.6" xstart="0.15" yend="0.6" ystart="0.15"/>
+        <graphic graphiccolor="#ff005555" outlinethickness="0.5" rotation="0.0" shadow="false" solid="true" type="oval" xend="0.7" xstart="0.5" yend="0.7" ystart="0.5"/>
+        <graphic graphiccolor="#ffff00ff" outlinethickness="0.5" rotation="0.0" shadow="false" solid="true" type="rectangle" xend="0.2" xstart="0.1" yend="0.2" ystart="0.1">
+        	<cyclicshading shadingcolor="#ff00ff00"/>
+        </graphic>
     </slide>
     <slide backgroundcolor="#ffcc00cc" number="2">
         <image rotation="0.0" scale="1.0" sourcefile="testpic.png" xstart="0.1" yscale="1.0" ystart="0.1"/>
-        <image rotation="12.0" scale="1.0" sourcefile="testpic.png" xstart="0.4" yscale="1.0" ystart="0.4"/>
+        <image rotation="54.0" scale="1.0" sourcefile="testpic.png" xstart="0.4" yscale="1.0" ystart="0.4"/>
     </slide>
     <slide backgroundcolor="#ffcc00cc" number="3">
         <video sourcefile="M:/Year 3/SWENG/Videos/avengers-featurehp.mp4" videoscreenshot="C:\Users\sadjlsd\videoicon.jpeg" xstart="0.1" ystart="0.1"/>
@@ -35,15 +38,15 @@
     <slide backgroundcolor="#ffffffff" number="4">
     	<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.1" ystart="0.1">
             <richtext bold="true" font="arial" fontcolor="#ff000000" fontsize="24">Bold Text</richtext>
-            <richtext font="arial" fontcolor="#ff000000" fontsize="24">Not Bold Text</richtext>
-            <richtext font="arial" fontcolor="#ff000000" fontsize="24" italic="true" newline="true">Italic text.</richtext>
+            <richtext font="arial" fontcolor="#ff000000" fontsize="20">Not Bold Text</richtext>
+            <richtext font="arial" fontcolor="#ff000000" fontsize="12" italic="true" newline="true">Italic text.</richtext>
         </text>
     </slide>
     <slide backgroundcolor="#ffffffff" number="4">
-    	<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.3" ystart="0.3">
+    	<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.1" ystart="0.3">
             <richtext bold="true" font="arial" fontcolor="#ff000000" fontsize="24">Bold Text</richtext>
-            <richtext font="arial" fontcolor="#ff000000" fontsize="24">Not Bold Text</richtext>
-            <richtext font="arial" fontcolor="#ff000000" fontsize="24" italic="true" newline="true">Italic text.</richtext>
+            <richtext font="arial" fontcolor="#ff000000" fontsize="30">Not Bold Text</richtext>
+            <richtext font="arial" fontcolor="#ff000000" fontsize="34" italic="true" newline="true">Italic text.</richtext>
         </text>
     </slide>
     <slide backgroundcolor="#ffffffff" number="5">
@@ -52,7 +55,8 @@
         </text>
         <image rotation="0.0" scale="1.0" sourcefile="testpic.png" xstart="0.1" yscale="1.0" ystart="0.3"/>
         <text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.5" ystart="0.7">
-			<richtext font="arial" fontcolor="#ff000000" fontsize="24" bold="true" newline="true">Isn't it shit?</richtext>
+			<richtext font="arial" fontcolor="#ff000000" fontsize="24" bold="true" newline="true">Isn't it poo?</richtext>
         </text>
+        <video sourcefile="M:/Year 3/SWENG/Videos/avengers-featurehp.mp4" videoscreenshot="C:\Users\sadjlsd\videoicon.jpeg" xstart="0.7" ystart="0.1"/>
     </slide>
 </slideshow>

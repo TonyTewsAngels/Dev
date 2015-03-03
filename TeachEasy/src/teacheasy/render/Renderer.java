@@ -112,33 +112,39 @@ public class Renderer {
     
     /** Render a text box on a page */
     private void renderText(TextObject text) {
+        /* Clear the handler buffer */
         textHandler.clearBuffer();
         
+        /* Loop through each rich text element */
         for(int i = 0; i < text.textFragments.size(); i++) {
-           RichText richText = text.textFragments.get(i);
-           
-           ArrayList<TextAttribute> attrs = new ArrayList<TextAttribute>();
-           if(richText.isBold()) attrs.add(TextAttribute.BOLD);
-           if(richText.isItalic()) attrs.add(TextAttribute.ITALIC);
-           if(richText.isUnderline()) attrs.add(TextAttribute.UNDERLINE);
-           if(richText.isSubscript()) attrs.add(TextAttribute.SUBSCRIPT);
-           if(richText.isSuperscript()) attrs.add(TextAttribute.SUPERSCRIPT);
-           if(richText.isStrikethrough()) attrs.add(TextAttribute.STRIKETHROUGH);         
-           
-           textHandler.addStringToBuffer(richText.getText(),
-                                         richText.getFont(),
-                                         richText.getFontSize(),
-                                         richText.getColor(),
-                                         "#00000000",
-                                         attrs.toArray(new TextAttribute[attrs.size()])); 
+            /* Get the rich text */
+            RichText richText = text.textFragments.get(i);
+            
+            /* Create an array of the attributes */
+            ArrayList<TextAttribute> attrs = new ArrayList<TextAttribute>();
+            if(richText.isBold()) attrs.add(TextAttribute.BOLD);
+            if(richText.isItalic()) attrs.add(TextAttribute.ITALIC);
+            if(richText.isUnderline()) attrs.add(TextAttribute.UNDERLINE);
+            if(richText.isSubscript()) attrs.add(TextAttribute.SUBSCRIPT);
+            if(richText.isSuperscript()) attrs.add(TextAttribute.SUPERSCRIPT);
+            if(richText.isStrikethrough()) attrs.add(TextAttribute.STRIKETHROUGH);         
+            
+            /* Add the rich text fragment to the buffer */
+            textHandler.addStringToBuffer(richText.getText(),
+                                          richText.getFont(),
+                                          richText.getFontSize(),
+                                          richText.getColor(),
+                                          "#00000000",
+                                          attrs.toArray(new TextAttribute[attrs.size()])); 
         }
         
+        /* Draw the buffer to the screen */
         textHandler.drawBuffer((int)(bounds.getMaxX() * text.getXStart()),
                                (int)(bounds.getMaxY() * text.getYStart()),
-                               500,
-                               500,
+                               (int)(bounds.getMaxX() * text.getXStart()) + 200,
+                               (int)(bounds.getMaxY() * text.getYStart()) + 200,
                                "#00000000",
-                               Alignment.JUSTIFY);
+                               Alignment.LEFT);
         
     }
     
@@ -164,6 +170,18 @@ public class Renderer {
     
     /** Render a graphic object on a page */
     private void renderGraphic(GraphicObject graphic) {
+        /* Set up the shading */
+        Shading shading;
+        switch(graphic.getShading()) {
+            case CYCLIC:
+                shading = Shading.CYCLIC;
+                break;
+            default:
+                shading = Shading.NONE;
+                break;
+        }
+        
+        /* Draw the appropriate graphic */
         switch(graphic.getGraphicType()) {
             case OVAL:
                 graphicsHandler.drawOval((float)(bounds.getMaxX() * graphic.getXStart()),
@@ -176,7 +194,8 @@ public class Renderer {
                                          graphic.getOutlineThickness(), 
                                          Shadow.NONE, 
                                          graphic.getRotation(), 
-                                         Shading.NONE);
+                                         shading,
+                                         Util.colorFromString(graphic.getShadingColor()));
                 break;
             case RECTANGLE:
                 graphicsHandler.drawRectangle((float)(bounds.getMaxX() * graphic.getXStart()),
@@ -191,10 +210,18 @@ public class Renderer {
                                               graphic.getOutlineThickness(),
                                               Shadow.NONE, 
                                               graphic.getRotation(), 
-                                              Shading.NONE);
+                                              shading,
+                                              Util.colorFromString(graphic.getShadingColor()));
                 break;
             case LINE :
-                
+                graphicsHandler.drawLine((float)(bounds.getMaxX() * graphic.getXStart()),
+                                         (float)(bounds.getMaxY() * graphic.getYStart()), 
+                                         (float)(bounds.getMaxX() * graphic.getXEnd()), 
+                                         (float)(bounds.getMaxY() * graphic.getYEnd()), 
+                                         Util.colorFromString(graphic.getGraphicColour()), 
+                                         graphic.getOutlineThickness(), 
+                                         shading,
+                                         Util.colorFromString(graphic.getShadingColor()));
                 break;
             default:
                 break;
