@@ -170,13 +170,31 @@ public class Renderer {
                                          (float)(bounds.getMaxY() * graphic.getYStart()), 
                                          (float)(bounds.getMaxX() * graphic.getXEnd()), 
                                          (float)(bounds.getMaxY() * graphic.getYEnd()), 
-                                         new Color(1.0, 0.0, 1.0, 1.0), 
+                                         Util.colorFromString(graphic.getGraphicColour()), 
                                          graphic.isSolid(), 
                                          new Color(0.0, 0.0, 0.0, 0.0),
                                          graphic.getOutlineThickness(), 
                                          Shadow.NONE, 
                                          graphic.getRotation(), 
                                          Shading.NONE);
+                break;
+            case RECTANGLE:
+                graphicsHandler.drawRectangle((float)(bounds.getMaxX() * graphic.getXStart()),
+                                              (float)(bounds.getMaxY() * graphic.getYStart()),
+                                              (float)(bounds.getMaxX() * graphic.getXEnd()),
+                                              (float)(bounds.getMaxY() * graphic.getYEnd()),
+                                              0.0f,
+                                              0.0f,
+                                              Util.colorFromString(graphic.getGraphicColour()),
+                                              graphic.isSolid(), 
+                                              new Color(0.0, 0.0, 0.0, 0.0),
+                                              graphic.getOutlineThickness(),
+                                              Shadow.NONE, 
+                                              graphic.getRotation(), 
+                                              Shading.NONE);
+                break;
+            case LINE :
+                
                 break;
             default:
                 break;
