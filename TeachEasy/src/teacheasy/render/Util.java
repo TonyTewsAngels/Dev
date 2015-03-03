@@ -2,7 +2,15 @@ package teacheasy.render;
 
 import javafx.scene.paint.Color;
 
+/**
+ * A class for renderer utility methods.
+ * 
+ * @author Alistair Jewers
+ * @version 1.0 03 Mar 2015
+ */
 public class Util {
+    
+    /** Convert an ARGB hex color string into a java fx color */
     public static Color colorFromString(String hexCol) {
         String A = hexCol.substring(1, 3);
         String R = hexCol.substring(3, 5);
@@ -20,9 +28,5 @@ public class Util {
         float fA = iA/255.0f;
 
         return new Color(fR, fG, fB, fA);
-    }
-    
-    public static void main(String args[]) {
-        colorFromString("#ff22AAFF");
     }
 }
