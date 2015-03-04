@@ -1,6 +1,7 @@
 package teacheasy.data;
 
 import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -8,27 +9,41 @@ import javafx.scene.input.KeyEvent;
 public class AnswerBox {
 
 	public TextField answerField;
-	public int marks;
+	int marks;
+	int awardedMarks;
 	boolean retry;
 	String correctAnswers;
 	boolean answerIsCorrect;
+	int characterLimit;
+	double xStart;
+	double yStart;
+	Group group;
 
 	public AnswerBox(double nXStart, double nYStart, int nCharacterLimit,
-			boolean nRetry, String nCorrectAnswers, int nMarks) {
+			boolean nRetry, String nCorrectAnswers, int nMarks, Group nGroup) {
+
 		answerField = new TextField();
 		this.marks = nMarks;
 		this.correctAnswers = nCorrectAnswers;
-		createAnswerBox(nXStart, nYStart, nCharacterLimit, nRetry);
+		this.characterLimit = nCharacterLimit;
+		this.xStart = nXStart;
+		this.yStart = nYStart;
+		this.group = nGroup;
+		this.retry = nRetry;
+
+		createAnswerBox(xStart, yStart, characterLimit, nRetry);
 		answerField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			public void handle(KeyEvent ke) {
-				if (ke.getCode().equals(KeyCode.ENTER)
+			public void handle(KeyEvent key) {
+				if (key.getCode().equals(KeyCode.ENTER)
 						&& answerField.isEditable() == true) {
 					answerIsCorrect = checkAnswer(marks);
-					// System.out.println(correctAnswer);
-					// System.out.println(answerBox.marks);
+					System.out.println("Answered " + answerIsCorrect);
+					System.out.println("Awarded marks " + awardedMarks);
 				}
 			}
 		});
+		
+		group.getChildren().add(answerField);
 	}
 
 	/* Method to create an answer box */
@@ -52,8 +67,8 @@ public class AnswerBox {
 			@Override
 			public void handle(KeyEvent event) {
 
-				TextField tx = (TextField) event.getSource();
-				if (tx.getText().length() >= characterLimit) {
+				TextField textField = (TextField) event.getSource();
+				if (textField.getText().length() >= characterLimit) {
 					event.consume();
 				}
 			}
@@ -73,7 +88,7 @@ public class AnswerBox {
 		for (int i = 0; i < listOfCorrectAnswers.length; i++) {
 
 			if (answerField.getText().equals(listOfCorrectAnswers[i])) {
-				marks += nMarks;
+				awardedMarks += nMarks;
 				isCorrect = true;
 				retry = false;
 				break;

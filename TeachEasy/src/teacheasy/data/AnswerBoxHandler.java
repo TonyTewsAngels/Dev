@@ -6,9 +6,7 @@ package teacheasy.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.event.EventHandler;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.Group;
 import teacheasy.data.AnswerBox;
 
 /**
@@ -23,31 +21,18 @@ import teacheasy.data.AnswerBox;
  */
 public class AnswerBoxHandler {
 
-	public TextField answerField;
-	public int marks;
-	boolean retry;
-	String correctAnswers;
-	double XStart;
-	double YStart;
-	int characterLimit;
-	
-	
-	
+	private List<AnswerBox> answerBox;
+	private Group group;
 
-	public List<AnswerBox> answerBox;
-
-	public AnswerBoxHandler(double nXStart, double nYStart,
-			int nCharacterLimit, boolean nRetry, String nCorrectAnswers,
-			int nMarks) {
+	public AnswerBoxHandler(Group nGroup) {
 		this.answerBox = new ArrayList<AnswerBox>();
-		this.XStart = nXStart;
-		this.YStart = nYStart;
-		this.characterLimit = nCharacterLimit;
+		this.group = nGroup;
 	}
 
-	public void createAnswerBox() {
-		answerBox.add(new AnswerBox(XStart, YStart, characterLimit, retry,
-				correctAnswers, marks));
+	public void createAnswerBox(double xStart, double yStart,
+			int characterLimit, boolean retry, String correctAnswers, int marks) {
+		answerBox.add(new AnswerBox(xStart, yStart, characterLimit, retry,
+				correctAnswers, marks, group));
 	}
 
 }
