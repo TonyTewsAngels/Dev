@@ -1,10 +1,13 @@
 package teacheasy.data;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 
 public class AnswerBox {
 
@@ -19,6 +22,9 @@ public class AnswerBox {
 	double yStart;
 	Group group;
 
+	private HBox box;
+	private Button checkAnswerButton;
+
 	public AnswerBox(double nXStart, double nYStart, int nCharacterLimit,
 			boolean nRetry, String nCorrectAnswers, int nMarks, Group nGroup) {
 
@@ -31,6 +37,12 @@ public class AnswerBox {
 		this.group = nGroup;
 		this.retry = nRetry;
 
+		checkAnswerButton = new Button("Check answer");
+		checkAnswerButton.setId("check answer");
+		checkAnswerButton.setOnAction(new ButtonEventHandler());
+
+		box = new HBox();
+
 		createAnswerBox(xStart, yStart, characterLimit, nRetry);
 		answerField.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent key) {
@@ -42,8 +54,9 @@ public class AnswerBox {
 				}
 			}
 		});
-		
-		group.getChildren().add(answerField);
+
+		box.getChildren().addAll(answerField ,checkAnswerButton);
+		group.getChildren().addAll(box);
 	}
 
 	/* Method to create an answer box */
@@ -96,6 +109,28 @@ public class AnswerBox {
 		}
 		answerField.setEditable(retry);
 		return isCorrect;
+	}
+
+	/**
+	 * Button Event Handler Class
+	 */
+	public class ButtonEventHandler implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent e) {
+			/* Get the button that was pressed */
+			Button button = (Button) e.getSource();
+
+			/* Get the id of the button pressed */
+			String id = button.getId();
+
+			/* Act according to id */
+			if (id.equals("check answer")) {
+				answerIsCorrect = checkAnswer(marks);
+				System.out.println("Answered " + answerIsCorrect);
+				System.out.println("Awarded marks " + awardedMarks);
+				System.out.println("Checked answer using the button ");
+			}
+		}
 	}
 
 }
