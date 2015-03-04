@@ -21,17 +21,18 @@ public class TestAnswerBoxHandler extends Application {
 
 	AnswerBoxHandler answerBox;
 
+
+
 	public void start(Stage stage) {
+
+		answerBox = new AnswerBoxHandler(100, 200, 10, false,
+				"monday~tuesday~wednesday", 3);
 
 		Group root = new Group();
 		Scene scene = new Scene(root);
 		scene.setFill(Color.LIGHTBLUE);
-		answerBox = new AnswerBoxHandler(root);
-		answerBox.createAnswerBox(0, 130, 10, true, "monday~tuesday~wednesday",
-				5);
-		answerBox.createAnswerBox(0, 160, 10, false, "leeds~york~london", 5);
-		answerBox.createAnswerBox(0, 190, 10, true, "yellow~blue~green", 15);
-		answerBox.createAnswerBox(0, 220, 10, true, "left~right~middle", 5);
+		root.getChildren().addAll(answerBox.answerBox[0]);
+
 		stage.setTitle("Answer Box Test");
 		stage.setScene(scene);
 		stage.sizeToScene();
