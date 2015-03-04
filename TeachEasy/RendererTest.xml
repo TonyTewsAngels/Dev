@@ -44,19 +44,16 @@
     </slide>
     <slide backgroundcolor="#ffffffff" number="4">
     	<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.1" ystart="0.3">
-            <richtext bold="true" font="arial" fontcolor="#ff000000" fontsize="24">Bold Text</richtext>
+            <richtext bold="true" underline="true" font="arial" fontcolor="#ff000000" fontsize="24">Bold Text</richtext>
             <richtext font="arial" fontcolor="#ff000000" fontsize="30">Not Bold Text</richtext>
             <richtext font="arial" fontcolor="#ff000000" fontsize="34" italic="true" newline="true">Italic text.</richtext>
         </text>
     </slide>
     <slide backgroundcolor="#ffffffff" number="5">
-    	<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.1" ystart="0.1">
-			<richtext font="arial" fontcolor="#ff000000" fontsize="24" bold="true" newline="true">Modern Art...</richtext>
+    	<video sourcefile="M:/Year 3/SWENG/Videos/avengers-featurehp.mp4" videoscreenshot="C:\Users\sadjlsd\videoicon.jpeg" xstart="0.1" ystart="0.1"/>
+    	<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.1" ystart="0.5">
+			<richtext font="arial" fontcolor="#ff000000" fontsize="12" bold="true" newline="true">Avengers is better than Modern Art</richtext>
         </text>
-        <image rotation="0.0" scale="1.0" sourcefile="testpic.png" xstart="0.1" yscale="1.0" ystart="0.3"/>
-        <text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.5" ystart="0.7">
-			<richtext font="arial" fontcolor="#ff000000" fontsize="24" bold="true" newline="true">Isn't it poo?</richtext>
-        </text>
-        <video sourcefile="M:/Year 3/SWENG/Videos/avengers-featurehp.mp4" videoscreenshot="C:\Users\sadjlsd\videoicon.jpeg" xstart="0.7" ystart="0.1"/>
+        <image rotation="0.0" scale="1.0" sourcefile="testpic.png" xstart="0.1" yscale="1.0" ystart="0.6"/>
     </slide>
 </slideshow>
