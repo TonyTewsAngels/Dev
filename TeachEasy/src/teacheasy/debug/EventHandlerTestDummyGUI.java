@@ -19,7 +19,7 @@ public class EventHandlerTestDummyGUI extends Application {
     public void start(Stage primaryStage) {       
         /* Instantiate the scene and group */
         Group group = new Group();
-        Scene scene = new Scene(group, 450, 155);
+        Scene scene = new Scene(group, 800, 900);
         
         /* Setup the window */
         primaryStage.setTitle("Audio Test Window");
@@ -28,7 +28,11 @@ public class EventHandlerTestDummyGUI extends Application {
         File file = new File("H:\\3RD YEAR\\SWEng\\SampleAudioFiles\\tail toddle.mp3");
         /* Create the audio player */
         audioHandler = new AudioHandler(group);
-        audioHandler.createAudio(file, false, true, false);
+        audioHandler.createAudio(5, 5, 600, file, false, true, false);
+        audioHandler.createAudio(5, 300, 400, file, false, true, false);
+        audioHandler.createAudio(5, 500, 400, file, false, true, false);
+        audioHandler.createAudio(5, 700, 400, file, false, true, false);
+        audioHandler.createAudio(5, 900, 400, file, false, true, false);
         
         
         /* Show the window */

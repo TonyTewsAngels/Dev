@@ -16,10 +16,13 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
@@ -46,6 +49,8 @@ public class Audio {
 	VolumeListener volumeListener;
 	SeekListener seekListener;
 	Label elapsedLabel, remainingLabel;
+	VBox mediaControlsVBox, timeProgressVbox, elapsedLabelVBox, remainingLabelVBox;
+	HBox playSeekHbox, volumeMuteHBox, timeLabelsHBox;
 	
 	/* Variables */
 	double oldVolume;
@@ -53,33 +58,68 @@ public class Audio {
 	double durationMillis;
 	boolean pausedByButton;
 	int roundedDuration, durationMins, durationSecs, durationSeconds, roundedCurrentTime, currentTimeMins, currentTimeSecs;
+	int buttonWidth = 70;
+	int buttonHeight = 40;
 
-	public Audio(Group nGroup, File sourceFile, boolean autoPlay, boolean visibleControls, boolean playButtonOnly){
+	public Audio(Group nGroup, double x, double y, double width, File sourceFile, boolean autoPlay, boolean visibleControls, boolean playButtonOnly){
 		/* Set the group reference */
 		this.group = nGroup;
+		
+		mediaControlsVBox = new VBox();
+		mediaControlsVBox.setAlignment(Pos.CENTER);
+		mediaControlsVBox.setSpacing(10);
+		mediaControlsVBox.relocate(x, y);
+		
+		playSeekHbox = new HBox();
+		playSeekHbox.setAlignment(Pos.CENTER_LEFT);
+		playSeekHbox.setSpacing(5);
+		
+		volumeMuteHBox = new HBox();
+		volumeMuteHBox.setAlignment(Pos.CENTER_LEFT);
+		volumeMuteHBox.setSpacing(5);
+		
+		timeProgressVbox = new VBox();
+		timeProgressVbox.setAlignment(Pos.CENTER);
+		timeProgressVbox.setSpacing(0);
+		
+		timeLabelsHBox = new HBox();
+		timeLabelsHBox.setAlignment(Pos.CENTER);
+		timeLabelsHBox.setSpacing(5);
+		
+		elapsedLabelVBox = new VBox();
+		elapsedLabelVBox.setAlignment(Pos.CENTER_LEFT);
+		elapsedLabelVBox.setSpacing(10);
+
+		remainingLabelVBox = new VBox();
+		remainingLabelVBox.setAlignment(Pos.CENTER_RIGHT);
+		remainingLabelVBox.setSpacing(10);		
+//		
+		
+		mediaControlsVBox.getChildren().addAll(playSeekHbox, volumeMuteHBox);
+		
 		
 		/* playPause button with default text */
 		playPauseButton = new Button ("Play");
 		playPauseButton.setOnAction(new playHandler());
 		/* Set size and location of the play/pause button */
-		playPauseButton.setPrefSize(70, 40);
-		playPauseButton.relocate(5, 35);
+		playPauseButton.setPrefSize(buttonWidth, buttonHeight);
+//		playPauseButton.relocate(5, 35);
 		
 		
 		/* Mute button with default text */
 		muteButton = new Button("Mute");
 		muteButton.setOnAction(new muteHandler());
 		/* Set the size and location of the mute button */
-		muteButton.setPrefSize(70, 40);
-		muteButton.relocate(345, 80);
+		muteButton.setPrefSize(buttonWidth, buttonHeight);
+//		muteButton.relocate(345, 80);
 		
 		
 		/* Controls button with default text */
 		controlsButton = new Button("Controls");
 		controlsButton.setOnAction(new controlsHandler());		
 		/* Set the size and location of the controls button */
-		controlsButton.setPrefSize(70, 40);
-		controlsButton.relocate(5, 80);
+		controlsButton.setPrefSize(buttonWidth, buttonHeight);
+//		controlsButton.relocate(5, 80);
 		
 		
 		/* Create new listener for the volume value */
@@ -97,8 +137,8 @@ public class Audio {
 		volumeSlider.setOrientation(Orientation.HORIZONTAL);		
 		volumeSlider.valueProperty().addListener(volumeListener);
 		/* Set the size and location of the volume slider */
-		volumeSlider.setPrefSize(260, 40);
-		volumeSlider.relocate(80, 80);
+		volumeSlider.setPrefSize(width - (2 * buttonWidth), 5);
+//		volumeSlider.relocate(80, 80);
 				
 		
 		/* Create new listener for the progress bar/slider */ 
@@ -117,15 +157,26 @@ public class Audio {
 		progressSlider.setOnMousePressed(new AudioSeekHandler());
 		progressSlider.setOnMouseReleased(new AudioSeekHandler());	
 		/* Set the size and location of the progress slider */
-		progressSlider.setPrefSize(340, 40);
-		progressSlider.relocate(80, 40);
-
+		progressSlider.setPrefSize(width-buttonWidth, 5);
+//		progressSlider.relocate(80, 40);
+		
 		
 		/* Duration labels */
 		elapsedLabel = new Label();
 		remainingLabel = new Label();
 		elapsedLabel.relocate(80, 35);
 		remainingLabel.relocate(380, 35);
+		
+		
+		elapsedLabelVBox.getChildren().addAll(elapsedLabel);
+		remainingLabelVBox.getChildren().addAll(remainingLabel);	
+		timeLabelsHBox.getChildren().addAll(elapsedLabelVBox, remainingLabelVBox);
+		timeProgressVbox.getChildren().addAll(timeLabelsHBox, progressSlider);
+		playSeekHbox.getChildren().addAll(playPauseButton, timeProgressVbox);
+		volumeMuteHBox.getChildren().addAll(controlsButton, volumeSlider, muteButton);
+		
+		
+	
 		
 
 		/* Reformat the file to a string to be used as a Media object */
@@ -162,6 +213,12 @@ public class Audio {
 				roundedDuration = (int)Math.round(duration.toSeconds());
 				durationMins = roundedDuration /60;
 				durationSecs = roundedDuration - (60*durationMins);
+				
+				/* Set the sizes of the label VBoxes once the other boxes are initialised */
+				double timeLabelSize = (timeLabelsHBox.getWidth()/2);
+				elapsedLabelVBox.setMinWidth(timeLabelSize);
+				remainingLabelVBox.setMinWidth(timeLabelSize);
+				
 
 				elapsedLabel.setText("00:00");
 				remainingLabel.setText(String.format("-%02d:%02d",durationMins, durationSecs));
@@ -171,15 +228,16 @@ public class Audio {
 
 		player.currentTimeProperty().addListener(new progressUpdater());
 
+		group.getChildren().addAll(mediaControlsVBox);
 		
-		/* Add relevant parts to the group depending on bool switches in call */		
-		if (visibleControls == true && playButtonOnly == false){
-			group.getChildren().addAll(playPauseButton, controlsButton, audioView);
-		} else if (visibleControls == true && playButtonOnly == true) {
-			group.getChildren().addAll(playPauseButton, audioView);
-		} else {
-			group.getChildren().addAll(audioView);
-		}
+//		/* Add relevant parts to the group depending on bool switches in call */		
+//		if (visibleControls == true && playButtonOnly == false){
+//			group.getChildren().addAll(playPauseButton, controlsButton, audioView);
+//		} else if (visibleControls == true && playButtonOnly == true) {
+//			group.getChildren().addAll(playPauseButton, audioView);
+//		} else {
+//			group.getChildren().addAll(audioView);
+//		}
 
 	}
 	
@@ -271,18 +329,19 @@ public class Audio {
 	public class controlsHandler implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
-			if (group.getChildren().contains(volumeSlider)) {
-				group.getChildren().remove(progressSlider);
-				group.getChildren().remove(volumeSlider);
-				group.getChildren().remove(muteButton);
-				group.getChildren().remove(elapsedLabel);
-				group.getChildren().remove(remainingLabel);
-			} else {
-				group.getChildren().add(progressSlider);
-				group.getChildren().add(volumeSlider);
-				group.getChildren().add(muteButton);
-				group.getChildren().add(elapsedLabel);
-				group.getChildren().add(remainingLabel);
+			if (volumeMuteHBox.getChildren().contains(volumeSlider)) {
+				timeProgressVbox.getChildren().remove(progressSlider);
+				volumeMuteHBox.getChildren().remove(volumeSlider);
+				volumeMuteHBox.getChildren().remove(muteButton);
+				elapsedLabelVBox.getChildren().remove(elapsedLabel);
+				remainingLabelVBox.getChildren().remove(remainingLabel);
+			} else {			
+				elapsedLabelVBox.getChildren().add(elapsedLabel);
+				remainingLabelVBox.getChildren().add(remainingLabel);
+				timeProgressVbox.getChildren().add(progressSlider);
+				volumeMuteHBox.getChildren().add(volumeSlider);
+				volumeMuteHBox.getChildren().add(muteButton);
+
 			}
 		}
 	}
