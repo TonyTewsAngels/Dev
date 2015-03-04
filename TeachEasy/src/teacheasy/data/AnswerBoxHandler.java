@@ -3,9 +3,13 @@
  */
 package teacheasy.data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import teacheasy.data.AnswerBox;
 
 /**
  * Class to draw answer boxes with the specified x & y location and character
@@ -23,63 +27,27 @@ public class AnswerBoxHandler {
 	public int marks;
 	boolean retry;
 	String correctAnswers;
+	double XStart;
+	double YStart;
+	int characterLimit;
+	
+	
+	
 
-	public AnswerBoxHandler(String nCorrectAnswers) {
+	public List<AnswerBox> answerBox;
 
-		answerField = new TextField();
-		marks = 0;
-		this.correctAnswers = nCorrectAnswers;
+	public AnswerBoxHandler(double nXStart, double nYStart,
+			int nCharacterLimit, boolean nRetry, String nCorrectAnswers,
+			int nMarks) {
+		this.answerBox = new ArrayList<AnswerBox>();
+		this.XStart = nXStart;
+		this.YStart = nYStart;
+		this.characterLimit = nCharacterLimit;
 	}
 
-	/* Method to create an answer box */
-	public void createAnswerBox(double nXStart, double nYStart,
-			int nCharacterLimit, boolean nRetry) {
-
-		answerField.relocate(nXStart, nYStart);
-		answerField.addEventHandler(KeyEvent.KEY_TYPED,
-				maxLength(nCharacterLimit));
-		this.retry = nRetry;
+	public void createAnswerBox() {
+		answerBox.add(new AnswerBox(XStart, YStart, characterLimit, retry,
+				correctAnswers, marks));
 	}
 
-	/**
-	 * This method limits the number of characters that can be typed in the
-	 * textField to the the specified nCharacterLimit
-	 *
-	 */
-	public EventHandler<KeyEvent> maxLength(final Integer characterLimit) {
-		return new EventHandler<KeyEvent>() {
-
-			@Override
-			public void handle(KeyEvent event) {
-
-				TextField tx = (TextField) event.getSource();
-				if (tx.getText().length() >= characterLimit) {
-					event.consume();
-				}
-			}
-		};
-	}
-
-	/**
-	 * This method stores the potential answers in an array. When an answer is
-	 * provided the loop compares the entered answer against the possible
-	 * answers in the array. It also allows/disallows retry depending on the
-	 * value of the variable retry.
-	 * 
-	 */
-	public boolean answerChecker(int nMarks) {
-		boolean isCorrect = false;
-		String[] listOfCorrectAnswers = correctAnswers.split("-");
-		for (int i = 0; i < listOfCorrectAnswers.length; i++) {
-
-			if (answerField.getText().equals(listOfCorrectAnswers[i])) {
-				marks += nMarks;
-				isCorrect = true;
-				retry = false;
-				break;
-			}
-		}
-		answerField.setEditable(retry);
-		return isCorrect;
-	}
 }
