@@ -106,7 +106,7 @@ public class AudioHandler {
 		
 	}
 	
-	public void createAudio(Group group, File sourceFile, boolean autoPlay) {
+	public void createAudio(Group group, File sourceFile, boolean autoPlay, boolean visibleControls, boolean playButtonOnly) {
 		/* Reformat the file to a string to be used as a Media object */
 		final Media audio = new Media(sourceFile.toURI().toString());
 
@@ -114,7 +114,11 @@ public class AudioHandler {
 		player = new MediaPlayer(audio);
 
 		/* Set its autoPlay value to whatever it was called with */
-		player.setAutoPlay(autoPlay);
+		if (visibleControls == false) {
+			player.setAutoPlay(true);
+		} else {
+			player.setAutoPlay(autoPlay);
+		}
 
 		/* Create the MediaView using the "player" MediaPlayer */
 		MediaView audioView = new MediaView(player);
@@ -138,8 +142,8 @@ public class AudioHandler {
 		muteButton.relocate(345, 80);
 		
 		/* Set the size and location of the volume slider */
-		volumeSlider.setPrefSize(260, 140);
-		volumeSlider.relocate(80, 35);
+		volumeSlider.setPrefSize(260, 40);
+		volumeSlider.relocate(80, 80);
 
 
 		/* Set the size and location of the progress slider */
@@ -169,8 +173,14 @@ public class AudioHandler {
 		player.currentTimeProperty().addListener(new progressUpdater());
 
 		
-		/* Add all parts to the group */
-		group.getChildren().addAll(playPauseButton, controlsButton, audioView);
+		/* Add relevant parts to the group depending on bool switches in call */		
+		if (visibleControls == true && playButtonOnly == false){
+			group.getChildren().addAll(playPauseButton, controlsButton, audioView);
+		} else if (visibleControls == true && playButtonOnly == true) {
+			group.getChildren().addAll(playPauseButton, audioView);
+		} else {
+			group.getChildren().addAll(audioView);
+		}
 
 	}
 	
