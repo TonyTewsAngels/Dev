@@ -2,8 +2,9 @@ package teacheasy.debug;
 
 import java.io.File;
 
+
 import teacheasy.debug.GeneralDummyGUI.buttonEventHandler;
-import teacheasy.mediahandler.AudioHandler;
+import teacheasy.mediahandler.*;
 
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -27,7 +28,7 @@ public class EventHandlerTestDummyGUI extends Application {
         File file = new File("H:\\3RD YEAR\\SWEng\\SampleAudioFiles\\tail toddle.mp3");
         /* Create the audio player */
         audioHandler = new AudioHandler(group);
-        audioHandler.createAudio(group, file, false, false, true);
+        audioHandler.createAudio(file, false, true, false);
         
         
         /* Show the window */
