@@ -18,6 +18,8 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
@@ -31,6 +33,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import teacheasy.data.Lesson;
 import teacheasy.debug.GeneralDummyGUI.buttonEventHandler;
@@ -94,18 +98,30 @@ public class DummyGUILayout extends Application {
 		/* Set Pane Colours */
 		hBoxTop.setStyle("-fx-background-color: blue;");
 		group.setStyle("-fx-blend-mode: hard-light;");
-		contentPane.setStyle("-fx-background-color: Orange;");
-		botAnchor.setStyle("-fx-background-color: yellow;");
+		contentPane.setStyle("-fx-background-color: lightGrey;");
+		botAnchor.setStyle("-fx-background-color: Grey;");
 		
 		/* Setup the window */
         primaryStage.setTitle("Grid with hbox test");
         primaryStage.setScene(scene);
+        
+        /* Add button images */
+
         
         /* Create a buttons */
         Button fileBtn = new Button();
         Button editBtn = new Button();
         Button prevBtn = new Button();
         Button nextBtn = new Button();
+        
+       // Image imageNext = new Image(getClass().getResourceAsStream("file:Learneasy_v2_3.png"));
+ 
+        Image image = new Image("file:Learneasy_v2_3.png");
+        ImageView imageNext = new ImageView(image);
+       // imageNext.setImage(image);
+       // Image imageNext = new Image("file:Learneasy_v2_3.png");
+       // imageNext.setFitWidth(200);
+        nextBtn.setGraphic(imageNext);
         
         /* Setup the buttons */
         fileBtn.setText("File");
@@ -117,14 +133,19 @@ public class DummyGUILayout extends Application {
         prevBtn.setText("Previous");
         prevBtn.setId("prevBtn");
 
-        nextBtn.setText("Next");
+    //    nextBtn.setText("Next");
         nextBtn.setId("hBtn");
+        
+        /* Add image */
+        
+
         
         /* Create Menubar */
         MenuBar menuBar = new MenuBar();
         Menu menuFile = new Menu("File");
         Menu menuEdit = new Menu("Edit");
         Menu menuHelp = new Menu("Help");
+        menuBar.scaleXProperty();
         
         menuBar.getMenus().addAll(menuFile, menuEdit, menuHelp);
 
@@ -145,8 +166,8 @@ public class DummyGUILayout extends Application {
         
         
         /* Add content to panes */
-        hBoxTop.getChildren().addAll(menuBar);
-        group.getChildren().addAll(text,r);
+        hBoxTop.getChildren().addAll(menuBar,imageNext);
+        group.getChildren().addAll(text,r,imageNext);
        // contentPane.getChildren().addAll(group);
         botAnchor.getChildren().addAll(nextBtn, prevBtn);
 
