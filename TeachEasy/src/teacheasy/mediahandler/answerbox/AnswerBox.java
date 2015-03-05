@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2015 Sofia Software Solutions
  */
-package teacheasy.data;
+package teacheasy.mediahandler.answerbox;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

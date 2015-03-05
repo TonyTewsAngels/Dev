@@ -3,7 +3,7 @@
  */
 package teacheasy.debug;
 
-import teacheasy.data.AnswerBoxHandler;
+import teacheasy.mediahandler.AnswerBoxHandler;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
