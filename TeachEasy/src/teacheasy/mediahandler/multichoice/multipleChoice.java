@@ -140,28 +140,6 @@ public class multipleChoice{
 
 		}
 
-
-		//horizontalPosition.getChildren().add(markButton);
-
-
-		/* markButton.setOnAction(new EventHandler<ActionEvent>(){
-		        	@Override 
-		        	public void handle (ActionEvent event){
-		        		boolean correctCheckBoxAnswer = Check();
-		        		boolean correctRadioAnswer = RadioCheck();
-
-		        		     if (correctCheckBoxAnswer){
-		        			 System.out.println("Thats Great ");
-		        		     }else 
-		        			 System.out.println("Try again");
-
-		        	         if (correctRadioAnswer){
-		        		     System.out.println("thats awesome ");
-		        	         }else 
-		        		     System.out.println("you need more help");
-		                     }
-		        });*/
-
 	}
 
 	public boolean Check(){
@@ -190,16 +168,16 @@ public class multipleChoice{
 	public boolean RadioCheck(){
 		/* */
 		for(int i = 0; i < rB.size(); i++){
-			/* */
+			/* checks if one of the radio buttons have been clicked*/
 			if(rB.get(i).getrB().isSelected()){
-				/* */
+				/*checks if radio button clicked in correct */
 				if (!rB.get(i).isCorrect()){
 					return false;
 				}
 			}
 		}
 		
-		/* */
+		/* Returns true if the correct radio buttun has been pressed   */
 		return true; 
 	}
 
