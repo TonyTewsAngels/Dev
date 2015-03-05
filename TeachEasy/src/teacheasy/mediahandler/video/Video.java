@@ -162,22 +162,30 @@ public class Video {
     
     /** Programmatically play this video */
     public void play() {
-        mediaPlayer.play();
+        if(mediaPlayer != null) {
+            mediaPlayer.play();
+        }
     }
     
     /** Programmatically pause this video */
     public void pause() {
-        mediaPlayer.pause();
+        if(mediaPlayer != null) {
+            mediaPlayer.pause();
+        }
     }
     
     /** Programmatically stop this video */
     public void stop() {
-        mediaPlayer.stop();
+        if(mediaPlayer != null) {
+            mediaPlayer.stop();
+        }
     }
     
     /** Programmatically dispose of this video */
     public void dispose() {
-        mediaPlayer.dispose();
+        if(mediaPlayer != null) {
+            mediaPlayer.dispose();
+        }
     }
     
     /** Adds the controls to a video frame */
