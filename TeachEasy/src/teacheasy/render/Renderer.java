@@ -225,7 +225,7 @@ public class Renderer {
                                               shading,
                                               Util.colorFromString(graphic.getShadingColor()));
                 break;
-            case LINE :
+            case LINE:
                 graphicsHandler.drawLine((float)(bounds.getMaxX() * graphic.getXStart()),
                                          (float)(bounds.getMaxY() * graphic.getYStart()), 
                                          (float)(bounds.getMaxX() * graphic.getXEnd()), 
@@ -234,6 +234,27 @@ public class Renderer {
                                          graphic.getOutlineThickness(), 
                                          shading,
                                          Util.colorFromString(graphic.getShadingColor()));
+                break;
+            case TRIANGLE:
+                System.out.println("Cannot Currently Draw Equi Triangle - Graphics Handler Unfinished");
+                graphicsHandler.drawEquiTriangle();
+                break;
+            case ROUNDEDRECTANGLE:
+                System.out.println("Cannot Currently Draw Rounded Rects - Graphics Handler Unfinished");
+                graphicsHandler.drawRectangle((float)(bounds.getMaxX() * graphic.getXStart()),
+                                              (float)(bounds.getMaxY() * graphic.getYStart()),
+                                              (float)(bounds.getMaxX() * graphic.getXEnd()),
+                                              (float)(bounds.getMaxY() * graphic.getYEnd()),
+                                              150.0f,
+                                              150.0f,
+                                              Util.colorFromString(graphic.getGraphicColour()),
+                                              graphic.isSolid(), 
+                                              new Color(0.0, 0.0, 0.0, 0.0),
+                                              graphic.getOutlineThickness(),
+                                              Shadow.NONE, 
+                                              graphic.getRotation(), 
+                                              shading,
+                                              Util.colorFromString(graphic.getShadingColor()));
                 break;
             default:
                 break;

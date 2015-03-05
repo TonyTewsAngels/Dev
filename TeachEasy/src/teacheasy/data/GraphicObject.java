@@ -22,7 +22,7 @@ public class GraphicObject extends PageObject {
 		RECTANGLE,
 		LINE,
 		TRIANGLE,
-		ROUNDED_RECTANGLE;
+		ROUNDEDRECTANGLE;
 		
 		public static GraphicType check(String str) {
 	        try {
