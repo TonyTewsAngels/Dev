@@ -119,10 +119,7 @@ public class RuntimeDataDummyUI extends Application {
         updateUI();
     }
     
-    public void updateUI() {
-        /* Call the rendering method 
-        runTimeData.redraw(group, bounds);*/
-        
+    public void updateUI() {        
         /* 
          * If there is a lesson open enable the relevant page 
          * buttons, if not disable both.
