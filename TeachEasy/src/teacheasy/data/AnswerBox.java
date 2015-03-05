@@ -11,16 +11,16 @@ import javafx.scene.layout.HBox;
 
 public class AnswerBox {
 
-	public TextField answerField;
-	int marks;
-	int awardedMarks;
-	boolean retry;
-	String correctAnswers;
-	boolean answerIsCorrect;
-	int characterLimit;
-	double xStart;
-	double yStart;
-	Group group;
+	private TextField answerField;
+	private int marks;
+	private int awardedMarks;
+	private boolean retry;
+	private String correctAnswers;
+	private boolean answerIsCorrect;
+	private int characterLimit;
+	private double xStart;
+	private double yStart;
+	private Group group;
 
 	private HBox box;
 	private Button checkAnswerButton;
@@ -37,11 +37,11 @@ public class AnswerBox {
 		this.group = nGroup;
 		this.retry = nRetry;
 
+		box = new HBox();
+
 		checkAnswerButton = new Button("Check answer");
 		checkAnswerButton.setId("check answer");
 		checkAnswerButton.setOnAction(new ButtonEventHandler());
-
-		box = new HBox();
 
 		createAnswerBox(xStart, yStart, characterLimit, nRetry);
 		answerField.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -55,8 +55,8 @@ public class AnswerBox {
 			}
 		});
 
-		box.getChildren().addAll(answerField ,checkAnswerButton);
-		group.getChildren().addAll(box);
+		box.getChildren().addAll(answerField);
+		group.getChildren().add(box);
 	}
 
 	/* Method to create an answer box */
@@ -124,7 +124,7 @@ public class AnswerBox {
 			String id = button.getId();
 
 			/* Act according to id */
-			if (id.equals("check answer")) {
+			if (id.equals("check answer") && answerField.isEditable() == true) {
 				answerIsCorrect = checkAnswer(marks);
 				System.out.println("Answered " + answerIsCorrect);
 				System.out.println("Awarded marks " + awardedMarks);
