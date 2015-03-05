@@ -185,6 +185,9 @@ public class RunTimeData {
         
         /* Set the page count back to zero */
         setPageCount(0);
+        
+        /* Set the current page back to zero */
+        setCurrentPage(0);
     }
     
     /** Redraw the content */
