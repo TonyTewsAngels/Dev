@@ -47,7 +47,7 @@ public class AnswerBox {
 			boolean nIsNumerical, Group nGroup) {
 
 		answerField = new TextField();
-		/*Setting local variables*/
+		/* Setting local variables */
 		this.marks = nMarks;
 		this.correctAnswers = nCorrectAnswers;
 		this.characterLimit = nCharacterLimit;
@@ -168,15 +168,15 @@ public class AnswerBox {
 
 	/** A method to display feedback to the user */
 	public void displayFeedback() {
-		if (validInput) {
+
+		if (validInput == false && isNumerical == true) {
+			feedbackLabel.setText("Invalid input");
+		} else {
 			if (answerIsCorrect)
 				feedbackLabel.setText("Correct! " + awardedMarks + " marks");
 			else
-				feedbackLabel.setText("Inorrect");
-		} else {
-			feedbackLabel.setText("Invalid input");
+				feedbackLabel.setText("Incorrect");
 		}
-
 	}
 
 	/**
