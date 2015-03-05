@@ -116,10 +116,10 @@ public class RuntimeDataDummyUI extends Application {
         primaryStage.show();
         
         /* Redraw the window */
-        redraw();
+        updateUI();
     }
     
-    public void redraw() {
+    public void updateUI() {
         /* Call the rendering method */
         runTimeData.redraw(group, bounds);
         
@@ -148,13 +148,13 @@ public class RuntimeDataDummyUI extends Application {
     /** Next page button functionality */
     public void nextPageButtonPressed() {
         runTimeData.nextPage();
-        redraw();
+        updateUI();
     }
     
     /** Previous page button functionality */
     public void prevPageButtonPressed() {
         runTimeData.prevPage();
-        redraw();
+        updateUI();
     }
     
     /** File->Open menu option functionality */
@@ -168,10 +168,14 @@ public class RuntimeDataDummyUI extends Application {
         File file = fileChooser.showOpenDialog(new Stage());
         
         /* Open the file */
-        runTimeData.openLesson(file);
+        if(runTimeData.openLesson(file)) {
+            /* Opened Successfully */
+        } else {
+            System.out.print("Parse Failed");
+        }
         
         /* Redraw the window */
-        redraw();
+        updateUI();
     }
     
     /** File->Close menu option functionality */
@@ -180,7 +184,7 @@ public class RuntimeDataDummyUI extends Application {
         runTimeData.closeLesson();
         
         /* Re-draw the window */
-        redraw();
+        updateUI();
     }
     
     public static void main(String args[]) {

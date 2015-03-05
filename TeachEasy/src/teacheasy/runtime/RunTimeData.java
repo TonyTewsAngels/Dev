@@ -93,6 +93,7 @@ public class RunTimeData {
     public void nextPage() {        
         if(currentPage < pageCount - 1) {
             currentPage++;
+            redraw(group, bounds);
         }
     }
     
@@ -100,6 +101,7 @@ public class RunTimeData {
     public void prevPage() {        
         if(currentPage > 0) {
             currentPage--;
+            redraw(group, bounds);
         }
     }
     
@@ -147,18 +149,21 @@ public class RunTimeData {
     }
     
     /** Open a lesson file */
-    public void openLesson(File file) {
+    public boolean openLesson(File file) {
         /* Check that the file is not null */
         if(file == null) {
-            return;
+            return false;
         }
         
         /* Parse the file */
         ArrayList<String> errorList = xmlHandler.parseXML(file.getAbsolutePath());
         
         /* If any errors were found during parsing, do not load the lesson */
-        if(errorList.size() > 0) {            
-            return;
+        if(errorList.size() > 0) {   
+            for(int i = 0; i < errorList.size(); i++) {
+                System.out.println(errorList.get(i));
+            }
+            return false;
         }
         
         /* Get the lesson data */
@@ -167,6 +172,7 @@ public class RunTimeData {
         /* Open the lesson */
         setPageCount(lesson.pages.size());
         setLessonOpen(true);
+        return true;
     }
     
     /** Close the current lesson */

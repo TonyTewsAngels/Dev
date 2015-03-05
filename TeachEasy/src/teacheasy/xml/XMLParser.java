@@ -174,7 +174,13 @@ public class XMLParser extends DefaultHandler{
 		        break;
 		    case CYCLICSHADING:
 		        handleCyclicShadingElement(attrs);
-		        break; 
+		        break;
+		    case VERTICALSHADING:
+                handleVerticalShadingElement(attrs);
+                break;
+		    case HORIZONTALSHADING:
+                handleHorizontalShadingElement(attrs);
+                break;
 		    case ANSWERBOX:
 		        handleAnswerBoxElement(attrs);
 		        break;

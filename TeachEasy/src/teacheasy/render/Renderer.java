@@ -64,7 +64,7 @@ public class Renderer {
     /** Render an individual page */
     public void renderPage(Page page) {
         /* Clear the page */
-        group.getChildren().removeAll();
+        clearPage();
         
         /* Add the background */
         Rectangle bg = new Rectangle(bounds.getMaxX(), bounds.getMaxY() - 100, Color.WHITE);
@@ -98,7 +98,7 @@ public class Renderer {
     /** Render the screen if no lesson is loaded */
     public void renderUnLoaded() {
         /* Clear the page */
-        group.getChildren().removeAll();
+        clearPage();
         
         /* Add the background */
         Rectangle bg = new Rectangle(bounds.getMaxX(), bounds.getMaxY() - 100, Color.WHITE);
@@ -108,6 +108,12 @@ public class Renderer {
         Text text = new Text("Open a lesson to begin!");
         text.relocate(10, 10);
         group.getChildren().add(text);
+    }
+    
+    /** Clears the page, releasing memory if necessary */
+    public void clearPage() {
+        videoHandler.clearVideos();
+        group.getChildren().removeAll();
     }
     
     /** Render a text box on a page */
@@ -175,6 +181,12 @@ public class Renderer {
         switch(graphic.getShading()) {
             case CYCLIC:
                 shading = Shading.CYCLIC;
+                break;
+            case HORIZONTAL:
+                shading = Shading.HORIZONTAL;
+                break;
+            case VERTICAL:
+                shading = Shading.VERTICAL;
                 break;
             default:
                 shading = Shading.NONE;
