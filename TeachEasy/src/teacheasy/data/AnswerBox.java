@@ -47,6 +47,7 @@ public class AnswerBox {
 			boolean nIsNumerical, Group nGroup) {
 
 		answerField = new TextField();
+		/*Setting local variables*/
 		this.marks = nMarks;
 		this.correctAnswers = nCorrectAnswers;
 		this.characterLimit = nCharacterLimit;
@@ -55,8 +56,6 @@ public class AnswerBox {
 		this.group = nGroup;
 		this.retry = nRetry;
 		this.isNumerical = nIsNumerical;
-
-		validInput = true;
 
 		box = new HBox();
 
@@ -171,7 +170,7 @@ public class AnswerBox {
 	public void displayFeedback() {
 		if (validInput) {
 			if (answerIsCorrect)
-				feedbackLabel.setText("Correct! " + awardedMarks + "marks");
+				feedbackLabel.setText("Correct! " + awardedMarks + " marks");
 			else
 				feedbackLabel.setText("Inorrect");
 		} else {
