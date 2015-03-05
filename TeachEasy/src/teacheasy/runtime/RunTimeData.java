@@ -160,6 +160,11 @@ public class RunTimeData {
         fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Files", "*.xml"));
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         
+        /* Set the initial directory to the recent read path */
+        if(xmlHandler.getRecentReadPath() != null) {
+            fileChooser.setInitialDirectory(new File(new File(xmlHandler.getRecentReadPath()).getParent()));
+        }
+        
         /* Get the file to open */
         File file = fileChooser.showOpenDialog(new Stage());
         
@@ -167,6 +172,9 @@ public class RunTimeData {
         if(file == null) {
             return false;
         }
+        
+        /* Set the recent read Path */
+        xmlHandler.setRecentReadPath(file.getAbsolutePath());
         
         /* Parse the file */
         ArrayList<String> errorList = xmlHandler.parseXML(file.getAbsolutePath());
