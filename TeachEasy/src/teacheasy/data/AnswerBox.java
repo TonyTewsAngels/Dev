@@ -41,6 +41,7 @@ public class AnswerBox {
 
 		checkAnswerButton = new Button("Check answer");
 		checkAnswerButton.setId("check answer");
+		//checkAnswerButton.relocate(150, 190);
 		checkAnswerButton.setOnAction(new ButtonEventHandler());
 
 		createAnswerBox(xStart, yStart, characterLimit, nRetry);
@@ -55,7 +56,8 @@ public class AnswerBox {
 			}
 		});
 
-		box.getChildren().addAll(answerField);
+		box.relocate(xStart, yStart);
+		box.getChildren().addAll(answerField, checkAnswerButton);
 		group.getChildren().add(box);
 	}
 
