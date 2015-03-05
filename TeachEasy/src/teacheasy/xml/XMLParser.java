@@ -814,6 +814,34 @@ public class XMLParser extends DefaultHandler{
         currentGraphic.setShadingColor(shadingcolor);
     }
     
+    /** Called to handle a Vertical Shading element in the XML */
+    private void handleVerticalShadingElement(Attributes attrs) {
+        /* Variables to hold the attribute strings */
+        String shadingcolor = attrs.getValue("shadingcolor");
+        
+        if(shadingcolor == null) {
+            errorList.add(new String("VerticalShading: Missing shading color"));
+            return;
+        }
+        
+        currentGraphic.setShading(GraphicObject.Shading.VERTICAL);
+        currentGraphic.setShadingColor(shadingcolor);
+    }
+    
+    /** Called to handle a Horizontal Shading element in the XML */
+    private void handleHorizontalShadingElement(Attributes attrs) {
+        /* Variables to hold the attribute strings */
+        String shadingcolor = attrs.getValue("shadingcolor");
+        
+        if(shadingcolor == null) {
+            errorList.add(new String("HorizontalShading: Missing shading color"));
+            return;
+        }
+        
+        currentGraphic.setShading(GraphicObject.Shading.HORIZONTAL);
+        currentGraphic.setShadingColor(shadingcolor);
+    }
+    
     /** Called to handle an answer box element in the XML */
     private void handleAnswerBoxElement(Attributes attrs) {
         /* Variables to hold the attribute strings */

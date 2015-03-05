@@ -20,7 +20,9 @@ public class GraphicObject extends PageObject {
 	public static enum GraphicType {
 		OVAL,
 		RECTANGLE,
-		LINE;
+		LINE,
+		TRIANGLE,
+		ROUNDED_RECTANGLE;
 		
 		public static GraphicType check(String str) {
 	        try {
@@ -34,7 +36,17 @@ public class GraphicObject extends PageObject {
 	/** Enumeration of the various shading types */
 	public static enum Shading {
 	    NONE,
-	    CYCLIC
+	    CYCLIC,
+	    VERTICAL,
+	    HORIZONTAL;
+	    
+	    public static Shading check(String str) {
+	        try {
+	            return valueOf(str);
+	        } catch (Exception ex) {
+	            return NONE;
+	        }
+	    }
 	}
 	
 	/** Graphics Variables */
