@@ -1,3 +1,6 @@
+/*
+ * Copyright (C) 2015 Sofia Software Solutions
+ */
 package teacheasy.data;
 
 import javafx.event.ActionEvent;
@@ -9,6 +12,16 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 
+/**
+ * Class to draw answer boxes with the specified x & y location and character
+ * limit. The class also checks entered answer against list of possible answers
+ * and assigns them the predefined marks.
+ * 
+ * @author Daniel Berhe and Jake Ransom
+ * @version 1.0
+ * 
+ * 
+ */
 public class AnswerBox {
 
 	private TextField answerField;
@@ -39,12 +52,14 @@ public class AnswerBox {
 
 		box = new HBox();
 
+		/* Creates new button to check the typed answer */
 		checkAnswerButton = new Button("Check answer");
 		checkAnswerButton.setId("check answer");
-		//checkAnswerButton.relocate(150, 190);
 		checkAnswerButton.setOnAction(new ButtonEventHandler());
 
 		createAnswerBox(xStart, yStart, characterLimit, nRetry);
+
+		/* Submits and checks typed answer upon key press "enter" */
 		answerField.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent key) {
 				if (key.getCode().equals(KeyCode.ENTER)
@@ -61,7 +76,7 @@ public class AnswerBox {
 		group.getChildren().add(box);
 	}
 
-	/* Method to create an answer box */
+	/** Method to create an answer box */
 	private void createAnswerBox(double nXStart, double nYStart,
 			int nCharacterLimit, boolean nRetry) {
 
@@ -130,7 +145,6 @@ public class AnswerBox {
 				answerIsCorrect = checkAnswer(marks);
 				System.out.println("Answered " + answerIsCorrect);
 				System.out.println("Awarded marks " + awardedMarks);
-				System.out.println("Checked answer using the button ");
 			}
 		}
 	}
