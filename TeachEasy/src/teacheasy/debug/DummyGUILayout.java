@@ -18,6 +18,8 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -89,7 +91,32 @@ public class DummyGUILayout extends Application {
 		Group group = new Group();
 		BorderPane contentPane = new BorderPane();
 		AnchorPane botAnchor = new AnchorPane();
-
+		GridPane gridBot = new GridPane();
+		
+		/* Set gridBot to resize correctly */
+		
+		ColumnConstraints alignLeft = new ColumnConstraints();
+		alignLeft.setMaxWidth(150);
+		gridBot.getColumnConstraints().add(alignLeft);
+		
+		ColumnConstraints alignCenterLeft = new ColumnConstraints();
+		alignCenterLeft.setFillWidth(true);
+		alignCenterLeft.setHgrow(Priority.ALWAYS);
+		gridBot.getColumnConstraints().add(alignCenterLeft);
+		
+		ColumnConstraints alignCenter = new ColumnConstraints();
+		alignCenter.setMaxWidth(50);
+		gridBot.getColumnConstraints().add(alignCenter);
+		
+		ColumnConstraints alignCenterRight = new ColumnConstraints();
+		alignCenterRight.setFillWidth(true);
+		alignCenterRight.setHgrow(Priority.ALWAYS);
+		gridBot.getColumnConstraints().add(alignCenterRight);
+		
+		ColumnConstraints alignRight = new ColumnConstraints();
+		alignRight.setMaxWidth(150);
+		gridBot.getColumnConstraints().add(alignRight);
+		
 		group.minHeight(200);
 		group.maxHeight(200);
 		group.minWidth(200);
@@ -98,30 +125,35 @@ public class DummyGUILayout extends Application {
 		/* Set Pane Colours */
 		hBoxTop.setStyle("-fx-background-color: blue;");
 		group.setStyle("-fx-blend-mode: hard-light;");
-		contentPane.setStyle("-fx-background-color: lightGrey;");
+		contentPane.setStyle("-fx-background-color: rgb(74, 104, 177);");
 		botAnchor.setStyle("-fx-background-color: Grey;");
+		gridBot.setStyle("-fx-background-color: Grey;");
 		
 		/* Setup the window */
         primaryStage.setTitle("Grid with hbox test");
         primaryStage.setScene(scene);
-        
-        /* Add button images */
-
         
         /* Create a buttons */
         Button fileBtn = new Button();
         Button editBtn = new Button();
         Button prevBtn = new Button();
         Button nextBtn = new Button();
+      
         
-       // Image imageNext = new Image(getClass().getResourceAsStream("file:Learneasy_v2_3.png"));
- 
-        Image image = new Image("file:Learneasy_v2_3.png");
+        /* Add button images */
+        Image image = new Image("file://userfs/lt669/w2k/Desktop/Workspace/Learneasy_v2_3.png");
         ImageView imageNext = new ImageView(image);
-       // imageNext.setImage(image);
-       // Image imageNext = new Image("file:Learneasy_v2_3.png");
-       // imageNext.setFitWidth(200);
+        imageNext.setFitWidth(20);
+        imageNext.setFitHeight(20);
         nextBtn.setGraphic(imageNext);
+        
+        
+        /* Add central LE icon */
+        Image image2 = new Image("file://userfs/lt669/w2k/Desktop/Workspace/Learneasy_v2_3.png");
+        ImageView LE = new ImageView(image2);
+        LE.setFitWidth(50);
+        LE.setFitHeight(50);
+        
         
         /* Setup the buttons */
         fileBtn.setText("File");
@@ -133,20 +165,15 @@ public class DummyGUILayout extends Application {
         prevBtn.setText("Previous");
         prevBtn.setId("prevBtn");
 
-    //    nextBtn.setText("Next");
+    //  nextBtn.setText("Next");
         nextBtn.setId("hBtn");
-        
-        /* Add image */
-        
-
         
         /* Create Menubar */
         MenuBar menuBar = new MenuBar();
         Menu menuFile = new Menu("File");
         Menu menuEdit = new Menu("Edit");
         Menu menuHelp = new Menu("Help");
-        menuBar.scaleXProperty();
-        
+        menuBar.setPrefWidth(10000);
         menuBar.getMenus().addAll(menuFile, menuEdit, menuHelp);
 
         /* Create some text and set it up*/
@@ -155,9 +182,10 @@ public class DummyGUILayout extends Application {
         text.setId("text");
         
         Rectangle r = new Rectangle();
-        r.setWidth(100);
-        r.setHeight(100);
-        r.setFill(Color.GREEN);
+        r.setWidth(1250);
+        r.setHeight(703.125);
+        r.setFill(Color.WHITE);
+        r.setEffect(new DropShadow());
         
         
         /* Set the position of group in content pane */
@@ -169,12 +197,18 @@ public class DummyGUILayout extends Application {
         hBoxTop.getChildren().addAll(menuBar,imageNext);
         group.getChildren().addAll(text,r,imageNext);
        // contentPane.getChildren().addAll(group);
-        botAnchor.getChildren().addAll(nextBtn, prevBtn);
-
+        //botAnchor.getChildren().addAll(nextBtn, prevBtn,LE);
+        gridBot.add(prevBtn, 0, 0); 
+        gridBot.add(LE, 2, 0);      
+        gridBot.add(nextBtn, 4, 0);
+        gridBot.setAlignment(Pos.CENTER);
+        
+        
 		/* Add other panes to grid layout */
         grid.add(hBoxTop, 0, 0);
 		grid.add(contentPane, 0, 1);
-		grid.add(botAnchor, 0, 2);
+		//grid.add(botAnchor, 0, 2);
+		grid.add(gridBot, 0, 2);
 		AnchorPane.setRightAnchor(nextBtn, 8.0);
 		AnchorPane.setLeftAnchor(prevBtn, 8.0);
 		
