@@ -28,9 +28,9 @@ public class AnswerBoxHandler {
 
 	/** Creates a new answer box */
 	public void createAnswerBox(double xStart, double yStart,
-			int characterLimit, boolean retry, String correctAnswers, int marks) {
+			int characterLimit, boolean retry, String correctAnswers, int marks, boolean isNumerical) {
 		answerBox.add(new AnswerBox(xStart, yStart, characterLimit, retry,
-				correctAnswers, marks, group));
+				correctAnswers,marks,isNumerical, group));
 	}
 
 }
