@@ -57,6 +57,7 @@ public class GraphicObject extends PageObject {
 	private String graphicColor;
 	private boolean solid;
 	private float outlineThickness;
+	private String lineColor;
 	private boolean shadow;
 	
 	private Shading shading;
@@ -65,7 +66,7 @@ public class GraphicObject extends PageObject {
 	/** Constructor Method */
 	public GraphicObject(GraphicType nType, float nXStart, float nYStart, float nXEnd, 
 						  float nYEnd, float nRotation, String nGraphicColor,   
-						  boolean nSolid, float nOutlineThickness, boolean nShadow) {
+						  boolean nSolid, String nLineColor, float nOutlineThickness, boolean nShadow) {
 	    
 		super(PageObjectType.GRAPHIC, nXStart, nYStart);
 		
@@ -76,6 +77,7 @@ public class GraphicObject extends PageObject {
 		this.graphicColor = nGraphicColor;
 		this.solid = nSolid;
 		this.outlineThickness = nOutlineThickness;
+		this.lineColor = nLineColor;
 		this.shadow = nShadow;
 		
 		this.shading = Shading.NONE;
@@ -130,6 +132,14 @@ public class GraphicObject extends PageObject {
 
 	public void setSolid(boolean nSolid) {
 		this.solid = nSolid;
+	}
+	
+	public String getLineColor() {
+	    return lineColor;
+	}
+	
+	public void setLineColor(String nLineColor) {
+	    this.lineColor = nLineColor;
 	}
 
 	public float getOutlineThickness() {

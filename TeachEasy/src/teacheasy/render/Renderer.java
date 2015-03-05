@@ -76,6 +76,9 @@ public class Renderer {
             PageObject pageObject = page.pageObjects.get(i);
             
             /* Act based on type */
+            if(pageObject == null) {
+                System.out.println(i);
+            }
             switch(pageObject.getType()) {
                 case TEXT:
                     renderText((TextObject) pageObject);
@@ -202,7 +205,7 @@ public class Renderer {
                                          (float)(bounds.getMaxY() * graphic.getYEnd()), 
                                          Util.colorFromString(graphic.getGraphicColour()), 
                                          graphic.isSolid(), 
-                                         new Color(0.0, 0.0, 0.0, 0.0),
+                                         Util.colorFromString(graphic.getLineColor()),
                                          graphic.getOutlineThickness(), 
                                          Shadow.NONE, 
                                          graphic.getRotation(), 
@@ -218,7 +221,7 @@ public class Renderer {
                                               0.0f,
                                               Util.colorFromString(graphic.getGraphicColour()),
                                               graphic.isSolid(), 
-                                              new Color(0.0, 0.0, 0.0, 0.0),
+                                              Util.colorFromString(graphic.getLineColor()),
                                               graphic.getOutlineThickness(),
                                               Shadow.NONE, 
                                               graphic.getRotation(), 
@@ -249,7 +252,7 @@ public class Renderer {
                                               150.0f,
                                               Util.colorFromString(graphic.getGraphicColour()),
                                               graphic.isSolid(), 
-                                              new Color(0.0, 0.0, 0.0, 0.0),
+                                              Util.colorFromString(graphic.getLineColor()),
                                               graphic.getOutlineThickness(),
                                               Shadow.NONE, 
                                               graphic.getRotation(), 

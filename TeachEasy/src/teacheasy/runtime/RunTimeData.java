@@ -66,6 +66,8 @@ public class RunTimeData {
         
         /* Instantiate the renderer */
         renderer = new Renderer(group, bounds);
+        
+        redraw(group, bounds);
     }
     
     /** Get the current page */
@@ -172,6 +174,7 @@ public class RunTimeData {
         /* Open the lesson */
         setPageCount(lesson.pages.size());
         setLessonOpen(true);
+        redraw(group, bounds);
         return true;
     }
     
@@ -188,6 +191,8 @@ public class RunTimeData {
         
         /* Set the current page back to zero */
         setCurrentPage(0);
+        
+        redraw(group, bounds);
     }
     
     /** Redraw the content */

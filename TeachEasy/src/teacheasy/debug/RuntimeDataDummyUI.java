@@ -120,8 +120,8 @@ public class RuntimeDataDummyUI extends Application {
     }
     
     public void updateUI() {
-        /* Call the rendering method */
-        runTimeData.redraw(group, bounds);
+        /* Call the rendering method 
+        runTimeData.redraw(group, bounds);*/
         
         /* 
          * If there is a lesson open enable the relevant page 
