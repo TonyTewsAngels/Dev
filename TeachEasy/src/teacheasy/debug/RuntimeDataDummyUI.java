@@ -34,7 +34,7 @@ public class RuntimeDataDummyUI extends Application {
     
     /** Constructor method */
     public RuntimeDataDummyUI() {
-        runTimeData = new RunTimeData(0);
+        // Do Nothing
     }
 
     @Override
@@ -49,7 +49,7 @@ public class RuntimeDataDummyUI extends Application {
         primaryStage.setY(bounds.getMinY());
         primaryStage.setWidth(bounds.getMaxX());
         primaryStage.setHeight(bounds.getMaxY());
-        primaryStage.setResizable(false);
+        primaryStage.setResizable(true);
         
         /* Set up the grid */
         GridPane grid = new GridPane();
@@ -109,16 +109,19 @@ public class RuntimeDataDummyUI extends Application {
         /* Add the page buttons to the grid */
         grid.add(buttonRow, 0, 2);
         
+        /* Instantiate the runtime data */
+        runTimeData = new RunTimeData(group, bounds);
+        
         /* Show the stage */
         primaryStage.show();
         
         /* Redraw the window */
-        redraw();
+        updateUI();
     }
     
-    public void redraw() {
-        /* Call the rendering method */
-        runTimeData.redraw(group, bounds);
+    public void updateUI() {
+        /* Call the rendering method 
+        runTimeData.redraw(group, bounds);*/
         
         /* 
          * If there is a lesson open enable the relevant page 
@@ -145,13 +148,13 @@ public class RuntimeDataDummyUI extends Application {
     /** Next page button functionality */
     public void nextPageButtonPressed() {
         runTimeData.nextPage();
-        redraw();
+        updateUI();
     }
     
     /** Previous page button functionality */
     public void prevPageButtonPressed() {
         runTimeData.prevPage();
-        redraw();
+        updateUI();
     }
     
     /** File->Open menu option functionality */
@@ -165,10 +168,14 @@ public class RuntimeDataDummyUI extends Application {
         File file = fileChooser.showOpenDialog(new Stage());
         
         /* Open the file */
-        runTimeData.openLesson(file);
+        if(runTimeData.openLesson(file)) {
+            /* Opened Successfully */
+        } else {
+            System.out.print("Parse Failed");
+        }
         
         /* Redraw the window */
-        redraw();
+        updateUI();
     }
     
     /** File->Close menu option functionality */
@@ -177,7 +184,7 @@ public class RuntimeDataDummyUI extends Application {
         runTimeData.closeLesson();
         
         /* Re-draw the window */
-        redraw();
+        updateUI();
     }
     
     public static void main(String args[]) {

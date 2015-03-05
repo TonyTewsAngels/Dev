@@ -174,7 +174,13 @@ public class XMLParser extends DefaultHandler{
 		        break;
 		    case CYCLICSHADING:
 		        handleCyclicShadingElement(attrs);
-		        break; 
+		        break;
+		    case VERTICALSHADING:
+                handleVerticalShadingElement(attrs);
+                break;
+		    case HORIZONTALSHADING:
+                handleHorizontalShadingElement(attrs);
+                break;
 		    case ANSWERBOX:
 		        handleAnswerBoxElement(attrs);
 		        break;
@@ -717,6 +723,7 @@ public class XMLParser extends DefaultHandler{
         String solid = attrs.getValue("solid");
         String graphiccolor = attrs.getValue("graphiccolor");
         String rotation = attrs.getValue("rotation");
+        String linecolor = attrs.getValue("linecolor");
         String outlinethickness = attrs.getValue("outlinethickness");
         String shadow = attrs.getValue("shadow");
         
@@ -778,6 +785,14 @@ public class XMLParser extends DefaultHandler{
             outlinethickness = new String("1.0");
         }
         
+        if(linecolor == null) {
+            linecolor = new String("#00000000");
+        } else if(!checkColor(linecolor)) {
+            errorList.add(new String("Graphic; Invalid Line Color String"));
+            invalidConstruct = true;
+            return;
+        }
+        
         if(shadow == null) {
             shadow = new String("false");
         }
@@ -792,25 +807,78 @@ public class XMLParser extends DefaultHandler{
                                                Float.parseFloat(rotation),
                                                graphiccolor,
                                                Boolean.parseBoolean(solid),
+                                               linecolor,
                                                Float.parseFloat(outlinethickness),
                                                Boolean.parseBoolean(shadow));
         } catch (NullPointerException | NumberFormatException e) {
-            errorList.add(new String("Video; Could not parse float value"));
+            errorList.add(new String("Graphic; Could not parse float value"));
             invalidConstruct = true;
         }
     }
     
     /** Called to handle a Cyclic Shading element in the XML */
     private void handleCyclicShadingElement(Attributes attrs) {
+        /* If the current graphic construct is invalid, ignore the shading */
+        if(invalidConstruct) {
+            return;
+        }
+        
         /* Variables to hold the attribute strings */
         String shadingcolor = attrs.getValue("shadingcolor");
         
         if(shadingcolor == null) {
             errorList.add(new String("CyclicShading: Missing shading color"));
             return;
+        } else if(!checkColor(shadingcolor)) {
+            errorList.add(new String("CyclicShading: Invalid shading color"));
+            return;
         }
         
         currentGraphic.setShading(GraphicObject.Shading.CYCLIC);
+        currentGraphic.setShadingColor(shadingcolor);
+    }
+    
+    /** Called to handle a Vertical Shading element in the XML */
+    private void handleVerticalShadingElement(Attributes attrs) {
+        /* If the current graphic construct is invalid, ignore the shading */
+        if(invalidConstruct) {
+            return;
+        }
+        
+        /* Variables to hold the attribute strings */
+        String shadingcolor = attrs.getValue("shadingcolor");
+        
+        if(shadingcolor == null) {
+            errorList.add(new String("VerticalShading: Missing shading color"));
+            return;
+        } else if(!checkColor(shadingcolor)) {
+            errorList.add(new String("VerticalShading: Invalid shading color"));
+            return;
+        }
+        
+        currentGraphic.setShading(GraphicObject.Shading.VERTICAL);
+        currentGraphic.setShadingColor(shadingcolor);
+    }
+    
+    /** Called to handle a Horizontal Shading element in the XML */
+    private void handleHorizontalShadingElement(Attributes attrs) {
+        /* If the current graphic construct is invalid, ignore the shading */
+        if(invalidConstruct) {
+            return;
+        }
+        
+        /* Variables to hold the attribute strings */
+        String shadingcolor = attrs.getValue("shadingcolor");
+        
+        if(shadingcolor == null) {
+            errorList.add(new String("HorizontalShading: Missing shading color"));
+            return;
+        } else if(!checkColor(shadingcolor)) {
+            errorList.add(new String("HorizontalShading: Invalid shading color"));
+            return;
+        }
+        
+        currentGraphic.setShading(GraphicObject.Shading.HORIZONTAL);
         currentGraphic.setShadingColor(shadingcolor);
     }
     

@@ -20,7 +20,9 @@ public class GraphicObject extends PageObject {
 	public static enum GraphicType {
 		OVAL,
 		RECTANGLE,
-		LINE;
+		LINE,
+		TRIANGLE,
+		ROUNDEDRECTANGLE;
 		
 		public static GraphicType check(String str) {
 	        try {
@@ -34,7 +36,17 @@ public class GraphicObject extends PageObject {
 	/** Enumeration of the various shading types */
 	public static enum Shading {
 	    NONE,
-	    CYCLIC
+	    CYCLIC,
+	    VERTICAL,
+	    HORIZONTAL;
+	    
+	    public static Shading check(String str) {
+	        try {
+	            return valueOf(str);
+	        } catch (Exception ex) {
+	            return NONE;
+	        }
+	    }
 	}
 	
 	/** Graphics Variables */
@@ -45,6 +57,7 @@ public class GraphicObject extends PageObject {
 	private String graphicColor;
 	private boolean solid;
 	private float outlineThickness;
+	private String lineColor;
 	private boolean shadow;
 	
 	private Shading shading;
@@ -53,7 +66,7 @@ public class GraphicObject extends PageObject {
 	/** Constructor Method */
 	public GraphicObject(GraphicType nType, float nXStart, float nYStart, float nXEnd, 
 						  float nYEnd, float nRotation, String nGraphicColor,   
-						  boolean nSolid, float nOutlineThickness, boolean nShadow) {
+						  boolean nSolid, String nLineColor, float nOutlineThickness, boolean nShadow) {
 	    
 		super(PageObjectType.GRAPHIC, nXStart, nYStart);
 		
@@ -64,6 +77,7 @@ public class GraphicObject extends PageObject {
 		this.graphicColor = nGraphicColor;
 		this.solid = nSolid;
 		this.outlineThickness = nOutlineThickness;
+		this.lineColor = nLineColor;
 		this.shadow = nShadow;
 		
 		this.shading = Shading.NONE;
@@ -118,6 +132,14 @@ public class GraphicObject extends PageObject {
 
 	public void setSolid(boolean nSolid) {
 		this.solid = nSolid;
+	}
+	
+	public String getLineColor() {
+	    return lineColor;
+	}
+	
+	public void setLineColor(String nLineColor) {
+	    this.lineColor = nLineColor;
 	}
 
 	public float getOutlineThickness() {

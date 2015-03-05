@@ -41,6 +41,8 @@ public enum XMLElement {
         VIDEO,
         GRAPHIC,
             CYCLICSHADING,
+            VERTICALSHADING,
+            HORIZONTALSHADING,
         ANSWERBOX,
         BUTTON,
             BUTTONTEXT,

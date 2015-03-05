@@ -16,6 +16,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 import teacheasy.data.*;
+import teacheasy.render.Renderer;
 import teacheasy.xml.*;
 
 /**
@@ -28,6 +29,10 @@ import teacheasy.xml.*;
  * @version 1.0 20 Feb 2015
  */
 public class RunTimeData {
+    /* */
+    private Group group;
+    private Rectangle2D bounds;
+    
     /* Class level variables */
     private int pageCount;
     private int currentPage;
@@ -38,11 +43,18 @@ public class RunTimeData {
     
     /* XML Handler */
     private XMLHandler xmlHandler;
+    
+    /* Renderer */
+    private Renderer renderer;
 
     /** Constructor method */
-    public RunTimeData(int nPageCount) {
+    public RunTimeData(Group nGroup, Rectangle2D nBounds) {
+        /* Set the class level variables */
+        this.group = nGroup;
+        this.bounds = nBounds;
+        
         /* Instantiate class level variables */
-        this.pageCount = nPageCount;
+        this.pageCount = 0;
         this.currentPage = 0;
         this.lessonOpen = false;
         
@@ -51,6 +63,11 @@ public class RunTimeData {
         
         /* Instantiate the xml handler */
         this.xmlHandler = new XMLHandler();
+        
+        /* Instantiate the renderer */
+        renderer = new Renderer(group, bounds);
+        
+        redraw(group, bounds);
     }
     
     /** Get the current page */
@@ -78,6 +95,7 @@ public class RunTimeData {
     public void nextPage() {        
         if(currentPage < pageCount - 1) {
             currentPage++;
+            redraw(group, bounds);
         }
     }
     
@@ -85,6 +103,7 @@ public class RunTimeData {
     public void prevPage() {        
         if(currentPage > 0) {
             currentPage--;
+            redraw(group, bounds);
         }
     }
     
@@ -132,18 +151,21 @@ public class RunTimeData {
     }
     
     /** Open a lesson file */
-    public void openLesson(File file) {
+    public boolean openLesson(File file) {
         /* Check that the file is not null */
         if(file == null) {
-            return;
+            return false;
         }
         
         /* Parse the file */
         ArrayList<String> errorList = xmlHandler.parseXML(file.getAbsolutePath());
         
         /* If any errors were found during parsing, do not load the lesson */
-        if(errorList.size() > 0) {            
-            return;
+        if(errorList.size() > 0) {   
+            for(int i = 0; i < errorList.size(); i++) {
+                System.out.println(errorList.get(i));
+            }
+            return false;
         }
         
         /* Get the lesson data */
@@ -152,6 +174,8 @@ public class RunTimeData {
         /* Open the lesson */
         setPageCount(lesson.pages.size());
         setLessonOpen(true);
+        redraw(group, bounds);
+        return true;
     }
     
     /** Close the current lesson */
@@ -161,39 +185,24 @@ public class RunTimeData {
         
         /* Set the lesson to an empty lesson */
         lesson = new Lesson();
+        
+        /* Set the page count back to zero */
+        setPageCount(0);
+        
+        /* Set the current page back to zero */
+        setCurrentPage(0);
+        
+        redraw(group, bounds);
     }
     
     /** Redraw the content */
-    public void redraw(Group group, Rectangle2D bounds) {
-        /* Clear the previous content */
-        group.getChildren().removeAll(group.getChildren());
-        
-        /* Draw background */
-        group.getChildren().add(new Rectangle(bounds.getMaxX(), bounds.getMaxY()- 100, Color.WHITE));
-        
-        /* If a lesson is open, render the current page. */
+    public void redraw(Group group, Rectangle2D bounds) {        
         if(isLessonOpen()) {
-            /* Create title */
-            Text title = new Text(lesson.lessonInfo.getLessonName());
-            title.relocate(5, 0);
-            
-            /* Create Page Number */
-            Text pageNumber = new Text("Page: " + (currentPage + 1));
-            pageNumber.relocate(5, 20);
-            
-            /* Draw the objects on the page*/
-            for(int i = 0; i < getCurrentPage().pageObjects.size(); i++) {
-                Text objectName = new Text(getCurrentPage().pageObjects.get(i).getType().toString());
-                objectName.relocate(5, 100 + i * 20);
-                group.getChildren().add(objectName);
-            }
-            
-            /* Add the elements to the content pane */
-            group.getChildren().addAll(title, pageNumber);
-            
+            /* Render the current page */
+            renderer.renderPage(lesson.pages.get(currentPage));
         } else {
-            /* Draw welcome message */
-            group.getChildren().add(new Text("Begin by opening a lesson!"));
+            /* Render the no lesson loaded screen */
+            renderer.renderUnLoaded();
         }
     }
 }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<slideshow>
+    <documentinfo>
+        <author>Mr Cash</author>
+        <version>1.1</version>
+        <comment>A comment about the lesson</comment>
+        <groupid>4</groupid>
+        <datecreated>13/02/15</datecreated>
+        <totalmarks>20</totalmarks>
+        <lessonname>Algebra 1</lessonname>
+    </documentinfo>
+    <defaultsettings>
+        <backgroundcolor>#ff00ff00</backgroundcolor>
+        <font>arial</font>
+        <fontsize>24</fontsize>
+        <fontcolor>#ffffffff</fontcolor>
+    </defaultsettings>
+    <gradesettings>
+        <passboundary failmessage="fail" passmessage="pass">10</passboundary>
+    </gradesettings>
+    <slide backgroundcolor="#ffcc00cc" number="1">
+    	<graphic graphiccolor="#ff000000" outlinethickness="4" rotation="0.0" shadow="false" solid="true" type="line" xend="0.6" xstart="0.15" yend="0.6" ystart="0.15"/>
+        <graphic graphiccolor="#ff005555" linecolor="#ffff0000" outlinethickness="5" rotation="0.0" shadow="false" solid="true" type="oval" xend="0.7" xstart="0.5" yend="0.7" ystart="0.5">
+        	<horizontalshading shadingcolor="#ffff0000"/>
+        </graphic>
+        <graphic graphiccolor="#ffff00ff" outlinethickness="0.5" rotation="0.0" shadow="false" solid="true" type="roundedrectangle" xend="0.2" xstart="0.1" yend="0.2" ystart="0.1">
+        	<cyclicshading shadingcolor="#ff00ff00"/>
+        </graphic>
+    </slide>
+    <slide backgroundcolor="#ffcc00cc" number="2">
+        <image rotation="0.0" scale="1.0" sourcefile="testpic.png" xstart="0.1" yscale="1.0" ystart="0.1"/>
+        <image rotation="54.0" scale="1.0" sourcefile="testpic.png" xstart="0.4" yscale="1.0" ystart="0.4"/>
+    </slide>
+    <slide backgroundcolor="#ffcc00cc" number="3">
+        <video sourcefile="M:/Year 3/SWENG/Videos/avengers-featurehp.mp4" videoscreenshot="C:\Users\sadjlsd\videoicon.jpeg" xstart="0.1" ystart="0.1"/>
+    </slide>
+    <slide backgroundcolor="#ffcc00cc" number="3">
+        <video sourcefile="M:/Year 3/SWENG/Videos/prometheus-featureukFhp.mp4" videoscreenshot="C:\Users\sadjlsd\videoicon.jpeg" xstart="0.1" ystart="0.1"/>
+    </slide>
+    <slide backgroundcolor="#ffffffff" number="4">
+    	<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.1" ystart="0.1">
+            <richtext bold="true" font="arial" fontcolor="#ff000000" fontsize="24">Bold Text</richtext>
+            <richtext font="arial" fontcolor="#ff000000" fontsize="20">Not Bold Text</richtext>
+            <richtext font="arial" fontcolor="#ff000000" fontsize="12" italic="true" newline="true">Italic text.</richtext>
+        </text>
+    </slide>
+    <slide backgroundcolor="#ffffffff" number="4">
+    	<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.1" ystart="0.3">
+            <richtext bold="true" underline="true" font="arial" fontcolor="#ff000000" fontsize="24">Bold Text</richtext>
+            <richtext font="arial" fontcolor="#ff000000" fontsize="30">Not Bold Text</richtext>
+            <richtext font="arial" fontcolor="#ff000000" fontsize="34" italic="true" newline="true">Italic text.</richtext>
+        </text>
+    </slide>
+    <slide backgroundcolor="#ffffffff" number="5">
+    	<video sourcefile="M:/Year 3/SWENG/Videos/avengers-featurehp.mp4" videoscreenshot="C:\Users\sadjlsd\videoicon.jpeg" xstart="0.1" ystart="0.1"/>
+    	<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.1" ystart="0.5">
+			<richtext font="arial" fontcolor="#ff000000" fontsize="12" bold="true" newline="true">Avengers is better than Modern Art</richtext>
+        </text>
+        <image rotation="0.0" scale="1.0" sourcefile="testpic.png" xstart="0.1" yscale="1.0" ystart="0.6"/>
+    </slide>
+</slideshow>
