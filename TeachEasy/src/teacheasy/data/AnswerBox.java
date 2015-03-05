@@ -46,7 +46,6 @@ public class AnswerBox {
 			boolean nRetry, String nCorrectAnswers, int nMarks,
 			boolean nIsNumerical, Group nGroup) {
 
-		answerField = new TextField();
 		/* Setting local variables */
 		this.marks = nMarks;
 		this.correctAnswers = nCorrectAnswers;
@@ -57,7 +56,8 @@ public class AnswerBox {
 		this.retry = nRetry;
 		this.isNumerical = nIsNumerical;
 
-		box = new HBox();
+		/* A text field where answers can be typed */
+		answerField = new TextField();
 
 		/* Creates new button to check the typed answer */
 		checkAnswerButton = new Button("Check answer");
@@ -67,22 +67,22 @@ public class AnswerBox {
 		/* Creates feedback label to display correct/incorrect */
 		feedbackLabel = new Label();
 
+		/* HBox to hold the answerBox and the Check answer button */
+		box = new HBox();
+
+		/* Create an answer box with the specified character limit */
 		createAnswerBox(characterLimit, nRetry);
 
 		/* Submits and checks typed answer upon key press "enter" */
-		answerField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			public void handle(KeyEvent key) {
-				if (key.getCode().equals(KeyCode.ENTER)
-						&& answerField.isEditable() == true) {
-					answerIsCorrect = checkAnswer(marks);
-					displayFeedback();
+		answerField.setOnKeyPressed(new KeyEventHandler());
 
-				}
-			}
-		});
-
+		/* Place the box at the specified location */
 		box.relocate(xStart, yStart);
+
+		/* Group the elements to be displayed on the screen in box */
 		box.getChildren().addAll(answerField, checkAnswerButton, feedbackLabel);
+
+		/* Add box back to the main screen */
 		group.getChildren().add(box);
 	}
 
@@ -90,7 +90,7 @@ public class AnswerBox {
 	private void createAnswerBox(int nCharacterLimit, boolean nRetry) {
 
 		answerField.addEventHandler(KeyEvent.KEY_TYPED,
-				maxLength(nCharacterLimit));
+				handleMaxLength(nCharacterLimit));
 		this.retry = nRetry;
 	}
 
@@ -99,7 +99,7 @@ public class AnswerBox {
 	 * textField to the the specified nCharacterLimit
 	 * 
 	 */
-	public EventHandler<KeyEvent> maxLength(final Integer characterLimit) {
+	public EventHandler<KeyEvent> handleMaxLength(final Integer characterLimit) {
 		return new EventHandler<KeyEvent>() {
 
 			@Override
@@ -126,22 +126,40 @@ public class AnswerBox {
 		if (!isNumerical) {
 			String[] listOfCorrectAnswers = correctAnswers.split("~");
 			for (int i = 0; i < listOfCorrectAnswers.length; i++) {
-
+				/*
+				 * Compares user submitted answers with the list of available
+				 * answers
+				 */
 				if (answerField.getText().equals(listOfCorrectAnswers[i])) {
+					/* Award marks */
 					awardedMarks += nMarks;
+
+					/* Acknowledge that question is answered correctly */
 					isCorrect = true;
+
+					/* Disable retry if answered correctly */
 					retry = false;
+
 					break;
 				}
 			}
-		} else {
+		}
+		/* Used when expecting numerical inputs in the TextField */
+		else {
 			float minRange;
 			float maxRange;
 			float answer;
+
+			/* Splits the correctAnswers so that min & max ranges are identified */
 			String[] listOfCorrectAnswers = correctAnswers.split("~");
 
+			/* A variable that is set when input is invalid */
 			validInput = true;
 
+			/*
+			 * Converting range of acceptable answers and user submitted ansers
+			 * to float
+			 */
 			try {
 				minRange = Float.parseFloat(listOfCorrectAnswers[0]);
 				maxRange = Float.parseFloat(listOfCorrectAnswers[1]);
@@ -152,6 +170,9 @@ public class AnswerBox {
 				answer = 0.0f;
 				validInput = false;
 			}
+			/*
+			 * Checks submitted numerical answer is within the specified region
+			 */
 			if (validInput) {
 				if (answer >= minRange && answer <= maxRange) {
 					awardedMarks += nMarks;
@@ -159,7 +180,6 @@ public class AnswerBox {
 					retry = false;
 				}
 			}
-
 		}
 
 		answerField.setEditable(retry);
@@ -172,14 +192,14 @@ public class AnswerBox {
 		if (validInput == false && isNumerical == true) {
 			feedbackLabel.setText("Invalid input");
 		} else {
-			if (answerIsCorrect)
+			if (answerIsCorrect) {
 				feedbackLabel.setText("Correct! " + awardedMarks + " marks");
-			else
+			} else {
 				feedbackLabel.setText("Incorrect");
+			}
 		}
 	}
-	
-	/*Dummy comment to test commit and push*/
+
 	/**
 	 * Button Event Handler Class
 	 */
@@ -195,6 +215,22 @@ public class AnswerBox {
 			/* Act according to id */
 			if (id.equals("check answer") && answerField.isEditable() == true) {
 				answerIsCorrect = checkAnswer(marks);
+				displayFeedback();
+			}
+		}
+	}
+
+	/**
+	 * Key press event handler
+	 */
+	public class KeyEventHandler implements EventHandler<KeyEvent> {
+		public void handle(KeyEvent key) {
+			if (key.getCode().equals(KeyCode.ENTER)
+					&& answerField.isEditable() == true) {
+				/* Check if answer is correct */
+				answerIsCorrect = checkAnswer(marks);
+
+				/* Display the outcome */
 				displayFeedback();
 			}
 		}
