@@ -5,6 +5,7 @@ package teacheasy.mediahandler.answerbox;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -69,7 +70,9 @@ public class AnswerBox {
 
         /* HBox to hold the answerBox, Check answer button & the feedback label */
         box = new HBox();
-
+        box.setSpacing(5);
+        box.setAlignment(Pos.CENTER);
+        
         /* Create an answer box with the specified character limit */
         createAnswerBox(characterLimit, nRetry);
 
@@ -130,7 +133,7 @@ public class AnswerBox {
                  * Compares user submitted answers with the list of available
                  * answers
                  */
-                if (answerField.getText().equals(listOfCorrectAnswers[i])) {
+                if (answerField.getText().toUpperCase().equals(listOfCorrectAnswers[i].toUpperCase())) {
                     /* Award marks */
                     awardedMarks += nMarks;
 
@@ -183,6 +186,8 @@ public class AnswerBox {
         }
 
         answerField.setEditable(retry);
+        answerField.setDisable(!retry);
+        checkAnswerButton.setDisable(!retry);
         return isCorrect;
     }
 

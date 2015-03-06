@@ -262,8 +262,8 @@ public class Renderer {
     
     /** Add an answer box object to the screen */
     public void renderAnswerBox(AnswerBoxObject aBox) {
-        answerBoxHandler.createAnswerBox(aBox.getXStart(),
-                                         aBox.getYStart(),
+        answerBoxHandler.createAnswerBox((float)(bounds.getMaxX() * aBox.getXStart()),
+                                         (float)(bounds.getMaxY() * aBox.getYStart()),
                                          aBox.getCharacterLimit(),
                                          aBox.isRetry(),
                                          aBox.getCorrectAnswers(),
