@@ -268,6 +268,6 @@ public class Renderer {
                                          aBox.isRetry(),
                                          aBox.getCorrectAnswers(),
                                          aBox.getMarks(),
-                                         false);
+                                         aBox.isNumerical());
     }
 }

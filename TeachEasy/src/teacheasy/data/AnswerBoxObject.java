@@ -17,10 +17,11 @@ public class AnswerBoxObject extends PageObject {
 	private int marks;
 	private String correctAnswers;
 	private boolean retry;
+	private boolean numerical;
 	
 	/** Constructor Method */
 	public AnswerBoxObject(float nXStart, float nYStart, int nCharacterLimit,
-						   int nMarks, String nCorrectAnswers, boolean nRetry) {
+						   int nMarks, String nCorrectAnswers, boolean nRetry, boolean nNumerical) {
 		
 		/* Call Superconstructor */
 		super(PageObjectType.ANSWER_BOX, nXStart, nYStart);
@@ -30,6 +31,7 @@ public class AnswerBoxObject extends PageObject {
 		this.marks = nMarks;
 		this.correctAnswers = nCorrectAnswers;
 		this.retry = nRetry;
+		this.numerical = nNumerical;
 	}
 	
 	/** Get the character limit  */
@@ -71,6 +73,16 @@ public class AnswerBoxObject extends PageObject {
 	public void setRetry(boolean retry) {
 		this.retry = retry;
 	}
+	
+	/** Check the numerical flag */
+    public boolean isNumerical() {
+        return numerical;
+    }
+
+    /** Set the numerical flag */
+    public void setNumerical(boolean retry) {
+        this.numerical = retry;
+    }
 	
 	/** Prints information about the object to the screen */
     public void debugPrint() {

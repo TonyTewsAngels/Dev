@@ -891,6 +891,7 @@ public class XMLParser extends DefaultHandler{
         String correctanswer = attrs.getValue("correctanswer");
         String marks = attrs.getValue("marks");
         String retry = attrs.getValue("retry");
+        String numerical = attrs.getValue("numerical");
         
         /* Check for null attributes */        
         if(xstart == null) {
@@ -919,7 +920,11 @@ public class XMLParser extends DefaultHandler{
         }
         
         if(retry == null) {
-            retry = new String("True");
+            retry = new String("true");
+        }
+        
+        if(numerical == null) {
+            numerical = new String("false");
         }
         
         /* Create the object, checking for parsing errors */
@@ -929,7 +934,8 @@ public class XMLParser extends DefaultHandler{
                                                       Integer.parseInt(characterlimit),
                                                       Integer.parseInt(marks),
                                                       correctanswer,
-                                                      Boolean.parseBoolean(retry)));
+                                                      Boolean.parseBoolean(retry),
+                                                      Boolean.parseBoolean(numerical)));
         } catch (NullPointerException | NumberFormatException e) {
             errorList.add(new String("Answer Box; Could not parse a value"));
         }
