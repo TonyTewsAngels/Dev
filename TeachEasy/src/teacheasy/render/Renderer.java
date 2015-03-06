@@ -8,16 +8,8 @@ package teacheasy.render;
 
 import java.util.ArrayList;
 
-import teacheasy.data.GraphicObject;
-import teacheasy.data.ImageObject;
-import teacheasy.data.Lesson;
-import teacheasy.data.Page;
-import teacheasy.data.PageObject;
-import teacheasy.data.RichText;
-import teacheasy.data.TextObject;
-import teacheasy.data.VideoObject;
-import teacheasy.mediahandler.ImageHandler;
-import teacheasy.mediahandler.VideoHandler;
+import teacheasy.data.*;
+import teacheasy.mediahandler.*;
 import wavemedia.graphic.GraphicsHandler;
 import wavemedia.graphic.Shading;
 import wavemedia.graphic.Shadow;
@@ -45,6 +37,7 @@ public class Renderer {
     private ImageHandler imageHandler;
     private TextHandler textHandler;
     private GraphicsHandler graphicsHandler;
+    private AnswerBoxHandler answerBoxHandler;
    
     /** Constructor */
     public Renderer(Group nGroup, Rectangle2D nBounds) {
@@ -59,6 +52,7 @@ public class Renderer {
         imageHandler = new ImageHandler(group);
         textHandler = new TextHandler(group);
         graphicsHandler = new GraphicsHandler(group);
+        answerBoxHandler = new AnswerBoxHandler(group);
     }
     
     /** Render an individual page */
@@ -92,6 +86,8 @@ public class Renderer {
                 case GRAPHIC:
                     renderGraphic((GraphicObject) pageObject);
                     break;
+                case ANSWER_BOX:
+                    renderAnswerBox((AnswerBoxObject) pageObject);
                 default:
                     break;
             }
@@ -262,5 +258,16 @@ public class Renderer {
             default:
                 break;
         }
+    }
+    
+    /** Add an answer box object to the screen */
+    public void renderAnswerBox(AnswerBoxObject aBox) {
+        answerBoxHandler.createAnswerBox(aBox.getXStart(),
+                                         aBox.getYStart(),
+                                         aBox.getCharacterLimit(),
+                                         aBox.isRetry(),
+                                         aBox.getCorrectAnswers(),
+                                         aBox.getMarks(),
+                                         false);
     }
 }
