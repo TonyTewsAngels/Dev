@@ -10,7 +10,7 @@
         <lessonname>Algebra 1</lessonname>
     </documentinfo>
     <defaultsettings>
-        <backgroundcolor>#ff000000</backgroundcolor>
+        <backgroundcolor>#ffffffff</backgroundcolor>
         <font>arial</font>
         <fontsize>24</fontsize>
         <fontcolor>#ffffffff</fontcolor>
