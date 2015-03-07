@@ -2,6 +2,8 @@ package teacheasy.main;
 
 import teacheasy.runtime.RunTimeData;
 import javafx.application.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
@@ -14,9 +16,10 @@ import javafx.scene.text.*;
 import javafx.stage.*;
 
 public class LearnEasyClient extends Application {
-    
+    /* Text */
     Text text;
     
+    /* Application state */
     RunTimeData runtimeData;
     
     @Override
@@ -110,7 +113,7 @@ public class LearnEasyClient extends Application {
         ImageView imageNext = new ImageView(image);
         imageNext.setFitWidth(20);
         imageNext.setFitHeight(20);
-        nextBtn.setGraphic(imageNext);
+        //nextBtn.setGraphic(imageNext);
         
         
         /* Add central LE icon */
@@ -130,8 +133,8 @@ public class LearnEasyClient extends Application {
         prevBtn.setText("Previous");
         prevBtn.setId("prevBtn");
 
-    //  nextBtn.setText("Next");
-        nextBtn.setId("hBtn");
+        nextBtn.setText("Next");
+        nextBtn.setId("nextBtn");
         
         /* Create Menubar */
         MenuBar menuBar = new MenuBar();
@@ -202,5 +205,30 @@ public class LearnEasyClient extends Application {
     
     public void prevPageButtonPressed() {
         
+    }
+    
+    public void updateUI() {
+        
+    }
+    
+    public class UIButtonEventHandler implements EventHandler<ActionEvent> {
+        public void handle(ActionEvent e) {
+            /* Get the source */
+            Button sourceButton = (Button) e.getSource();
+            
+            /* TODO Check the ID of the source button and call the relevant runtime method */
+            switch(sourceButton.getId()) {
+                case "nextBtn":
+                    break;
+                case "prevBtn":
+                    break;
+                default:
+                    /* Do Nothing */
+                    break;
+            }
+            
+            /* TODO Update the UI to reflect any changes to the application state */
+            updateUI();
+        }
     }
 }
