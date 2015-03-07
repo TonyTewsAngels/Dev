@@ -96,7 +96,7 @@ public class LearnEasyClient extends Application {
         
         /* Set Pane Colours */
         hBoxTop.setStyle("-fx-background-color: blue;");
-        group.setStyle("-fx-blend-mode: hard-light;");
+        //group.setStyle("-fx-blend-mode: hard-light;");
         contentPane.setStyle("-fx-background-color: rgb(74, 104, 177);");
         botAnchor.setStyle("-fx-background-color: Grey;");
         gridBot.setStyle("-fx-background-color: Grey;");

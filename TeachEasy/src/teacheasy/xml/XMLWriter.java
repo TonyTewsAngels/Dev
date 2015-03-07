@@ -336,13 +336,27 @@ public class XMLWriter {
         graphicElement.setAttribute("outlinethickness", String.valueOf(graphic.getOutlineThickness()));
         graphicElement.setAttribute("shadow", String.valueOf(graphic.isShadow()));
         
+        
+        Element shadingElement;
         /* add shading element if necessary */
-        if(graphic.getShading() == Shading.CYCLIC) {
-            Element shadingElement = doc.createElement("cyclicshading");
-            graphicElement.appendChild(shadingElement);
-            
-            shadingElement.setAttribute("shadingcolor", graphic.getShadingColor());
+        switch(graphic.getShading()) {
+            case CYCLIC:
+                shadingElement = doc.createElement("cyclicshading");
+                break;
+            case VERTICAL:
+                shadingElement = doc.createElement("verticalshading");
+                break;
+            case HORIZONTAL:
+                shadingElement = doc.createElement("horizontalshading");
+                break;
+            case NONE:
+            default:
+                /* No valid shading */
+                return;
         }
+        
+        graphicElement.appendChild(shadingElement);
+        shadingElement.setAttribute("shadingcolor", graphic.getShadingColor());
 	}
 	
 	/** Add a video */
