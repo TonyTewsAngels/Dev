@@ -1,13 +1,13 @@
 /*
  * Copyright (C) 2015 Sofia Software Solutions
  */
-package teacheasy.data;
+package teacheasy.mediahandler;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.Group;
-import teacheasy.data.AnswerBox;
+import teacheasy.mediahandler.answerbox.AnswerBox;
 
 /**
  * Class to draw answer boxes with the specified x & y location
