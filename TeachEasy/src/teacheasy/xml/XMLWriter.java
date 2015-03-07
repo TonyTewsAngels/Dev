@@ -336,9 +336,10 @@ public class XMLWriter {
         graphicElement.setAttribute("outlinethickness", String.valueOf(graphic.getOutlineThickness()));
         graphicElement.setAttribute("shadow", String.valueOf(graphic.isShadow()));
         
-        
+        /* Declare an element for the shading */
         Element shadingElement;
-        /* add shading element if necessary */
+        
+        /* If shading is not 'none' give the shading element the correct name. Else return */
         switch(graphic.getShading()) {
             case CYCLIC:
                 shadingElement = doc.createElement("cyclicshading");
@@ -351,11 +352,13 @@ public class XMLWriter {
                 break;
             case NONE:
             default:
-                /* No valid shading */
                 return;
         }
         
+        /* Add the shading element to the graphic element */
         graphicElement.appendChild(shadingElement);
+        
+        /* Set the shading colour attribute */
         shadingElement.setAttribute("shadingcolor", graphic.getShadingColor());
 	}
 	
