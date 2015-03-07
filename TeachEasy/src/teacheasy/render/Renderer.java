@@ -6,6 +6,7 @@
  */
 package teacheasy.render;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import teacheasy.data.*;
@@ -39,6 +40,7 @@ public class Renderer {
     private GraphicsHandler graphicsHandler;
     private AnswerBoxHandler answerBoxHandler;
     private MultipleChoiceHandler multipleChoiceHandler;
+    private AudioHandler audioHandler;
    
     /** Constructor */
     public Renderer(Group nGroup, Rectangle2D nBounds) {
@@ -55,6 +57,7 @@ public class Renderer {
         graphicsHandler = new GraphicsHandler(group);
         answerBoxHandler = new AnswerBoxHandler(group);
         multipleChoiceHandler = new MultipleChoiceHandler(group);
+        audioHandler = new AudioHandler(group);
     }
     
     /** Render an individual page */
@@ -84,6 +87,9 @@ public class Renderer {
                     break;
                 case VIDEO:
                     renderVideo((VideoObject) pageObject);
+                    break;
+                case AUDIO:
+                    renderAudio((AudioObject) pageObject);
                     break;
                 case GRAPHIC:
                     renderGraphic((GraphicObject) pageObject);
@@ -118,6 +124,7 @@ public class Renderer {
     /** Clears the page, releasing memory if necessary */
     public void clearPage() {
         videoHandler.clearVideos();
+        audioHandler.clearAudios();
         group.getChildren().removeAll();
     }
     
@@ -166,6 +173,17 @@ public class Renderer {
                                  500,
                                  video.getSourcefile(),
                                  false,
+                                 false);
+    }
+    
+    /** Render an audio object on a page */
+    private void renderAudio(AudioObject audio) {
+        audioHandler.createAudio((double)(bounds.getMaxX() * audio.getXStart()),
+                                 (double)(bounds.getMaxY() * audio.getYStart()),
+                                 300,
+                                 new File(audio.getSourcefile()),
+                                 false,
+                                 audio.isViewProgress(),
                                  false);
     }
     
