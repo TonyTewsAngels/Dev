@@ -4,8 +4,14 @@
  * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
  * 
  */
-
 package teacheasy.mediahandler.multichoice;
+
+/**
+ * A class to create check boxes and radio buttons 
+ * 
+ * @author	Emmanuel Olutayo
+ * @version	1.0 07 Mar 2015
+ */
 
 import java.awt.List;
 import java.util.ArrayList;
@@ -30,7 +36,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-//create and array list of correct and incorrect answers  
+
 
 
 public class MultipleChoice{
@@ -84,9 +90,9 @@ public class MultipleChoice{
 				for(int i = 0; i < cB.size(); i++ ){
 					horizontalPosition.getChildren().add(cB.get(i).getcB());
 				}
-			horizontalPosition.getChildren().add(markButton);
-			group.getChildren().add(horizontalPosition);
-		    }
+				horizontalPosition.getChildren().add(markButton);
+				group.getChildren().add(horizontalPosition);
+			}
 
 			markButton.setOnAction(new EventHandler<ActionEvent>(){
 				@Override 
@@ -116,7 +122,7 @@ public class MultipleChoice{
 				for(int i= 0; i < rB.size(); i++ ){
 					verticalPosition.getChildren().add(rB.get(i).getrB());
 				}
-				
+
 				verticalPosition.getChildren().add(markButton);
 				group.getChildren().add(verticalPosition);
 			} else { 
@@ -124,7 +130,7 @@ public class MultipleChoice{
 				for(int i =0; i< rB.size();i++){
 					horizontalPosition.getChildren().add(rB.get(i).getrB());
 				}
-				
+
 				horizontalPosition.getChildren().add(markButton);
 				group.getChildren().add(horizontalPosition);
 			}
@@ -183,15 +189,9 @@ public class MultipleChoice{
 				}
 			}
 		}
-		
+
 		/* Returns true if the correct radio button has been pressed   */
 		return true; 
-	}
-
-
-	public static void main(String[] args) {
-		//launch(args);
-
 	}
 
 }
