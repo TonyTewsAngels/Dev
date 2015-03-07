@@ -38,7 +38,7 @@ import javafx.util.Duration;
  * 
  * @author Alex Cash 
  * @author Calum Armstrong
- * @version 1.0 4 Mar 2015
+ * @version 1.5 4 Mar 2015
  */
 
 public class AudioHandler {
