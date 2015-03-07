@@ -23,13 +23,15 @@ public class AnswerBoxTest extends Application {
 
 	public void start(Stage stage) {
 
+		/* Create a window to display answer box in */
 		Group group = new Group();
-		Scene scene = new Scene(group);
+		Scene scene = new Scene(group, 800, 800);
 		scene.setFill(Color.LIGHTBLUE);
 		
+		/* Create answer box*/
 		answerBoxHandler = new AnswerBoxHandler(group);
-		answerBoxHandler.createAnswerBox(0, 130, 10, true,
-				"monday~tuesday~wednesday", 5, false);
+		answerBoxHandler.createAnswerBox(0, 0, 10, true,
+				"cat", 5, true);
 
 		stage.setTitle("Answer Box Test");
 		stage.setScene(scene);
