@@ -73,4 +73,7 @@
 			<answer correct="false">Komodo Dragon</answer>
 		</multiplechoice>
     </slide>
+    <slide number="8">
+    	<audio sourcefile="C:/Users/amj523/bass.wav" viewprogress="true" xstart="0.5" ystart="0.1"/>
+    </slide>
 </slideshow>
