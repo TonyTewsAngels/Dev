@@ -59,8 +59,7 @@
         <image rotation="0.0" scale="1.0" sourcefile="testpic.png" xstart="0.1" yscale="1.0" ystart="0.6"/>
     </slide>
     <slide backgroundcolor="#ffffffff" number="6">
-		<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.0" ystart="0.0">
-			<richtext font="arial" fontcolor="#ff000000" fontsize="12" bold="true" newline="true">Avengers is better than Modern Art</richtext>
-        </text>
+    	<answerbox characterlimit="6" correctanswer="springs~spring" marks="5" retry="true" xstart="0.5" ystart="0.5" numerical="false"/>
+    	<answerbox characterlimit="6" correctanswer="0.4~0.6" marks="5" retry="true" xstart="0.5" ystart="0.6" numerical="true"/>
     </slide>
 </slideshow>
