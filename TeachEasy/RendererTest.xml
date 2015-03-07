@@ -66,7 +66,7 @@
     	<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.1" ystart="0.1">
             <richtext font="arial" fontcolor="#ff000000" fontsize="24">Tick the mammals</richtext>
         </text>
-    	<multiplechoice xstart="0.2" ystart="0.2" type="checkbox" orientation="vertical" marks="1" retry="false">
+    	<multiplechoice xstart="0.2" ystart="0.2" type="checkbox" orientation="vertical" marks="1" retry="true">
 			<answer correct="false">Fish</answer>
 			<answer correct="true">Bear</answer>
 			<answer correct="true">Zebra</answer>

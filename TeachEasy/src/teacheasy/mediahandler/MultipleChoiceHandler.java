@@ -33,12 +33,11 @@ public class MultipleChoiceHandler {
 
 	/** Constructor */
 	public MultipleChoiceHandler(Group nGroup) {
-
+	    /* Set the group reference */
 		this.group = nGroup;
 
 		/* initialise the Question list */
 		this.multipleChoice = new ArrayList<MultipleChoice>();
-
 	}
 	
 	/**
@@ -51,12 +50,14 @@ public class MultipleChoiceHandler {
 	 * @param type - The type of multiple choice object being created
 	 * @param orientation - Which orientation (vertical or horizontal) to draw the answers.
 	 */
-	public void createMultipleChoice(float xStart, float yStart, ArrayList<Answer>answers, MultiChoiceType type, Orientation orientation){
+	public void createMultipleChoice(float xStart, float yStart, ArrayList<Answer>answers, 
+	                                 MultiChoiceType type, Orientation orientation, boolean retry){
 		multipleChoice.add(new MultipleChoice(group,
 		                                      xStart,
 		                                      yStart,
 		                                      answers,
 		                                      type, 
-				                              orientation));
+				                              orientation,
+				                              retry));
 	}
 }

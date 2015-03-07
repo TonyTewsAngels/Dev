@@ -18,6 +18,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
@@ -33,17 +34,24 @@ public class MultipleChoice{
     /* Group reference */
 	private Group group ;
 	
+	/* UI Objects */
+	private VBox verticalPosition;
+	private HBox horizontalPosition;
+	private Button markButton;
+	private Label markLabel;
+	
 	/* Lists of the check boxes and radio buttons */
-	List<MChoiceCheckBox> cB;
-	List<MChoiceRadio> rB;
+	private List<MChoiceCheckBox> cB;
+	private List<MChoiceRadio> rB;
 	
 	/* Data */
-	MultiChoiceType type;
-	Orientation orientation;
+	private MultiChoiceType type;
+	private Orientation orientation;
+	private boolean retry;
 	
 	/** Constructor */
 	public MultipleChoice (Group nGroup, float xStart, float yStart, ArrayList<Answer>answers,
-	                       MultiChoiceType nType, Orientation nOrientation ) {
+	                       MultiChoiceType nType, Orientation nOrientation, boolean nRetry) {
 
 	    /* Set the group reference */
 		this.group = nGroup;
@@ -54,17 +62,20 @@ public class MultipleChoice{
 		
 		/* Set the type variable */
 		this.type = nType;
+		this.orientation = nOrientation;
+		this.retry = nRetry;
 
 		/* VBox to hold the answers if vertically oriented */
-		VBox verticalPosition = new VBox(10);
+		verticalPosition = new VBox(10);
 		verticalPosition.setPadding(new Insets(10));
 
 		/* HBox to hold the answers if horizontally oriented */
-		HBox horizontalPosition = new HBox(10);
+		horizontalPosition = new HBox(10);
 		horizontalPosition.setPadding(new Insets (10));
 
 		/* The button to mark the question */
-		Button markButton = new Button("Mark");
+		markButton = new Button("Mark");
+		markLabel = new Label("");
 
 		/* Toggle group used to allow only one radio button to be selected */
 		ToggleGroup tGroup = new ToggleGroup();
@@ -84,6 +95,7 @@ public class MultipleChoice{
     				}
     				
     				verticalPosition.getChildren().add(markButton);
+    				verticalPosition.getChildren().add(markLabel);
     				verticalPosition.relocate(xStart, yStart);
     				group.getChildren().add(verticalPosition);
     			}else {
@@ -92,6 +104,7 @@ public class MultipleChoice{
     				}
     				
     				horizontalPosition.getChildren().add(markButton);
+    				horizontalPosition.getChildren().add(markLabel);
     				horizontalPosition.relocate(xStart, yStart);
     				group.getChildren().add(horizontalPosition);
     			}
@@ -116,6 +129,7 @@ public class MultipleChoice{
     				}
     
     				verticalPosition.getChildren().add(markButton);
+    				verticalPosition.getChildren().add(markLabel);
     				verticalPosition.relocate(xStart, yStart);
     				group.getChildren().add(verticalPosition);
     			} else { 
@@ -124,6 +138,7 @@ public class MultipleChoice{
     				}
     
     				horizontalPosition.getChildren().add(markButton);
+    				horizontalPosition.getChildren().add(markLabel);
     				horizontalPosition.relocate(xStart, yStart);
     				group.getChildren().add(horizontalPosition);
     			}
@@ -186,6 +201,40 @@ public class MultipleChoice{
 		return false;
 	}
 	
+	public void handleCorrect() {
+    	markLabel.setText("Correct!");
+    	disable();
+	}
+	
+	public void handleIncorrect() {
+	    markLabel.setText("Incorrect.");
+	    
+	    if(!retry) {
+	        disable();
+	    }
+	}
+	
+	public void disable() {
+	    /* Disable the appropriate answer objects */
+	    switch(type) {
+	        case CHECKBOX:
+	            for(int i = 0; i < cB.size(); i++) {
+	                cB.get(i).getCheckBox().setDisable(true);
+	            }
+	            break;
+	        case RADIO:
+	            for(int i = 0; i < rB.size(); i++) {
+                    rB.get(i).getRadioButton().setDisable(true);
+                }
+	            break;
+	        default:
+	            break;
+	    }
+	    
+	    /* Disable the mark button */
+	    markButton.setDisable(true);
+	}
+	
 	/**
 	 * This class handles the mark button's action
 	 */
@@ -193,9 +242,10 @@ public class MultipleChoice{
         @Override
         public void handle(ActionEvent arg0) {
             if (Check()){
-                System.out.println("Thats Great ");
-            }else 
-                System.out.println("Try again");
+                handleCorrect();
+            } else {
+                handleIncorrect();
+            }
         }
 	}
 

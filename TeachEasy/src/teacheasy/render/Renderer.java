@@ -283,6 +283,7 @@ public class Renderer {
                                                    (float)(bounds.getMaxX() * mChoice.getXStart()),
                                                    mChoice.getAnswers(),
                                                    mChoice.getMultiChoiceType(),
-                                                   mChoice.getOrientation());
+                                                   mChoice.getOrientation(),
+                                                   mChoice.isRetry());
     }
 }
