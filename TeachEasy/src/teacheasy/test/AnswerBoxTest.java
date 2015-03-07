@@ -1,42 +1,43 @@
 /*
- * Samuel Raeburn
- * 
- * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
- * 
+ * Copyright (C) 2015 Sofia Software Solutions
  */
 package teacheasy.test;
 
-import teacheasy.mediahandler.answerbox.AnswerBox;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Pos;
+import teacheasy.mediahandler.AnswerBoxHandler;
+import javafx.application.Application;
 import javafx.scene.Group;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import com.sun.javafx.scene.control.behavior.TextFieldBehavior;
-import com.sun.javafx.scene.control.skin.TextFieldSkin;
+import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 /**
- * This class is used to manually test the
- * answer box handler
+ * A simple class to test the TestAnswerBoxHandler
  * 
- * @author Samuel Raeburn
- * @version 1.0 07 Mar 2015
+ * @author Sam Raeburn
+ * @version 1.0
+ * 
  */
+public class AnswerBoxTest extends Application {
 
-public class AnswerBoxTest {
-	
-	/*This method creates a new answer box handler so that it can be manually tested*/
-	void createAnswerBoxHandler() {
-		AnswerBox testAnswerBox = new AnswerBox(50, 50, 10, true, "dog", 0, false, null);
+	AnswerBoxHandler answerBoxHandler;
+
+	public void start(Stage stage) {
+
+		Group group = new Group();
+		Scene scene = new Scene(group);
+		scene.setFill(Color.LIGHTBLUE);
+		
+		answerBoxHandler = new AnswerBoxHandler(group);
+		answerBoxHandler.createAnswerBox(0, 130, 10, true,
+				"monday~tuesday~wednesday", 5, false);
+
+		stage.setTitle("Answer Box Test");
+		stage.setScene(scene);
+		stage.sizeToScene();
+		stage.show();
+	}
+
+	public static void main(String[] args) {
+		launch();
 	}
 }
-
