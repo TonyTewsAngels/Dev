@@ -4,7 +4,7 @@
  * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
  * 
  */
-package teacheasy.mediahandler.multichoice;
+package teacheasy.mediahandler;
 
 /**
  * A class to make multiple choice objects 
@@ -19,15 +19,16 @@ import java.util.List;
 import teacheasy.data.MultipleChoiceObject.MultiChoiceType;
 import teacheasy.data.MultipleChoiceObject.Orientation;
 import teacheasy.data.multichoice.Answer;
+import teacheasy.mediahandler.multichoice.MultipleChoice;
 import javafx.scene.Group;
 
-public class MChoiceMediaHandler {
+public class MultipleChoiceHandler {
 	private Group group; 
 	private List <MultipleChoice> multipleChoice;
 
 	/*constructor method */
 
-	public MChoiceMediaHandler(Group nGroup) {
+	public MultipleChoiceHandler(Group nGroup) {
 
 		this.group = nGroup;
 
