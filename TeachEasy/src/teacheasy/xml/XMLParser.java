@@ -16,6 +16,7 @@ import teacheasy.data.*;
 import teacheasy.data.GraphicObject.*;
 import teacheasy.data.MultipleChoiceObject.*;
 import teacheasy.data.lessondata.*;
+import teacheasy.data.multichoice.Answer;
 
 import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
@@ -280,9 +281,9 @@ public class XMLParser extends DefaultHandler{
                 break;
             case ANSWER:
                 if(currentAnswer) {
-                    currentMultiChoice.correctAnswers.add(readBuffer);
+                    currentMultiChoice.addAnswer(new Answer(readBuffer, true));
                 } else {
-                    currentMultiChoice.incorrectAnswers.add(readBuffer);
+                    currentMultiChoice.addAnswer(new Answer(readBuffer, false));
                 }
                 break;
             case BUTTON:

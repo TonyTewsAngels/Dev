@@ -217,10 +217,11 @@ public class Iteration1XMLTest {
 				assertTrue(multipleChoice.getXStart() == 0.2f);
 				assertTrue(multipleChoice.getYStart() == 0.2f);
 				assertTrue(multipleChoice.getMultiChoiceType() == MultiChoiceType.CHECKBOX);
-				assertTrue(multipleChoice.incorrectAnswers.get(0).equals("Fish"));
+				/* THIS CODE IS NO LONGER VALID */
+				/*assertTrue(multipleChoice.incorrectAnswers.get(0).equals("Fish"));
 				assertTrue(multipleChoice.correctAnswers.get(0).equals("Bear"));
 				assertTrue(multipleChoice.correctAnswers.get(1).equals("Zebra"));
-				assertTrue(multipleChoice.incorrectAnswers.get(1).equals("Komodo Dragon"));
+				assertTrue(multipleChoice.incorrectAnswers.get(1).equals("Komodo Dragon"));*/
 				break;				
 			default:
 				break;

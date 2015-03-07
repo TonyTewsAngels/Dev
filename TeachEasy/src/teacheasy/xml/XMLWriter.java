@@ -25,6 +25,7 @@ import org.w3c.dom.Element;
 import teacheasy.data.*;
 import teacheasy.data.GraphicObject.Shading;
 import teacheasy.data.lessondata.*;
+import teacheasy.data.multichoice.Answer;
 
 /**
  * This class handles XML writing, 
@@ -386,27 +387,25 @@ public class XMLWriter {
 	    multipleChoiceElement.setAttribute("marks", String.valueOf(multipleChoice.getMarks()));
 	    multipleChoiceElement.setAttribute("retry", String.valueOf(multipleChoice.isRetry()));
 	    
-	    /* Add the correct answers */
-	    for(int i = 0; i < multipleChoice.correctAnswers.size(); i++) {
+	    /* Add the answers */
+	    for(int i = 0; i < multipleChoice.getAnswers().size(); i++) {
+	        /* Get the answer object */
+	        Answer answer = multipleChoice.getAnswers().get(i);
+	        
 	        /* Create the answer element and add it to the multiple choice element */
 	        Element answerElement = doc.createElement("answer");
 	        multipleChoiceElement.appendChild(answerElement);
 	        
-	        /* Set the attributes and text */
-	        answerElement.setAttribute("correct", "true");
-	        answerElement.appendChild(doc.createTextNode(multipleChoice.correctAnswers.get(i)));
+	        /* Set the correct attribute */
+	        if(answer.isCorrect()) {
+	            answerElement.setAttribute("correct", "true");
+	        } else {
+	            answerElement.setAttribute("correct", "false");
+	        }
+	        
+	        /* Set the text */
+	        answerElement.appendChild(doc.createTextNode(answer.getText()));
 	    }
-	    
-	    /* Add the incorrect answers */
-	    for(int i = 0; i < multipleChoice.incorrectAnswers.size(); i++) {
-	        /* Create the answer element and add it to the multiple choice element */
-            Element answerElement = doc.createElement("answer");
-            multipleChoiceElement.appendChild(answerElement);
-            
-            /* Set the attributes and text */
-            answerElement.setAttribute("correct", "false");
-            answerElement.appendChild(doc.createTextNode(multipleChoice.incorrectAnswers.get(i)));
-        }
 	}
 	
 	/** Add a button */

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import teacheasy.data.MultipleChoiceObject.MultiChoiceType;
 import teacheasy.data.MultipleChoiceObject.Orientation;
 import teacheasy.data.multichoice.Answer;
+import teacheasy.mediahandler.MultipleChoiceHandler;
 import teacheasy.mediahandler.multichoice.MultipleChoice;
 import javafx.application.Application;
 import javafx.event.*;
@@ -31,7 +32,7 @@ import javafx.*;
 
 
 public class MultipleChoiceDummyGUI extends Application {
-	MultipleChoice mChoice;
+	MultipleChoiceHandler multipleChoiceHandler;
 
     /**
      * Override the start method inside the JavaFX Application
@@ -62,7 +63,10 @@ public class MultipleChoiceDummyGUI extends Application {
         answers.add(new Answer("INCorrect Answer", false));
         answers.add(new Answer("Correct Answer", true));
         
-        mChoice = new MultipleChoice(group, answers, 10, 5, MultiChoiceType.CHECKBOX, Orientation.VERTICAL);
+        multipleChoiceHandler = new MultipleChoiceHandler(group);
+        
+        multipleChoiceHandler.createMultipleChoice(5, 5, answers, MultiChoiceType.CHECKBOX, Orientation.VERTICAL, false);
+        multipleChoiceHandler.createMultipleChoice(500, 150, answers, MultiChoiceType.RADIO, Orientation.HORIZONTAL, true);
         
         /* Show the window */
         primaryStage.show(); 

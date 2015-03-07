@@ -6,31 +6,30 @@
  */
 package teacheasy.mediahandler.multichoice;
 
+import javafx.scene.control.CheckBox;
+
 /**
  * A class to label right and wrong check boxes 
  * 
  * @author	Emmanuel Olutayo
  * @version	1.0 07 Mar 2015
  */
-
-import javafx.scene.control.CheckBox;
-
 public class MChoiceCheckBox {
 
-	private CheckBox cB;
+	private CheckBox checkBox;
 	private boolean correct;
 
 	public MChoiceCheckBox(CheckBox nCB, boolean nCorrect){
-		this.cB = nCB;
+		this.checkBox = nCB;
 		this.correct = nCorrect;
 	}
 
-	public CheckBox getcB() {
-		return cB;
+	public CheckBox getCheckBox() {
+		return checkBox;
 	}
 
-	public void setcB(CheckBox ncB) {
-		this.cB = ncB;
+	public void setCheckBox(CheckBox ncB) {
+		this.checkBox = ncB;
 	}
 
 	public boolean isCorrect() {
@@ -40,7 +39,4 @@ public class MChoiceCheckBox {
 	public void setCorrect(boolean nCorrect) {
 		this.correct = nCorrect;
 	}
-
-
-
 }

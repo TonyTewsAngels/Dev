@@ -38,6 +38,7 @@ public class Renderer {
     private TextHandler textHandler;
     private GraphicsHandler graphicsHandler;
     private AnswerBoxHandler answerBoxHandler;
+    private MultipleChoiceHandler multipleChoiceHandler;
    
     /** Constructor */
     public Renderer(Group nGroup, Rectangle2D nBounds) {
@@ -53,6 +54,7 @@ public class Renderer {
         textHandler = new TextHandler(group);
         graphicsHandler = new GraphicsHandler(group);
         answerBoxHandler = new AnswerBoxHandler(group);
+        multipleChoiceHandler = new MultipleChoiceHandler(group);
     }
     
     /** Render an individual page */
@@ -88,6 +90,10 @@ public class Renderer {
                     break;
                 case ANSWER_BOX:
                     renderAnswerBox((AnswerBoxObject) pageObject);
+                    break;
+                case MULTIPLE_CHOICE:
+                    renderMultipleChoice((MultipleChoiceObject) pageObject);
+                    break;
                 default:
                     break;
             }
@@ -269,5 +275,15 @@ public class Renderer {
                                          aBox.getCorrectAnswers(),
                                          aBox.getMarks(),
                                          aBox.isNumerical());
+    }
+    
+    /** Add a multiple choice object to the screen */
+    public void renderMultipleChoice(MultipleChoiceObject mChoice) {
+        multipleChoiceHandler.createMultipleChoice((float)(bounds.getMaxX() * mChoice.getXStart()),
+                                                   (float)(bounds.getMaxX() * mChoice.getXStart()),
+                                                   mChoice.getAnswers(),
+                                                   mChoice.getMultiChoiceType(),
+                                                   mChoice.getOrientation(),
+                                                   mChoice.isRetry());
     }
 }
