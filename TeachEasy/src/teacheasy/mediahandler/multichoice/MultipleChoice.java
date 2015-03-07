@@ -42,8 +42,7 @@ public class MultipleChoice{
 	Orientation orientation;
 	
 	/** Constructor */
-	public MultipleChoice (Group nGroup, ArrayList<Answer>answers, int defaultPadding, 
-			               int spacing, MultiChoiceType nType, Orientation nOrientation ) {
+	public MultipleChoice (Group nGroup, double xStart, double yStart, ArrayList<Answer>answers, MultiChoiceType nType, Orientation nOrientation ) {
 
 	    /* Set the group reference */
 		this.group = nGroup;
@@ -56,12 +55,12 @@ public class MultipleChoice{
 		this.type = nType;
 
 		/* VBox to hold the answers if vertically oriented */
-		VBox verticalPosition = new VBox(spacing);
-		verticalPosition.setPadding(new Insets(defaultPadding));
+		VBox verticalPosition = new VBox(10);
+		verticalPosition.setPadding(new Insets(10));
 
 		/* HBox to hold the answers if horizontally oriented */
-		HBox horizontalPosition = new HBox(spacing);
-		horizontalPosition.setPadding(new Insets (defaultPadding));
+		HBox horizontalPosition = new HBox(10);
+		horizontalPosition.setPadding(new Insets (10));
 
 		/* The button to mark the question */
 		Button markButton = new Button("Mark");
@@ -84,6 +83,7 @@ public class MultipleChoice{
     				}
     				
     				verticalPosition.getChildren().add(markButton);
+    				verticalPosition.relocate(xStart, yStart);
     				group.getChildren().add(verticalPosition);
     			}else {
     				for(int i = 0; i < cB.size(); i++ ){
@@ -91,6 +91,7 @@ public class MultipleChoice{
     				}
     				
     				horizontalPosition.getChildren().add(markButton);
+    				horizontalPosition.relocate(xStart, yStart);
     				group.getChildren().add(horizontalPosition);
     			}
     			
@@ -114,6 +115,7 @@ public class MultipleChoice{
     				}
     
     				verticalPosition.getChildren().add(markButton);
+    				verticalPosition.relocate(xStart, yStart);
     				group.getChildren().add(verticalPosition);
     			} else { 
     				for(int i =0; i< rB.size();i++){
@@ -121,6 +123,7 @@ public class MultipleChoice{
     				}
     
     				horizontalPosition.getChildren().add(markButton);
+    				horizontalPosition.relocate(xStart, yStart);
     				group.getChildren().add(horizontalPosition);
     			}
     			
@@ -132,8 +135,6 @@ public class MultipleChoice{
     		case DROPDOWNLIST:
     			break;
 		}
-		
-		markButton.setOnAction(new MultipleChoiceCheckHandler());
 	}
 
 	public boolean Check(){
@@ -174,13 +175,13 @@ public class MultipleChoice{
 	public boolean RadioCheck(){
 		/* Loop through all the radio buttons */
 		for(int i = 0; i < rB.size(); i++){
-		    /* If this is the correct answer return true if its selected, false if not */
-			if(rB.get(i).isCorrect()){
-				return rB.get(i).getRadioButton().isSelected();
+		    /* If this is a correct answer and its selected return true */
+			if(rB.get(i).isCorrect() && rB.get(i).getRadioButton().isSelected()){
+				return true;
 			}
 		}
 		
-		/* There were no correct answers, return false */
+		/* A correct answer was not selected, return false */
 		return false;
 	}
 	

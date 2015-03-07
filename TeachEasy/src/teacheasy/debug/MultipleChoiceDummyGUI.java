@@ -65,8 +65,8 @@ public class MultipleChoiceDummyGUI extends Application {
         
         multipleChoiceHandler = new MultipleChoiceHandler(group);
         
-        multipleChoiceHandler.createMultipleChoice(answers, 10, 5, MultiChoiceType.CHECKBOX, Orientation.VERTICAL);
-        multipleChoiceHandler.createMultipleChoice(answers, 100, 5, MultiChoiceType.RADIO, Orientation.HORIZONTAL);
+        multipleChoiceHandler.createMultipleChoice(5, 5, answers, MultiChoiceType.CHECKBOX, Orientation.VERTICAL);
+        multipleChoiceHandler.createMultipleChoice(500, 150, answers, MultiChoiceType.RADIO, Orientation.HORIZONTAL);
         
         /* Show the window */
         primaryStage.show(); 
