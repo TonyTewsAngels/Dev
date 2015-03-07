@@ -1,3 +1,9 @@
+/*
+ * Sam Raeburn
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
+ * 
+ */
 package teacheasy.test;
 
 import teacheasy.mediahandler.VideoHandler;
@@ -10,6 +16,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
+
+/**
+ * This class draws a video on the screen using the video
+ * handler. I have used this to manually test the handler.
+ * Any changes that need to be made are outlined
+ * in the test report on the google drive
+ * @author amj523
+ * @version 1.0 20 Feb 2015
+ */
 
 public class VideoHandlerTest extends Application {
     /* Video Handler */
