@@ -10,7 +10,7 @@
         <lessonname>Algebra 1</lessonname>
     </documentinfo>
     <defaultsettings>
-        <backgroundcolor>#ff00ff00</backgroundcolor>
+        <backgroundcolor>#ff000000</backgroundcolor>
         <font>arial</font>
         <fontsize>24</fontsize>
         <fontcolor>#ffffffff</fontcolor>
@@ -18,7 +18,7 @@
     <gradesettings>
         <passboundary failmessage="fail" passmessage="pass">10</passboundary>
     </gradesettings>
-    <slide backgroundcolor="#ffcc00cc" number="1">
+    <slide backgroundcolor="#ff0a000a" number="1">
     	<graphic graphiccolor="#ff000000" outlinethickness="4" rotation="0.0" shadow="false" solid="true" type="line" xend="0.6" xstart="0.15" yend="0.6" ystart="0.15"/>
         <graphic graphiccolor="#ff005555" linecolor="#ffff0000" outlinethickness="5" rotation="0.0" shadow="false" solid="true" type="oval" xend="0.7" xstart="0.5" yend="0.7" ystart="0.5">
         	<horizontalshading shadingcolor="#ffff0000"/>
@@ -27,7 +27,7 @@
         	<cyclicshading shadingcolor="#ff00ff00"/>
         </graphic>
     </slide>
-    <slide backgroundcolor="#ffcc00cc" number="2">
+    <slide backgroundcolor="#ffffffff" number="2">
         <image rotation="0.0" scale="1.0" sourcefile="testpic.png" xstart="0.1" yscale="1.0" ystart="0.1"/>
         <image rotation="54.0" scale="1.0" sourcefile="testpic.png" xstart="0.4" yscale="1.0" ystart="0.4"/>
     </slide>
