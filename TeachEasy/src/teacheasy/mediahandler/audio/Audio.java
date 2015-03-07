@@ -165,19 +165,7 @@ public class Audio {
 		elapsedLabel = new Label();
 		remainingLabel = new Label();
 		elapsedLabel.relocate(80, 35);
-		remainingLabel.relocate(380, 35);
-		
-		
-		elapsedLabelVBox.getChildren().addAll(elapsedLabel);
-		remainingLabelVBox.getChildren().addAll(remainingLabel);	
-		timeLabelsHBox.getChildren().addAll(elapsedLabelVBox, remainingLabelVBox);
-		timeProgressVbox.getChildren().addAll(timeLabelsHBox, progressSlider);
-		playSeekHbox.getChildren().addAll(playPauseButton, timeProgressVbox);
-		volumeMuteHBox.getChildren().addAll(controlsButton, volumeSlider, muteButton);
-		
-		
-	
-		
+		remainingLabel.relocate(380, 35);		
 
 		/* Reformat the file to a string to be used as a Media object */
 		final Media audio = new Media(sourceFile.toURI().toString());
@@ -230,14 +218,21 @@ public class Audio {
 
 		group.getChildren().addAll(mediaControlsVBox);
 		
-//		/* Add relevant parts to the group depending on bool switches in call */		
-//		if (visibleControls == true && playButtonOnly == false){
-//			group.getChildren().addAll(playPauseButton, controlsButton, audioView);
-//		} else if (visibleControls == true && playButtonOnly == true) {
-//			group.getChildren().addAll(playPauseButton, audioView);
-//		} else {
-//			group.getChildren().addAll(audioView);
-//		}
+		/* Add relevant parts to the group depending on bool switches in call */		
+		if (visibleControls == true && playButtonOnly == false){	//Add all visible controls				
+			elapsedLabelVBox.getChildren().addAll(elapsedLabel);
+			remainingLabelVBox.getChildren().addAll(remainingLabel);	
+			timeLabelsHBox.getChildren().addAll(elapsedLabelVBox, remainingLabelVBox);
+			timeProgressVbox.getChildren().addAll(timeLabelsHBox, progressSlider);
+			playSeekHbox.getChildren().addAll(playPauseButton, timeProgressVbox);
+			volumeMuteHBox.getChildren().addAll(controlsButton, volumeSlider, muteButton);
+			group.getChildren().addAll(audioView);
+		} else if (visibleControls == true && playButtonOnly == true) {		//Add just the play/pause button
+			playSeekHbox.getChildren().addAll(playPauseButton);
+			group.getChildren().addAll(audioView);
+		} else {
+			group.getChildren().addAll(audioView); //Add no visible controls
+		}
 
 	}
 	

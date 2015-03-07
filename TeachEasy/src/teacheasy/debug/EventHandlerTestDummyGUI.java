@@ -29,10 +29,7 @@ public class EventHandlerTestDummyGUI extends Application {
         /* Create the audio player */
         audioHandler = new AudioHandler(group);
         audioHandler.createAudio(5, 5, 600, file, false, true, false);
-        audioHandler.createAudio(5, 300, 400, file, false, true, false);
-        audioHandler.createAudio(5, 500, 400, file, false, true, false);
-        audioHandler.createAudio(5, 700, 400, file, false, true, false);
-        audioHandler.createAudio(5, 900, 400, file, false, true, false);
+        audioHandler.createAudio(5, 300, 400, file, false, true, true);
         
         
         /* Show the window */
