@@ -14,6 +14,9 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 import teacheasy.data.*;
 import teacheasy.render.Renderer;
@@ -151,11 +154,27 @@ public class RunTimeData {
     }
     
     /** Open a lesson file */
-    public boolean openLesson(File file) {
+    public boolean openLesson() {
+        /* Create a file chooser */
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Files", "*.xml"));
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        
+        /* Set the initial directory to the recent read path */
+        if(xmlHandler.getRecentReadPath() != null) {
+            fileChooser.setInitialDirectory(new File(new File(xmlHandler.getRecentReadPath()).getParent()));
+        }
+        
+        /* Get the file to open */
+        File file = fileChooser.showOpenDialog(new Stage());
+        
         /* Check that the file is not null */
         if(file == null) {
             return false;
         }
+        
+        /* Set the recent read Path */
+        xmlHandler.setRecentReadPath(file.getAbsolutePath());
         
         /* Parse the file */
         ArrayList<String> errorList = xmlHandler.parseXML(file.getAbsolutePath());
@@ -173,6 +192,7 @@ public class RunTimeData {
         
         /* Open the lesson */
         setPageCount(lesson.pages.size());
+        setCurrentPage(0);
         setLessonOpen(true);
         redraw(group, bounds);
         return true;
@@ -180,6 +200,9 @@ public class RunTimeData {
     
     /** Close the current lesson */
     public void closeLesson() {
+        /* Clear the page */
+        renderer.clearPage();
+        
         /* Set the lesson open flag to false */
         setLessonOpen(false);
         

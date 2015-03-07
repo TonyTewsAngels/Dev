@@ -26,6 +26,12 @@ public class XMLHandler {
 	/** XML Writer */
 	private XMLWriter xmlWriter;
 	
+	/** The most recent read location */
+	String recentReadPath = null;
+	
+	/** The most recent write location*/
+	String recentWritePath = null;
+	
 	/** Constructor Method */
 	public XMLHandler() {
 		
@@ -50,4 +56,24 @@ public class XMLHandler {
 	public ArrayList<String> writeXML(Lesson lesson, String filename) {
 	    return xmlWriter.writeXML(lesson, filename);
 	}
+	
+	/** Get the recent read path */
+	public String getRecentReadPath() {
+	    return recentReadPath;
+	}
+	
+	/** Set the recent read path */
+	public void setRecentReadPath(String nPath) {
+	    this.recentReadPath = nPath;
+	}
+	
+	/** Get the recent write path */
+    public String getRecentWritePath() {
+        return recentWritePath;
+    }
+    
+    /** Set the recent write path */
+    public void setRecentWritePath(String nPath) {
+        this.recentWritePath = nPath;
+    }
 }

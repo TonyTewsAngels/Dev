@@ -119,10 +119,7 @@ public class RuntimeDataDummyUI extends Application {
         updateUI();
     }
     
-    public void updateUI() {
-        /* Call the rendering method 
-        runTimeData.redraw(group, bounds);*/
-        
+    public void updateUI() {        
         /* 
          * If there is a lesson open enable the relevant page 
          * buttons, if not disable both.
@@ -159,16 +156,8 @@ public class RuntimeDataDummyUI extends Application {
     
     /** File->Open menu option functionality */
     public void fileOpenPressed() {
-        /* Create a file chooser */
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Files", "*.xml"));
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        
-        /* Get the file to open */
-        File file = fileChooser.showOpenDialog(new Stage());
-        
         /* Open the file */
-        if(runTimeData.openLesson(file)) {
+        if(runTimeData.openLesson()) {
             /* Opened Successfully */
         } else {
             System.out.print("Parse Failed");
