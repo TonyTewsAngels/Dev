@@ -39,7 +39,4 @@ public class MChoiceCheckBox {
 	public void setCorrect(boolean nCorrect) {
 		this.correct = nCorrect;
 	}
-
-
-
 }

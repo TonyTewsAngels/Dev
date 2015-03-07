@@ -9,6 +9,8 @@ package teacheasy.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import teacheasy.data.multichoice.Answer;
+
 /**
  * This class encapsulates the data for
  * a multiple choice object.
@@ -46,8 +48,7 @@ public class MultipleChoiceObject extends PageObject {
         }
     }
     
-    public List<String> correctAnswers;
-    public List<String> incorrectAnswers;
+    private ArrayList<Answer> answers;
     
     private Orientation orientation;
     private MultiChoiceType multiChoiceType;
@@ -64,8 +65,7 @@ public class MultipleChoiceObject extends PageObject {
         super(PageObjectType.MULTIPLE_CHOICE, nXStart, nYStart);
         
         /* Instantiate answer lists */
-        correctAnswers = new ArrayList<String>();
-        incorrectAnswers = new ArrayList<String>();
+        answers = new ArrayList<Answer>();
         
         /* Instantiate class level variables */
         this.orientation = nOrientation;
@@ -108,6 +108,18 @@ public class MultipleChoiceObject extends PageObject {
         this.retry = nRetry;
     }
     
+    public ArrayList<Answer> getAnswers() {
+        return answers;
+    }
+    
+    public void clearAnswers() {
+        answers.clear();
+    }
+    
+    public void addAnswer(Answer answer) {
+        answers.add(answer);
+    }
+    
     /** Prints information about the object to the console */
     public void debugPrint() {
         super.debugPrint();
@@ -117,12 +129,8 @@ public class MultipleChoiceObject extends PageObject {
                            ", Marks " + marks + 
                            ", Retry " + retry + ".");
         
-        for(int i = 0; i < correctAnswers.size(); i++) {
-            System.out.println("\tCorrect Aswer: " + correctAnswers.get(i));
-        }
-        
-        for(int i = 0; i < incorrectAnswers.size(); i++) {
-            System.out.println("\tIncorrect Aswer: " + incorrectAnswers.get(i));
+        for(int i = 0; i < answers.size(); i++) {
+            System.out.println("\tCorrect Aswer: " + answers.get(i).getText());
         }
         
         System.out.println("");

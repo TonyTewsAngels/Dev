@@ -51,8 +51,7 @@ public class MultipleChoiceHandler {
 	 * @param type - The type of multiple choice object being created
 	 * @param orientation - Which orientation (vertical or horizontal) to draw the answers.
 	 */
-	public void createMultipleChoice(double xStart, double yStart, ArrayList<Answer>answers, MultiChoiceType type, Orientation orientation){
-
+	public void createMultipleChoice(float xStart, float yStart, ArrayList<Answer>answers, MultiChoiceType type, Orientation orientation){
 		multipleChoice.add(new MultipleChoice(group,
 		                                      xStart,
 		                                      yStart,
@@ -60,5 +59,4 @@ public class MultipleChoiceHandler {
 		                                      type, 
 				                              orientation));
 	}
-
 }

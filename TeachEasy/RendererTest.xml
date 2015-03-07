@@ -62,4 +62,15 @@
     	<answerbox characterlimit="6" correctanswer="springs~spring" marks="5" retry="true" xstart="0.5" ystart="0.5" numerical="false"/>
     	<answerbox characterlimit="6" correctanswer="0.4~0.6" marks="5" retry="true" xstart="0.5" ystart="0.6" numerical="true"/>
     </slide>
+    <slide number = "7">
+    	<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.1" ystart="0.1">
+            <richtext font="arial" fontcolor="#ff000000" fontsize="24">Tick the mammals</richtext>
+        </text>
+    	<multiplechoice xstart="0.2" ystart="0.2" type="checkbox" orientation="vertical" marks="1" retry="false">
+			<answer correct="false">Fish</answer>
+			<answer correct="true">Bear</answer>
+			<answer correct="true">Zebra</answer>
+			<answer correct="false">Komodo Dragon</answer>
+		</multiplechoice>
+    </slide>
 </slideshow>

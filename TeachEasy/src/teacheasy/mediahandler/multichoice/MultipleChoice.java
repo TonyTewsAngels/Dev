@@ -42,7 +42,8 @@ public class MultipleChoice{
 	Orientation orientation;
 	
 	/** Constructor */
-	public MultipleChoice (Group nGroup, double xStart, double yStart, ArrayList<Answer>answers, MultiChoiceType nType, Orientation nOrientation ) {
+	public MultipleChoice (Group nGroup, float xStart, float yStart, ArrayList<Answer>answers,
+	                       MultiChoiceType nType, Orientation nOrientation ) {
 
 	    /* Set the group reference */
 		this.group = nGroup;
