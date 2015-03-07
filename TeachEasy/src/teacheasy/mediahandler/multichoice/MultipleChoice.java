@@ -153,7 +153,12 @@ public class MultipleChoice{
 		}
 	}
 
-	public boolean Check(){
+	/**
+	 * Method to check the seleted answers.
+	 * 
+	 * @return True if the selected answers are correct. False otherwise.
+	 */
+	private boolean Check(){
 	    /* Check the type */
 	    switch(type) {
 	        case CHECKBOX:
@@ -170,7 +175,12 @@ public class MultipleChoice{
 	    }
 	}
 	
-	public boolean CheckBoxCheck() {
+    /**
+     * Method to check a set of check boxes.
+     * 
+     * @return True if the selected answers are the correct answers. False otherwise.
+     */
+	private boolean CheckBoxCheck() {
 	    /* Loop through all the check boxes */
 	    for(int i = 0; i < cB.size(); i++ ){
 	        /* If this box is ticked and is incorrect return false */
@@ -187,8 +197,13 @@ public class MultipleChoice{
 	    /* If all boxes are correct return true */
 	    return true;
 	}
-
-	public boolean RadioCheck(){
+    
+    /**
+     * Method to check a set of radio buttons.
+     * 
+     * @return True if the correct answer is selected.
+     */
+    private boolean RadioCheck(){
 		/* Loop through all the radio buttons */
 		for(int i = 0; i < rB.size(); i++){
 		    /* If this is a correct answer and its selected return true */
@@ -201,12 +216,18 @@ public class MultipleChoice{
 		return false;
 	}
 	
-	public void handleCorrect() {
+	/**
+	 * Method to handle a correct result
+	 */
+	private void handleCorrect() {
     	markLabel.setText("Correct!");
     	disable();
 	}
 	
-	public void handleIncorrect() {
+	/**
+	 * Method to handle an incorrect result
+	 */
+	private void handleIncorrect() {
 	    markLabel.setText("Incorrect.");
 	    
 	    if(!retry) {
@@ -214,7 +235,10 @@ public class MultipleChoice{
 	    }
 	}
 	
-	public void disable() {
+	/**
+	 * Method to disable the set of answer options
+	 */
+	private void disable() {
 	    /* Disable the appropriate answer objects */
 	    switch(type) {
 	        case CHECKBOX:
