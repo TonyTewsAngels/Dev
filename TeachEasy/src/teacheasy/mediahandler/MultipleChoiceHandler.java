@@ -6,13 +6,6 @@
  */
 package teacheasy.mediahandler;
 
-/**
- * A class to make multiple choice objects 
- * 
- * @author	Emmanuel Olutayo
- * @version	1.0 07 Mar 2015
- */
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,14 +13,25 @@ import teacheasy.data.MultipleChoiceObject.MultiChoiceType;
 import teacheasy.data.MultipleChoiceObject.Orientation;
 import teacheasy.data.multichoice.Answer;
 import teacheasy.mediahandler.multichoice.MultipleChoice;
+
 import javafx.scene.Group;
 
+
+/**
+ * A class to handle the multiple choice objects
+ * on a page. 
+ * 
+ * @author	Emmanuel Olutayo
+ * @version	1.0 07 Mar 2015
+ */
 public class MultipleChoiceHandler {
-	private Group group; 
+    /* Group reference */
+	private Group group;
+	
+	/* List of multiple choice objects */
 	private List <MultipleChoice> multipleChoice;
 
-	/*constructor method */
-
+	/** Constructor */
 	public MultipleChoiceHandler(Group nGroup) {
 
 		this.group = nGroup;
@@ -36,7 +40,18 @@ public class MultipleChoiceHandler {
 		this.multipleChoice = new ArrayList<MultipleChoice>();
 
 	}
-	public void createMultipleChoice(Group nGroup , ArrayList<Answer>answers, int defaultPadding, 
+	
+	/**
+	 * Method to add a multiple choice object to a page.
+	 * 
+	 * @param answers - Array list of Answer objects representing the possible
+	 *                  answers; correct or incorrect.        
+	 * @param defaultPadding
+	 * @param spacing
+	 * @param type - The type of multiple choice object being created
+	 * @param orientation - Which orientation (vertical or horizontal) to draw the answers.
+	 */
+	public void createMultipleChoice(ArrayList<Answer>answers, int defaultPadding, 
 			int spacing, MultiChoiceType type, Orientation orientation){
 
 		multipleChoice.add(new MultipleChoice(group, answers, defaultPadding, spacing, type , 
