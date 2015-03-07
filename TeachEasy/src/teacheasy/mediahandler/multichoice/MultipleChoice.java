@@ -1,3 +1,10 @@
+/*
+ * Emmanuel Olutayo
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
+ * 
+ */
+
 package teacheasy.mediahandler.multichoice;
 
 import java.awt.List;
