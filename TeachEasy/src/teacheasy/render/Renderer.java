@@ -159,8 +159,8 @@ public class Renderer {
         /* Draw the buffer to the screen */
         textHandler.drawBuffer((int)(bounds.getMaxX() * text.getXStart()),
                                (int)(bounds.getMaxY() * text.getYStart()),
-                               (int)(bounds.getMaxX() * text.getXStart()) + 200,
-                               (int)(bounds.getMaxY() * text.getYStart()) + 200,
+                               (int)(bounds.getMaxX()),
+                               (int)(bounds.getMaxY()),
                                "#00000000",
                                Alignment.LEFT);
         
