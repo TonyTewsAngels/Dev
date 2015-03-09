@@ -298,7 +298,7 @@ public class Renderer {
     /** Add a multiple choice object to the screen */
     public void renderMultipleChoice(MultipleChoiceObject mChoice) {
         multipleChoiceHandler.createMultipleChoice((float)(bounds.getMaxX() * mChoice.getXStart()),
-                                                   (float)(bounds.getMaxX() * mChoice.getXStart()),
+                                                   (float)(bounds.getMaxY() * mChoice.getYStart()),
                                                    mChoice.getAnswers(),
                                                    mChoice.getMultiChoiceType(),
                                                    mChoice.getOrientation(),

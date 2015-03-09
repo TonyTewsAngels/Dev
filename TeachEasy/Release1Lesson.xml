@@ -20,13 +20,11 @@
     </gradesettings>
     
     <slide backgroundcolor="#ffffffff" number="1">
-    
     	<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.15" ystart="0.05">
             <richtext bold="true" underline="true" font="arial" fontcolor="#ff000000" fontsize="70">Learn Piano</richtext>
         </text>
         
         <image rotation="0.0" scale="1.8" sourcefile="Release1LessonPianoKeys.gif" xstart="0.15" ystart="0.2"/>
-  
     	<graphic graphiccolor="#ffff0000" outlinethickness="4" rotation="0.0" shadow="false" solid="true" type="oval" xstart="0.7" xend="0.727" ystart="0.52" yend="0.568"/>
     	<graphic graphiccolor="#ff00ff00" outlinethickness="4" rotation="0.0" shadow="false" solid="true" type="oval" xstart="0.435" xend="0.464" ystart="0.52" yend="0.568"/>
     	<graphic graphiccolor="#ff0000ff" outlinethickness="4" rotation="0.0" shadow="false" solid="true" type="oval" xstart="0.32" xend="0.349" ystart="0.42"  yend="0.468"/>
@@ -51,7 +49,48 @@
             <richtext>' note.</richtext>
         </text>
 		<answerbox xstart="0.5" ystart ="0.9" characterlimit="2" correctanswer="a" marks="1" retry="true"/>
+    </slide>
+    
+    <slide number="2" backgroundcolor="#ffddffff">
+    	<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.1" ystart="0.05">
+			<richtext> What chord is made by combining G, A# and D? </richtext>
+        </text>
+        <multiplechoice xstart="0.1" ystart="0.1" type="radio" orientation="vertical" marks="1" retry="true">
+			<answer correct="false">G Major</answer>
+			<answer correct="false">A# Major</answer>
+			<answer correct="true">G Minor</answer>
+			<answer correct="false">D Minor</answer>
+		</multiplechoice>
 		
+		<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.6" ystart="0.05">
+			<richtext> What chord is made by combining A, C and E? </richtext>
+        </text>
+        <multiplechoice xstart="0.6" ystart="0.1" type="radio" orientation="vertical" marks="1" retry="true">
+			<answer correct="false">E Minor</answer>
+			<answer correct="false">E Major</answer>
+			<answer correct="false">C7</answer>
+			<answer correct="true">A Major</answer>
+		</multiplechoice>
+		
+		<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.1" ystart="0.55">
+			<richtext> What chord is made by combining E, G# and B? </richtext>
+        </text>
+        <multiplechoice xstart="0.1" ystart="0.6" type="radio" orientation="vertical" marks="1" retry="true">
+			<answer correct="false">G# Minor</answer>
+			<answer correct="true">E Major</answer>
+			<answer correct="false">G# Major</answer>
+			<answer correct="false">B Major</answer>
+		</multiplechoice>
+		
+		<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.6" ystart="0.55">
+			<richtext> What chord is made by combining F, G and C? </richtext>
+        </text>
+        <multiplechoice xstart="0.6" ystart="0.6" type="radio" orientation="vertical" marks="1" retry="true">
+			<answer correct="true">Fsus2</answer>
+			<answer correct="false">F7</answer>
+			<answer correct="false">F Minor</answer>
+			<answer correct="false">Csus4</answer>
+		</multiplechoice>
     </slide>
     
 </slideshow>
