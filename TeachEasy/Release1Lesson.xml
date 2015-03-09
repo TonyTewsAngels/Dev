@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<slideshow>
+    <documentinfo>
+        <author>Mr Armstrong</author>
+        <version>1.0</version>
+        <comment>Easy starting steps to learning piano</comment>
+        <groupid>4</groupid>
+        <datecreated>06/03/2015</datecreated>
+        <totalmarks>3</totalmarks>
+        <lessonname>Piano 1</lessonname>
+    </documentinfo>
+    <defaultsettings>
+        <backgroundcolor>#ff00ff00</backgroundcolor>
+        <font>arial</font>
+        <fontsize>24</fontsize>
+        <fontcolor>#ffffffff</fontcolor>
+    </defaultsettings>
+    <gradesettings>
+        <passboundary failmessage="fail" passmessage="pass">2</passboundary>
+    </gradesettings>
+    
+    <slide backgroundcolor="#ffcc00cc" number="1">
+    
+    	<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.4" ystart="0.1">
+            <richtext bold="true" underline="true" font="arial" fontcolor="#ff000000" fontsize="70">Learn Piano</richtext>
+        </text>
+        
+        <image rotation="0.0" scale="1.8" sourcefile="Release1LessonPianoKeys.gif" xstart="0.15" ystart="0.3"/>
+  
+    	<graphic graphiccolor="#ffff0000" outlinethickness="4" rotation="0.0" shadow="false" solid="true" type="oval" xstart="0.722" xend="0.772" ystart="0.52" yend="0.57"/>
+    	<graphic graphiccolor="#ff00ff00" outlinethickness="4" rotation="0.0" shadow="false" solid="true" type="oval" xstart="0.417" xend="0.467" ystart="0.52" yend="0.57"/>
+    	<graphic graphiccolor="#ff0000ff" outlinethickness="4" rotation="0.0" shadow="false" solid="true" type="oval" xstart="0.306" xend="0.356" ystart="0.42"  yend="0.47"/>
+
+		<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.25" ystart="0.6">
+            Blue
+        </text>
+   		<answerbox xstart="0.25" ystart ="0.65" characterlimit="2" correctanswer="f#" marks="1" retry="true"/>
+	
+		<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.25" ystart="0.7">
+            Green
+        </text>
+		<answerbox xstart="0.25" ystart ="0.75" characterlimit="2" correctanswer="b" marks="1" retry="true"/>
+
+		<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.25" ystart="0.8">
+            Red
+        </text>
+		<answerbox xstart="0.25" ystart ="0.85" characterlimit="2" correctanswer="b" marks="1" retry="true"/>
+		
+    </slide>
+    
+</slideshow>
