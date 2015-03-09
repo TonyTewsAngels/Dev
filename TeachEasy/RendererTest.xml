@@ -10,7 +10,7 @@
         <lessonname>Algebra 1</lessonname>
     </documentinfo>
     <defaultsettings>
-        <backgroundcolor>#ff00ff00</backgroundcolor>
+        <backgroundcolor>#ffffffff</backgroundcolor>
         <font>arial</font>
         <fontsize>24</fontsize>
         <fontcolor>#ffffffff</fontcolor>
@@ -18,7 +18,7 @@
     <gradesettings>
         <passboundary failmessage="fail" passmessage="pass">10</passboundary>
     </gradesettings>
-    <slide backgroundcolor="#ffcc00cc" number="1">
+    <slide backgroundcolor="#ffa0a0a0" number="1">
     	<graphic graphiccolor="#ff000000" outlinethickness="4" rotation="0.0" shadow="false" solid="true" type="line" xend="0.6" xstart="0.15" yend="0.6" ystart="0.15"/>
         <graphic graphiccolor="#ff005555" linecolor="#ffff0000" outlinethickness="5" rotation="0.0" shadow="false" solid="true" type="oval" xend="0.7" xstart="0.5" yend="0.7" ystart="0.5">
         	<horizontalshading shadingcolor="#ffff0000"/>
@@ -27,7 +27,7 @@
         	<cyclicshading shadingcolor="#ff00ff00"/>
         </graphic>
     </slide>
-    <slide backgroundcolor="#ffcc00cc" number="2">
+    <slide backgroundcolor="#ffffffff" number="2">
         <image rotation="0.0" scale="1.0" sourcefile="testpic.png" xstart="0.1" yscale="1.0" ystart="0.1"/>
         <image rotation="54.0" scale="1.0" sourcefile="testpic.png" xstart="0.4" yscale="1.0" ystart="0.4"/>
     </slide>
@@ -52,17 +52,10 @@
         </text>
     </slide>
     <slide backgroundcolor="#ffffffff" number="5">
-    	<video sourcefile="M:/Year 3/SWENG/Videos/avengers-featurehp.mp4" videoscreenshot="C:\Users\sadjlsd\videoicon.jpeg" xstart="0.1" ystart="0.1"/>
-    	<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.1" ystart="0.5">
-			<richtext font="arial" fontcolor="#ff000000" fontsize="12" bold="true" newline="true">Avengers is better than Modern Art</richtext>
-        </text>
-        <image rotation="0.0" scale="1.0" sourcefile="testpic.png" xstart="0.1" yscale="1.0" ystart="0.6"/>
-    </slide>
-    <slide backgroundcolor="#ffffffff" number="6">
     	<answerbox characterlimit="6" correctanswer="springs~spring" marks="5" retry="true" xstart="0.5" ystart="0.5" numerical="false"/>
     	<answerbox characterlimit="6" correctanswer="0.4~0.6" marks="5" retry="true" xstart="0.5" ystart="0.6" numerical="true"/>
     </slide>
-    <slide number = "7">
+    <slide number = "6" backgroundcolor="#ffffffff">
     	<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.1" ystart="0.1">
             <richtext font="arial" fontcolor="#ff000000" fontsize="24">Tick the mammals</richtext>
         </text>

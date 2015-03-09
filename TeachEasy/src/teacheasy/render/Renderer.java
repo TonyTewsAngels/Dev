@@ -66,7 +66,7 @@ public class Renderer {
         clearPage();
         
         /* Add the background */
-        Rectangle bg = new Rectangle(bounds.getMaxX(), bounds.getMaxY() - 100, Color.WHITE);
+        Rectangle bg = new Rectangle(bounds.getMaxX(), bounds.getMaxY(), Util.colorFromString(page.getPageColour()));
         group.getChildren().add(bg);
         
         /* Loop through all the objects on the page */
@@ -112,7 +112,7 @@ public class Renderer {
         clearPage();
         
         /* Add the background */
-        Rectangle bg = new Rectangle(bounds.getMaxX(), bounds.getMaxY() - 100, Color.WHITE);
+        Rectangle bg = new Rectangle(bounds.getMaxX(), bounds.getMaxY(), Color.WHITE);
         group.getChildren().add(bg);
         
         /* Add the help message */

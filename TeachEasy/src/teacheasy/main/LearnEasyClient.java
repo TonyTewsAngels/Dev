@@ -2,6 +2,8 @@ package teacheasy.main;
 
 import teacheasy.runtime.RunTimeData;
 import javafx.application.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
@@ -14,9 +16,14 @@ import javafx.scene.text.*;
 import javafx.stage.*;
 
 public class LearnEasyClient extends Application {
-    
+    /* Text */
     Text text;
     
+    /* UI Elements */
+    Button nextBtn;
+    Button prevBtn;
+    
+    /* Application state */
     RunTimeData runtimeData;
     
     @Override
@@ -89,7 +96,7 @@ public class LearnEasyClient extends Application {
         
         /* Set Pane Colours */
         hBoxTop.setStyle("-fx-background-color: blue;");
-        group.setStyle("-fx-blend-mode: hard-light;");
+        //group.setStyle("-fx-blend-mode: hard-light;");
         contentPane.setStyle("-fx-background-color: rgb(74, 104, 177);");
         botAnchor.setStyle("-fx-background-color: Grey;");
         gridBot.setStyle("-fx-background-color: Grey;");
@@ -99,10 +106,8 @@ public class LearnEasyClient extends Application {
         primaryStage.setScene(scene);
         
         /* Create a buttons */
-        Button fileBtn = new Button();
-        Button editBtn = new Button();
-        Button prevBtn = new Button();
-        Button nextBtn = new Button();
+        prevBtn = new Button();
+        nextBtn = new Button();
       
         
         /* Add button images */
@@ -110,7 +115,7 @@ public class LearnEasyClient extends Application {
         ImageView imageNext = new ImageView(image);
         imageNext.setFitWidth(20);
         imageNext.setFitHeight(20);
-        nextBtn.setGraphic(imageNext);
+        //nextBtn.setGraphic(imageNext);
         
         
         /* Add central LE icon */
@@ -120,22 +125,28 @@ public class LearnEasyClient extends Application {
         LE.setFitHeight(50);
         
         
-        /* Setup the buttons */
-        fileBtn.setText("File");
-        fileBtn.setId("fileBtn");
-          
-        editBtn.setText("Edit");
-        editBtn.setId("editBtn");
-        
+        /* Setup the buttons */        
         prevBtn.setText("Previous");
         prevBtn.setId("prevBtn");
+        prevBtn.setOnAction(new UIButtonEventHandler());
 
-    //  nextBtn.setText("Next");
-        nextBtn.setId("hBtn");
+        nextBtn.setText("Next");
+        nextBtn.setId("nextBtn");
+        nextBtn.setOnAction(new UIButtonEventHandler());
         
         /* Create Menubar */
         MenuBar menuBar = new MenuBar();
         Menu menuFile = new Menu("File");
+        MenuItem open = new MenuItem("Open");
+        open.setId("openFile");
+        open.setOnAction(new UIMenuEventHandler());
+        
+        MenuItem close = new MenuItem("Close");
+        close.setId("closeFile");
+        close.setOnAction(new UIMenuEventHandler());
+        
+        menuFile.getItems().addAll(open, close);
+        
         Menu menuEdit = new Menu("Edit");
         Menu menuHelp = new Menu("Help");
         menuBar.setPrefWidth(10000);
@@ -151,12 +162,9 @@ public class LearnEasyClient extends Application {
         r.setHeight(canvasBounds.getMaxY());
         r.setFill(Color.WHITE);
         r.setEffect(new DropShadow());
-        
-        
+
         /* Set the position of group in content pane */
         contentPane.setCenter(group);
-        
-        
         
         /* Add content to panes */
         hBoxTop.getChildren().addAll(menuBar,imageNext);
@@ -182,6 +190,8 @@ public class LearnEasyClient extends Application {
         /* Show the window */
         primaryStage.show(); 
         
+        /* Update the UI */
+        updateUI();
     }
     
     public static void main(String[] args) {
@@ -189,18 +199,93 @@ public class LearnEasyClient extends Application {
     }
     
     public void openFilePressed() {
-        
+        /* Open the file */
+        if(runtimeData.openLesson()) {
+            /* Opened Successfully */
+        } else {
+            System.out.print("Parse Failed");
+        }
     }
     
     public void closeFilePressed() {
-        
+        runtimeData.closeLesson();
     }
     
     public void nextPageButtonPressed() {
-        
+        runtimeData.nextPage();
     }
     
     public void prevPageButtonPressed() {
-        
+        runtimeData.prevPage();
+    }
+    
+    public void updateUI() {
+        /* 
+         * If there is a lesson open enable the relevant page 
+         * buttons, if not disable both.
+         */
+        if(runtimeData.isLessonOpen()) {
+            if(!runtimeData.isNextPage()) {
+                nextBtn.setDisable(true);
+            } else {
+                nextBtn.setDisable(false);
+            }
+            
+            if(!runtimeData.isPrevPage()) {
+                prevBtn.setDisable(true);
+            } else {
+                prevBtn.setDisable(false);
+            }
+        } else {
+            nextBtn.setDisable(true);
+            prevBtn.setDisable(true);
+        }
+    }
+    
+    public class UIButtonEventHandler implements EventHandler<ActionEvent> {
+        @Override
+        public void handle(ActionEvent e) {
+            /* Get the source */
+            Button sourceButton = (Button) e.getSource();
+            
+            /* TODO Check the ID of the source button and call the relevant runtime method */
+            switch(sourceButton.getId()) {
+                case "nextBtn":
+                    nextPageButtonPressed();
+                    break;
+                case "prevBtn":
+                    prevPageButtonPressed();
+                    break;
+                default:
+                    /* Do Nothing */
+                    break;
+            }
+
+            /* TODO Update the UI to reflect any changes to the application state */
+            updateUI();
+        }
+    }
+    
+    public class UIMenuEventHandler implements EventHandler<ActionEvent> {
+        @Override
+        public void handle(ActionEvent e) {
+            /* Get the source */
+            MenuItem source = (MenuItem) e.getSource();
+            
+            /* TODO Check the ID of the source and call the relevant runtime method */
+            switch(source.getId()) {
+                case "openFile":
+                    openFilePressed();
+                    break;
+                case "closeFile":
+                    closeFilePressed();
+                default:
+                    /* Do Nothing */
+                    break;
+            }
+            
+            /* TODO Update UI to reflect changes to application state */
+            updateUI();
+        }
     }
 }
