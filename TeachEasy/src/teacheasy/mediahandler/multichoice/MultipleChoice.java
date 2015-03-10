@@ -18,6 +18,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
@@ -27,8 +28,8 @@ import javafx.scene.layout.VBox;
 /**
  * A class to create check boxes and radio buttons 
  * 
- * @author	Emmanuel Olutayo
- * @version	1.0 07 Mar 2015
+ * @author	Emmanuel Olutayo & Penelope Nicole
+ * @version	1.1 10 Mar 2015
  */
 public class MultipleChoice{
     /* Group reference */
@@ -43,11 +44,15 @@ public class MultipleChoice{
 	/* Lists of the check boxes and radio buttons */
 	private List<MChoiceCheckBox> cB;
 	private List<MChoiceRadio> rB;
+	private List<Answer> dList;
 	
 	/* Data */
 	private MultiChoiceType type;
 	private Orientation orientation;
 	private boolean retry;
+	
+	/* Create Drop Down List  */
+	ComboBox dropDownList = new ComboBox();
 	
 	/** Constructor */
 	public MultipleChoice (Group nGroup, float xStart, float yStart, ArrayList<Answer>answers,
@@ -56,9 +61,11 @@ public class MultipleChoice{
 	    /* Set the group reference */
 		this.group = nGroup;
 		
+		
 		/* Instantiate the array lists */
 		cB = new ArrayList<MChoiceCheckBox>();
 		rB = new ArrayList<MChoiceRadio>();
+		this.dList = answers;
 		
 		/* Set the type variable */
 		this.type = nType;
@@ -76,6 +83,8 @@ public class MultipleChoice{
 		/* The button to mark the question */
 		markButton = new Button("Mark");
 		markLabel = new Label("");
+		
+		
 
 		/* Toggle group used to allow only one radio button to be selected */
 		ToggleGroup tGroup = new ToggleGroup();
@@ -149,12 +158,34 @@ public class MultipleChoice{
     			break;
     
     		case DROPDOWNLIST:
+    			/* Add answers to drop down List*/
+    			for (int i = 0; i < answers.size(); i++ ){
+    				dropDownList.getItems().add(dList.get(i).getText());
+    				
+    			}
+    			/* Check the orientation and add the drop down appropriately */
+    			if( nOrientation == Orientation.VERTICAL){
+    			    verticalPosition.getChildren().add(dropDownList);
+    				verticalPosition.getChildren().add(markButton);
+    				verticalPosition.getChildren().add(markLabel);
+    				verticalPosition.relocate(xStart, yStart);
+    				group.getChildren().add(verticalPosition);
+    			} else { 
+    				horizontalPosition.getChildren().add(dropDownList);
+    				horizontalPosition.getChildren().add(markButton);
+    				horizontalPosition.getChildren().add(markLabel);
+    				horizontalPosition.relocate(xStart, yStart);
+    				group.getChildren().add(horizontalPosition);
+    			}
+    			
+    			/* Set the mark buttons action */
+    			markButton.setOnAction(new MultipleChoiceCheckHandler());
     			break;
 		}
 	}
 
 	/**
-	 * Method to check the seleted answers.
+	 * Method to check the selected answers.
 	 * 
 	 * @return True if the selected answers are correct. False otherwise.
 	 */
@@ -168,8 +199,8 @@ public class MultipleChoice{
 	            /* Check the radio buttons */
 	            return RadioCheck();
 	        case DROPDOWNLIST:
-	            /* TODO */
-	            return false;
+	            /* Check the drop down list */
+	            return DropDownListCheck() ;
             default:
                 return false;
 	    }
@@ -216,6 +247,19 @@ public class MultipleChoice{
 		return false;
 	}
 	
+    private boolean DropDownListCheck() {
+    	/* Gets the values in the drop down list*/
+    	String str = (String) dropDownList.getValue();
+    	
+    	 /* If this is a correct answer and its selected return true */
+    	for (int i = 0; i < dList.size(); i++ ){
+    		if(dList.get(i).isCorrect() && dList.get(i).getText().equals(str)){
+    			return true;
+    			
+    		}
+    	}
+		return false;
+    }
 	/**
 	 * Method to handle a correct result
 	 */
@@ -251,6 +295,10 @@ public class MultipleChoice{
                     rB.get(i).getRadioButton().setDisable(true);
                 }
 	            break;
+	        case DROPDOWNLIST:
+	            dropDownList.setDisable(true);
+	        	break;
+	        	
 	        default:
 	            break;
 	    }
