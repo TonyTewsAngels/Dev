@@ -159,8 +159,8 @@ public class Renderer {
         /* Draw the buffer to the screen */
         textHandler.drawBuffer((int)(bounds.getMaxX() * text.getXStart()),
                                (int)(bounds.getMaxY() * text.getYStart()),
-                               (int)(bounds.getMaxX() * text.getXStart()) + 200,
-                               (int)(bounds.getMaxY() * text.getYStart()) + 200,
+                               (int)(bounds.getMaxX()),
+                               (int)(bounds.getMaxY()),
                                "#00000000",
                                Alignment.LEFT);
         
@@ -170,7 +170,7 @@ public class Renderer {
     private void renderVideo(VideoObject video) {
         videoHandler.createVideo(bounds.getMaxX() * video.getXStart(),
                                  bounds.getMaxY() * video.getYStart(),
-                                 500,
+                                 800,
                                  video.getSourcefile(),
                                  false,
                                  false);
@@ -298,7 +298,7 @@ public class Renderer {
     /** Add a multiple choice object to the screen */
     public void renderMultipleChoice(MultipleChoiceObject mChoice) {
         multipleChoiceHandler.createMultipleChoice((float)(bounds.getMaxX() * mChoice.getXStart()),
-                                                   (float)(bounds.getMaxX() * mChoice.getXStart()),
+                                                   (float)(bounds.getMaxY() * mChoice.getYStart()),
                                                    mChoice.getAnswers(),
                                                    mChoice.getMultiChoiceType(),
                                                    mChoice.getOrientation(),

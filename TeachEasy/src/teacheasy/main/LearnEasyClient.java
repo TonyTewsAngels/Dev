@@ -36,7 +36,7 @@ public class LearnEasyClient extends Application {
         /* Instantiate the scene and main Grid layout*/
         GridPane grid = new GridPane();
         grid.setStyle("-fx-background-color:red");
-        Scene scene = new Scene(grid, 500, 500);
+        Scene scene = new Scene(grid, bounds.getMaxX(), bounds.getMaxY());
         
         /* Set gridPane constraints to resize with window */
         ColumnConstraints columnConstraints = new ColumnConstraints();
