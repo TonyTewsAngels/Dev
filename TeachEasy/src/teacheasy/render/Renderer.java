@@ -170,7 +170,7 @@ public class Renderer {
     private void renderVideo(VideoObject video) {
         videoHandler.createVideo(bounds.getMaxX() * video.getXStart(),
                                  bounds.getMaxY() * video.getYStart(),
-                                 500,
+                                 800,
                                  video.getSourcefile(),
                                  false,
                                  false);
