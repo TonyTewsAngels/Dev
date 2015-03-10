@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="lib" path="M:/Year 3/SWENG/Workspace3/Dev/TeachEasy/jfxrt.jar"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry exported="true" kind="lib" path="M:/Year 3/SWENG/Workspace3/Dev/TeachEasy/jfxrt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
