@@ -102,7 +102,7 @@ public class LearnEasyClient extends Application {
         gridBot.setStyle("-fx-background-color: Grey;");
         
         /* Setup the window */
-        primaryStage.setTitle("Grid with hbox test");
+        primaryStage.setTitle("Learn Easy");
         primaryStage.setScene(scene);
         
         /* Create a buttons */
