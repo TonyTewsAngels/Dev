@@ -26,6 +26,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaPlayer.*;
 import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
@@ -40,13 +41,19 @@ import javafx.util.Duration;
  * @version 1.0 24 Feb 2015
  */
 public class Video {
-    /* Reference to the group on which to draw videos */
+    /** Reference to the group on which to draw videos. */
     private Group group;
     
-    /* Video Variables */
+    /** Media object containing the video. */
     Media media;
+    
+    /** Media player object to control playback. */
     MediaPlayer mediaPlayer;
+    
+    /** Media view object to display the video. */
     MediaView video;
+    
+    /** Grid layout to contain the video and the controls. */
     GridPane videoFrame;
     
     /* Controls */
@@ -61,13 +68,32 @@ public class Video {
     private Slider volumeSlider;
     private VolumeListener volumeListener;
     
-    /* Fullscreen stage */
+    /** Fullscreen stage. */
     private Stage fsStage;
     
-    /* Fullscreen information */
+    /** Fullscreen information, needed when exiting fullscreen. */
     private FullscreenInfo fsInfo;
     
-    public Video(Group nGroup, double x, double y, double width, String sourcefile, boolean autoPlay, boolean loop) {
+    /**
+     * Constructs the video.
+     * 
+     * @param nGroup - The group this video goes on.
+     * 
+     * @param x - The x coordinate of the top left of the video 
+     *            relative to the group's origin.
+     *            
+     * @param y - The y coordinate of the top left of the video 
+     *            relative to the group's origin.
+     *            
+     * @param width - The width of the video in pixels
+     * 
+     * @param sourcefile - The absolute path of the video file
+     * 
+     * @param autoPlay - If true the video plays immediately
+     * 
+     * @param loop - If true the video loops to the beggining when it ends
+     */
+    public Video(Group nGroup, float x, float y, float width, String sourcefile, boolean autoPlay, boolean loop) {
         /* Set the group reference */
         this.group = nGroup;
         
@@ -136,6 +162,7 @@ public class Video {
         /* Set up the media player */
         mediaPlayer.setAutoPlay(autoPlay);
         mediaPlayer.currentTimeProperty().addListener(videoListener);
+        mediaPlayer.statusProperty().addListener(new PlayerStatusListener());
         if(loop) {
             mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         }
@@ -160,35 +187,35 @@ public class Video {
         group.getChildren().add(videoFrame);
     }
     
-    /** Programmatically play this video */
+    /** Programmatically plays this video */
     public void play() {
         if(mediaPlayer != null) {
             mediaPlayer.play();
         }
     }
     
-    /** Programmatically pause this video */
+    /** Programmatically pauses this video */
     public void pause() {
         if(mediaPlayer != null) {
             mediaPlayer.pause();
         }
     }
     
-    /** Programmatically stop this video */
+    /** Programmatically stops this video */
     public void stop() {
         if(mediaPlayer != null) {
             mediaPlayer.stop();
         }
     }
     
-    /** Programmatically dispose of this video */
+    /** Programmatically disposes of this video */
     public void dispose() {
         if(mediaPlayer != null) {
             mediaPlayer.dispose();
         }
     }
     
-    /** Programmatically resize this video */
+    /** Programmatically resizes this video */
     public void resize(float nWidth) {
         video.setFitWidth(nWidth);
     }
@@ -223,7 +250,7 @@ public class Video {
         videoFrame.getChildren().remove(controls);
     }
     
-    /** Set the correct button labels and IDs */
+    /** Set the correct button labels */
     private void setButtonLabels() {
         /* Set the button text */
         if(mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
@@ -233,7 +260,12 @@ public class Video {
         }
     }
     
-    /** Scan to a location in the video */
+    /** 
+     * Scan to a position in the video 
+     * 
+     * @param percent - The new position in the video as a 
+     *                  percentage of the video length.
+     */
     public void scan(double percent) {
         /* Get the duration of the clip */
         double duration = media.getDuration().toSeconds();
@@ -454,6 +486,18 @@ public class Video {
         public void changed(ObservableValue<? extends Number> val,
                             Number oldVal, Number newVal) {
             mediaPlayer.setVolume(newVal.doubleValue());
+        }
+    }
+    
+    /**
+     * Listener for the media player status
+     */
+    public class PlayerStatusListener implements ChangeListener<Status> {
+        @Override
+        public void changed(ObservableValue<? extends Status> val,
+                            Status oldVal, Status newVal) {
+            //TODO stuff with the status
+            System.out.println("New status:" + newVal.toString());
         }
     }
 }
