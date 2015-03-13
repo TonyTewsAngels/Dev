@@ -168,8 +168,8 @@ public class Renderer {
     
     /** Render a video on a page */
     private void renderVideo(VideoObject video) {
-        videoHandler.createVideo(bounds.getMaxX() * video.getXStart(),
-                                 bounds.getMaxY() * video.getYStart(),
+        videoHandler.createVideo((float)bounds.getMaxX() * video.getXStart(),
+                                 (float)bounds.getMaxY() * video.getYStart(),
                                  800,
                                  video.getSourcefile(),
                                  false,

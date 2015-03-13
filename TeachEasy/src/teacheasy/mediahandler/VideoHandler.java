@@ -58,7 +58,11 @@ public class VideoHandler {
     /* Array List of the videos currently on the screen */
     private List<Video> videos;
     
-    /** Constructor Method */
+    /** 
+     * Constructs the video handler.
+     * 
+     * @param nGroup - The group this handler should place videos in
+     */
     public VideoHandler(Group nGroup) {
         /* Set the group reference */
         this.group = nGroup;
@@ -67,32 +71,93 @@ public class VideoHandler {
         this.videos = new ArrayList<Video>();
     }
     
-    /** Add a video frame to a group */
-    public void createVideo(double x, double y, double width, String sourcefile, boolean autoPlay, boolean loop) {
+    /** 
+     * Adds a video to the group associated with the handler.
+     * 
+     * @param x - The x coordinate for the top left of the video
+     *            relative to the groups origin.
+     *            
+     * @param y - The y coordinate for the top left of the video
+     *            relative to the group's origin.
+     *            
+     * @param width - The width of the video in pixels.
+     * 
+     * @param sourcefile - Absolute filepath of the video as a string.
+     * 
+     * @param autoplay - If true video plays as soon as created.
+     * 
+     * @param loop - If true video loops to beginning once it ends.
+     */
+    public void createVideo(float x, float y, float width, String sourcefile, boolean autoPlay, boolean loop) {
         videos.add(new Video(group, x, y, width, sourcefile, autoPlay, loop));
     }
     
-    /** Play a video */
+    /** 
+     * Causes a video handled by the handler to play.
+     * 
+     * @param videoId - The ID of the video to be played.
+     */
     public void playVideo(int videoId) {
-        videos.get(videoId).play();
+        if(videoId < videos.size() && videoId != 0) {
+            videos.get(videoId).play();
+        }
     }
     
-    /** Pause a video */
+    /** 
+     * Causes a video handled by the handler to pause.
+     * 
+     * @param videoId - The ID of the video to be played.
+     */
     public void pauseVideo(int videoId) {
-        videos.get(videoId).pause();
+        if(videoId < videos.size() && videoId != 0) {
+            videos.get(videoId).pause();
+        }
     }
     
-    /** Stop a video */
+    /** 
+     * Causes a video handled by the handler to stop.
+     * 
+     * @param videoId - The ID of the video to be played.
+     */
     public void stopVideo(int videoId) {
-        videos.get(videoId).stop();
+        if(videoId < videos.size() && videoId != 0) {
+            videos.get(videoId).stop();
+        }
     }
     
-    /** Scan a video */
+    /** 
+     * Causes a video handled by the handler to change
+     * playback position.
+     * 
+     * @param videoId - The ID of the video to be played.
+     * 
+     * @param percent - The time in the video to move
+     *                  playback to as a percentage of the
+     *                  total time.
+     */
     public void scanVideo(int videoId, double percent) {
-        videos.get(videoId).scan(percent);
+        if(videoId < videos.size() && videoId != 0) {    
+            videos.get(videoId).scan(percent);
+        }
     }
     
-    /** Clear all the videos currently being handled */
+    /** 
+     * Causes a video handled by the handler to change
+     * size
+     * 
+     * @param videoId - The ID of the video to be played.
+     * 
+     * @param nWidth - The new width for the video.
+     */
+    public void resizeVideo(int videoId, float nWidth) {
+        if(videoId < videos.size() && videoId != 0) {
+            videos.get(videoId).resize(nWidth);
+        }
+    }
+    
+    /** 
+     * Clears all the videos currently being handled.
+     */
     public void clearVideos() {
         /* Remove all the media views (videos) from the group */
         for(int i = 0; i < videos.size(); i++) {

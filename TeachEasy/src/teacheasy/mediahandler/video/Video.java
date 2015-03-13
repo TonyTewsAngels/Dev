@@ -188,6 +188,11 @@ public class Video {
         }
     }
     
+    /** Programmatically resize this video */
+    public void resize(float nWidth) {
+        video.setFitWidth(nWidth);
+    }
+    
     /** Adds the controls to a video frame */
     private void addControls() {
         /* Set up the control bar */
