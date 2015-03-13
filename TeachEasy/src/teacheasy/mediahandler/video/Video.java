@@ -45,16 +45,16 @@ public class Video {
     private Group group;
     
     /** Media object containing the video. */
-    Media media;
+    private Media media;
     
     /** Media player object to control playback. */
-    MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer;
     
     /** Media view object to display the video. */
-    MediaView video;
+    private MediaView video;
     
     /** Grid layout to contain the video and the controls. */
-    GridPane videoFrame;
+    private GridPane videoFrame;
     
     /* Controls */
     private HBox controls;
