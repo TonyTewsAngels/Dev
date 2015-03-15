@@ -98,7 +98,7 @@ public class VideoHandler {
      * @param videoId - The ID of the video to be played.
      */
     public void playVideo(int videoId) {
-        if(videoId < videos.size() && videoId != 0) {
+        if(videoId < videos.size() && videoId >= 0) {
             videos.get(videoId).play();
         }
     }
@@ -109,7 +109,7 @@ public class VideoHandler {
      * @param videoId - The ID of the video to be played.
      */
     public void pauseVideo(int videoId) {
-        if(videoId < videos.size() && videoId != 0) {
+        if(videoId < videos.size() && videoId >= 0) {
             videos.get(videoId).pause();
         }
     }
@@ -120,7 +120,7 @@ public class VideoHandler {
      * @param videoId - The ID of the video to be played.
      */
     public void stopVideo(int videoId) {
-        if(videoId < videos.size() && videoId != 0) {
+        if(videoId < videos.size() && videoId >= 0) {
             videos.get(videoId).stop();
         }
     }
@@ -136,7 +136,7 @@ public class VideoHandler {
      *                  total time.
      */
     public void scanVideo(int videoId, double percent) {
-        if(videoId < videos.size() && videoId != 0) {    
+        if(videoId < videos.size() && videoId >= 0) {    
             videos.get(videoId).scan(percent);
         }
     }
@@ -150,7 +150,7 @@ public class VideoHandler {
      * @param nWidth - The new width for the video.
      */
     public void resizeVideo(int videoId, float nWidth) {
-        if(videoId < videos.size() && videoId != 0) {
+        if(videoId < videos.size() && videoId >= 0) {
             videos.get(videoId).resize(nWidth);
         }
     }
@@ -165,7 +165,7 @@ public class VideoHandler {
      * @param ny - The new y location in pixels
      */
     public void relocateVideo(int videoId, float nx, float ny) {
-        if(videoId < videos.size() && videoId != 0) {
+        if(videoId < videos.size() && videoId >= 0) {
             videos.get(videoId).relocate(nx, ny);
         }
     }
@@ -179,7 +179,7 @@ public class VideoHandler {
      * @param visible - The new visibility setting as a boolean.
      */
     public void setVisible(int videoId, boolean visible) {
-        if(videoId < videos.size() && videoId != 0) {
+        if(videoId < videos.size() && videoId >= 0) {
             videos.get(videoId).setVisible(visible);
         }
     }
