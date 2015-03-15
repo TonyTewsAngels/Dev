@@ -228,6 +228,7 @@ public class Video {
     /** Programmatically sets this videos visibility */
     public void setVisible(boolean visible) {
         video.setVisible(visible);
+        controls.setVisible(visible);
     }
     
     /** Adds the controls to a video frame */
