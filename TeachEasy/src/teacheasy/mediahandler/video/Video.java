@@ -228,7 +228,6 @@ public class Video {
     /** Programmatically sets this videos visibility */
     public void setVisible(boolean visible) {
         video.setVisible(visible);
-        controls.setVisible(visible);
     }
     
     /** Adds the controls to a video frame */
@@ -359,10 +358,10 @@ public class Video {
     public class MouseEventHandler implements EventHandler<MouseEvent> {
         @Override
         public void handle(MouseEvent e) {            
-            if(e.getEventType() == MouseEvent.MOUSE_ENTERED) {
+            if(e.getEventType() == MouseEvent.MOUSE_ENTERED && video.isVisible()) {
                 /* Add the controls */
                 addControls();
-            } else if(e.getEventType() == MouseEvent.MOUSE_EXITED) {
+            } else if(e.getEventType() == MouseEvent.MOUSE_EXITED  && video.isVisible()) {
                 /* Remove the controls */
                 removeControls();
             }
