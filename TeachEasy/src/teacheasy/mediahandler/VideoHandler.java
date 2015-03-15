@@ -161,11 +161,26 @@ public class VideoHandler {
      * 
      * @param videoId - The ID of the video to be played.
      * 
-     * @param nWidth - The new width for the video.
+     * @param nx - The new x location in pixels
+     * @param ny - The new y location in pixels
      */
-    public void relocateVideo(int videoId, float x, float y) {
+    public void relocateVideo(int videoId, float nx, float ny) {
         if(videoId < videos.size() && videoId != 0) {
-            videos.get(videoId).relocate(x, y);
+            videos.get(videoId).relocate(nx, ny);
+        }
+    }
+    
+    /** 
+     * Causes a video handled by the handler to change
+     * visibility
+     * 
+     * @param videoId - The ID of the video to be played.
+     * 
+     * @param visible - The new visibility setting as a boolean.
+     */
+    public void setVisible(int videoId, boolean visible) {
+        if(videoId < videos.size() && videoId != 0) {
+            videos.get(videoId).setVisible(visible);
         }
     }
     

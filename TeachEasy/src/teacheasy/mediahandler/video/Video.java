@@ -225,6 +225,11 @@ public class Video {
         video.relocate(x, y);
     }
     
+    /** Programmatically sets this videos visibility */
+    public void setVisible(boolean visible) {
+        video.setVisible(visible);
+    }
+    
     /** Adds the controls to a video frame */
     private void addControls() {
         /* Set up the control bar */
