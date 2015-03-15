@@ -156,6 +156,20 @@ public class VideoHandler {
     }
     
     /** 
+     * Causes a video handled by the handler to change
+     * location
+     * 
+     * @param videoId - The ID of the video to be played.
+     * 
+     * @param nWidth - The new width for the video.
+     */
+    public void relocateVideo(int videoId, float x, float y) {
+        if(videoId < videos.size() && videoId != 0) {
+            videos.get(videoId).relocate(x, y);
+        }
+    }
+    
+    /** 
      * Clears all the videos currently being handled.
      */
     public void clearVideos() {
@@ -167,5 +181,14 @@ public class VideoHandler {
         
         /* Clear the array list */
         videos.clear();
+    }
+    
+    /**
+     * Returns the number of videos currently being handled
+     * 
+     * @return Number of videos being handled
+     */
+    public int getVideoCount() {
+        return videos.size();
     }
 }

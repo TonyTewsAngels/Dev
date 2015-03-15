@@ -220,6 +220,11 @@ public class Video {
         video.setFitWidth(nWidth);
     }
     
+    /** Programmatically relocates this video */
+    public void relocate(float x, float y) {
+        video.relocate(x, y);
+    }
+    
     /** Adds the controls to a video frame */
     private void addControls() {
         /* Set up the control bar */
