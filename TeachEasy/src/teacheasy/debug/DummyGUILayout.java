@@ -130,7 +130,7 @@ public class DummyGUILayout extends Application {
 		gridBot.setStyle("-fx-background-color: Grey;");
 		
 		/* Setup the window */
-        primaryStage.setTitle("Grid with hbox test");
+        primaryStage.setTitle("Iteration 1 GUI");
         primaryStage.setScene(scene);
         
         /* Create a buttons */
@@ -141,11 +141,11 @@ public class DummyGUILayout extends Application {
       
         
         /* Add button images */
-        Image image = new Image("file://userfs/lt669/w2k/Desktop/Workspace/Learneasy_v2_3.png");
-        ImageView imageNext = new ImageView(image);
-        imageNext.setFitWidth(20);
-        imageNext.setFitHeight(20);
-        nextBtn.setGraphic(imageNext);
+//        Image image = new Image("file://userfs/lt669/w2k/Desktop/Workspace/Learneasy_v2_3.png");
+//        ImageView imageNext = new ImageView(image);
+//        imageNext.setFitWidth(20);
+//        imageNext.setFitHeight(20);
+//        nextBtn.setGraphic(imageNext);
         
         
         /* Add central LE icon */
@@ -165,7 +165,7 @@ public class DummyGUILayout extends Application {
         prevBtn.setText("Previous");
         prevBtn.setId("prevBtn");
 
-    //  nextBtn.setText("Next");
+        nextBtn.setText("Next");
         nextBtn.setId("hBtn");
         
         /* Create Menubar */
@@ -194,8 +194,8 @@ public class DummyGUILayout extends Application {
         
         
         /* Add content to panes */
-        hBoxTop.getChildren().addAll(menuBar,imageNext);
-        group.getChildren().addAll(text,r,imageNext);
+        hBoxTop.getChildren().addAll(menuBar);
+        group.getChildren().addAll(text,r);
        // contentPane.getChildren().addAll(group);
         //botAnchor.getChildren().addAll(nextBtn, prevBtn,LE);
         gridBot.add(prevBtn, 0, 0); 
