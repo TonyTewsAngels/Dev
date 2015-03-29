@@ -28,15 +28,15 @@ public class TestAnswerBoxHandler extends Application {
 		scene.setFill(Color.LIGHTBLUE);
 		
 		answerBoxHandler = new AnswerBoxHandler(group);
-		answerBoxHandler.createAnswerBox(0, 130, 10, true,
+		answerBoxHandler.createAnswerBox(0, 130, -1, true,
 				"monday~tuesday~wednesday", 5, false);
 		answerBoxHandler.createAnswerBox(0, 160, 10, false,
 				"leeds~york~london", 5,false);
-		answerBoxHandler.createAnswerBox(0, 190, 10, true, "yellow~blue~green",
+		answerBoxHandler.createAnswerBox(0, 190, 10, true, "yellow",
 				15,false);
 		answerBoxHandler.createAnswerBox(0, 220, 10, true, "left~right~middle",
 				5,false);
-		answerBoxHandler.createAnswerBox(0, 250, 10, true, "2.45~4.55",
+		answerBoxHandler.createAnswerBox(0, 250, 10, true, "4.55",
 				5,true);
 
 		stage.setTitle("Answer Box Test");

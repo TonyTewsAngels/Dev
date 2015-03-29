@@ -58,7 +58,15 @@ public class AnswerBox {
         /* Setting local variables */
         this.marks = nMarks;
         this.correctAnswers = nCorrectAnswers;
-        this.characterLimit = nCharacterLimit;
+        
+        /*To prevent negative or 0 character limit*/
+        if(nCharacterLimit >= 1){
+        	this.characterLimit = nCharacterLimit;
+        }
+        else if(nCharacterLimit <= 0){
+        	this.characterLimit = 2;
+        }
+        
         this.xStart = nXStart;
         this.yStart = nYStart;
         this.group = nGroup;
@@ -157,9 +165,21 @@ public class AnswerBox {
              * to float
              */
             try {
-                minRange = Float.parseFloat(listOfCorrectAnswers[0]);
-                maxRange = Float.parseFloat(listOfCorrectAnswers[1]);
-                answer = Float.parseFloat(answerField.getText());
+            	/*If no minimum and maximum value is provided make the provided
+            	 * value minimum and maximum
+            	 * */
+            	if(listOfCorrectAnswers.length == 1){
+            		minRange = Float.parseFloat(listOfCorrectAnswers[0]);
+            		maxRange = Float.parseFloat(listOfCorrectAnswers[0]);
+            		answer = Float.parseFloat(answerField.getText());
+            	}
+            	else
+            	{
+            		minRange = Float.parseFloat(listOfCorrectAnswers[0]);
+            		maxRange = Float.parseFloat(listOfCorrectAnswers[1]);
+            		answer = Float.parseFloat(answerField.getText());
+            	}
+                
             } catch (NumberFormatException nfe) {
                 minRange = 0.0f;
                 maxRange = 0.0f;
