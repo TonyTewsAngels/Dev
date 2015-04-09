@@ -1,0 +1,29 @@
+#play{
+	-fx-background-color: rgba(0, 0, 0, 0);
+	-fx-insets: 0;
+	-fx-padding: 0 0 0 0;
+}
+
+#pause{
+	-fx-background-color: rgba(0, 0, 0, 0);
+	-fx-insets: 0;
+	-fx-padding: 0 0 0 0;
+}
+
+#stop{
+	-fx-background-color: rgba(0, 0, 0, 0);
+	-fx-insets: 0;
+	-fx-padding: 0 0 0 0;
+}
+
+#fullscreen{
+	-fx-background-color: rgba(0, 0, 0, 0);
+	-fx-insets: 0;
+	-fx-padding: 0 0 0 0;
+}
+
+#volume{
+	-fx-background-color: rgba(0, 0, 0, 0);
+	-fx-insets: 0;
+	-fx-padding: 0 0 0 0;
+}

@@ -21,6 +21,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -71,6 +73,13 @@ public class Video {
     private Slider volumeSlider;
     private VolumeListener volumeListener;
     
+    /* Controls UI */
+    private ImageView playImage;
+    private ImageView pauseImage;
+    private ImageView stopImage;
+    private ImageView fullscreenImage;
+    private ImageView volumeImage;
+    
     /* Variable to maintain play state after scan */
     private boolean wasPlaying = false;
     
@@ -93,35 +102,66 @@ public class Video {
      *            
      * @param width - The width of the video in pixels
      * 
-     * @param sourcefile - The absolute path of the video file
+     * @param sourcefile - Absolute path of the video as a string. Can be a local
+     *                     file path or a web address beginning with 'http'
      * 
      * @param autoPlay - If true the video plays immediately
      * 
-     * @param loop - If true the video loops to the beggining when it ends
+     * @param loop - If true the video loops to the beginning when it ends
      */
     public Video(Group nGroup, float x, float y, float width, String sourcefile, boolean autoPlay, boolean loop) {
         /* Set the group reference */
         this.group = nGroup;
         
+        playImage = new ImageView(new Image(getClass().getResourceAsStream("Play_ST_CONTENT_RECT_Transparent_L-01.png")));
+        playImage.setFitWidth(30);
+        playImage.setFitHeight(30);
+        
+        pauseImage = new ImageView(new Image(getClass().getResourceAsStream("Pause_ST_CONTENT_RECT_Transparent_L-01.png")));
+        pauseImage.setFitWidth(30);
+        pauseImage.setFitHeight(30);
+        
+        stopImage = new ImageView(new Image(getClass().getResourceAsStream("Stop_ST_CONTENT_RECT_Transparent_L-01.png")));
+        stopImage.setFitWidth(30);
+        stopImage.setFitHeight(30);
+        
+        fullscreenImage = new ImageView(new Image(getClass().getResourceAsStream("FullscreenON_ST_CONTENT_RECT_Transparent_L-01.png")));
+        fullscreenImage.setFitWidth(30);
+        fullscreenImage.setFitHeight(30);
+        
+        volumeImage = new ImageView(new Image(getClass().getResourceAsStream("VolumeON_ST_CONTENT_RECT_Transparent_L-01.png")));
+        volumeImage.setFitWidth(30);
+        volumeImage.setFitHeight(30);
+        
         /* Play/Pause Control */
-        playButton = new Button("Play");
-        playButton.setId("play");
+        playButton = new Button("");
         playButton.setOnAction(new ButtonEventHandler());
+        playButton.getStylesheets().add(this.getClass().getResource("MediaHandlerStyle.css").toExternalForm());
+        playButton.setGraphic(playImage);
+        playButton.setId("play");
         
         /* Stop Control */
-        stopButton = new Button("Stop");
-        stopButton.setId("stop");
+        stopButton = new Button("");
+        stopButton.getStylesheets().add(this.getClass().getResource("MediaHandlerStyle.css").toExternalForm());
+        stopButton.setGraphic(stopImage);
         stopButton.setOnAction(new ButtonEventHandler());
+        stopButton.setId("stop");
         
         /* Fullscreen Control */
-        fullscreenButton = new Button("[ ]");
-        fullscreenButton.setId("fullscreen");
+        fullscreenButton = new Button("");
+        fullscreenButton.getStylesheets().add(this.getClass().getResource("MediaHandlerStyle.css").toExternalForm());
+        fullscreenButton.setGraphic(fullscreenImage);
         fullscreenButton.setOnAction(new ButtonEventHandler());
+        fullscreenButton.setId("fullscreen");
         
         /* Volume Control */
-        volumeButton = new Button("Vol");
-        volumeButton.setId("volume");
+        volumeButton = new Button("");
+        volumeButton.getStylesheets().add(this.getClass().getResource("MediaHandlerStyle.css").toExternalForm());
+        volumeButton.setGraphic(volumeImage);
         volumeButton.setOnAction(new ButtonEventHandler());
+        volumeButton.setId("volume");
+        
+        
         volumeSlider = new Slider();
         volumeListener = new VolumeListener();
         
@@ -568,17 +608,18 @@ public class Video {
                 case HALTED:
                     break;
                 case PAUSED:
-                    playButton.setText("Play");
+                    playButton.setGraphic(playImage);
                     break;
                 case PLAYING:
-                    playButton.setText("Pause");
+                    playButton.setGraphic(pauseImage);
                     break;
                 case READY:
+                    playButton.setGraphic(playImage);
                     break;
                 case STALLED:
                     break;
                 case STOPPED:
-                    playButton.setText("Play");
+                    playButton.setGraphic(playImage);
                     break;
                 case UNKNOWN:
                     break;

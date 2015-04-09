@@ -82,7 +82,8 @@ public class VideoHandler {
      *            
      * @param width - The width of the video in pixels.
      * 
-     * @param sourcefile - Absolute filepath of the video as a string.
+     * @param sourcefile - Absolute path of the video as a string. Can be a local
+     *                     file path or a web address beginning with 'http'
      * 
      * @param autoplay - If true video plays as soon as created.
      * 
