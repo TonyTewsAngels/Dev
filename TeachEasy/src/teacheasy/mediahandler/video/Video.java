@@ -65,6 +65,7 @@ public class Video {
     private HBox controls;
     private Button playButton;
     private Button stopButton;
+    private Label timeStamp;
     private Slider scanBar;
     private ScanListener scanBarListener;
     private VideoListener videoListener;
@@ -163,6 +164,8 @@ public class Video {
         
         
         volumeSlider = new Slider();
+        volumeSlider.getStylesheets().add(this.getClass().getResource("MediaHandlerStyle.css").toExternalForm());
+        volumeSlider.setId("volumeslider");
         volumeListener = new VolumeListener();
         
         /* Set up volume control */
@@ -177,6 +180,8 @@ public class Video {
         
         /* Scan Control */
         scanBar = new Slider();
+        scanBar.getStylesheets().add(this.getClass().getResource("MediaHandlerStyle.css").toExternalForm());
+        scanBar.setId("slider");
         scanBarListener = new ScanListener();
         videoListener = new VideoListener();
         
@@ -190,6 +195,8 @@ public class Video {
         scanBar.valueProperty().addListener(scanBarListener);
         scanBar.setOnMousePressed(new ScanMouseHandler());
         scanBar.setOnMouseReleased(new ScanMouseHandler());
+        
+        timeStamp = new Label("--:--");
         
         /* Temporary file object to load media from */
         File file;
@@ -324,7 +331,7 @@ public class Video {
         setScan();
         
         /* Add the buttons to the control bar */
-        controls.getChildren().addAll(playButton, stopButton, scanBar, fullscreenButton, volumeButton);
+        controls.getChildren().addAll(playButton, stopButton, timeStamp, scanBar, fullscreenButton, volumeButton);
         controls.setPrefWidth(videoFrame.getWidth());
         
         /* Set the volume slider value */
@@ -370,6 +377,8 @@ public class Video {
         
         /* Set the scan bar value */
         scanBar.setValue(percentage);
+        
+        timeStamp.setText("" + Math.round(mediaPlayer.getCurrentTime().toSeconds()));
     }
     
     /** Toggle video fullscreen */

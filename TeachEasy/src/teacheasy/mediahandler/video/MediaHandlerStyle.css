@@ -27,3 +27,7 @@
 	-fx-insets: 0;
 	-fx-padding: 0 0 0 0;
 }
+
+#slider .track{
+	-fx-background-color: rgba(50, 50, 50, 50);
+}
