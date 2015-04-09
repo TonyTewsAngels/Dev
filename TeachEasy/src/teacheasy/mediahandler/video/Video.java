@@ -7,6 +7,8 @@
 package teacheasy.mediahandler.video;
 
 import java.io.File;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -17,6 +19,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -67,6 +70,9 @@ public class Video {
     private Button volumeButton;
     private Slider volumeSlider;
     private VolumeListener volumeListener;
+    
+    /* Variable to maintain play state after scan */
+    private boolean wasPlaying = false;
     
     /** Fullscreen stage. */
     private Stage fsStage;
@@ -145,24 +151,55 @@ public class Video {
         scanBar.setOnMousePressed(new ScanMouseHandler());
         scanBar.setOnMouseReleased(new ScanMouseHandler());
         
-        /* Check that the file exists and is .mp4 */
-        File file = new File(sourcefile);
-        if(!file.exists()) {
-            return;
-        } else if(!file.getAbsolutePath().endsWith(".mp4")) {
-            return;
+        /* Temporary file object to load media from */
+        File file;
+        
+        /* Check whether the media file is a local or web resource */
+        if(sourcefile.startsWith("http")) {
+            /* File is a web resource. Check that it exists */
+            if(!mediaExists(sourcefile)) {
+                /* Add a label to notify the user that the media was unavailable */
+                Label label = new Label("Media Unavailable");
+                label.relocate(x, y);
+                group.getChildren().add(label);
+                
+                /* Return to halt the creation of this video */
+                return;
+            }
+            
+            /* Load the media from URL */
+            media = new Media(sourcefile);
+            
+        } else {
+            /* File is a local resource */
+            file = new File(sourcefile);
+            
+            /* Check that the file exists and is .mp4 or .flv */
+            if(!file.exists()) {
+                /* Add a label to notify the user that the file could not be found */
+                Label label = new Label("File could not be found");
+                label.relocate(x, y);
+                group.getChildren().add(label);
+                return;
+            } else if(!file.getAbsolutePath().endsWith(".mp4") &&
+                      !file.getAbsolutePath().endsWith(".flv")) {
+                /* Return to halt the creation of this video */
+                return;
+            }
+
+            /* Load the file as a media object */
+            media = new Media(file.toURI().toString());
         }
-        
-        /* Load the file as a media object */
-        media = new Media(file.toURI().toString());
-        
+
         /* Create a media player for the object */
         mediaPlayer = new MediaPlayer(media);
         
         /* Set up the media player */
         mediaPlayer.setAutoPlay(autoPlay);
+        mediaPlayer.setOnEndOfMedia(new MediaEndHandler());
         mediaPlayer.currentTimeProperty().addListener(videoListener);
         mediaPlayer.statusProperty().addListener(new PlayerStatusListener());
+        
         if(loop) {
             mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         }
@@ -217,17 +254,23 @@ public class Video {
     
     /** Programmatically resizes this video */
     public void resize(float nWidth) {
-        video.setFitWidth(nWidth);
+        if(video != null) {
+            video.setFitWidth(nWidth);
+        }
     }
     
     /** Programmatically relocates this video */
     public void relocate(float x, float y) {
-        videoFrame.relocate(x, y);
+        if(videoFrame != null) {
+            videoFrame.relocate(x, y);
+        }
     }
     
     /** Programmatically sets this videos visibility */
     public void setVisible(boolean visible) {
-        videoFrame.setVisible(visible);
+        if(videoFrame != null) {
+            videoFrame.setVisible(visible);
+        }
     }
     
     /** Adds the controls to a video frame */
@@ -236,9 +279,6 @@ public class Video {
         controls = new HBox();
         controls.setAlignment(Pos.BOTTOM_CENTER);
         controls.setSpacing(10);
-        
-        /* Set the button labels */
-        setButtonLabels();
         
         /* Adjust the scan location */
         setScan();
@@ -258,16 +298,6 @@ public class Video {
     private void removeControls() {
         /* Remove the controls */
         videoFrame.getChildren().remove(controls);
-    }
-    
-    /** Set the correct button labels */
-    private void setButtonLabels() {
-        /* Set the button text */
-        if(mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
-            playButton.setText("Pause");
-        } else {
-            playButton.setText("Play");
-        }
     }
     
     /** 
@@ -352,6 +382,20 @@ public class Video {
         }
     }
     
+    private static boolean mediaExists(String url){
+        try {
+          HttpURLConnection.setFollowRedirects(false);
+          
+          HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
+          con.setRequestMethod("HEAD");
+          
+          return (con.getResponseCode() == HttpURLConnection.HTTP_OK);
+        }
+        catch (Exception e) {
+           return false;
+        }
+      }
+    
     /**
      * Mouse Event Handler Class
      */
@@ -383,20 +427,17 @@ public class Video {
             /* Act according to id */
             if(id.equals("play")) {
                 if(mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
-                    /* If the video was playing, pause it and change the button label to play */
+                    /* If the video was playing, pause it */
                     mediaPlayer.pause();
-                    playButton.setText("Play");
                 } else if(mediaPlayer.getStatus() == MediaPlayer.Status.PAUSED ||
                           mediaPlayer.getStatus() == MediaPlayer.Status.STOPPED ||
                           mediaPlayer.getStatus() == MediaPlayer.Status.READY) {
-                    /* If the video wasn't playing, play it and change the button label to pause */
+                    /* If the video wasn't playing, play it */
                     mediaPlayer.play();
-                    playButton.setText("Pause");
                 }
             } else if (id.equals("stop")) {
                 /* Stop the video and set the button label to play */
                 mediaPlayer.stop();
-                playButton.setText("Play");
             } else if (id.equals("fullscreen")) {
                 fullscreen();
             } else if (id.equals("volume")) {
@@ -431,9 +472,15 @@ public class Video {
             
             /* Pause the video whilst scanning is enabled, restart when disabled */
             if(enable) {
-                mediaPlayer.pause();
+                if(mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                    wasPlaying = true;
+                    mediaPlayer.pause();
+                }
             } else {
-                mediaPlayer.play();
+                if(wasPlaying) {
+                    wasPlaying = false;
+                    mediaPlayer.play();
+                }
             }
         }
         
@@ -500,14 +547,44 @@ public class Video {
     }
     
     /**
+     * Event Handler for the end of the media
+     */
+    public class MediaEndHandler implements Runnable {
+        public void run() {
+            mediaPlayer.stop();
+        }
+    }
+    
+    /**
      * Listener for the media player status
      */
     public class PlayerStatusListener implements ChangeListener<Status> {
         @Override
         public void changed(ObservableValue<? extends Status> val,
-                            Status oldVal, Status newVal) {
-            //TODO stuff with the status
-            System.out.println("New status:" + newVal.toString());
+                            Status oldVal, Status newVal) {            
+            switch(newVal) {
+                case DISPOSED:
+                    break;
+                case HALTED:
+                    break;
+                case PAUSED:
+                    playButton.setText("Play");
+                    break;
+                case PLAYING:
+                    playButton.setText("Pause");
+                    break;
+                case READY:
+                    break;
+                case STALLED:
+                    break;
+                case STOPPED:
+                    playButton.setText("Play");
+                    break;
+                case UNKNOWN:
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
