@@ -1,4 +1,4 @@
-package teacheasy.xml.handler;
+package teacheasy.xml.contenthandlers;
 
 import java.util.ArrayList;
 
