@@ -8,7 +8,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import teacheasy.data.Lesson;
 import teacheasy.data.lessondata.LessonDefaultSettings;
-import teacheasy.data.lessondata.LessonInfo;
 import teacheasy.xml.XMLElement;
 import teacheasy.xml.util.XMLNotification;
 import teacheasy.xml.util.XMLUtil;

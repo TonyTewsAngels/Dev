@@ -43,6 +43,7 @@ public class SlideshowXMLHandler extends DefaultHandler {
                 xmlReader.setContentHandler(new DefaultSettingsXMLHandler(xmlReader, this, lesson, errorList));
                 break;
             case GRADESETTINGS:
+                xmlReader.setContentHandler(new GradeSettingsXMLHandler(xmlReader, this, lesson, errorList));
                 break;
             case SLIDE:
                 slideFound = true;
