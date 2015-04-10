@@ -30,7 +30,7 @@ public class VideoHandler {
     /** 
      * Constructs the video handler.
      * 
-     * @param nGroup - The group this handler should place videos in
+     * @param nGroup The group this handler should place videos in
      */
     public VideoHandler(Group nGroup) {
         /* Set the group reference */
@@ -43,20 +43,20 @@ public class VideoHandler {
     /** 
      * Adds a video to the group associated with the handler.
      * 
-     * @param x - The x coordinate for the top left of the video
+     * @param x The x coordinate for the top left of the video
      *            relative to the groups origin.
      *            
-     * @param y - The y coordinate for the top left of the video
+     * @param y The y coordinate for the top left of the video
      *            relative to the group's origin.
      *            
-     * @param width - The width of the video in pixels.
+     * @param width The width of the video in pixels.
      * 
-     * @param sourcefile - Absolute path of the video as a string. Can be a local
+     * @param sourcefile Absolute path of the video as a string. Can be a local
      *                     file path or a web address beginning with 'http'
      * 
-     * @param autoPlay - If true video plays as soon as created.
+     * @param autoPlay If true video plays as soon as created.
      * 
-     * @param loop - If true video loops to beginning once it ends.
+     * @param loop If true video loops to beginning once it ends.
      */
     public void createVideo(float x, float y, float width, String sourcefile, boolean autoPlay, boolean loop) {
         videos.add(new Video(group, x, y, width, sourcefile, autoPlay, loop));
@@ -65,7 +65,7 @@ public class VideoHandler {
     /** 
      * Causes a video handled by the handler to play.
      * 
-     * @param videoId - The ID of the video to be played.
+     * @param videoId The ID of the video to be played.
      */
     public void playVideo(int videoId) {
         if(videoId < videos.size() && videoId >= 0) {
@@ -76,7 +76,7 @@ public class VideoHandler {
     /** 
      * Causes a video handled by the handler to pause.
      * 
-     * @param videoId - The ID of the video to be played.
+     * @param videoId The ID of the video to be played.
      */
     public void pauseVideo(int videoId) {
         if(videoId < videos.size() && videoId >= 0) {
@@ -87,7 +87,7 @@ public class VideoHandler {
     /** 
      * Causes a video handled by the handler to stop.
      * 
-     * @param videoId - The ID of the video to be played.
+     * @param videoId The ID of the video to be played.
      */
     public void stopVideo(int videoId) {
         if(videoId < videos.size() && videoId >= 0) {
@@ -99,9 +99,9 @@ public class VideoHandler {
      * Causes a video handled by the handler to change
      * playback position.
      * 
-     * @param videoId - The ID of the video to be played.
+     * @param videoId The ID of the video to be played.
      * 
-     * @param percent - The time in the video to move
+     * @param percent The time in the video to move
      *                  playback to as a percentage of the
      *                  total time.
      */
@@ -115,7 +115,7 @@ public class VideoHandler {
      * Causes a video handled by the handler to change
      * size
      * 
-     * @param videoId - The ID of the video to be played.
+     * @param videoId The ID of the video to be played.
      * 
      * @param nWidth - The new width for the video.
      */
@@ -129,10 +129,10 @@ public class VideoHandler {
      * Causes a video handled by the handler to change
      * location
      * 
-     * @param videoId - The ID of the video to be played.
+     * @param videoId The ID of the video to be played.
      * 
-     * @param nx - The new x location in pixels
-     * @param ny - The new y location in pixels
+     * @param nx The new x location in pixels
+     * @param ny The new y location in pixels
      */
     public void relocateVideo(int videoId, float nx, float ny) {
         if(videoId < videos.size() && videoId >= 0) {
@@ -144,9 +144,9 @@ public class VideoHandler {
      * Causes a video handled by the handler to change
      * visibility
      * 
-     * @param videoId - The ID of the video to be played.
+     * @param videoId The ID of the video to be played.
      * 
-     * @param visible - The new visibility setting as a boolean.
+     * @param visible The new visibility setting as a boolean.
      */
     public void setVisible(int videoId, boolean visible) {
         if(videoId < videos.size() && videoId >= 0) {

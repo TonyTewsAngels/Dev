@@ -44,7 +44,6 @@ import javafx.util.Duration;
  * 
  * @author Alistair Jewers
  * @version 1.1 10 Apr 2015
- * 
  */
 public class Video {
     /** Reference to the group on which to draw videos. */
@@ -88,33 +87,34 @@ public class Video {
     /** Variable to maintain whether the volume slider is visible or not */
     private boolean volumeOpen = false;
     
-    /** Fullscreen stage. */
+    /** Fullscreen stage */
     private Stage fsStage;
     
     /** Fullscreen information, needed when exiting fullscreen. */
     private FullscreenInfo fsInfo;
     
+    /** The minimum width a video can be whilst still accommodating the controls */
     private static final int MIN_WIDTH = 350;
     
     /**
      * Constructs the video.
      * 
-     * @param nGroup - The group this video goes on.
+     * @param nGroup The group this video goes on.
      * 
-     * @param x - The x coordinate of the top left of the video 
+     * @param x The x coordinate of the top left of the video 
      *            relative to the group's origin.
      *            
-     * @param y - The y coordinate of the top left of the video 
+     * @param y The y coordinate of the top left of the video 
      *            relative to the group's origin.
      *            
-     * @param width - The width of the video in pixels.
+     * @param width The width of the video in pixels.
      * 
-     * @param sourcefile - Absolute path of the video as a string. Can be a local
+     * @param sourcefile Absolute path of the video as a string. Can be a local
      *                     file path or a web address beginning with 'http'
      * 
-     * @param autoPlay - If true the video plays immediately
+     * @param autoPlay If true the video plays immediately
      * 
-     * @param loop - If true the video loops to the beginning when it ends
+     * @param loop If true the video loops to the beginning when it ends
      */
     public Video(Group nGroup, float x, float y, float width, String sourcefile, boolean autoPlay, boolean loop) {
         /* Set the group reference */
@@ -465,7 +465,9 @@ public class Video {
     }
     
     /** 
-     * Utility function, adds a leading zero to numbers under 10 
+     * Utility function, adds a leading zero to numbers under 10
+     * 
+     * @param n Integer number to be padded
      */
     private String zeroPad(int n) {
         if(n < 10) {
@@ -534,7 +536,9 @@ public class Video {
     }
     
     /** 
-     * Utility function, checks if an online video exists 
+     * Utility function, checks if an online video exists
+     * 
+     * @param url The URL to check
      */
     private static boolean mediaExists(String url){
         try {
@@ -556,7 +560,8 @@ public class Video {
       }
     
     /**
-     * Mouse Event Handler Class
+     * Handles adding and removing the controls from the video when
+     * the mouse enters and leaves the frame.
      */
     public class MouseEventHandler implements EventHandler<MouseEvent> {
         @Override
@@ -572,7 +577,8 @@ public class Video {
     }
     
     /**
-     * Button Event Handler Class
+     * Handles performing actions on the video based on the buttons
+     * pressed by the user.
      */
     public class ButtonEventHandler implements EventHandler<ActionEvent> {
         @Override
@@ -615,7 +621,8 @@ public class Video {
     }
     
     /**
-     * Scan event handler class
+     * Handles moving through the video based on the user moving
+     * the scan bar.
      */
     public class ScanListener implements ChangeListener<Number> {
         /* 
@@ -659,7 +666,7 @@ public class Video {
     }
     
     /**
-     * Scan mouse click handler class
+     * Handles enabling and disabling the scan bar.
      */
     public class ScanMouseHandler implements EventHandler<MouseEvent> {
         @Override
@@ -675,7 +682,8 @@ public class Video {
     }
     
     /**
-     * Video Position Listener
+     * Listener for changes to the current position in the video to
+     * update the scan bar as the video plays.
      */
     public class VideoListener implements ChangeListener<Duration> {                        
         /** When the position in the video changes, update the scan bar */
@@ -688,7 +696,7 @@ public class Video {
     }
     
     /**
-     * Listener for the esape key in fullscreen
+     * Listener for the esape key to exit fullscreen
      */
     public class FullscreenKeyListener implements EventHandler<KeyEvent> {
         @Override
@@ -716,7 +724,8 @@ public class Video {
     }
     
     /**
-     * Event Handler for the end of the media
+     * Stops the media player when the it reaches the end of the current
+     * video. This resets it back to the beginning of the clip.
      */
     public class MediaEndHandler implements Runnable {
         public void run() {
@@ -725,7 +734,8 @@ public class Video {
     }
     
     /**
-     * Listener for the media player status
+     * Listener for changes in the media player status. Used to update
+     * the buttons and time stamps.
      */
     public class PlayerStatusListener implements ChangeListener<Status> {
         @Override
