@@ -32,10 +32,18 @@
 	-fx-padding: 5;
 }
 
+#slider:focused {
+	-fx-padding: 5;
+}
+
 #slider .track{
 	-fx-background-color: rgba(75, 75, 75, 0.55);
 }
 
 #slider .thumb{
 	-fx-background-color: rgba(235, 235, 235, 1);
+}
+
+#slider:focused .thumb {
+	fx-background-color: rgba(235, 235, 235, 1);
 }

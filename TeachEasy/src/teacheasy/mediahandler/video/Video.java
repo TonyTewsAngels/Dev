@@ -88,6 +88,8 @@ public class Video {
     /* Variable to maintain play state after scan */
     private boolean wasPlaying = false;
     
+    /* Variable to maintain whether the volume slider is visible or not */
+    private boolean volumeOpen = false;
     /** Fullscreen stage. */
     private Stage fsStage;
     
@@ -107,7 +109,7 @@ public class Video {
      * @param y - The y coordinate of the top left of the video 
      *            relative to the group's origin.
      *            
-     * @param width - The width of the video in pixels
+     * @param width - The width of the video in pixels.
      * 
      * @param sourcefile - Absolute path of the video as a string. Can be a local
      *                     file path or a web address beginning with 'http'
@@ -340,17 +342,20 @@ public class Video {
         controls = new HBox();
         controls.setAlignment(Pos.BOTTOM_CENTER);
         controls.setSpacing(5);
+        controls.setPrefWidth(videoFrame.getWidth());
         
         /* Adjust the scan location */
         setScan();
         
-        /* Add the buttons to the control bar */
-        controls.getChildren().addAll(playButton, stopButton, timeStamp, scanBar, durationStamp, fullscreenButton, volumeButton);
-        controls.setPrefWidth(videoFrame.getWidth());
-        
         /* Set the volume slider value */
         volumeSlider.setValue(mediaPlayer.getVolume());
         
+        /* Add the buttons to the control bar */
+        controls.getChildren().addAll(playButton, stopButton, timeStamp, scanBar, durationStamp, fullscreenButton, volumeButton);
+        if(volumeOpen) {
+            controls.getChildren().add(volumeSlider);
+        }
+
         /* Add the control bar to the video frame */
         videoFrame.getChildren().add(controls);
     }
@@ -374,6 +379,11 @@ public class Video {
         /* Get the new position using the percentage */
         double newPosition = duration * (percent/100);
         
+        if(mediaPlayer.getStatus() == Status.STOPPED ||
+           mediaPlayer.getStatus() == Status.READY) {
+            mediaPlayer.pause();
+        }
+        
         /* Set the new position (milliseconds) */
         mediaPlayer.seek(new Duration(newPosition*1000));
     }
@@ -391,6 +401,11 @@ public class Video {
         
         /* Set the scan bar value */
         scanBar.setValue(percentage);
+    }
+    
+    /** Reset the scan bar to the start of the video */
+    private void resetScan() {
+        scanBar.setValue(0);
     }
     
     /** Update a label to show a time based on a duration */
@@ -548,16 +563,20 @@ public class Video {
                     mediaPlayer.play();
                 }
             } else if (id.equals("stop")) {
-                /* Stop the video and set the button label to play */
+                /* Stop the video and reset the time stanp and scan bar */
                 mediaPlayer.stop();
+                resetScan();
+                updateTimeStamp(timeStamp, new Duration(0));
             } else if (id.equals("fullscreen")) {
                 fullscreen();
             } else if (id.equals("volume")) {
                 /* Add or remove the volume slider as necessary */
                 if(controls.getChildren().contains(volumeSlider)) {
                     controls.getChildren().remove(volumeSlider);
+                    volumeOpen = false;
                 } else {
-                    controls.getChildren().add(volumeSlider);  
+                    controls.getChildren().add(volumeSlider);
+                    volumeOpen = true;
                 }
             }
         }
@@ -603,6 +622,7 @@ public class Video {
             /* If enabled update the video position */
             if(enable) {
                 scan(new_val.doubleValue());
+                updateTimeStamp(timeStamp, mediaPlayer.getCurrentTime());
             }
         }
     }
@@ -692,13 +712,14 @@ public class Video {
                     playButton.setGraphic(pauseImage);
                     break;
                 case READY:
-                    System.out.println("Ready");
                     updateTimeStamp(durationStamp, mediaPlayer.getMedia().getDuration());
                     playButton.setGraphic(playImage);
                     break;
                 case STALLED:
                     break;
                 case STOPPED:
+                    setScan();
+                    updateTimeStamp(timeStamp, mediaPlayer.getCurrentTime());
                     playButton.setGraphic(playImage);
                     break;
                 case UNKNOWN:
