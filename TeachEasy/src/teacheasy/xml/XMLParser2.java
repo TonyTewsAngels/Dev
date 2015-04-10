@@ -13,12 +13,19 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 import teacheasy.data.Lesson;
 import teacheasy.xml.handler.DocumentInfoXMLHandler;
+import teacheasy.xml.handler.SlideshowXMLHandler;
 import teacheasy.xml.util.XMLNotification;
+import teacheasy.xml.util.XMLNotification.Level;
 
 public class XMLParser2 extends DefaultHandler {
     private Lesson lesson;
     private ArrayList<XMLNotification> errorList;
     private XMLReader xmlReader;
+    
+    public XMLParser2() {
+        lesson = new Lesson();
+        errorList = new ArrayList<XMLNotification>();
+    }
     
     public void parse(String file) throws SAXException, IOException {
         xmlReader = XMLReaderFactory.createXMLReader();
@@ -32,16 +39,11 @@ public class XMLParser2 extends DefaultHandler {
     
     public void startElement(String uri, String localName, String qName, Attributes attrs) {
         switch(XMLElement.check(qName.toUpperCase())) {
-            case DOCUMENTINFO:
-                xmlReader.setContentHandler(new DocumentInfoXMLHandler(xmlReader, this, lesson, errorList));
-                break;
-            case DEFAULTSETTINGS:
-                break;
-            case GRADESETTINGS:
-                break;
-            case SLIDE:
+            case SLIDESHOW:
+                xmlReader.setContentHandler(new SlideshowXMLHandler(xmlReader, this, lesson, errorList));
                 break;
             default:
+                errorList.add(new XMLNotification(Level.WARNING, "Non-slideshow top level element found, ignored."));
                 break;
         }
     }
@@ -56,21 +58,18 @@ public class XMLParser2 extends DefaultHandler {
     
     // #######################################
     public static void main(String args[]) {
-        new XMLParser2();
-    }
-    
-    public XMLParser2() {
-        lesson = new Lesson();
-        errorList = new ArrayList<XMLNotification>();
+        XMLParser2 xmlParser = new XMLParser2();
         
         try {
-            parse("testXML/testXML.xml");
+            xmlParser.parse("testXML/testXML.xml");
         } catch (SAXException | IOException e) {
             e.printStackTrace();
         }
         
-        for(int i = 0; i < errorList.size(); i++) {
-            System.out.println(errorList.get(i).toString());
+        for(int i = 0; i < xmlParser.errorList.size(); i++) {
+            System.out.println(xmlParser.errorList.get(i).toString());
         }
     }
+    
+    
 }

@@ -9,7 +9,6 @@ import org.xml.sax.helpers.DefaultHandler;
 import teacheasy.data.Lesson;
 import teacheasy.data.lessondata.LessonInfo;
 import teacheasy.xml.XMLElement;
-import teacheasy.xml.XMLParser2;
 import teacheasy.xml.util.XMLNotification;
 import teacheasy.xml.util.XMLNotification.Level;
 
@@ -17,13 +16,13 @@ public class DocumentInfoXMLHandler extends DefaultHandler{
     private Lesson lesson;
     private ArrayList<XMLNotification> errorList;
     private XMLReader xmlReader;
-    private XMLParser2 parent;
+    private DefaultHandler parent;
     
     private String readBuffer;
     
     private LessonInfo lessonInfo;
     
-    public DocumentInfoXMLHandler(XMLReader nXMLReader, XMLParser2 nParent, Lesson nLesson, ArrayList<XMLNotification> nErrorList) {
+    public DocumentInfoXMLHandler(XMLReader nXMLReader, DefaultHandler nParent, Lesson nLesson, ArrayList<XMLNotification> nErrorList) {
         this.xmlReader = nXMLReader;
         this.parent = nParent;
         
@@ -41,7 +40,7 @@ public class DocumentInfoXMLHandler extends DefaultHandler{
         switch(XMLElement.check(qName.toUpperCase())) {
             /* If the document info has finished, return to the parent */
             case DOCUMENTINFO:
-                xmlReader.setContentHandler(parent);
+                endHandler();
                 break;
                 
             /* Store the relevant document info */
@@ -65,7 +64,7 @@ public class DocumentInfoXMLHandler extends DefaultHandler{
                 totalMarks();
                 break;
             case LESSONNAME:
-                lessonInfo.setVersion(readBuffer);
+                lessonInfo.setLessonName(readBuffer);
                 break;
             
             default:
