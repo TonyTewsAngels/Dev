@@ -28,6 +28,14 @@
 	-fx-padding: 0 0 0 0;
 }
 
+#slider {
+	-fx-padding: 8;
+}
+
 #slider .track{
-	-fx-background-color: rgba(50, 50, 50, 50);
+	-fx-background-color: rgba(50, 50, 50, 0.4);
+}
+
+#slider .thumb{
+	-fx-background-color: rgba(235, 235, 235, 1);
 }

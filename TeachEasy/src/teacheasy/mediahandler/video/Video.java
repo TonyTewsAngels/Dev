@@ -28,6 +28,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -66,6 +67,7 @@ public class Video {
     private Button playButton;
     private Button stopButton;
     private Label timeStamp;
+    private Label durationStamp;
     private Slider scanBar;
     private ScanListener scanBarListener;
     private VideoListener videoListener;
@@ -115,25 +117,11 @@ public class Video {
         this.group = nGroup;
         
         playImage = new ImageView(new Image(getClass().getResourceAsStream("Play_ST_CONTENT_RECT_Transparent_L-01.png")));
-        playImage.setFitWidth(30);
-        playImage.setFitHeight(30);
-        
-        pauseImage = new ImageView(new Image(getClass().getResourceAsStream("Pause_ST_CONTENT_RECT_Transparent_L-01.png")));
-        pauseImage.setFitWidth(30);
-        pauseImage.setFitHeight(30);
-        
+        pauseImage = new ImageView(new Image(getClass().getResourceAsStream("Pause_ST_CONTENT_RECT_Transparent_L-01.png")));        
         stopImage = new ImageView(new Image(getClass().getResourceAsStream("Stop_ST_CONTENT_RECT_Transparent_L-01.png")));
-        stopImage.setFitWidth(30);
-        stopImage.setFitHeight(30);
-        
         fullscreenImage = new ImageView(new Image(getClass().getResourceAsStream("FullscreenON_ST_CONTENT_RECT_Transparent_L-01.png")));
-        fullscreenImage.setFitWidth(30);
-        fullscreenImage.setFitHeight(30);
-        
         volumeImage = new ImageView(new Image(getClass().getResourceAsStream("VolumeON_ST_CONTENT_RECT_Transparent_L-01.png")));
-        volumeImage.setFitWidth(30);
-        volumeImage.setFitHeight(30);
-        
+
         /* Play/Pause Control */
         playButton = new Button("");
         playButton.setOnAction(new ButtonEventHandler());
@@ -165,7 +153,7 @@ public class Video {
         
         volumeSlider = new Slider();
         volumeSlider.getStylesheets().add(this.getClass().getResource("MediaHandlerStyle.css").toExternalForm());
-        volumeSlider.setId("volumeslider");
+        volumeSlider.setId("slider");
         volumeListener = new VolumeListener();
         
         /* Set up volume control */
@@ -190,14 +178,23 @@ public class Video {
         scanBar.setMax(100);
         scanBar.setValue(0);
         scanBar.setPrefWidth(1000);
+        scanBar.setMinHeight(28);
         scanBar.setShowTickLabels(false);
         scanBar.setShowTickMarks(false);
         scanBar.valueProperty().addListener(scanBarListener);
         scanBar.setOnMousePressed(new ScanMouseHandler());
         scanBar.setOnMouseReleased(new ScanMouseHandler());
         
-        timeStamp = new Label("--:--");
+        timeStamp = new Label("00:00:00");
+        timeStamp.setTextFill(Color.LIGHTGRAY);
+        timeStamp.setMinWidth(50);
+        timeStamp.setMinHeight(28);
         
+        durationStamp = new Label("00:00:00");
+        durationStamp.setTextFill(Color.LIGHTGRAY);
+        durationStamp.setMinWidth(50);
+        durationStamp.setMinHeight(28);
+
         /* Temporary file object to load media from */
         File file;
         
@@ -325,13 +322,13 @@ public class Video {
         /* Set up the control bar */
         controls = new HBox();
         controls.setAlignment(Pos.BOTTOM_CENTER);
-        controls.setSpacing(10);
+        controls.setSpacing(5);
         
         /* Adjust the scan location */
         setScan();
         
         /* Add the buttons to the control bar */
-        controls.getChildren().addAll(playButton, stopButton, timeStamp, scanBar, fullscreenButton, volumeButton);
+        controls.getChildren().addAll(playButton, stopButton, timeStamp, scanBar, durationStamp, fullscreenButton, volumeButton);
         controls.setPrefWidth(videoFrame.getWidth());
         
         /* Set the volume slider value */
@@ -377,8 +374,39 @@ public class Video {
         
         /* Set the scan bar value */
         scanBar.setValue(percentage);
+    }
+    
+    private void updateTimeStamp(Label stamp, Duration duration) {
+        int hours = 0;
+        int minutes = 0;
+        int seconds = 0;
         
-        timeStamp.setText("" + Math.round(mediaPlayer.getCurrentTime().toSeconds()));
+        seconds = (int)Math.round(duration.toSeconds());
+        
+        while(seconds > 59) {
+            seconds -= 60;
+            minutes++;
+        }
+        
+        while(minutes > 59) {
+            minutes -= 60;
+            hours++;
+        }
+        
+        String secStr, minStr, hrStr;
+        secStr = zeroPad(seconds);
+        minStr = zeroPad(minutes);
+        hrStr = zeroPad(hours);
+        
+        stamp.setText(hrStr + ":" + minStr + ":" + secStr);
+    }
+    
+    private String zeroPad(int n) {
+        if(n < 10 && n > -10) {
+            return new String("0" + n);
+        } else {
+            return new String("" + n);
+        }
     }
     
     /** Toggle video fullscreen */
@@ -569,6 +597,7 @@ public class Video {
         public void changed(ObservableValue<? extends Duration> arg0,
                             Duration arg1, Duration arg2) {
             setScan();
+            updateTimeStamp(timeStamp, mediaPlayer.getCurrentTime());
         }
     }
     
@@ -623,6 +652,8 @@ public class Video {
                     playButton.setGraphic(pauseImage);
                     break;
                 case READY:
+                    System.out.println("Ready");
+                    updateTimeStamp(durationStamp, mediaPlayer.getMedia().getDuration());
                     playButton.setGraphic(playImage);
                     break;
                 case STALLED:
