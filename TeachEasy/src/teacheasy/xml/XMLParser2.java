@@ -70,7 +70,8 @@ public class XMLParser2 extends DefaultHandler {
             System.out.println(xmlParser.errorList.get(i).toString());
         }
         
-        System.out.println(xmlParser.errorList.size() + " error(s) during parsing\n");
+        System.out.println(XMLNotification.countLevel(xmlParser.errorList, Level.ERROR) + " error(s) during parsing.");
+        System.out.println(XMLNotification.countLevel(xmlParser.errorList, Level.WARNING) + " warning(s) during parsing.\n");
             
         xmlParser.lesson.debugPrint();
     }

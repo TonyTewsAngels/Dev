@@ -1,5 +1,7 @@
 package teacheasy.xml.util;
 
+import java.util.ArrayList;
+
 public class XMLNotification {
     public enum Level {
         WARNING,
@@ -24,5 +26,17 @@ public class XMLNotification {
     
     public String toString() {
         return new String("[" + level.toString() + "] " + text);
+    }
+    
+    public static int countLevel(ArrayList<XMLNotification> errorList, Level level) {
+        int n = 0;
+        
+        for(XMLNotification i : errorList) {
+            if(i.getLevel() == level) {
+                n++;
+            }
+        }
+        
+        return n;
     }
 }

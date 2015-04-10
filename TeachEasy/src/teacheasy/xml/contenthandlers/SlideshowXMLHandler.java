@@ -47,6 +47,7 @@ public class SlideshowXMLHandler extends DefaultHandler {
                 break;
             case SLIDE:
                 slideFound = true;
+                xmlReader.setContentHandler(new SlideXMLHandler(xmlReader, this, lesson, errorList, attrs));
                 break;
             default:
                 break;
@@ -85,7 +86,10 @@ public class SlideshowXMLHandler extends DefaultHandler {
             errorList.add(new XMLNotification(Level.ERROR, "No Slides were found."));
         }
         
+        if(lesson.lessonInfo.getTotalMarks() < lesson.gradeSettings.getPassBoundary()) {
+            errorList.add(new XMLNotification(Level.ERROR, "Pass boundary exceeds total marks"));
+        }
+        
         xmlReader.setContentHandler(parent);
     }
-
 }
