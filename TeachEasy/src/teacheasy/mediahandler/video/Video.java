@@ -44,14 +44,11 @@ import javafx.util.Duration;
  * within the video handler.
  * 
  * @author Alistair Jewers
- * @version 1.0 24 Feb 2015
+ * @version 1.1 10 Apr 2015
  */
 public class Video {
     /** Reference to the group on which to draw videos. */
     private Group group;
-    
-    /** Media object containing the video. */
-    private Media media;
     
     /** Media player object to control playback. */
     private MediaPlayer mediaPlayer;
@@ -214,6 +211,9 @@ public class Video {
         /* Temporary file object to load media from */
         File file;
         
+        /* Temporary media object to create media player from */
+        Media media;
+        
         /* Check whether the media file is a local or web resource */
         if(sourcefile.startsWith("http")) {
             /* File is a web resource. Check that it exists */
@@ -287,56 +287,73 @@ public class Video {
         group.getChildren().add(videoFrame);
     }
     
-    /** Programmatically plays this video */
+    /** 
+     * Programmatically plays this video 
+     */
     public void play() {
         if(mediaPlayer != null) {
             mediaPlayer.play();
         }
     }
     
-    /** Programmatically pauses this video */
+    /**
+     *  Programmatically pauses this video 
+     */
     public void pause() {
         if(mediaPlayer != null) {
             mediaPlayer.pause();
         }
     }
     
-    /** Programmatically stops this video */
+    /** 
+     * Programmatically stops this video 
+     */
     public void stop() {
         if(mediaPlayer != null) {
             mediaPlayer.stop();
         }
     }
     
-    /** Programmatically disposes of this video */
+    /** 
+     * Programmatically disposes of this video 
+     */
     public void dispose() {
         if(mediaPlayer != null) {
+            mediaPlayer.stop();
             mediaPlayer.dispose();
         }
     }
     
-    /** Programmatically resizes this video */
+    /** 
+     * Programmatically resizes this video 
+     */
     public void resize(float nWidth) {
         if(video != null) {
             video.setFitWidth(nWidth);
         }
     }
     
-    /** Programmatically relocates this video */
+    /** 
+     * Programmatically relocates this video 
+     */
     public void relocate(float x, float y) {
         if(videoFrame != null) {
             videoFrame.relocate(x, y);
         }
     }
     
-    /** Programmatically sets this videos visibility */
+    /** 
+     * Programmatically sets this videos visibility 
+     */
     public void setVisible(boolean visible) {
         if(videoFrame != null) {
             videoFrame.setVisible(visible);
         }
     }
     
-    /** Adds the controls to a video frame */
+    /** 
+     * Adds the controls to a video frame 
+     */
     private void addControls() {
         /* Set up the control bar */
         controls = new HBox();
@@ -360,21 +377,23 @@ public class Video {
         videoFrame.getChildren().add(controls);
     }
     
-    /** Removes the controls from a video frame */
+    /** 
+     * Removes the controls from a video frame 
+     */
     private void removeControls() {
         /* Remove the controls */
         videoFrame.getChildren().remove(controls);
     }
     
     /** 
-     * Scan to a position in the video 
+     * Scans to a position in the video 
      * 
      * @param percent - The new position in the video as a 
      *                  percentage of the video length.
      */
     public void scan(double percent) {
         /* Get the duration of the clip */
-        double duration = media.getDuration().toSeconds();
+        double duration = mediaPlayer.getMedia().getDuration().toSeconds();
         
         /* Get the new position using the percentage */
         double newPosition = duration * (percent/100);
@@ -388,10 +407,12 @@ public class Video {
         mediaPlayer.seek(new Duration(newPosition*1000));
     }
     
-    /** Set the scan bar to match the video position */
+    /** 
+     * Sets the scan bar to match the video position 
+     */
     private void setScan() {
         /* Get the duration of the clip */
-        double duration = media.getDuration().toSeconds();
+        double duration = mediaPlayer.getMedia().getDuration().toSeconds();
         
         /* Get the current position in the clip */
         double current =  mediaPlayer.getCurrentTime().toSeconds();
@@ -403,12 +424,16 @@ public class Video {
         scanBar.setValue(percentage);
     }
     
-    /** Reset the scan bar to the start of the video */
+    /** 
+     * Resets the scan bar to the start of the video 
+     */
     private void resetScan() {
         scanBar.setValue(0);
     }
     
-    /** Update a label to show a time based on a duration */
+    /** 
+     * Update a label to show a time based on a duration 
+     */
     private void updateTimeStamp(Label stamp, Duration duration) {
         int hours = 0;
         int minutes = 0;
@@ -438,7 +463,9 @@ public class Video {
         stamp.setText(hrStr + ":" + minStr + ":" + secStr);
     }
     
-    /** Utility function to add a leading zero to numbers under 10 */
+    /** 
+     * Utility function, adds a leading zero to numbers under 10 
+     */
     private String zeroPad(int n) {
         if(n < 10) {
             return new String("0" + n);
@@ -447,7 +474,9 @@ public class Video {
         }
     }
     
-    /** Toggle video fullscreen */
+    /** 
+     * Toggles video in and out of fullscreen 
+     */
     public void fullscreen() {                
         /* If the video is already fullscreen, go back. If not, go fullscreen */
         if(fsInfo.isFullscreen()) {
@@ -503,7 +532,9 @@ public class Video {
         }
     }
     
-    /** Utility function to check if an online video exists */
+    /** 
+     * Utility function, checks if an online video exists 
+     */
     private static boolean mediaExists(String url){
         try {
           /* Do not follow redirects */
@@ -587,8 +618,7 @@ public class Video {
      */
     public class ScanListener implements ChangeListener<Number> {
         /* 
-         * Class level variables to hold the ID of the video affect
-         * and whether or not the scan bar is enabled
+         * Class level variable indicates whether or not the scan bar is enabled
          */
         private boolean enable;
         
