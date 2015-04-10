@@ -94,6 +94,8 @@ public class Video {
     /** Fullscreen information, needed when exiting fullscreen. */
     private FullscreenInfo fsInfo;
     
+    private static final int MIN_WIDTH = 350;
+    
     /**
      * Constructs the video.
      * 
@@ -201,7 +203,12 @@ public class Video {
         durationStamp.setTextFill(Color.LIGHTGRAY);
         durationStamp.setMinWidth(50);
         durationStamp.setMinHeight(28);
-
+        
+        /* Check that the sourcefile is not null */
+        if(sourcefile == null) {
+            return;
+        }
+        
         /* Temporary file object to load media from */
         File file;
         
@@ -259,6 +266,9 @@ public class Video {
         video = new MediaView(mediaPlayer);
         
         /* Set up the media view */
+        if(width < MIN_WIDTH) {
+            width = MIN_WIDTH;
+        }
         video.setFitWidth(width);
 
         /* Create a grid */
@@ -646,9 +656,9 @@ public class Video {
         public void changed(ObservableValue<? extends Number> val,
                             Number oldVal, Number newVal) {
             mediaPlayer.setVolume(newVal.doubleValue());
-            if(newVal.doubleValue() < 0.01) {
+            if(newVal.doubleValue() < 0.001) {
                 volumeButton.setGraphic(volumeOffImage);
-            } else if(oldVal.doubleValue() < 0.01 && newVal.doubleValue() >= 0.01) {
+            } else if(oldVal.doubleValue() < 0.01 && newVal.doubleValue() >= 0.001) {
                 volumeButton.setGraphic(volumeImage);
             }
         }
