@@ -39,6 +39,20 @@ public class SlideXMLHandler extends DefaultHandler {
         readBuffer = null;
         
         switch(XMLElement.check(qName.toUpperCase())) {
+            case TEXT:
+                break;
+            case IMAGE:
+                break;
+            case AUDIO:
+                break;
+            case VIDEO:
+                break;
+            case GRAPHIC:
+                break;
+            case ANSWERBOX:
+                break;
+            case MULTIPLECHOICE:
+                break;
             default:
                 break;
         }
@@ -80,8 +94,8 @@ public class SlideXMLHandler extends DefaultHandler {
             if(XMLUtil.checkColor(backgroundColor)) {
                 page.setPageColour(backgroundColor);
             } else {
-                errorList.add(new XMLNotification(Level.ERROR, "Page " + pn + "background color invalid color format."));
-                page.setPageColour("none");
+                errorList.add(new XMLNotification(Level.WARNING, "Page " + pn + "background color invalid color format."));
+                page.setPageColour(lesson.defaultSettings.getBackgroundColour());
             }
         }
     }
