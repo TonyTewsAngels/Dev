@@ -12,22 +12,16 @@ import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 import teacheasy.data.Lesson;
+import teacheasy.xml.handler.DocumentInfoXMLHandler;
 import teacheasy.xml.util.XMLNotification;
 
 public class XMLParser2 extends DefaultHandler {
     private Lesson lesson;
     private ArrayList<XMLNotification> errorList;
-    
-    public XMLParser2() {
-        try {
-            parse("testXML/testXML.xml");
-        } catch (SAXException | IOException e) {
-            e.printStackTrace();
-        }
-    }
+    private XMLReader xmlReader;
     
     public void parse(String file) throws SAXException, IOException {
-        XMLReader xmlReader = XMLReaderFactory.createXMLReader();
+        xmlReader = XMLReaderFactory.createXMLReader();
         
         xmlReader.setContentHandler(this);
         
@@ -37,10 +31,46 @@ public class XMLParser2 extends DefaultHandler {
     }
     
     public void startElement(String uri, String localName, String qName, Attributes attrs) {
-        System.out.println(qName);
+        switch(XMLElement.check(qName.toUpperCase())) {
+            case DOCUMENTINFO:
+                xmlReader.setContentHandler(new DocumentInfoXMLHandler(xmlReader, this, lesson, errorList));
+                break;
+            case DEFAULTSETTINGS:
+                break;
+            case GRADESETTINGS:
+                break;
+            case SLIDE:
+                break;
+            default:
+                break;
+        }
     }
     
+    
+    
+    
+    
+    
+    
+    
+    
+    // #######################################
     public static void main(String args[]) {
         new XMLParser2();
+    }
+    
+    public XMLParser2() {
+        lesson = new Lesson();
+        errorList = new ArrayList<XMLNotification>();
+        
+        try {
+            parse("testXML/testXML.xml");
+        } catch (SAXException | IOException e) {
+            e.printStackTrace();
+        }
+        
+        for(int i = 0; i < errorList.size(); i++) {
+            System.out.println(errorList.get(i).toString());
+        }
     }
 }

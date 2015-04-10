@@ -21,4 +21,8 @@ public class XMLNotification {
     public Level getLevel() {
         return level;
     }
+    
+    public String toString() {
+        return new String("[" + level.toString() + "] " + text);
+    }
 }
