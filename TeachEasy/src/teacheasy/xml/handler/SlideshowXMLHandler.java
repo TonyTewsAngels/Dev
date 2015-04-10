@@ -40,6 +40,7 @@ public class SlideshowXMLHandler extends DefaultHandler {
                 break;
             case DEFAULTSETTINGS:
                 defaultSettingsFound = true;
+                xmlReader.setContentHandler(new DefaultSettingsXMLHandler(xmlReader, this, lesson, errorList));
                 break;
             case GRADESETTINGS:
                 break;
