@@ -6,43 +6,12 @@
  */
 package teacheasy.mediahandler;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import teacheasy.mediahandler.video.FullscreenInfo;
-import teacheasy.mediahandler.video.Video;
-
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.Slider;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaErrorEvent;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
-import javafx.scene.media.MediaPlayer.Status;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import javafx.util.Duration;
+
+import teacheasy.mediahandler.video.Video;
 
 /**
  * This class encapsulates the video handler,
@@ -85,7 +54,7 @@ public class VideoHandler {
      * @param sourcefile - Absolute path of the video as a string. Can be a local
      *                     file path or a web address beginning with 'http'
      * 
-     * @param autoplay - If true video plays as soon as created.
+     * @param autoPlay - If true video plays as soon as created.
      * 
      * @param loop - If true video loops to beginning once it ends.
      */

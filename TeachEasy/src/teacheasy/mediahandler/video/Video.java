@@ -28,7 +28,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -45,6 +44,7 @@ import javafx.util.Duration;
  * 
  * @author Alistair Jewers
  * @version 1.1 10 Apr 2015
+ * 
  */
 public class Video {
     /** Reference to the group on which to draw videos. */
@@ -59,7 +59,7 @@ public class Video {
     /** Grid layout to contain the video and the controls. */
     private GridPane videoFrame;
     
-    /* Controls */
+    /* Various UI Control Objects */
     private HBox controls;
     private Button playButton;
     private Button stopButton;
@@ -73,7 +73,7 @@ public class Video {
     private Slider volumeSlider;
     private VolumeListener volumeListener;
     
-    /* Controls UI */
+    /* GUI Elements */
     private ImageView playImage;
     private ImageView pauseImage;
     private ImageView stopImage;
@@ -82,11 +82,12 @@ public class Video {
     private ImageView volumeImage;
     private ImageView volumeOffImage;
     
-    /* Variable to maintain play state after scan */
+    /** Variable to maintain play state after scan */
     private boolean wasPlaying = false;
     
-    /* Variable to maintain whether the volume slider is visible or not */
+    /** Variable to maintain whether the volume slider is visible or not */
     private boolean volumeOpen = false;
+    
     /** Fullscreen stage. */
     private Stage fsStage;
     
