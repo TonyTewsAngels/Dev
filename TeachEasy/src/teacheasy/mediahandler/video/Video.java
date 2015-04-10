@@ -118,6 +118,7 @@ public class Video {
         /* Set the group reference */
         this.group = nGroup;
         
+        /* Load icon images */
         playImage = new ImageView(new Image(getClass().getResourceAsStream("Play_ST_CONTENT_RECT_Transparent_L-01.png")));
         pauseImage = new ImageView(new Image(getClass().getResourceAsStream("Pause_ST_CONTENT_RECT_Transparent_L-01.png")));        
         stopImage = new ImageView(new Image(getClass().getResourceAsStream("Stop_ST_CONTENT_RECT_Transparent_L-01.png")));
@@ -147,14 +148,14 @@ public class Video {
         fullscreenButton.setOnAction(new ButtonEventHandler());
         fullscreenButton.setId("fullscreen");
         
-        /* Volume Control */
+        /* Volume Button */
         volumeButton = new Button("");
         volumeButton.getStylesheets().add(this.getClass().getResource("MediaHandlerStyle.css").toExternalForm());
         volumeButton.setGraphic(volumeImage);
         volumeButton.setOnAction(new ButtonEventHandler());
         volumeButton.setId("volume");
         
-        
+        /* Volume Control */
         volumeSlider = new Slider();
         volumeSlider.getStylesheets().add(this.getClass().getResource("MediaHandlerStyle.css").toExternalForm());
         volumeSlider.setId("slider");
@@ -177,7 +178,7 @@ public class Video {
         scanBarListener = new ScanListener();
         videoListener = new VideoListener();
         
-        /* Setup Scan Control */
+        /* Set up Scan Control */
         scanBar.setMin(0);
         scanBar.setMax(100);
         scanBar.setValue(0);
@@ -189,11 +190,13 @@ public class Video {
         scanBar.setOnMousePressed(new ScanMouseHandler());
         scanBar.setOnMouseReleased(new ScanMouseHandler());
         
+        /* Set up the time stamp */
         timeStamp = new Label("00:00:00");
         timeStamp.setTextFill(Color.LIGHTGRAY);
         timeStamp.setMinWidth(50);
         timeStamp.setMinHeight(28);
         
+        /* Set up the duration stamp */
         durationStamp = new Label("00:00:00");
         durationStamp.setTextFill(Color.LIGHTGRAY);
         durationStamp.setMinWidth(50);
@@ -380,33 +383,39 @@ public class Video {
         scanBar.setValue(percentage);
     }
     
+    /** Update a label to show a time based on a duration */
     private void updateTimeStamp(Label stamp, Duration duration) {
         int hours = 0;
         int minutes = 0;
         int seconds = 0;
         
+        /* Get the number of seconds */
         seconds = (int)Math.round(duration.toSeconds());
         
+        /* Convert up to minutes */
         while(seconds > 59) {
             seconds -= 60;
             minutes++;
         }
         
+        /* Convert up to hours */
         while(minutes > 59) {
             minutes -= 60;
             hours++;
         }
         
-        String secStr, minStr, hrStr;
-        secStr = zeroPad(seconds);
-        minStr = zeroPad(minutes);
-        hrStr = zeroPad(hours);
+        /* Convert integers to strings*/
+        String secStr = zeroPad(seconds);
+        String minStr = zeroPad(minutes);
+        String hrStr = zeroPad(hours);
         
+        /* Set the text */
         stamp.setText(hrStr + ":" + minStr + ":" + secStr);
     }
     
+    /** Utility function to add a leading zero to numbers under 10 */
     private String zeroPad(int n) {
-        if(n < 10 && n > -10) {
+        if(n < 10) {
             return new String("0" + n);
         } else {
             return new String("" + n);
@@ -469,13 +478,19 @@ public class Video {
         }
     }
     
+    /** Utility function to check if an online video exists */
     private static boolean mediaExists(String url){
         try {
+          /* Do not follow redirects */
           HttpURLConnection.setFollowRedirects(false);
           
+          /* Open a connection to the media */
           HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
+          
+          /* Use a head only request to just retrieve metadata */
           con.setRequestMethod("HEAD");
           
+          /* If a response code of 200 (okay) is received, the media is available */
           return (con.getResponseCode() == HttpURLConnection.HTTP_OK);
         }
         catch (Exception e) {
