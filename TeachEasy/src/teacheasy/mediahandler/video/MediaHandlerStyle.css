@@ -33,7 +33,7 @@
 }
 
 #slider .track{
-	-fx-background-color: rgba(50, 50, 50, 0.4);
+	-fx-background-color: rgba(75, 75, 75, 0.55);
 }
 
 #slider .thumb{

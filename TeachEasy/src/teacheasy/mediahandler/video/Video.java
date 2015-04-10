@@ -81,7 +81,9 @@ public class Video {
     private ImageView pauseImage;
     private ImageView stopImage;
     private ImageView fullscreenImage;
+    private ImageView fullscreenOffImage;
     private ImageView volumeImage;
+    private ImageView volumeOffImage;
     
     /* Variable to maintain play state after scan */
     private boolean wasPlaying = false;
@@ -120,7 +122,9 @@ public class Video {
         pauseImage = new ImageView(new Image(getClass().getResourceAsStream("Pause_ST_CONTENT_RECT_Transparent_L-01.png")));        
         stopImage = new ImageView(new Image(getClass().getResourceAsStream("Stop_ST_CONTENT_RECT_Transparent_L-01.png")));
         fullscreenImage = new ImageView(new Image(getClass().getResourceAsStream("FullscreenON_ST_CONTENT_RECT_Transparent_L-01.png")));
+        fullscreenOffImage = new ImageView(new Image(getClass().getResourceAsStream("FullscreenOFF_ST_CONTENT_RECT_Transparent_L-01.png")));
         volumeImage = new ImageView(new Image(getClass().getResourceAsStream("VolumeON_ST_CONTENT_RECT_Transparent_L-01.png")));
+        volumeOffImage = new ImageView(new Image(getClass().getResourceAsStream("VolumeOFF_ST_CONTENT_RECT_Transparent_L-01.png")));
 
         /* Play/Pause Control */
         playButton = new Button("");
@@ -427,6 +431,9 @@ public class Video {
             
             /* Set the fullscreen flag false */
             fsInfo.setFullscreen(false);
+            
+            /* Set the fullscreen button graphic */
+            fullscreenButton.setGraphic(fullscreenImage);
         } else {
             /* Remove the video from the main screen */
             group.getChildren().remove(videoFrame);
@@ -456,6 +463,9 @@ public class Video {
             
             /* Set the fullscreen flag true */
             fsInfo.setFullscreen(true);
+            
+            /* Set the fullscreen button graphic */
+            fullscreenButton.setGraphic(fullscreenOffImage);
         }
     }
     
@@ -621,6 +631,11 @@ public class Video {
         public void changed(ObservableValue<? extends Number> val,
                             Number oldVal, Number newVal) {
             mediaPlayer.setVolume(newVal.doubleValue());
+            if(newVal.doubleValue() < 0.01) {
+                volumeButton.setGraphic(volumeOffImage);
+            } else if(oldVal.doubleValue() < 0.01 && newVal.doubleValue() >= 0.01) {
+                volumeButton.setGraphic(volumeImage);
+            }
         }
     }
     
