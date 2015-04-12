@@ -58,8 +58,8 @@ public class AudioHandler {
 	}
 	
 	 /** Add an audio to a group */
-    public void createAudio(double x, double y, double width, File sourceFile, boolean autoPlay, boolean visibleControls, boolean playButtonOnly) {
-        audios.add(new Audio(group, x, y, width, sourceFile, autoPlay, visibleControls, playButtonOnly));
+    public void createAudio(double x, double y, double width, String sourceFile, boolean autoPlay, boolean loop, boolean visibleControls, boolean playButtonOnly) {
+        audios.add(new Audio(group, x, y, width, sourceFile, autoPlay, loop, visibleControls, playButtonOnly));
     }
     
     /** Play an audio */

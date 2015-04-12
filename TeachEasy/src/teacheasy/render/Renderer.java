@@ -181,7 +181,8 @@ public class Renderer {
         audioHandler.createAudio((double)(bounds.getMaxX() * audio.getXStart()),
                                  (double)(bounds.getMaxY() * audio.getYStart()),
                                  300,
-                                 new File(audio.getSourcefile()),
+                                 audio.getSourcefile(),
+                                 false,
                                  false,
                                  audio.isViewProgress(),
                                  false);
