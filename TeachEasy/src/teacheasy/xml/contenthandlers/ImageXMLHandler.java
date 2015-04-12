@@ -55,5 +55,11 @@ public class ImageXMLHandler extends DefaultHandler{
         String sourceFileStr = attrs.getValue("sourcefile");
         String xStartStr = attrs.getValue("xstart");
         String yStartStr = attrs.getValue("ystart");
+        String scaleStr = attrs.getValue("scale");
+        String xEndStr = attrs.getValue("xend");
+        String yEndStr = attrs.getValue("yend");
+        String rotationStr = attrs.getValue("scale");
+        String startTimeStr = attrs.getValue("starttime");
+        String durationStr = attrs.getValue("duration");
     }
 }
