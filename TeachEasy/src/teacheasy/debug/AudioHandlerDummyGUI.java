@@ -32,11 +32,13 @@ public class AudioHandlerDummyGUI extends Application {
         audioHandler = new AudioHandler(group);
         
         //File sourceFile = new File("E:/Users/Alex/Music/Daniel Avery - Drone Logic/03 Drone Logic.mp3");
-        String sourceFile = new String("E:/Users/Alex/Music/Daniel Avery - Drone Logic/03 Drone Logic.mp3");
+        String sourceFile = new String("H:/3RD YEAR/SWEng/aactest.AAC");
         
     
         //audioHandler.createAudio(50, 50, 200, sourceFile, false, true, true, false);
-        audioHandler.createAudio(50, 50, 400, "http://www.tonycuffe.com/mp3/tail%20toddle.mp3", false, true, true, false);
+        //audioHandler.createAudio(50, 50, 200, "http://www.tonycuffe.com/mp3/tail%20toddle.mp3", false, true, true, false);
+        
+        audioHandler.createAudio(50, 50, 200, sourceFile, false, true, true, false);
         
         /* Show the window */
         primaryStage.show(); 

@@ -50,7 +50,10 @@ public class Audio {
 	private Group group;
 	
 	/** Media player object to control playback. */
-	MediaPlayer player;
+	private MediaPlayer player;
+	
+	/** MediaView declaration to add the media to the necessary group */
+	private MediaView audioView;
 	
 	/* UI Control Objects */
 	private Button playPauseButton;
@@ -88,7 +91,7 @@ public class Audio {
 	/** Duration variable used to store the duration of the audio track. */
 	private Duration duration;	
 	/** Boolean variable used to indicate whether the audio was paused using the "Pause" button. */
-	private boolean pausedByButton;
+	private boolean pausedByButton = true;
 	/** Integer variable used to store the duration rounded to the nearest second. */
 	private int roundedDuration;
 	/** Integer variable used to store the duration of the audio track in hours. */
@@ -97,6 +100,10 @@ public class Audio {
 	private int durationMins;
 	/** Integer variable used to store the duration of the audio track in seconds. */
 	private int durationSecs;
+	/** Boolean to be used to check if media exists */
+	private boolean mediaExists;
+	
+	
 	private int durationSeconds;
 	private int roundedCurrentTime;
 	private int currentTimeMins;
@@ -137,6 +144,11 @@ public class Audio {
 		/* Set the group reference */
 		this.group = nGroup;
 
+		/* If the width is less than our defined minimum, set width to our minimum */
+		if (width < 130){
+			width = 130;
+		}
+		
         /* Load icon images */
         playImage = new ImageView(new Image(getClass().getResourceAsStream("Play_ST_CONTENT_RECT_Transparent_L-01.png")));
         pauseImage = new ImageView(new Image(getClass().getResourceAsStream("Pause_ST_CONTENT_RECT_Transparent_L-01.png")));        
@@ -201,7 +213,7 @@ public class Audio {
 		muteButton = new Button("");
 		muteButton.setOnAction(new muteHandler());
 		muteButton.getStylesheets().add(this.getClass().getResource("MediaHandlerStyle.css").toExternalForm());
-		muteButton.setGraphic(volumeOffImage);
+		muteButton.setGraphic(volumeImage);
 		muteButton.setId("mute");
 		
 		
@@ -257,15 +269,15 @@ public class Audio {
 		
 		/* Labels for tracking elapsed and remaining time */
 		elapsedLabel = new Label("00:00");
-		elapsedLabel.setTextFill(Color.LIGHTGRAY);
+		elapsedLabel.setTextFill(Color.BLACK);
 		remainingLabel = new Label("00:00");
-		remainingLabel.setTextFill(Color.LIGHTGRAY);
+		remainingLabel.setTextFill(Color.BLACK);
 
 
 		
 		/* Create a temporary media object */
 		//Media audio = new Media(sourceFile.toURI().toString());
-		Media audio;
+		final Media audio;
 		
 		/* Create a temporary file object */
 		File file;
@@ -284,11 +296,12 @@ public class Audio {
                 Label label = new Label("Media Unavailable");
                 label.relocate(x, y);
                 group.getChildren().add(label);
-                
+                mediaExists = false;
                 /* Return to halt the creation of this video */
                 return;
             }
             
+            mediaExists = true;
             /* Load the media from URL */
             audio = new Media(sourceFile);
             
@@ -302,16 +315,20 @@ public class Audio {
                 Label label = new Label("File could not be found");
                 label.relocate(x, y);
                 group.getChildren().add(label);
+                mediaExists = false;
                 return;
             } else if(!file.getAbsolutePath().endsWith(".mp3") &&
-                      !file.getAbsolutePath().endsWith(".aac") &&
+                      !file.getAbsolutePath().endsWith(".AAC") &&
                       !file.getAbsolutePath().endsWith(".wav")) {
-                /* Return to halt the creation of this audio */
+            	mediaExists = false;
+            	/* Return to halt the creation of this audio */
                 return;
             }
 
             /* Load the file as a media object */
+            //audio = new Media(file.toURI().toString());
             audio = new Media(file.toURI().toString());
+            mediaExists = true;
         }
 		
 
@@ -331,7 +348,7 @@ public class Audio {
         }
 
 		/* Create the MediaView using the "player" MediaPlayer */
-		MediaView audioView = new MediaView(player);
+		audioView = new MediaView(player);
 
 		/* Set the play/pause button text based on autoPlay value */
 		if (player.isAutoPlay() == true) {
@@ -356,6 +373,7 @@ public class Audio {
 				double timeLabelSize = (timeLabelsHBox.getWidth()/2);
 				elapsedLabelVBox.setMinWidth(timeLabelSize);
 				remainingLabelVBox.setMinWidth(timeLabelSize);
+				System.out.println(player.getStatus());
 				
 				elapsedLabel.setText("00:00");
 				remainingLabel.setText(String.format("-%02d:%02d",durationMins, durationSecs));
@@ -429,26 +447,53 @@ public class Audio {
     public void dispose() {
     	player.dispose();
     }
+    
+    /** Programmatically resizes this video. */
+    public void resize(float nWidth) {
+    	if(mediaExists != false) {
+    		audioView.setFitWidth(nWidth);
+    	}
+    }
+    /** Programmatically relocates this video. */
+    public void relocate(float x, float y) {
+	    if(audioView != null) {
+	    	audioView.relocate(x, y);
+	    }
+    }
+    /**
+    * Programmatically sets this videos visibility
+    */
+    public void setVisible(boolean visible) {
+	    if(audioView != null) {
+	    	audioView.setVisible(visible);
+	    }
+    }
 	
 	public class progressUpdater implements ChangeListener<Duration> {		
 		@Override
         public void changed(ObservableValue<? extends Duration> arg0,
                             Duration arg1, Duration arg2) {			
-			double currentTime = player.getCurrentTime().toSeconds();
-			int elapsedTimeSecs = (int) Math.round(currentTime);
-			int elapsedTimeMins = elapsedTimeSecs / 60;
-			int remainingSeconds = ((int) duration.toSeconds()- elapsedTimeSecs);
-			int remainingMins = remainingSeconds / 60;
-					
+			double currentTime = player.getCurrentTime().toSeconds();				
 			double perCent = (currentTime / duration.toSeconds());
 			
 			if (!seekListener.isEnabled()) {
 				progressSlider.setValue(perCent * 100.0);
-				
-				elapsedLabel.setText(String.format("%02d:%02d",elapsedTimeMins, elapsedTimeSecs - elapsedTimeMins*60));
-				remainingLabel.setText(String.format("-%02d:%02d",remainingMins, remainingSeconds - remainingMins*60));
+				updateLabels();
 			}
+			updateLabels();
         }		
+	}
+	
+	public void updateLabels() {
+		double currentTime = player.getCurrentTime().toSeconds();
+		int elapsedTimeSecs = (int) Math.round(currentTime);
+		int elapsedTimeMins = elapsedTimeSecs / 60;
+		int remainingSeconds = ((int) duration.toSeconds()- elapsedTimeSecs);
+		int remainingMins = remainingSeconds / 60;
+
+		elapsedLabel.setText(String.format("%02d:%02d",elapsedTimeMins, elapsedTimeSecs - elapsedTimeMins*60));
+		remainingLabel.setText(String.format("-%02d:%02d",remainingMins, remainingSeconds - remainingMins*60));
+		
 	}
 		
 	public class AudioSeekHandler implements EventHandler<MouseEvent> {
@@ -458,11 +503,13 @@ public class Audio {
 				/* Enable the progress bar to be used for scanning */				
 				player.pause();
 				seekListener.setEnabled(true);
+				updateLabels();
 			}else if (e.getEventType().equals(MouseEvent.MOUSE_RELEASED)) {
-				/* Disable the use of progress bar for scanning*/
+				/* Disable the use of progress bar for scanning */
 				if (pausedByButton == false) {
-					player.play();
+					player.play();					
 				}
+				updateLabels();
 				seekListener.setEnabled(false);		
 			}
 		}
@@ -485,15 +532,16 @@ public class Audio {
 	public class muteHandler implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
-			if (muteButton.getGraphic().equals(volumeOffImage)) {				
+			if (muteButton.getGraphic().equals(volumeImage)) {				
 				oldVolume = volumeSlider.getValue();				
-				volumeSlider.setValue(0);
 				player.setMute(true);
-				muteButton.setGraphic(volumeImage);
+				volumeSlider.setDisable(true);
+				muteButton.setGraphic(volumeOffImage);
 			} else {
 				volumeSlider.setValue(oldVolume);
 				player.setMute(false);
-				muteButton.setGraphic(volumeOffImage);
+				muteButton.setGraphic(volumeImage);
+				volumeSlider.setDisable(false);
 			}
 		}
 	}
@@ -542,7 +590,7 @@ public class Audio {
                 Number old_val, Number new_val) {
 			if (enable) {
 				audioSeek(new_val.doubleValue());
-				
+				updateLabels();				
 			}
 		}
 	}
