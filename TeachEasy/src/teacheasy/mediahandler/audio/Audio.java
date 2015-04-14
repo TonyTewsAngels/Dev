@@ -9,11 +9,6 @@ package teacheasy.mediahandler.audio;
 import java.io.File;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -34,7 +29,6 @@ import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.scene.*;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
@@ -69,7 +63,6 @@ public class Audio {
     /* ImageViews for various GUI Elements */
     private ImageView playImage;
     private ImageView pauseImage;
-    private ImageView stopImage;
     private ImageView volumeImage;
     private ImageView volumeOffImage;
     private ImageView controlsImage;
@@ -92,26 +85,10 @@ public class Audio {
 	private Duration duration;	
 	/** Boolean variable used to indicate whether the audio was paused using the "Pause" button. */
 	private boolean pausedByButton = true;
-	/** Integer variable used to store the duration rounded to the nearest second. */
-	private int roundedDuration;
-	/** Integer variable used to store the duration of the audio track in hours. */
-	private int durationHours;
-	/** Integer variable used to store the duration of the audio track in minutes. */
-	private int durationMins;
-	/** Integer variable used to store the duration of the audio track in seconds. */
-	private int durationSecs;
 	/** Boolean to be used to check if media exists */
 	private boolean mediaExists;
-	
-	
-	private int durationSeconds;
-	private int roundedCurrentTime;
-	private int currentTimeMins;
-	private int currentTimeSecs;
 	/** Integer variable used to define the width of buttons used for the audio player. */
 	private int buttonWidth = 30;
-	/** Integer variable used to define the height of buttons used for the audio player. */
-	private int buttonHeight = 30;
 
 	/**
      * Constructs the audio track.
@@ -126,7 +103,7 @@ public class Audio {
      *            
      * @param width The width of the audio player in pixels.
      * 
-     * @param sourcefile Absolute path of the audio track as a string. Can be a local
+     * @param sourceFile Absolute path of the audio track as a string. Can be a local
      *                     file path or a web address beginning with 'http'
      * 
      * @param autoPlay If true the video plays immediately
@@ -152,7 +129,6 @@ public class Audio {
         /* Load icon images */
         playImage = new ImageView(new Image(getClass().getResourceAsStream("Play_ST_CONTENT_RECT_Transparent_L-01.png")));
         pauseImage = new ImageView(new Image(getClass().getResourceAsStream("Pause_ST_CONTENT_RECT_Transparent_L-01.png")));        
-        stopImage = new ImageView(new Image(getClass().getResourceAsStream("Stop_ST_CONTENT_RECT_Transparent_L-01.png")));
         volumeImage = new ImageView(new Image(getClass().getResourceAsStream("VolumeON_ST_CONTENT_RECT_Transparent_L-01.png")));
         volumeOffImage = new ImageView(new Image(getClass().getResourceAsStream("VolumeOFF_ST_CONTENT_RECT_Transparent_L-01.png")));
         controlsImage = new ImageView(new Image(getClass().getResourceAsStream("Cog_ST_CONTENT_RECT_Transparent_L-01.png")));
@@ -201,7 +177,7 @@ public class Audio {
 		mediaControlsVBox.getChildren().addAll(playSeekHbox, volumeMuteHBox);
 		
 		
-		/* playPause button with default text */
+		/* playPause button with default icon */
 		playPauseButton = new Button ("");
 		playPauseButton.setOnAction(new playHandler());
 		playPauseButton.getStylesheets().add(this.getClass().getResource("MediaHandlerStyle.css").toExternalForm());
@@ -209,7 +185,7 @@ public class Audio {
 		playPauseButton.setId("play");
 		
 		
-		/* Mute button with default text */
+		/* Mute button with default icon */
 		muteButton = new Button("");
 		muteButton.setOnAction(new muteHandler());
 		muteButton.getStylesheets().add(this.getClass().getResource("MediaHandlerStyle.css").toExternalForm());
@@ -217,7 +193,7 @@ public class Audio {
 		muteButton.setId("mute");
 		
 		
-		/* Controls button with default text */
+		/* Controls button with default icon */
 		controlsButton = new Button("");
 		controlsButton.setOnAction(new controlsHandler());		
 		controlsButton.getStylesheets().add(this.getClass().getResource("MediaHandlerStyle.css").toExternalForm());
@@ -242,13 +218,13 @@ public class Audio {
 		volumeSlider.setSnapToTicks(true);
 		volumeSlider.setOrientation(Orientation.HORIZONTAL);		
 		volumeSlider.valueProperty().addListener(volumeListener);
-		/* Set the size and location of the volume slider */
+		/* Set the size of the volume slider */
 		volumeSlider.setPrefSize(width - (2 * buttonWidth), 5);
 		
 		
 		/* Create new listener for the progress bar/slider */ 
 		seekListener = new SeekListener();
-		/* Create the slider for the progress bar */
+		/* Create the slider for the progress bar using our .css styling */
 		progressSlider = new Slider();
 		progressSlider.getStylesheets().add(this.getClass().getResource("MediaHandlerStyle.css").toExternalForm());
 		progressSlider.setId("slider");
@@ -263,7 +239,7 @@ public class Audio {
 		progressSlider.valueProperty().addListener(seekListener);
 		progressSlider.setOnMousePressed(new AudioSeekHandler());
 		progressSlider.setOnMouseReleased(new AudioSeekHandler());	
-		/* Set the size and location of the progress slider */
+		/* Set the size of the progress slider */
 		progressSlider.setPrefSize(width-buttonWidth+5, 5);
 		
 		
@@ -275,8 +251,7 @@ public class Audio {
 
 
 		
-		/* Create a temporary media object */
-		//Media audio = new Media(sourceFile.toURI().toString());
+		/* Create a media object */
 		final Media audio;
 		
 		/* Create a temporary file object */
@@ -318,15 +293,15 @@ public class Audio {
                 mediaExists = false;
                 return;
             } else if(!file.getAbsolutePath().endsWith(".mp3") &&
-                      !file.getAbsolutePath().endsWith(".AAC") &&
                       !file.getAbsolutePath().endsWith(".wav")) {
+            	Label label = new Label("Audio file is not an acceptable format");
+                label.relocate(x, y);
+                group.getChildren().add(label);
             	mediaExists = false;
-            	/* Return to halt the creation of this audio */
                 return;
             }
 
             /* Load the file as a media object */
-            //audio = new Media(file.toURI().toString());
             audio = new Media(file.toURI().toString());
             mediaExists = true;
         }
@@ -365,27 +340,22 @@ public class Audio {
 			public void run() {
 				duration = audio.getDuration();
 				durationMillis = duration.toMillis();
-				roundedDuration = (int)Math.round(duration.toSeconds());
-				durationMins = roundedDuration /60;
-				durationSecs = roundedDuration - (60*durationMins);
-				
 				/* Set the sizes of the label VBoxes once the other boxes are initialised */
 				double timeLabelSize = (timeLabelsHBox.getWidth()/2);
 				elapsedLabelVBox.setMinWidth(timeLabelSize);
 				remainingLabelVBox.setMinWidth(timeLabelSize);
-				System.out.println(player.getStatus());
-				
-				elapsedLabel.setText("00:00");
-				remainingLabel.setText(String.format("-%02d:%02d",durationMins, durationSecs));
+				/* Update the labels with the relevant info */
+				updateLabels();	
 			}
 		});
 
-
+		/* Add a listener to the time property of the player for scanning and scrolling */
 		player.currentTimeProperty().addListener(new progressUpdater());
 
+		/* Add the mediaControlsVBox to the group */
 		group.getChildren().addAll(mediaControlsVBox);
 		
-		/* Add relevant parts to the group depending on bool switches in call */		
+		/* Add relevant parts to the group depending on boolean switches in call */		
 		if (visibleControls == true && playButtonOnly == false){	//Add all visible controls				
 			elapsedLabelVBox.getChildren().addAll(elapsedLabel);
 			remainingLabelVBox.getChildren().addAll(remainingLabel);	
@@ -469,6 +439,11 @@ public class Audio {
 	    }
     }
 	
+    /** 
+     * ChangeListener that listens to the current time value property of the mediaplayer.
+     * 	It updates the slider along the track as the audio plays and calls for the labels
+     * 	to be updated. 
+     */
 	public class progressUpdater implements ChangeListener<Duration> {		
 		@Override
         public void changed(ObservableValue<? extends Duration> arg0,
@@ -476,26 +451,41 @@ public class Audio {
 			double currentTime = player.getCurrentTime().toSeconds();				
 			double perCent = (currentTime / duration.toSeconds());
 			
+			/* If the user is not manually scanning, update the slider throughout the track */
 			if (!seekListener.isEnabled()) {
 				progressSlider.setValue(perCent * 100.0);
-				updateLabels();
 			}
+			/* Always update the label values */
 			updateLabels();
         }		
 	}
 	
+	/**
+	 * Method to update the labels dependent on current progress through the media and the total length
+	 * of the media.
+	 */
 	public void updateLabels() {
 		double currentTime = player.getCurrentTime().toSeconds();
 		int elapsedTimeSecs = (int) Math.round(currentTime);
 		int elapsedTimeMins = elapsedTimeSecs / 60;
-		int remainingSeconds = ((int) duration.toSeconds()- elapsedTimeSecs);
+		int remainingSeconds = ((int) Math.round(duration.toSeconds()) - elapsedTimeSecs);
 		int remainingMins = remainingSeconds / 60;
 
-		elapsedLabel.setText(String.format("%02d:%02d",elapsedTimeMins, elapsedTimeSecs - elapsedTimeMins*60));
-		remainingLabel.setText(String.format("-%02d:%02d",remainingMins, remainingSeconds - remainingMins*60));
-		
+		/* If the audio is longer than 99 minutes, increase to 3 digits to accomodate */
+		if (duration.toMinutes() > 99){
+			elapsedLabel.setText(String.format("%03d:%02d",elapsedTimeMins, elapsedTimeSecs - elapsedTimeMins*60));
+			remainingLabel.setText(String.format("-%03d:%02d",remainingMins, remainingSeconds - remainingMins*60));
+		/* Otherwise, sod it. Use 2. */
+		} else {
+			elapsedLabel.setText(String.format("%02d:%02d",elapsedTimeMins, elapsedTimeSecs - elapsedTimeMins*60));
+			remainingLabel.setText(String.format("-%02d:%02d",remainingMins, remainingSeconds - remainingMins*60));
+		}
 	}
 		
+	/**
+	 * EventHandler that listens to mouse inputs on the slider. Listens for both mouse 
+	 * presses and releases on the slider thumb.
+	 */
 	public class AudioSeekHandler implements EventHandler<MouseEvent> {
 		@Override
 		public void handle(MouseEvent e) {
@@ -514,6 +504,10 @@ public class Audio {
 			}
 		}
 	}
+	
+	/**
+	 * EventHandler for presses of the play/pause button.
+	 */
 	public class playHandler implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
@@ -528,7 +522,10 @@ public class Audio {
 			}
 		}
 	}
-
+	
+	/**
+	 * EventHandler for presses of the mute/unmute button.
+	 */
 	public class muteHandler implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
@@ -546,6 +543,10 @@ public class Audio {
 		}
 	}
 	
+	/**
+	 * EventHandler for presses of the controls button. This will remove visible controls when 
+	 * pressed, or re-add invisible controls when pressed.
+	 */
 	public class controlsHandler implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
@@ -566,6 +567,9 @@ public class Audio {
 		}
 	}
 	
+	/**
+	 * ChangeListener to handle the user moving the volume slider.
+	 */
 	public class VolumeListener implements ChangeListener<Number>{
 		@Override 
 		public void changed(ObservableValue<? extends Number> ov,
@@ -574,6 +578,10 @@ public class Audio {
 		}
 	}
 	
+	/**
+	 * ChangeListener to handle the user moving the progress bar manually
+	 * (causing the audiohandler to seek through the media).
+	 */
 	public class SeekListener implements ChangeListener<Number>{
 		private boolean enable;
 		
@@ -595,6 +603,12 @@ public class Audio {
 		}
 	}
 	
+	/**
+	 * Method to actually change the mediaplayers position through the media when the user
+	 * seeks through the media.
+	 * 
+	 * @param percentSeek the value to which the user requests the audio seek to.
+	 */
 	public void audioSeek(double percentSeek) {
 		Double currentValuePerCent = (percentSeek / 100);
 		player.seek(Duration.millis(durationMillis * currentValuePerCent));
