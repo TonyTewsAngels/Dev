@@ -18,7 +18,7 @@ import javafx.scene.*;
  * 
  * @author Alex Cash 
  * @author Calum Armstrong
- * @version 1.5 4 Mar 2015
+ * @version 1.6 14 April 2015
  */
 
 public class AudioHandler {
@@ -28,7 +28,12 @@ public class AudioHandler {
 	/* Array List of the Audios on screen */
 	private List<Audio> audios;
 	
-	/** Constructor Method */
+	/** 
+	 * Constructs the audio handler.
+	 * 
+	 * @param nGroup The group this handler should add audio tracks to.
+	 * 
+	 */
 	public AudioHandler(Group nGroup) {
 		/* Set the group reference */
 		this.group = nGroup;
@@ -37,54 +42,153 @@ public class AudioHandler {
         this.audios = new ArrayList<Audio>();
 	}
 	
-	 /** Add an audio to a group */
+	 /** 
+	  * Adds an audio track to the group associated with the handler
+	  * 
+	  *  @param x The x-coordinate for the top left of the audio player relative to 
+	  *  			the groups origin.
+	  *  
+	  *  @param y The y-coordinate for the top left of the audio player relative to 
+	  *  			the groups origin.
+	  *  
+	  *  @param width The width of the audio player.
+	  *  
+	  *  @param sourceFile Absolute path to the audio file as a string. Can either be
+	  *  					a local file path or a web address.
+	  *  
+	  *  @param autoPlay If true, the audio player will start playing the audio track
+	  *  					as soon as it is create.
+	  *  
+	  *  @param loop If true, the audio track will loop back to the beginning once it
+	  *  				has reached the end of the file. This will occur indefinitely.
+	  *  
+	  *  @param visibleControls If true, the audio player will be displayed and can be
+	  *  							interacted with using buttons. If false, no buttons
+	  *  							will appear and autoPlay will be set to true.
+	  *  
+	  *  @param playButtonOnly If true, the only button that will appear will be a play
+	  *  						and pause button. If false, all controls will be visible.
+	  *  
+	  */
     public void createAudio(double x, double y, double width, String sourceFile, boolean autoPlay, boolean loop, boolean visibleControls, boolean playButtonOnly) {
         audios.add(new Audio(group, x, y, width, sourceFile, autoPlay, loop, visibleControls, playButtonOnly));
     }
     
-    /** Play an audio */
+    /** 
+     * Will cause the selected audio track to play.
+     * 
+     * @param audioId The ID of the audio track to be played.
+     * 
+     */
     public void playAudio(int audioId) {
-        audios.get(audioId).play();
+    	if(audioId < audios.size() && audioId >= 0) {
+    		audios.get(audioId).play();
+    	}
     }
     
-    /** Pause an audio */
+    /** 
+     * Will cause the selected audio track to pause.
+     * 
+     * @param audioId The ID of the audio track to be paused.
+     * 
+     */
     public void pauseAudio(int audioId) {
-    	audios.get(audioId).pause();
+    	if(audioId < audios.size() && audioId >= 0) {
+    		audios.get(audioId).pause();
+    	}
     }    
     
-    /** Stop an audio */
+    /** 
+     * Will cause the selected audio track to stop.
+     * 
+     * @param audioId The ID of the audio track to be stopped.
+     * 
+     */
     public void stopAudio(int audioId) {
-    	audios.get(audioId).stop();
+    	if(audioId < audios.size() && audioId >= 0) {
+    		audios.get(audioId).stop();
+    	}    	
     }
     
-    /** Dispose an audio */
+    /** 
+     * Will cause the selected audio track to be disposed.
+     * 
+     * @param audioId The ID of the audio track to be disposed.
+     * 
+     */
     public void disposeAudio(int audioId) {
-    	audios.get(audioId).dispose();
+    	if(audioId < audios.size() && audioId >= 0) {
+    		audios.get(audioId).dispose();
+    	}    	
     }
     
-    /** Resize an audio */
+    /** 
+     * Will cause the selected audio player to be resized.
+     * 
+     * @param audioId The ID of the audio track associated with the audio
+     * 					player to be resized.
+     * 
+     * @param nWidth The new width for the audio player
+     * 
+     */
     public void resize(int audioId, float nWidth) {
-    	audios.get(audioId).resize(nWidth);
+    	if(audioId < audios.size() && audioId >= 0) {
+    		audios.get(audioId).resize(nWidth);
+    	}    	
     }
     
-    /** Relocate an audio */
+    /** 
+     * Will cause the selected audio player to be relocated.
+     * 
+     * @param audioId The ID of the audio track associated with the audio
+     * 					player to be relocated.
+     * 
+     * @param x The new x-coordinate for the audio player
+     * 
+     * @param y The new y-coordinate for the audio player
+     * 
+     */
     public void relocate(int audioId, float x, float y) {
-    	audios.get(audioId).relocate(x, y);
+    	if(audioId < audios.size() && audioId >= 0) {
+    		audios.get(audioId).relocate(x, y);
+    	}    	
     }
     
-    /**Programmatically sets this videos visibility*/
+    /** 
+     * Controls the visibility of a selected audio player.
+     * 
+     * @param audioId The ID of the audio track associated with the
+     * 					audio player to have its visibility changed.
+     * 
+     * @param visible The new visibility setting, as a boolean input.
+     * 
+     */
     public void setVisible(int audioId, boolean visible) {
-    	audios.get(audioId).setVisible(visible);
+    	if(audioId < audios.size() && audioId >= 0) {
+    		audios.get(audioId).setVisible(visible);
+    	}    	
     }
     
-    /** Scan an audio */
+    /** 
+     * Will cause the selected audio track to seek through the media.
+     * 
+     * @param audioId The ID of the audio track to be seeked through.
+     * 
+     * @param percent The new location through the audio track, as a percentage.
+     * 
+     */
     public void seekAudio(int audioId, double percent) {
-    	audios.get(audioId).audioSeek(percent);
+    	if(audioId < audios.size() && audioId >= 0) {
+    		audios.get(audioId).audioSeek(percent);
+    	}    	
     }
     
-    /** Clear all the audios currently being handled */
+    /** 
+     * Will clear all audio tracks being handled.
+     * 
+     */
     public void clearAudios() {
-        /* Remove all the media views (videos) from the group */
+        /* Remove all the media views (audios) from the group */
         for(int i = 0; i < audios.size(); i++) {
             audios.get(i).dispose();
             group.getChildren().remove(audios.get(i));
