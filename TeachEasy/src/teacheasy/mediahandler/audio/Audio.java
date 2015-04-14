@@ -430,9 +430,7 @@ public class Audio {
 	    	audioView.relocate(x, y);
 	    }
     }
-    /**
-    * Programmatically sets this videos visibility
-    */
+    /** Programmatically sets this videos visibility. */
     public void setVisible(boolean visible) {
 	    if(audioView != null) {
 	    	audioView.setVisible(visible);

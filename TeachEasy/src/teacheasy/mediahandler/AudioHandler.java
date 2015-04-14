@@ -6,32 +6,12 @@
  */
 package teacheasy.mediahandler;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import teacheasy.mediahandler.audio.Audio;
 
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Orientation;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaPlayer.Status;
-import javafx.scene.media.MediaView;
 import javafx.scene.*;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 
 /**
  * This class is the handler for audio
@@ -70,11 +50,31 @@ public class AudioHandler {
     /** Pause an audio */
     public void pauseAudio(int audioId) {
     	audios.get(audioId).pause();
-    }
+    }    
     
     /** Stop an audio */
     public void stopAudio(int audioId) {
     	audios.get(audioId).stop();
+    }
+    
+    /** Dispose an audio */
+    public void disposeAudio(int audioId) {
+    	audios.get(audioId).dispose();
+    }
+    
+    /** Resize an audio */
+    public void resize(int audioId, float nWidth) {
+    	audios.get(audioId).resize(nWidth);
+    }
+    
+    /** Relocate an audio */
+    public void relocate(int audioId, float x, float y) {
+    	audios.get(audioId).relocate(x, y);
+    }
+    
+    /**Programmatically sets this videos visibility*/
+    public void setVisible(int audioId, boolean visible) {
+    	audios.get(audioId).setVisible(visible);
     }
     
     /** Scan an audio */
