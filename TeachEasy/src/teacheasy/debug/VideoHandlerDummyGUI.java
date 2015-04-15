@@ -37,7 +37,7 @@ public class VideoHandlerDummyGUI extends Application {
         videoHandler = new VideoHandler(group);
         
         /* Use the video handler to create a video */
-        videoHandler.createVideo(5, 5, 500, "M:/Year 3/SWENG/Videos/avengers-featurehp.mp4", false, false);
+        videoHandler.createVideo(5, 5, 500, "E:/Users/Alex/Desktop/Technical/BigBuckBunny_320x180.mp4", false, false);
 
         /* Show the window */
         primaryStage.show(); 
@@ -59,7 +59,7 @@ public class VideoHandlerDummyGUI extends Application {
             /* Act based on the ID of the button */
             if(button.getId().equals("Button1")) {
                 videoHandler.clearVideos();
-                videoHandler.createVideo(5, 5, 900, "M:/Year 3/SWENG/Videos/prometheus-featureukFhp.mp4", true, true);
+                videoHandler.createVideo(5, 5, 900, "E:/Users/Alex/Desktop/Technical/BigBuckBunny_320x180.mp4", true, true);
             }
         }
     }
