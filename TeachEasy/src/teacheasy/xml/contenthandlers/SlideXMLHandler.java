@@ -42,6 +42,7 @@ public class SlideXMLHandler extends DefaultHandler {
             case TEXT:
                 break;
             case IMAGE:
+                xmlReader.setContentHandler(new ImageXMLHandler(xmlReader, this, lesson, page, errorList, attrs));
                 break;
             case AUDIO:
                 break;

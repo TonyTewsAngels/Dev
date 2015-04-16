@@ -6,6 +6,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
+import com.sun.org.apache.bcel.internal.classfile.SourceFile;
+
 import teacheasy.data.ImageObject;
 import teacheasy.data.Lesson;
 import teacheasy.data.Page;
@@ -47,8 +49,6 @@ public class ImageXMLHandler extends DefaultHandler{
     }
     
     public void endHandler() {
-        
-        
         page.pageObjects.add(image);
         
         xmlReader.setContentHandler(parent);
@@ -66,50 +66,49 @@ public class ImageXMLHandler extends DefaultHandler{
         String durationStr = attrs.getValue("duration");
         
         float xStart = checkFloat(xStartStr, 0.0f, Level.ERROR,
-                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) Missing X Start.");
+                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) X Start ");
         
         float yStart = checkFloat(yStartStr, 0.0f, Level.ERROR,
-                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) Missing Y Start.");
+                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) Y Start ");
         
         float scale = checkFloat(scaleStr, 1.0f, Level.WARNING,
-                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) No scale attribute, default 1 inserted.");
+                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) Scale ");
         
         float xEnd = checkFloat(xEndStr, -1.0f, Level.WARNING,
-                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) No X End attribute, placeholder -1 inserted. Use scale for size.");
+                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) X End ");
         
         float yEnd = checkFloat(yEndStr, -1.0f, Level.WARNING,
-                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) No Y End attribute, placeholder -1 inserted. Use scale for size.");
+                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) Y End ");
         
         float rotation = checkFloat(rotationStr, 0.0f, Level.WARNING,
-                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) No rotation attribute, default 0 inserted.");
+                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) Rotation ");
         
         float startTime = checkFloat(startTimeStr, 0.0f, Level.WARNING,
-                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) No start time attribute, default 0 inserted.");
+                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) Start time ");
         
         float duration = checkFloat(durationStr, 0.0f, Level.WARNING,
-                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) No duration attribute, default 0 inserted.");
+                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) Duration ");
+        
+        if(sourceFileStr == null) {
+            errorList.add(new XMLNotification(Level.ERROR, 
+                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) Sourcefile missing."));
+            sourceFileStr = new String("null");
+        }
+        
+        image = new ImageObject(xStart, yStart, xEnd, yEnd, sourceFileStr, scale, scale, rotation, startTime, duration);
     }
     
     public float checkFloat(String str, float defaultValue, Level errorLevel, String errorMessage) {
-        float val;
+        float val = defaultValue;
         
-        try {
-            val = Float.parseFloat(str);
-        } catch (NumberFormatException e) {
-            errorList.add(new XMLNotification(errorLevel, errorMessage));
-            val = defaultValue;
-        }
-        
-        return val;
-    }
-    
-    public float checkFloat(String str, float defaultValue) {
-        float val;
-        
-        try {
-            val = Float.parseFloat(str);
-        } catch (NumberFormatException e) {
-            val = defaultValue;
+        if(str == null) {
+            errorList.add(new XMLNotification(errorLevel, errorMessage + " missing. Default inserted."));
+        } else {
+            try {
+                val = Float.parseFloat(str);
+            } catch (NumberFormatException e) {
+                errorList.add(new XMLNotification(errorLevel, errorMessage + " non-float. Default inserted."));
+            }
         }
         
         return val;

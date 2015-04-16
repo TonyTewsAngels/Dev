@@ -24,7 +24,7 @@
 			<richtext>Not Bold Text</richtext>
 			<richtext italic="true" newline="true">Italic text.</richtext>
 		</text>
-		<image sourcefile="C:\Users\sadjlsd\imagefile.jpg" xstart="0.5" ystart="0.5" scale="1.0" yscale="1" rotation="0"/>
+		<image sourcefile="C:\Users\sadjlsd\imagefile.jpg" xstart="0.5" ystart="0.5" xend="0.6" yend="0.6" rotation="0"/>
 		<audio sourcefile="gavel.wav" xstart="0.5" ystart="0.1" viewprogress="false"/>
 		<video sourcefile="avengers.mkv" xstart="0.1" ystart="0.1" videoscreenshot="C:\Users\sadjlsd\videoicon.jpeg"/>
 		<graphic type="oval" xstart="0.5" ystart="0.5" xend="0.7" yend="0.7" solid="true" graphiccolor="#11223344" rotation="0" outlinethickness="0.5" shadow="false">
