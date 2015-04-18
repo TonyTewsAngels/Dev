@@ -7,6 +7,6 @@ package wavemedia.graphic;
  * @author tjd511
  * @version 1.0 11/03/2015
  */
-public enum GraphicHandlerType {
+public enum GraphicType {
 	OVAL, CIRCLE, RECTANGLE, SQUARE, LINE, ARROW, EQUITRIANGLE, TRIANGLE, REGULARPOLYGON, POLYGON, STAR, CHORD, ARC;
 }

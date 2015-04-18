@@ -10,10 +10,10 @@ import java.io.File;
 import java.util.ArrayList;
 
 import teacheasy.data.*;
+import teacheasy.data.GraphicObject;
 import teacheasy.mediahandler.*;
-import wavemedia.graphic.GraphicsHandler;
-import wavemedia.graphic.Shading;
-import wavemedia.graphic.Shadow;
+import wavemedia.graphic.*;
+import wavemedia.graphic.GraphicHandlerObject.*;
 import wavemedia.text.Alignment;
 import wavemedia.text.TextAttribute;
 import wavemedia.text.TextHandler;
@@ -199,7 +199,7 @@ public class Renderer {
     }
     
     /** Render a graphic object on a page */
-    private void renderGraphic(GraphicObject graphic) {
+    private void renderGraphic(GraphicObject graphic) {        
         /* Set up the shading */
         Shading shading;
         switch(graphic.getShading()) {
@@ -214,73 +214,6 @@ public class Renderer {
                 break;
             default:
                 shading = Shading.NONE;
-                break;
-        }
-        
-        /* Draw the appropriate graphic */
-        switch(graphic.getGraphicType()) {
-            case OVAL:
-                graphicsHandler.drawOval((float)(bounds.getMaxX() * graphic.getXStart()),
-                                         (float)(bounds.getMaxY() * graphic.getYStart()), 
-                                         (float)(bounds.getMaxX() * graphic.getXEnd()), 
-                                         (float)(bounds.getMaxY() * graphic.getYEnd()), 
-                                         Util.colorFromString(graphic.getGraphicColour()), 
-                                         graphic.isSolid(), 
-                                         Util.colorFromString(graphic.getLineColor()),
-                                         graphic.getOutlineThickness(), 
-                                         Shadow.NONE, 
-                                         graphic.getRotation(), 
-                                         shading,
-                                         Util.colorFromString(graphic.getShadingColor()));
-                break;
-            case RECTANGLE:
-                graphicsHandler.drawRectangle((float)(bounds.getMaxX() * graphic.getXStart()),
-                                              (float)(bounds.getMaxY() * graphic.getYStart()),
-                                              (float)(bounds.getMaxX() * graphic.getXEnd()),
-                                              (float)(bounds.getMaxY() * graphic.getYEnd()),
-                                              0.0f,
-                                              0.0f,
-                                              Util.colorFromString(graphic.getGraphicColour()),
-                                              graphic.isSolid(), 
-                                              Util.colorFromString(graphic.getLineColor()),
-                                              graphic.getOutlineThickness(),
-                                              Shadow.NONE, 
-                                              graphic.getRotation(), 
-                                              shading,
-                                              Util.colorFromString(graphic.getShadingColor()));
-                break;
-            case LINE:
-                graphicsHandler.drawLine((float)(bounds.getMaxX() * graphic.getXStart()),
-                                         (float)(bounds.getMaxY() * graphic.getYStart()), 
-                                         (float)(bounds.getMaxX() * graphic.getXEnd()), 
-                                         (float)(bounds.getMaxY() * graphic.getYEnd()), 
-                                         Util.colorFromString(graphic.getGraphicColour()), 
-                                         graphic.getOutlineThickness(), 
-                                         shading,
-                                         Util.colorFromString(graphic.getShadingColor()));
-                break;
-            case TRIANGLE:
-                System.out.println("Cannot Currently Draw Equi Triangle - Graphics Handler Unfinished");
-                graphicsHandler.drawEquiTriangle();
-                break;
-            case ROUNDEDRECTANGLE:
-                System.out.println("Cannot Currently Draw Rounded Rects - Graphics Handler Unfinished");
-                graphicsHandler.drawRectangle((float)(bounds.getMaxX() * graphic.getXStart()),
-                                              (float)(bounds.getMaxY() * graphic.getYStart()),
-                                              (float)(bounds.getMaxX() * graphic.getXEnd()),
-                                              (float)(bounds.getMaxY() * graphic.getYEnd()),
-                                              150.0f,
-                                              150.0f,
-                                              Util.colorFromString(graphic.getGraphicColour()),
-                                              graphic.isSolid(), 
-                                              Util.colorFromString(graphic.getLineColor()),
-                                              graphic.getOutlineThickness(),
-                                              Shadow.NONE, 
-                                              graphic.getRotation(), 
-                                              shading,
-                                              Util.colorFromString(graphic.getShadingColor()));
-                break;
-            default:
                 break;
         }
     }

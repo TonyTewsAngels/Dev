@@ -13,7 +13,7 @@ import javafx.scene.paint.Stop;
  * @author tjd511
  * @version 1.0 11/03/2015
  */
-public class GraphicHandlerObject {
+public class GraphicObject {
 	protected final static float defaultSize = 200;
 
 	/*
@@ -30,7 +30,7 @@ public class GraphicHandlerObject {
 	private final int bEndChar = 9;
 
 	/* Variables containing all relevant data about shapes. */
-	private GraphicHandlerType graphic;
+	private GraphicType graphic;
 	private float xStartPos;
 	private float yStartPos;
 	private String color;
@@ -63,7 +63,7 @@ public class GraphicHandlerObject {
 	private ArrayList<Stop> stops = new ArrayList<Stop>();
 
 	/* Constructor must be called using the builder */
-	private GraphicHandlerObject(GraphicBuilder builder) {
+	private GraphicObject(GraphicBuilder builder) {
 		graphic = builder.graphic;
 		xStartPos = builder.xStartPos;
 		yStartPos = builder.yStartPos;
@@ -108,7 +108,7 @@ public class GraphicHandlerObject {
 	/**
 	 * @return an enum containing information about the current type of graphic
 	 */
-	public GraphicHandlerType getGraphic() {
+	public GraphicType getGraphic() {
 		return graphic;
 	}
 
@@ -359,7 +359,7 @@ public class GraphicHandlerObject {
 	 */
 	public static class GraphicBuilder {
 		/* Required values for all graphics */
-		private final GraphicHandlerType graphic;
+		private final GraphicType graphic;
 		private final float xStartPos;
 		private final float yStartPos;
 
@@ -406,7 +406,7 @@ public class GraphicHandlerObject {
 		 * @param yStartPos
 		 *            the y coordinate of the top left position of the shape.
 		 */
-		public GraphicBuilder(GraphicHandlerType graphic, float xStartPos, float yStartPos) {
+		public GraphicBuilder(GraphicType graphic, float xStartPos, float yStartPos) {
 			shadingColors = new ArrayList<String>();
 			offsets = new ArrayList<Float>();
 			xCoordinates = new ArrayList<Float>();
@@ -708,8 +708,8 @@ public class GraphicHandlerObject {
 		 * @return a graphics object containing all the paramaters about the
 		 *         graphic.
 		 */
-		public GraphicHandlerObject build() {
-			return new GraphicHandlerObject(this);
+		public GraphicObject build() {
+			return new GraphicObject(this);
 		}
 	}
 }
