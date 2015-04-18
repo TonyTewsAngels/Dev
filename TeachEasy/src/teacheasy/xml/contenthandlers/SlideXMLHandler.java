@@ -50,6 +50,7 @@ public class SlideXMLHandler extends DefaultHandler {
             case GRAPHIC:
                 break;
             case ANSWERBOX:
+                xmlReader.setContentHandler(new AnswerBoxXMLHandler(xmlReader, this, lesson, page, errorList, attrs));
                 break;
             case MULTIPLECHOICE:
                 break;

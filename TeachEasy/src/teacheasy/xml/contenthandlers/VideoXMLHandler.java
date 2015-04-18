@@ -6,9 +6,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.sun.org.apache.bcel.internal.classfile.SourceFile;
-
-import teacheasy.data.AudioObject;
 import teacheasy.data.Lesson;
 import teacheasy.data.Page;
 import teacheasy.data.VideoObject;
