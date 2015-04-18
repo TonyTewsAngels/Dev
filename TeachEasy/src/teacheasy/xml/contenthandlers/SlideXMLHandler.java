@@ -19,8 +19,6 @@ public class SlideXMLHandler extends DefaultHandler {
     private XMLReader xmlReader;
     private DefaultHandler parent;
     
-    private String readBuffer;
-    
     private Page page;
     
     public SlideXMLHandler(XMLReader nXMLReader, DefaultHandler nParent, Lesson nLesson, ArrayList<XMLNotification> nErrorList, Attributes slideAttrs) {
@@ -36,10 +34,9 @@ public class SlideXMLHandler extends DefaultHandler {
     }
     
     public void startElement(String uri, String localName, String qName, Attributes attrs) {
-        readBuffer = null;
-        
         switch(XMLElement.check(qName.toUpperCase())) {
             case TEXT:
+                xmlReader.setContentHandler(new TextXMLHandler(xmlReader, this, lesson, page, errorList, attrs));
                 break;
             case IMAGE:
                 xmlReader.setContentHandler(new ImageXMLHandler(xmlReader, this, lesson, page, errorList, attrs));
@@ -67,14 +64,6 @@ public class SlideXMLHandler extends DefaultHandler {
                 break;            
             default:
                 break;
-        }
-    }
-    
-    public void characters(char[] ch, int start, int length) {
-        String str = new String(ch, start, length);
-        str = str.trim();
-        if(!str.isEmpty()) {
-            readBuffer = str;
         }
     }
     

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
@@ -34,7 +35,11 @@ public class XMLParser2 extends DefaultHandler {
         
         FileReader reader = new FileReader(file);
         
-        xmlReader.parse(new InputSource(reader));
+        try {
+            xmlReader.parse(new InputSource(reader));
+        } catch (SAXParseException e) {
+            errorList.add(new XMLNotification(Level.ERROR, "XML File Invalid"));
+        }
     }
     
     public void startElement(String uri, String localName, String qName, Attributes attrs) {
