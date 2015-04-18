@@ -13,7 +13,6 @@ import teacheasy.data.*;
 import teacheasy.data.GraphicObject;
 import teacheasy.mediahandler.*;
 import wavemedia.graphic.*;
-import wavemedia.graphic.GraphicHandlerObject.*;
 import wavemedia.text.Alignment;
 import wavemedia.text.TextAttribute;
 import wavemedia.text.TextHandler;
