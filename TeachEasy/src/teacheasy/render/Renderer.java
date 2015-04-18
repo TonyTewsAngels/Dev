@@ -168,12 +168,12 @@ public class Renderer {
     
     /** Render a video on a page */
     private void renderVideo(VideoObject video) {
-        videoHandler.createVideo(bounds.getMaxX() * video.getXStart(),
-                                 bounds.getMaxY() * video.getYStart(),
-                                 800,
-                                 video.getSourcefile(),
-                                 false,
-                                 false);
+    	videoHandler.createVideo((float)bounds.getMaxX() * video.getXStart(),
+    							(float)bounds.getMaxY() * video.getYStart(),
+							    800,
+							    video.getSourcefile(),
+							    false,
+							    false);
     }
     
     /** Render an audio object on a page */
@@ -181,7 +181,8 @@ public class Renderer {
         audioHandler.createAudio((double)(bounds.getMaxX() * audio.getXStart()),
                                  (double)(bounds.getMaxY() * audio.getYStart()),
                                  300,
-                                 new File(audio.getSourcefile()),
+                                 audio.getSourcefile(),
+                                 false,
                                  false,
                                  audio.isViewProgress(),
                                  false);
