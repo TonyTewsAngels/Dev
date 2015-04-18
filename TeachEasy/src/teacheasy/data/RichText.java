@@ -50,7 +50,7 @@ public class RichText {
     /** Constructor method */
     public RichText(String nText, String nFont, int nFontSize, String nColor, String... settings) {
         /* Instantiate class level variables */
-        this.text = new String(nText);
+        this.text = nText;
         this.font = nFont;
         this.fontSize = nFontSize;
         this.color = nColor;

@@ -30,6 +30,11 @@ public class XMLUtil {
     }
     
     public static String checkColor(String hexStr, String defaultStr, Level errorLevel, ArrayList<XMLNotification> errorList, String errorMessage) {              
+        if(hexStr == null) {
+            errorList.add(new XMLNotification(errorLevel, errorMessage + " missing. Default inserted."));
+            return defaultStr;
+        }
+        
         /** Check that the first character is a hash to indicate a hex value and that the string has 9 characters */
         if(!hexStr.startsWith("#") || hexStr.length() != 9) {
             errorList.add(new XMLNotification(errorLevel, errorMessage + " incorrect hex string format."));

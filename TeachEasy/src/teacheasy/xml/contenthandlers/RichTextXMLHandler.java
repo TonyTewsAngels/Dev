@@ -6,8 +6,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.sun.org.apache.bcel.internal.classfile.SourceFile;
-
 import teacheasy.data.Lesson;
 import teacheasy.data.Page;
 import teacheasy.data.RichText;
@@ -96,64 +94,64 @@ public class RichTextXMLHandler extends DefaultHandler{
             errorList.add(new XMLNotification(Level.WARNING, 
                 "Page " + lesson.pages.size() + 
                 ", Object " + page.getObjectCount() +
-                " (Text), RichText" + (text.textFragments.size()-1) +
-                "Font missing. Default used"));
+                " (Text), RichText " + (text.textFragments.size()) +
+                " Font missing. Default used"));
             fontStr = lesson.defaultSettings.getFont();
         }
         
         int fontSize = XMLUtil.checkInt(fontSizeStr, lesson.defaultSettings.getFontSize(), Level.WARNING, errorList,
                 "Page " + lesson.pages.size() + 
                 ", Object " + page.getObjectCount() +
-                " (Text), RichText" + (text.textFragments.size()-1) +
-                "Font size ");
+                " (Text), RichText " + (text.textFragments.size()) +
+                " Font size ");
         
         fontColorStr = XMLUtil.checkColor(fontColorStr, lesson.defaultSettings.getFontColour(), Level.WARNING, errorList,
                 "Page " + lesson.pages.size() + 
                 ", Object " + page.getObjectCount() +
-                " (Text), RichText" + (text.textFragments.size()-1) +
-                "Font color ");
+                " (Text), RichText " + (text.textFragments.size()) +
+                " Font color ");
         
         boolean bold = XMLUtil.checkBool(boldStr, false, Level.WARNING, errorList, 
                 "Page " + lesson.pages.size() + 
                 ", Object " + page.getObjectCount() +
-                " (Text), RichText" + (text.textFragments.size()-1) +
-                "Bold ");
+                " (Text), RichText " + (text.textFragments.size()) +
+                " Bold ");
         
         boolean italic = XMLUtil.checkBool(italicStr, false, Level.WARNING, errorList, 
                 "Page " + lesson.pages.size() + 
                 ", Object " + page.getObjectCount() +
-                " (Text), RichText" + (text.textFragments.size()-1) +
-                "Italic ");
+                " (Text), RichText " + (text.textFragments.size()) +
+                " Italic ");
         
         boolean underline = XMLUtil.checkBool(underlineStr, false, Level.WARNING, errorList, 
                 "Page " + lesson.pages.size() + 
                 ", Object " + page.getObjectCount() +
-                " (Text), RichText" + (text.textFragments.size()-1) +
-                "Underline ");
+                " (Text), RichText " + (text.textFragments.size()) +
+                " Underline ");
         
         boolean superScript = XMLUtil.checkBool(superscriptStr, false, Level.WARNING, errorList, 
                 "Page " + lesson.pages.size() + 
                 ", Object " + page.getObjectCount() +
-                " (Text), RichText" + (text.textFragments.size()-1) +
-                "Superscript ");
+                " (Text), RichText " + (text.textFragments.size()) +
+                " Superscript ");
         
         boolean subScript = XMLUtil.checkBool(subscriptStr, false, Level.WARNING, errorList, 
                 "Page " + lesson.pages.size() + 
                 ", Object " + page.getObjectCount() +
-                " (Text), RichText" + (text.textFragments.size()-1) +
-                "Subscript ");
+                " (Text), RichText " + (text.textFragments.size()) +
+                " Subscript ");
         
         boolean strikeThrough = XMLUtil.checkBool(strikethroughStr, false, Level.WARNING, errorList, 
                 "Page " + lesson.pages.size() + 
                 ", Object " + page.getObjectCount() +
-                " (Text), RichText" + (text.textFragments.size()-1) +
-                "Strike-through ");
+                " (Text), RichText " + (text.textFragments.size()) +
+                " Strike-through ");
         
         boolean newLine = XMLUtil.checkBool(newLineStr, false, Level.WARNING, errorList, 
                 "Page " + lesson.pages.size() + 
                 ", Object " + page.getObjectCount() +
-                " (Text), RichText" + (text.textFragments.size()-1) +
-                "New line ");
+                " (Text), RichText " + (text.textFragments.size()) +
+                " New line ");
         
         ArrayList<String> settings = new ArrayList<String>();
         
@@ -165,7 +163,7 @@ public class RichTextXMLHandler extends DefaultHandler{
         if(strikeThrough) settings.add(new String("strikethrough"));
         if(newLine) settings.add(new String("newline"));
         
-        richText = new RichText(null, fontStr, fontSize, fontColorStr, settings.toArray(new String[7]));
+        richText = new RichText(null, fontStr, fontSize, fontColorStr, settings.toArray(new String[0]));
     } 
 }
 
