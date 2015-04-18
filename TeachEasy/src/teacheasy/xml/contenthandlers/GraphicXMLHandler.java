@@ -63,7 +63,7 @@ public class GraphicXMLHandler extends DefaultHandler{
     public void endElement(String uri, String localName, String qName) {
         switch(XMLElement.check(qName.toUpperCase())) {
             /* If the image element has finished, return to the parent */
-            case MULTIPLECHOICE:
+            case GRAPHIC:
                 endHandler();
                 break;            
             default:

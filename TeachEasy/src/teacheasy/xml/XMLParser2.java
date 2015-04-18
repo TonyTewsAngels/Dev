@@ -66,7 +66,8 @@ public class XMLParser2 extends DefaultHandler {
         XMLParser2 xmlParser = new XMLParser2();
         
         try {
-            xmlParser.parse("testXML/PV2TestXML.xml");
+            //xmlParser.parse("testXML/PV2TestXML.xml");
+            xmlParser.parse("rendererTest.xml");
         } catch (SAXException | IOException e) {
             e.printStackTrace();
         }

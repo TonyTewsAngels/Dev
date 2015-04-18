@@ -108,7 +108,7 @@ public class TextXMLHandler extends DefaultHandler{
         float startTime = XMLUtil.checkFloat(startTimeStr, 0.0f, Level.WARNING, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Text) Start time ");
         
-        float duration = XMLUtil.checkFloat(durationStr, 0.0f, Level.ERROR, errorList,
+        float duration = XMLUtil.checkFloat(durationStr, 0.0f, Level.WARNING, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Text) Duration ");
         
         if(sourceFileStr == null) {
