@@ -32,7 +32,7 @@ public class ImageXMLHandler extends DefaultHandler{
         this.page = nPage;
         this.errorList = nErrorList;
         
-        image = new ImageObject(0.0f, 0.0f, null, 0.0f, 0.0f, 0.0f);
+        image = new ImageObject(0.0f, 0.0f, 0.0f, 0.0f, null, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
         
         imageStart(slideAttrs);
     }
