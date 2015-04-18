@@ -13,6 +13,7 @@ import teacheasy.data.Lesson;
 import teacheasy.data.Page;
 import teacheasy.xml.XMLElement;
 import teacheasy.xml.util.XMLNotification;
+import teacheasy.xml.util.XMLUtil;
 import teacheasy.xml.util.XMLNotification.*;
 
 public class ImageXMLHandler extends DefaultHandler{
@@ -24,7 +25,7 @@ public class ImageXMLHandler extends DefaultHandler{
     private XMLReader xmlReader;
     private DefaultHandler parent;
     
-    public ImageXMLHandler(XMLReader nXMLReader, DefaultHandler nParent, Lesson nLesson, Page nPage, ArrayList<XMLNotification> nErrorList, Attributes slideAttrs) {
+    public ImageXMLHandler(XMLReader nXMLReader, DefaultHandler nParent, Lesson nLesson, Page nPage, ArrayList<XMLNotification> nErrorList, Attributes imageAttrs) {
         this.xmlReader = nXMLReader;
         this.parent = nParent;
         
@@ -34,7 +35,7 @@ public class ImageXMLHandler extends DefaultHandler{
         
         image = new ImageObject(0.0f, 0.0f, 0.0f, 0.0f, null, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
         
-        imageStart(slideAttrs);
+        imageStart(imageAttrs);
     }
     
     public void endElement(String uri, String localName, String qName) {
@@ -65,28 +66,28 @@ public class ImageXMLHandler extends DefaultHandler{
         String startTimeStr = attrs.getValue("starttime");
         String durationStr = attrs.getValue("duration");
         
-        float xStart = checkFloat(xStartStr, 0.0f, Level.ERROR,
+        float xStart = XMLUtil.checkFloat(xStartStr, 0.0f, Level.ERROR, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) X Start ");
         
-        float yStart = checkFloat(yStartStr, 0.0f, Level.ERROR,
+        float yStart = XMLUtil.checkFloat(yStartStr, 0.0f, Level.ERROR, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) Y Start ");
         
-        float scale = checkFloat(scaleStr, 1.0f, Level.WARNING,
+        float scale = XMLUtil.checkFloat(scaleStr, 1.0f, Level.WARNING, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) Scale ");
         
-        float xEnd = checkFloat(xEndStr, -1.0f, Level.WARNING,
+        float xEnd = XMLUtil.checkFloat(xEndStr, -1.0f, Level.WARNING, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) X End ");
         
-        float yEnd = checkFloat(yEndStr, -1.0f, Level.WARNING,
+        float yEnd = XMLUtil.checkFloat(yEndStr, -1.0f, Level.WARNING, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) Y End ");
         
-        float rotation = checkFloat(rotationStr, 0.0f, Level.WARNING,
+        float rotation = XMLUtil.checkFloat(rotationStr, 0.0f, Level.WARNING, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) Rotation ");
         
-        float startTime = checkFloat(startTimeStr, 0.0f, Level.WARNING,
+        float startTime = XMLUtil.checkFloat(startTimeStr, 0.0f, Level.WARNING, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) Start time ");
         
-        float duration = checkFloat(durationStr, 0.0f, Level.WARNING,
+        float duration = XMLUtil.checkFloat(durationStr, 0.0f, Level.WARNING, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Image) Duration ");
         
         if(sourceFileStr == null) {
@@ -96,21 +97,5 @@ public class ImageXMLHandler extends DefaultHandler{
         }
         
         image = new ImageObject(xStart, yStart, xEnd, yEnd, sourceFileStr, scale, scale, rotation, startTime, duration);
-    }
-    
-    public float checkFloat(String str, float defaultValue, Level errorLevel, String errorMessage) {
-        float val = defaultValue;
-        
-        if(str == null) {
-            errorList.add(new XMLNotification(errorLevel, errorMessage + " missing. Default inserted."));
-        } else {
-            try {
-                val = Float.parseFloat(str);
-            } catch (NumberFormatException e) {
-                errorList.add(new XMLNotification(errorLevel, errorMessage + " non-float. Default inserted."));
-            }
-        }
-        
-        return val;
     }
 }
