@@ -53,6 +53,7 @@ public class SlideXMLHandler extends DefaultHandler {
                 xmlReader.setContentHandler(new AnswerBoxXMLHandler(xmlReader, this, lesson, page, errorList, attrs));
                 break;
             case MULTIPLECHOICE:
+                xmlReader.setContentHandler(new MultipleChoiceXMLHandler(xmlReader, this, lesson, page, errorList, attrs));
                 break;
             default:
                 break;
