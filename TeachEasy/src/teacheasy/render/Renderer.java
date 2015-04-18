@@ -159,8 +159,8 @@ public class Renderer {
         /* Draw the buffer to the screen */
         textHandler.drawBuffer((int)(bounds.getMaxX() * text.getXStart()),
                                (int)(bounds.getMaxY() * text.getYStart()),
-                               (int)(bounds.getMaxX()),
-                               (int)(bounds.getMaxY()),
+                               (int)(bounds.getMaxX() * text.getXEnd()),
+                               (int)(bounds.getMaxY() * text.getYEnd()),
                                "#00000000",
                                Alignment.LEFT);
         
@@ -170,7 +170,7 @@ public class Renderer {
     private void renderVideo(VideoObject video) {
     	videoHandler.createVideo((float)bounds.getMaxX() * video.getXStart(),
     							(float)bounds.getMaxY() * video.getYStart(),
-							    800,
+							    (float)bounds.getMaxX()*(video.getXEnd() - video.getXStart()),
 							    video.getSourcefile(),
 							    false,
 							    false);
@@ -180,7 +180,7 @@ public class Renderer {
     private void renderAudio(AudioObject audio) {
         audioHandler.createAudio((double)(bounds.getMaxX() * audio.getXStart()),
                                  (double)(bounds.getMaxY() * audio.getYStart()),
-                                 300,
+                                 (double)bounds.getMaxX()*(audio.getXEnd() - audio.getXStart()),
                                  audio.getSourcefile(),
                                  false,
                                  false,

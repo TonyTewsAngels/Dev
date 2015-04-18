@@ -49,11 +49,11 @@ public class VideoObject extends PageObject{
         System.out.println(", Sourcefile " + sourceFile + ".\n");
     }
 
-    public float getxEnd() {
+    public float getXEnd() {
         return xEnd;
     }
 
-    public void setxEnd(float nXEnd) {
+    public void setXEnd(float nXEnd) {
         this.xEnd = nXEnd;
     }
 }

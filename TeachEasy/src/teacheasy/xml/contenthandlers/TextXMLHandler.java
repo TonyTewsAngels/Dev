@@ -99,10 +99,10 @@ public class TextXMLHandler extends DefaultHandler{
         float yStart = XMLUtil.checkFloat(yStartStr, 0.0f, Level.ERROR, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Text) Y Start ");
         
-        float xEnd = XMLUtil.checkFloat(xEndStr, -1.0f, Level.WARNING, errorList,
+        float xEnd = XMLUtil.checkFloat(xEndStr, 1.0f, Level.WARNING, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Text) X End ");
         
-        float yEnd = XMLUtil.checkFloat(yEndStr, -1.0f, Level.WARNING, errorList,
+        float yEnd = XMLUtil.checkFloat(yEndStr, 1.0f, Level.WARNING, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Text) Y End ");
         
         float startTime = XMLUtil.checkFloat(startTimeStr, 0.0f, Level.WARNING, errorList,

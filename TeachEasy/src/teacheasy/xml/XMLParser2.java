@@ -28,18 +28,20 @@ public class XMLParser2 extends DefaultHandler {
         errorList = new ArrayList<XMLNotification>();
     }
     
-    public void parse(String file) throws SAXException, IOException {
-        xmlReader = XMLReaderFactory.createXMLReader();
-        
-        xmlReader.setContentHandler(this);
-        
-        FileReader reader = new FileReader(file);
-        
+    public ArrayList<XMLNotification> parse(String file) {
         try {
+            xmlReader = XMLReaderFactory.createXMLReader();
+            
+            xmlReader.setContentHandler(this);
+            
+            FileReader reader = new FileReader(file);
+            
             xmlReader.parse(new InputSource(reader));
-        } catch (SAXParseException e) {
+        } catch (SAXException | IOException e) {
             errorList.add(new XMLNotification(Level.ERROR, "XML File Invalid"));
         }
+        
+        return errorList;
     }
     
     public void startElement(String uri, String localName, String qName, Attributes attrs) {
@@ -52,35 +54,4 @@ public class XMLParser2 extends DefaultHandler {
                 break;
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    // #######################################
-    public static void main(String args[]) {
-        XMLParser2 xmlParser = new XMLParser2();
-        
-        try {
-            //xmlParser.parse("testXML/PV2TestXML.xml");
-            xmlParser.parse("rendererTest.xml");
-        } catch (SAXException | IOException e) {
-            e.printStackTrace();
-        }
-        
-        for(int i = 0; i < xmlParser.errorList.size(); i++) {
-            System.out.println(xmlParser.errorList.get(i).toString());
-        }
-        
-        System.out.println(XMLNotification.countLevel(xmlParser.errorList, Level.ERROR) + " error(s) during parsing.");
-        System.out.println(XMLNotification.countLevel(xmlParser.errorList, Level.WARNING) + " warning(s) during parsing.\n");
-            
-        xmlParser.lesson.debugPrint();
-    }
-    
-    
 }

@@ -9,6 +9,7 @@ package teacheasy.xml;
 import java.util.ArrayList;
 
 import teacheasy.data.Lesson;
+import teacheasy.xml.util.XMLNotification;
 
 /**
  * This class handles XML reading and
@@ -22,6 +23,9 @@ public class XMLHandler {
 	
 	/** XML Parser */
 	private XMLParser xmlParser;
+	
+	/** XML Parser */
+	private XMLParser2 xmlParser2;
 	
 	/** XML Writer */
 	private XMLWriter xmlWriter;
@@ -38,6 +42,9 @@ public class XMLHandler {
 		/* Instantiate the Parser */
 		xmlParser = new XMLParser();
 		
+		/* Instantiate the Parser */
+        xmlParser2 = new XMLParser2();
+		
 		/* Instantiate the Writer */
 		xmlWriter = new XMLWriter();
 	}
@@ -46,6 +53,11 @@ public class XMLHandler {
 	public ArrayList<String> parseXML(String filename) {
 		return xmlParser.parse(filename);
 	}
+	
+	/** Parse an xml file */
+    public ArrayList<XMLNotification> parseXML2(String filename) {
+        return xmlParser2.parse(filename);
+    }
 	
 	/** Get the most recently parsed lesson */
 	public Lesson getLesson() {

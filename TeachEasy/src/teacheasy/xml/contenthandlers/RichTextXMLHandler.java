@@ -163,7 +163,7 @@ public class RichTextXMLHandler extends DefaultHandler{
         if(strikeThrough) settings.add(new String("strikethrough"));
         if(newLine) settings.add(new String("newline"));
         
-        richText = new RichText(null, fontStr, fontSize, fontColorStr, settings.toArray(new String[0]));
+        richText = new RichText(null, fontStr, fontSize, fontColorStr, settings.toArray(new String[settings.size()]));
     } 
 }
 
