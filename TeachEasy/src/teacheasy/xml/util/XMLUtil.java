@@ -81,4 +81,20 @@ public class XMLUtil {
         
         return val;
     }
+    
+    public static boolean checkBool(String str, boolean defaultValue, Level errorLevel, ArrayList<XMLNotification> errorList, String errorMessage) {
+        boolean val = defaultValue;
+        
+        if(str == null) {
+            errorList.add(new XMLNotification(errorLevel, errorMessage + " missing. Default inserted."));
+        } else {
+            try {
+                val = Boolean.parseBoolean(str);
+            } catch (NumberFormatException e) {
+                errorList.add(new XMLNotification(errorLevel, errorMessage + " non-boolean. Default inserted."));
+            }
+        }
+        
+        return val;
+    }
 }

@@ -27,7 +27,7 @@ public class TextXMLHandler extends DefaultHandler{
     
     String readBuffer;
     
-    public TextXMLHandler(XMLReader nXMLReader, DefaultHandler nParent, Lesson nLesson, Page nPage, ArrayList<XMLNotification> nErrorList, Attributes slideAttrs) {
+    public TextXMLHandler(XMLReader nXMLReader, DefaultHandler nParent, Lesson nLesson, Page nPage, ArrayList<XMLNotification> nErrorList, Attributes textAttrs) {
         this.xmlReader = nXMLReader;
         this.parent = nParent;
         
@@ -37,16 +37,15 @@ public class TextXMLHandler extends DefaultHandler{
         
         text = new TextObject(0.0f, 0.0f, 0.0f, 0.0f, null, 0, null, null, 0.0f, 0.0f);
         
-        textStart(slideAttrs);
+        textStart(textAttrs);
     }
     
     public void startElement(String uri, String localName, String qName, Attributes attrs) {
         readBuffer = null;
         
         switch(XMLElement.check(qName.toUpperCase())) {
-            /* If the image element has finished, return to the parent */
             case RICHTEXT:
-                
+                xmlReader.setContentHandler(new RichTextXMLHandler(xmlReader, this, lesson, page, text, errorList, attrs));
                 break;            
             default:
                 break;
