@@ -48,6 +48,7 @@ public class SlideXMLHandler extends DefaultHandler {
                 xmlReader.setContentHandler(new VideoXMLHandler(xmlReader, this, lesson, page, errorList, attrs));
                 break;
             case GRAPHIC:
+                xmlReader.setContentHandler(new GraphicXMLHandler(xmlReader, this, lesson, page, errorList, attrs));
                 break;
             case ANSWERBOX:
                 xmlReader.setContentHandler(new AnswerBoxXMLHandler(xmlReader, this, lesson, page, errorList, attrs));

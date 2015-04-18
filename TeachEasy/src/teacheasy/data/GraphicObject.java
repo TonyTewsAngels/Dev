@@ -63,10 +63,36 @@ public class GraphicObject extends PageObject {
 	private Shading shading;
 	private String shadingColor;
 	
-	/** Constructor Method */
+	private float startTime;
+	private float duration;
+	
+    public GraphicObject(GraphicType nType, float nXStart, float nYStart, float nXEnd, 
+                         float nYEnd, float nRotation, String nGraphicColor,   
+                         boolean nSolid, String nLineColor, boolean nShadow,
+                         float nStartTime, float nDuration) {
+
+        super(PageObjectType.GRAPHIC, nXStart, nYStart);
+        
+        this.graphicType = nType;
+        this.xEnd = nXEnd;
+        this.yEnd = nYEnd;
+        this.rotation = nRotation;
+        this.graphicColor = nGraphicColor;
+        this.solid = nSolid;
+        this.lineColor = nLineColor;
+        this.shadow = nShadow;
+        
+        this.startTime = nStartTime;
+        this.duration = nDuration;
+        
+        this.shading = Shading.NONE;
+        this.shadingColor = new String("#ff000000");
+    }
+	
+	/** Old Compatability Constructor Method, Deprecated.*/
 	public GraphicObject(GraphicType nType, float nXStart, float nYStart, float nXEnd, 
-						  float nYEnd, float nRotation, String nGraphicColor,   
-						  boolean nSolid, String nLineColor, float nOutlineThickness, boolean nShadow) {
+						 float nYEnd, float nRotation, String nGraphicColor,   
+						 boolean nSolid, String nLineColor, float nOutlineThickness, boolean nShadow) {
 	    
 		super(PageObjectType.GRAPHIC, nXStart, nYStart);
 		
@@ -183,10 +209,26 @@ public class GraphicObject extends PageObject {
                            ", Rotation " + rotation +
                            ", Color " + graphicColor + 
                            ", Solid " + solid + 
-                           ", Outline Thickness " + outlineThickness +
+                           ", Outline Color " + lineColor +
                            ", Shadow " + shadow + 
                            ", Shading " + shading +
                            ", Shading Colour " + shadingColor +
                            ".\n");
+    }
+
+    public float getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(float nStartTime) {
+        this.startTime = nStartTime;
+    }
+
+    public float getDuration() {
+        return duration;
+    }
+
+    public void setDuration(float nDuration) {
+        this.duration = nDuration;
     }
 }
