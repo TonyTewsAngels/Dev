@@ -179,7 +179,6 @@ public class Iteration1XMLTest {
 				assertTrue(video.getXStart() == 0.1f);
 				assertTrue(video.getYStart() == 0.1f);
 				//Check source file and screenshot
-				assertTrue(video.getScreenshotFile().equals("C:\\Users\\sadjlsd\\videoicon.jpeg"));
 				assertTrue(video.getSourcefile().equals("avengers.mkv"));
 				break;
 			case GRAPHIC:

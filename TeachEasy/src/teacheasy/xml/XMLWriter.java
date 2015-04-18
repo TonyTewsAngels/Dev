@@ -372,7 +372,6 @@ public class XMLWriter {
 	    videoElement.setAttribute("sourcefile", video.getSourcefile());
 	    videoElement.setAttribute("xstart", String.valueOf(video.getXStart()));
         videoElement.setAttribute("ystart", String.valueOf(video.getYStart()));
-        videoElement.setAttribute("videoscreenshot", video.getScreenshotFile());
 	}
 	
 	/** Add an answer box */
