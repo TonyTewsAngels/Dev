@@ -46,7 +46,8 @@ public class VideoObject extends PageObject{
     public void debugPrint() {
         super.debugPrint();
         
-        System.out.println(", Sourcefile " + sourceFile + ".\n");
+        System.out.println(", X End " + xEnd +
+                           "Sourcefile " + sourceFile + ".\n");
     }
 
     public float getXEnd() {

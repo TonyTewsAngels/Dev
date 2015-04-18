@@ -36,7 +36,7 @@ public class GraphicXMLHandler extends DefaultHandler{
         this.page = nPage;
         this.errorList = nErrorList;
         
-        graphic = new GraphicObject(GraphicType.LINE, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, null, true, null, false, 0.0f, 0.0f);
+        graphic = new GraphicObject(GraphicType.LINE, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, null, true, null, 1.0f, false, 0.0f, 0.0f);
         
         multipleChoiceStart(multipleChoiceAttrs);
     }
@@ -96,6 +96,7 @@ public class GraphicXMLHandler extends DefaultHandler{
         String graphicColorStr = attrs.getValue("graphiccolor");
         String rotationStr = attrs.getValue("rotation");
         String shadowStr = attrs.getValue("shadow");
+        String outlineThicknessStr = attrs.getValue("outlinethickness");
         String lineColorStr = attrs.getValue("linecolor");
         String startTimeStr = attrs.getValue("starttime");
         String durationStr = attrs.getValue("duration");
@@ -118,7 +119,7 @@ public class GraphicXMLHandler extends DefaultHandler{
             typeStr = new String("line");
         }
         
-        GraphicType type = GraphicType.check(typeStr);
+        GraphicType type = GraphicType.check(typeStr.toUpperCase());
         
         boolean solid = XMLUtil.checkBool(solidStr, true, Level.ERROR, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Graphic) Solid setting ");
@@ -135,12 +136,15 @@ public class GraphicXMLHandler extends DefaultHandler{
         lineColorStr = XMLUtil.checkColor(lineColorStr, graphicColorStr, Level.WARNING, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Graphic) Line Color ");
         
+        float outlineThickness = XMLUtil.checkFloat(outlineThicknessStr, 1.0f, Level.WARNING, errorList,
+                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Graphic) Line thickness ");
+        
         float startTime = XMLUtil.checkFloat(startTimeStr, 0.0f, Level.WARNING, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Graphic) StartTime ");
         
         float duration = XMLUtil.checkFloat(durationStr, 0.0f, Level.WARNING, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Graphic) Duration ");
         
-        graphic = new GraphicObject(type, xStart, yStart, xEnd, yEnd, rotation, graphicColorStr, solid, lineColorStr, shadow, startTime, duration);
+        graphic = new GraphicObject(type, xStart, yStart, xEnd, yEnd, rotation, graphicColorStr, solid, lineColorStr, outlineThickness, shadow, startTime, duration);
     }
 }

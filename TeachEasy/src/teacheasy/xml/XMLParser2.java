@@ -44,6 +44,10 @@ public class XMLParser2 extends DefaultHandler {
         return errorList;
     }
     
+    public Lesson getLesson() {
+        return lesson;
+    }
+    
     public void startElement(String uri, String localName, String qName, Attributes attrs) {
         switch(XMLElement.check(qName.toUpperCase())) {
             case SLIDESHOW:

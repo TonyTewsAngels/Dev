@@ -21,6 +21,8 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import teacheasy.data.*;
 import teacheasy.render.Renderer;
 import teacheasy.xml.*;
+import teacheasy.xml.util.XMLNotification;
+import teacheasy.xml.util.XMLNotification.Level;
 
 /**
  * This class encapsulates the current state of the
@@ -177,18 +179,22 @@ public class RunTimeData {
         xmlHandler.setRecentReadPath(file.getAbsolutePath());
         
         /* Parse the file */
-        ArrayList<String> errorList = xmlHandler.parseXML(file.getAbsolutePath());
+        ArrayList<XMLNotification> errorList = xmlHandler.parseXML2(file.getAbsolutePath());
         
         /* If any errors were found during parsing, do not load the lesson */
         if(errorList.size() > 0) {   
             for(int i = 0; i < errorList.size(); i++) {
                 System.out.println(errorList.get(i));
             }
+        }
+        
+        if(XMLNotification.countLevel(errorList, Level.ERROR) > 0) {   
             return false;
         }
         
         /* Get the lesson data */
         lesson = xmlHandler.getLesson();
+        lesson.debugPrint();
         
         /* Open the lesson */
         setPageCount(lesson.pages.size());

@@ -35,7 +35,7 @@
         <video sourcefile="M:/Year 3/SWENG/Videos/avengers-featurehp.mp4" videoscreenshot="C:\Users\sadjlsd\videoicon.jpeg" xstart="0.1" ystart="0.1"/>
     </slide>
     <slide backgroundcolor="#ffcc00cc" number="3">
-        <video sourcefile="M:/Year 3/SWENG/Videos/prometheus-featureukFhp.mp4" videoscreenshot="C:\Users\sadjlsd\videoicon.jpeg" xstart="0.1" ystart="0.1"/>
+        <video sourcefile="M:/Year 3/SWENG/Videos/prometheus-featureukFhp.mp4" videoscreenshot="C:\Users\sadjlsd\videoicon.jpeg" xstart="0.1" ystart="0.1" xend="0.9"/>
     </slide>
     <slide backgroundcolor="#ffffffff" number="4">
     	<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.1" ystart="0.1">

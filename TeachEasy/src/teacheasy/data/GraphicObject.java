@@ -68,7 +68,8 @@ public class GraphicObject extends PageObject {
 	
     public GraphicObject(GraphicType nType, float nXStart, float nYStart, float nXEnd, 
                          float nYEnd, float nRotation, String nGraphicColor,   
-                         boolean nSolid, String nLineColor, boolean nShadow,
+                         boolean nSolid, String nLineColor, float nOutlineThickness,
+                         boolean nShadow,
                          float nStartTime, float nDuration) {
 
         super(PageObjectType.GRAPHIC, nXStart, nYStart);
@@ -80,6 +81,7 @@ public class GraphicObject extends PageObject {
         this.graphicColor = nGraphicColor;
         this.solid = nSolid;
         this.lineColor = nLineColor;
+        this.outlineThickness = nOutlineThickness;
         this.shadow = nShadow;
         
         this.startTime = nStartTime;
@@ -204,7 +206,8 @@ public class GraphicObject extends PageObject {
     public void debugPrint() {
         super.debugPrint();
         
-        System.out.println(", xEnd " + xEnd + 
+        System.out.println(", type " + graphicType.toString() +
+                           ", xEnd " + xEnd + 
                            ", yEnd " + yEnd + 
                            ", Rotation " + rotation +
                            ", Color " + graphicColor + 

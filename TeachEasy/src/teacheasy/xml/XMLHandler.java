@@ -19,11 +19,7 @@ import teacheasy.xml.util.XMLNotification;
  * @version 	1.0 05 Feb 2015
  * @author 		Alistair Jewers
  */
-public class XMLHandler {
-	
-	/** XML Parser */
-	private XMLParser xmlParser;
-	
+public class XMLHandler {	
 	/** XML Parser */
 	private XMLParser2 xmlParser2;
 	
@@ -38,20 +34,11 @@ public class XMLHandler {
 	
 	/** Constructor Method */
 	public XMLHandler() {
-		
-		/* Instantiate the Parser */
-		xmlParser = new XMLParser();
-		
 		/* Instantiate the Parser */
         xmlParser2 = new XMLParser2();
 		
 		/* Instantiate the Writer */
 		xmlWriter = new XMLWriter();
-	}
-	
-	/** Parse an xml file */
-	public ArrayList<String> parseXML(String filename) {
-		return xmlParser.parse(filename);
 	}
 	
 	/** Parse an xml file */
@@ -61,7 +48,7 @@ public class XMLHandler {
 	
 	/** Get the most recently parsed lesson */
 	public Lesson getLesson() {
-	    return xmlParser.getLesson();
+	    return xmlParser2.getLesson();
 	}
 	
 	/** Write a lesson to xml */

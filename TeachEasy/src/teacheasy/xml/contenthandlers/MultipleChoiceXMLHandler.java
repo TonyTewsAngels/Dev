@@ -86,7 +86,7 @@ public class MultipleChoiceXMLHandler extends DefaultHandler{
             typeStr = new String("line");
         }
         
-        MultiChoiceType type = MultiChoiceType.check(typeStr);
+        MultiChoiceType type = MultiChoiceType.check(typeStr.toUpperCase());
         
         if(orientationStr == null) {
             errorList.add(new XMLNotification(Level.ERROR,
@@ -94,7 +94,7 @@ public class MultipleChoiceXMLHandler extends DefaultHandler{
             orientationStr = new String("vertical");
         }
         
-        Orientation orientation = Orientation.check(orientationStr);
+        Orientation orientation = Orientation.check(orientationStr.toUpperCase());
         
         boolean retry = XMLUtil.checkBool(retryStr, true, Level.ERROR, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Multiple Choice) Retry setting ");
