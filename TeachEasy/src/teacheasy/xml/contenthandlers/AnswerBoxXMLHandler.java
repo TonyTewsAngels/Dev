@@ -81,7 +81,7 @@ public class AnswerBoxXMLHandler extends DefaultHandler{
         boolean numerical = XMLUtil.checkBool(numericalStr, false, Level.ERROR, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (AnswerBox) Numerical setting ");
         
-        boolean retry = XMLUtil.checkBool(retryStr, false, Level.ERROR, errorList,
+        boolean retry = XMLUtil.checkBool(retryStr, true, Level.ERROR, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (AnswerBox) Retry setting ");
         
         answerBox = new AnswerBoxObject(xStart, yStart, characterLimit, marks, correctAnswerStr, retry, numerical);
