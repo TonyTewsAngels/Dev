@@ -8,6 +8,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import teacheasy.data.GraphicObject;
 import teacheasy.data.GraphicObject.GraphicType;
+import teacheasy.data.GraphicObject.Shading;
 import teacheasy.data.MultipleChoiceObject;
 import teacheasy.data.Lesson;
 import teacheasy.data.MultipleChoiceObject.MultiChoiceType;
@@ -35,13 +36,24 @@ public class GraphicXMLHandler extends DefaultHandler{
         this.page = nPage;
         this.errorList = nErrorList;
         
+        graphic = new GraphicObject(GraphicType.LINE, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, null, true, null, false, 0.0f, 0.0f);
+        
         multipleChoiceStart(multipleChoiceAttrs);
     }
     
     public void startElement(String uri, String localName, String qName, Attributes attrs) {
         switch(XMLElement.check(qName.toUpperCase())) {
             case CYCLICSHADING:
-                
+                graphic.setShading(Shading.CYCLIC);
+                handleShading(attrs);
+                break;
+            case HORIZONTALSHADING:
+                graphic.setShading(Shading.HORIZONTAL);
+                handleShading(attrs);
+                break;
+            case VERTICALSHADING:
+                graphic.setShading(Shading.VERTICAL);
+                handleShading(attrs);
                 break;
             default:
                 break;
@@ -63,6 +75,15 @@ public class GraphicXMLHandler extends DefaultHandler{
         page.pageObjects.add(graphic);
         
         xmlReader.setContentHandler(parent);
+    }
+    
+    public void handleShading(Attributes attrs) {
+        String shadingColor = attrs.getValue("shadingcolor");
+        
+        shadingColor = XMLUtil.checkColor(shadingColor, graphic.getGraphicColour(), Level.ERROR, errorList, 
+                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Graphic) Shading color ");
+        
+        graphic.setShadingColor(shadingColor);
     }
     
     public void multipleChoiceStart(Attributes attrs) {
