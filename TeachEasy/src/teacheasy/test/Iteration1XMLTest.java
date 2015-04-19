@@ -20,6 +20,8 @@ import teacheasy.data.*;
 import teacheasy.data.MultipleChoiceObject.MultiChoiceType;
 import teacheasy.xml.*;
 
+import teacheasy.xml.util.XMLNotification;
+
 /**
  * This class tests the XML Parser and Writer using
  * a JUnit automated test system.
@@ -30,12 +32,12 @@ import teacheasy.xml.*;
  */
 public class Iteration1XMLTest {
 	private static XMLHandler handler;
-	private static XMLParser parser;
+	private static XMLParser2 parser;
 	private static XMLWriter writer;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		parser = new XMLParser();
+		parser = new XMLParser2();
 		writer = new XMLWriter();
 	}
 	
@@ -45,7 +47,7 @@ public class Iteration1XMLTest {
 	@Test
 	public void checkParserWithNonexistentXML() {
 		//Parse the XML file
-		ArrayList<String> errorList = parser.parse("iDontExist.xml");
+		ArrayList<XMLNotification> errorList = parser.parse("iDontExist.xml");
 		System.out.println("non existent file test:" + errorList);
 		assertTrue(errorList.size() != 0);
 	}
@@ -56,7 +58,7 @@ public class Iteration1XMLTest {
 	 */
 	@Test
 	public void checkParserWithMissingDataXML() {
-		ArrayList<String> errorList;
+		ArrayList<XMLNotification> errorList;
 		errorList = parser.parse("testXML/missingImageAudioVideoData.xml");
 		System.out.println("missing media test:" + errorList);
 		assertTrue(errorList.size() == 0);
@@ -68,7 +70,7 @@ public class Iteration1XMLTest {
 	 */
 	@Test
 	public void checkParserWithNoImageLocation() {
-		ArrayList<String> errorList;
+		ArrayList<XMLNotification> errorList;
 		errorList = parser.parse("testXML/missingImageLocation.xml");
 		System.out.println("image location test:" + errorList);
 		//Check that there IS an error in the list
@@ -78,7 +80,7 @@ public class Iteration1XMLTest {
 	/** Check how the parser handles missing default settings*/
 	@Test
 	public void checkParserDefaults() {
-		ArrayList<String> errorList;
+		ArrayList<XMLNotification> errorList;
 		errorList = parser.parse("testXML/missingDefaults.xml");
 		System.out.println("missing defaults test:" + errorList);
 		assertTrue(errorList.size() == 0);
@@ -87,7 +89,7 @@ public class Iteration1XMLTest {
 	/** Check how parser handles missing document info section */
 	@Test
 	public void checkMissingDocumentInfo() {
-		ArrayList<String> errorList;
+		ArrayList<XMLNotification> errorList;
 		errorList = parser.parse("testXML/missingDocumentInfo.xml");
 		System.out.println("missing document info test:" + errorList);
 		assertTrue(errorList.size() != 0);
@@ -96,7 +98,7 @@ public class Iteration1XMLTest {
 	/** Check how parser handles an xml file which does not define locations */
 	@Test
 	public void checkNoLocations() {
-		ArrayList<String> errorList;
+		ArrayList<XMLNotification> errorList;
 		errorList = parser.parse("testXML/noLocations.xml");
 		System.out.println("no locations test:" + errorList);
 		assertTrue(errorList.size() != 0);
@@ -105,7 +107,7 @@ public class Iteration1XMLTest {
 	/** Check pass boundary */
 	@Test
 	public void checkPassBoundary() {
-		ArrayList<String> errorList;
+		ArrayList<XMLNotification> errorList;
 		errorList = parser.parse("testXML/passBoundaryTest.xml");
 		System.out.println("Pass boundary test:" + errorList);
 		assertTrue(errorList.size() != 0);
@@ -114,7 +116,7 @@ public class Iteration1XMLTest {
 	/** Check if error if a colour is given in wrong format (not hex) */
 	@Test
 	public void checkColourFormatting() {
-		ArrayList<String> errorList;
+		ArrayList<XMLNotification> errorList;
 		errorList = parser.parse("testXML/colourFormatting.xml");
 		System.out.println("Colour formatting test: " + errorList);
 		assertTrue(errorList.size() != 0);
@@ -123,7 +125,7 @@ public class Iteration1XMLTest {
 	/** Check if locations can be greater than 1 or negative */
 	@Test
 	public void checkLocationToobig() {
-		ArrayList<String> errorList;
+		ArrayList<XMLNotification> errorList;
 		errorList = parser.parse("testXML/incorrectLocation.xml");
 		System.out.println("Location greater than 1 and negative test:" + errorList);
 		assertTrue(errorList.size() != 0);
@@ -132,7 +134,7 @@ public class Iteration1XMLTest {
 	/** Check if for graphic x/yend can be smaller than x/ystart */
 	@Test
 	public void checkGraphicLocation() {
-		ArrayList<String> errorList;
+		ArrayList<XMLNotification> errorList;
 		errorList = parser.parse("testXML/graphicsLocation.xml");
 		System.out.println("Check graphics locations:" + errorList);
 		assertTrue(errorList.size() != 0);
@@ -231,7 +233,7 @@ public class Iteration1XMLTest {
 	/** Check to see if defaults are stored correctly */
 	@Test
 	public void checkDefaultStoredCorrectly() {
-		ArrayList<String> errorList = parser.parse("testXML/testingDefaults.xml");
+		ArrayList<XMLNotification> errorList = parser.parse("testXML/testingDefaults.xml");
 		Lesson lesson = parser.getLesson();
 		Page page = lesson.pages.get(0);
 		for (int i = 0; i < page.pageObjects.size(); i++) {
@@ -276,7 +278,7 @@ public class Iteration1XMLTest {
 		Lesson lesson = parser.getLesson();
 		writer.writeXML(lesson, "testXML/writerTestCorrectXML.xml");
 		File file = new File("testXML/writerTestXML.xml");
-		ArrayList<String> errorList = parser.parse("testXML/writerTestCorrectXML.xml");
+		ArrayList<XMLNotification> errorList = parser.parse("testXML/writerTestCorrectXML.xml");
 		file.delete();
 		assertTrue(errorList.size() == 0);
 	}
