@@ -127,7 +127,7 @@ public class ImageObject extends PageObject {
     }
     
     /** Method to get the start time */
-    public float geStartTime() {
+    public float getStartTime() {
         return startTime;
     }
     
