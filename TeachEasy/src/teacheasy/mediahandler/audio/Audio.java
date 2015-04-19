@@ -117,7 +117,7 @@ public class Audio {
      * 						visibleControls is true, all control buttons are visible
      * 
      */
-	public Audio(Group nGroup, double x, double y, double width, String sourceFile, boolean autoPlay, boolean loop, boolean visibleControls, boolean playButtonOnly){
+	public Audio(Group nGroup, float x, float y, float width, String sourceFile, boolean autoPlay, boolean loop, boolean visibleControls, boolean playButtonOnly){
 		/* Set the group reference */
 		this.group = nGroup;
 
