@@ -36,6 +36,7 @@ import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 /**
@@ -96,6 +97,9 @@ public class Video {
     /** The minimum width a video can be whilst still accommodating the controls */
     private static final int MIN_WIDTH = 350;
     
+    /** Event handler for fullscreen exit */
+    private EventHandler<WindowEvent> fullScreenCloseHandler;
+    
     /**
      * Constructs the video.
      * 
@@ -116,9 +120,12 @@ public class Video {
      * 
      * @param loop If true the video loops to the beginning when it ends
      */
-    public Video(Group nGroup, float x, float y, float width, String sourcefile, boolean autoPlay, boolean loop) {
+    public Video(Group nGroup, float x, float y, float width, String sourcefile, boolean autoPlay, boolean loop, EventHandler<WindowEvent> nFullScreenCloseHandler) {
         /* Set the group reference */
         this.group = nGroup;
+        
+        /* Set the full screen exit event handler reference */
+        this.fullScreenCloseHandler = nFullScreenCloseHandler;
         
         /* Load icon images */
         playImage = new ImageView(new Image(getClass().getResourceAsStream("Play_ST_CONTENT_RECT_Transparent_L-01.png")));
@@ -497,7 +504,7 @@ public class Video {
             group.getChildren().add(videoFrame);
             
             /* Hide the fullscreen video stage */
-            fsStage.hide();
+            fsStage.close();
             
             /* Set the fullscreen flag false */
             fsInfo.setFullscreen(false);
@@ -530,6 +537,7 @@ public class Video {
             fsStage.setTitle("");
             fsStage.setFullScreen(true);
             fsStage.show();
+            fsStage.setOnCloseRequest(fullScreenCloseHandler);
             
             /* Set the fullscreen flag true */
             fsInfo.setFullscreen(true);
@@ -706,6 +714,8 @@ public class Video {
         @Override
         public void handle(KeyEvent k) {
             if(k.getCode() == KeyCode.ESCAPE) {
+                fullscreen();
+            } else if(k.getCode() == KeyCode.F4 && k.isAltDown()) {
                 fullscreen();
             }
         }

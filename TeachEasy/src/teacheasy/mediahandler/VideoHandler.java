@@ -9,7 +9,9 @@ package teacheasy.mediahandler;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.stage.WindowEvent;
 
 import teacheasy.mediahandler.video.Video;
 
@@ -24,17 +26,26 @@ public class VideoHandler {
     /* Reference to the group on which to draw videos */
     private Group group;
     
+    /** Event handler for fullscreen exit */
+    private EventHandler<WindowEvent> fullScreenCloseHandler;
+    
     /* Array List of the videos currently on the screen */
     private List<Video> videos;
     
     /** 
      * Constructs the video handler.
      * 
-     * @param nGroup The group this handler should place videos in
+     * @param nGroup The group this handler should place videos in.
+     * 
+     * @param nFullScreenCloseHandler An event handler to trigger events when 
+     *                                fullscreen is exited. Wavemedia required.
      */
-    public VideoHandler(Group nGroup) {
+    public VideoHandler(Group nGroup, EventHandler<WindowEvent> nFullScreenCloseHandler) {
         /* Set the group reference */
         this.group = nGroup;
+        
+        /* Set the full screen exit event handler reference */
+        this.fullScreenCloseHandler = nFullScreenCloseHandler;
         
         /* Initialise the video list */
         this.videos = new ArrayList<Video>();
@@ -59,7 +70,7 @@ public class VideoHandler {
      * @param loop If true video loops to beginning once it ends.
      */
     public void createVideo(float x, float y, float width, String sourcefile, boolean autoPlay, boolean loop) {
-        videos.add(new Video(group, x, y, width, sourcefile, autoPlay, loop));
+        videos.add(new Video(group, x, y, width, sourcefile, autoPlay, loop, fullScreenCloseHandler));
     }
     
     /** 
