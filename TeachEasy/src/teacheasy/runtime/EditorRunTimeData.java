@@ -226,6 +226,36 @@ public class EditorRunTimeData {
         return true;
     }
     
+    /** Save a lesson file */
+    public void saveLesson() {
+        /* Create a file chooser */
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Files", "*.xml"));
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        
+        /* Set the initial directory to the recent read path */
+        if(xmlHandler.getRecentWritePath() != null) {
+            fileChooser.setInitialDirectory(new File(new File(xmlHandler.getRecentWritePath()).getParent()));
+        } else if(xmlHandler.getRecentReadPath() != null) {
+            fileChooser.setInitialDirectory(new File(new File(xmlHandler.getRecentReadPath()).getParent()));
+        }
+        
+        /* Get the file to save */
+        File file = fileChooser.showSaveDialog(new Stage());
+        
+        String filePath = file.getAbsolutePath();
+        
+        if(!filePath.endsWith(".xml")) {
+            filePath = new String(filePath + ".xml");
+        }
+        
+        /* Set the recent read Path */
+        xmlHandler.setRecentWritePath(file.getAbsolutePath());
+        
+        /* Write the file */
+        xmlHandler.writeXML(lesson, filePath);
+    }
+    
     /** Close the current lesson */
     public void closeLesson() {
         /* Clear the page */

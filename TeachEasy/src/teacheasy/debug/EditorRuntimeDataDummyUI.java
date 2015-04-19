@@ -73,7 +73,12 @@ public class EditorRuntimeDataDummyUI extends Application {
         menuItemNew.setId("FileNew");
         menuItemNew.setOnAction(new MenuEventHandler());
         
-        menuFile.getItems().addAll(menuItemNew, menuItemClose, menuItemOpen);
+        /* Add a save button to the file menu */
+        MenuItem menuItemSave = new MenuItem("Save");
+        menuItemSave.setId("FileSave");
+        menuItemSave.setOnAction(new MenuEventHandler());
+        
+        menuFile.getItems().addAll(menuItemNew, menuItemOpen, menuItemSave, menuItemClose);
         menuBar.getMenus().addAll(menuFile, menuEdit, menuPreview, menuHelp);
         
         /* Add the menu to the grid */
@@ -178,6 +183,14 @@ public class EditorRuntimeDataDummyUI extends Application {
         /* Re-draw the window */
         updateUI();
     }
+    /** File->Save menu option functionality */
+    public void fileSavePressed() {
+        /* Close the current lesson */
+        editorRunTimeData.saveLesson();
+        
+        /* Re-draw the window */
+        updateUI();
+    }
     
     public static void main(String args[]) {
         new RuntimeDataDummyUI();
@@ -217,8 +230,10 @@ public class EditorRuntimeDataDummyUI extends Application {
                 fileOpenPressed();
             } else if(menuItem.getId().equals("FileClose")) {
                 fileClosePressed();
-            }  else if(menuItem.getId().equals("FileNew")) {
+            } else if(menuItem.getId().equals("FileNew")) {
                 fileNewPressed();
+            } else if(menuItem.getId().equals("FileSave")) {
+                fileSavePressed();
             } 
         }
     } 
