@@ -70,7 +70,7 @@ public class AudioHandler {
 	  *  						and pause button. If false, all controls will be visible.
 	  *  
 	  */
-    public void createAudio(double x, double y, double width, String sourceFile, boolean autoPlay, boolean loop, boolean visibleControls, boolean playButtonOnly) {
+    public void createAudio(float x, float y, float width, String sourceFile, boolean autoPlay, boolean loop, boolean visibleControls, boolean playButtonOnly) {
         audios.add(new Audio(group, x, y, width, sourceFile, autoPlay, loop, visibleControls, playButtonOnly));
     }
     
