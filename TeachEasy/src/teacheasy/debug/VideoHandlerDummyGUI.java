@@ -34,7 +34,7 @@ public class VideoHandlerDummyGUI extends Application {
         group.getChildren().add(button);
 
         /* Instantiate the video handler */
-        videoHandler = new VideoHandler(group);
+        videoHandler = new VideoHandler(group, null);
         
         /* Use the video handler to create a video */
         videoHandler.createVideo(5, 5, 500, "E:/Users/Alex/Desktop/Technical/BigBuckBunny_320x180.mp4", false, false);

@@ -41,10 +41,10 @@ public class VideoHandlerTest extends Application {
         primaryStage.setScene(scene);
 
         /* Instantiate the video handler */
-        videoHandler = new VideoHandler(group);
+        videoHandler = new VideoHandler(group, null);
         
         /* Use the video handler to create a video */
-        videoHandler.createVideo(5, 5, 100, "H:\\Electronic Engineering\\3rd\\SWEng\\avengers-featurehp.mp4", true, true);
+        videoHandler.createVideo(5, 5, 100, "M:/Year 3/SWENG/Videos/avengers-featurehp.mp4", true, true);
            
         /* Show the window */
         primaryStage.show(); 

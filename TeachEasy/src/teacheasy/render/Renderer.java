@@ -47,7 +47,7 @@ public class Renderer {
         this.bounds = nBounds;
         
         /* Instantiate the handlers */
-        videoHandler = new VideoHandler(group);
+        videoHandler = new VideoHandler(group, null);
         imageHandler = new ImageHandler(group);
         textHandler = new TextHandler(group);
         graphicsHandler = new GraphicsHandler(group);
