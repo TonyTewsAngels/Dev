@@ -179,7 +179,6 @@ public class XMLWriter {
 	    lessonElement.appendChild(pageElement);
 	    
 	    /* Set the attributes for the page */
-	    pageElement.setAttribute("number", String.valueOf(page.getNumber()));
 	    pageElement.setAttribute("backgroundcolor", page.getPageColour());
 	    
 	    /* Add each of the page object elements to the page element */
@@ -217,10 +216,6 @@ public class XMLWriter {
                     MultipleChoiceObject multipleChoiceObject = (MultipleChoiceObject) pageObject;
                     addMultipleChoice(multipleChoiceObject, pageElement, doc);
                     break;
-                case BUTTON:
-                    ButtonObject buttonObject = (ButtonObject) pageObject;
-                    addButton(buttonObject, pageElement, doc);
-                    break;
 	            default:
 	                break;
 	        }
@@ -237,9 +232,13 @@ public class XMLWriter {
 	    textElement.setAttribute("sourcefile", text.getSourceFile());
 	    textElement.setAttribute("xstart", String.valueOf(text.getXStart()));
 	    textElement.setAttribute("ystart", String.valueOf(text.getYStart()));
+	    textElement.setAttribute("xend", String.valueOf(text.getXEnd()));
+        textElement.setAttribute("yend", String.valueOf(text.getYEnd()));
 	    textElement.setAttribute("font", text.getFont());
 	    textElement.setAttribute("fontsize", String.valueOf(text.getFontSize()));
 	    textElement.setAttribute("fontcolor", text.getColor());
+	    textElement.setAttribute("starttime", String.valueOf(text.getStartTime()));
+        textElement.setAttribute("duration", String.valueOf(text.getDuration()));
 	    
 	    /* Add the rich text elements as children */
 	    for(int i = 0; i < text.textFragments.size(); i++) {
@@ -255,34 +254,14 @@ public class XMLWriter {
             richTextElement.setAttribute("fontsize", String.valueOf(richText.getFontSize()));
             richTextElement.setAttribute("fontcolor", richText.getColor());
             
-            /* Add the emphasis attributes as necessary */
-            if(richText.isBold()) {
-                richTextElement.setAttribute("bold", "true"); 
-            }
-            
-            if(richText.isItalic()) {
-                richTextElement.setAttribute("italic", "true"); 
-            }
-            
-            if(richText.isUnderline()) {
-                richTextElement.setAttribute("underline", "true"); 
-            }
-            
-            if(richText.isStrikethrough()) {
-                richTextElement.setAttribute("strikethrough", "true"); 
-            }
-            
-            if(richText.isSuperscript()) {
-                richTextElement.setAttribute("superscript", "true"); 
-            }
-            
-            if(richText.isSubscript()) {
-                richTextElement.setAttribute("subscript", "true"); 
-            }
-            
-            if(richText.isNewLine()) {
-                richTextElement.setAttribute("newline", "true"); 
-            }
+            /* Add the emphasis attributes */
+            richTextElement.setAttribute("bold", String.valueOf(richText.isBold()));
+            richTextElement.setAttribute("italic", String.valueOf(richText.isItalic()));
+            richTextElement.setAttribute("underline", String.valueOf(richText.isUnderline()));
+            richTextElement.setAttribute("superscript", String.valueOf(richText.isSuperscript()));
+            richTextElement.setAttribute("subscript", String.valueOf(richText.isSubscript()));
+            richTextElement.setAttribute("strikethrough", String.valueOf(richText.isStrikethrough()));
+            richTextElement.setAttribute("newline", String.valueOf(richText.isNewLine()));
             
             /* Add the text string */
             richTextElement.appendChild(doc.createTextNode(richText.getText()));
@@ -299,9 +278,13 @@ public class XMLWriter {
 	    imageElement.setAttribute("sourcefile", image.getSourcefile());
 	    imageElement.setAttribute("xstart", String.valueOf(image.getXStart()));
 	    imageElement.setAttribute("ystart", String.valueOf(image.getYStart()));
+	    imageElement.setAttribute("xend", String.valueOf(image.getXEnd()));
+        imageElement.setAttribute("yend", String.valueOf(image.getYEnd()));
 	    imageElement.setAttribute("scale", String.valueOf(image.getxScaleFactor()));
 	    imageElement.setAttribute("yscale", String.valueOf(image.getyScaleFactor()));
 	    imageElement.setAttribute("rotation", String.valueOf(image.getRotation()));
+	    imageElement.setAttribute("starttime", String.valueOf(image.getStartTime()));
+        imageElement.setAttribute("duration", String.valueOf(image.getDuration()));
 	}
 	
 	/** Add an audio clip */
@@ -314,6 +297,7 @@ public class XMLWriter {
 	    audioElement.setAttribute("sourcefile", audio.getSourcefile());
 	    audioElement.setAttribute("xstart", String.valueOf(audio.getXStart()));
 	    audioElement.setAttribute("ystart", String.valueOf(audio.getYStart()));
+	    audioElement.setAttribute("end", String.valueOf(audio.getXEnd()));
         audioElement.setAttribute("viewprogress", String.valueOf(audio.isViewProgress()));
 	}
 	
@@ -333,26 +317,11 @@ public class XMLWriter {
         graphicElement.setAttribute("graphiccolor", graphic.getGraphicColour());
         graphicElement.setAttribute("rotation", String.valueOf(graphic.getRotation()));
         graphicElement.setAttribute("outlinethickness", String.valueOf(graphic.getOutlineThickness()));
+        graphicElement.setAttribute("linecolor", graphic.getLineColor());
         graphicElement.setAttribute("shadow", String.valueOf(graphic.isShadow()));
         
         /* Declare an element for the shading */
-        Element shadingElement;
-        
-        /* If shading is not 'none' give the shading element the correct name. Else return */
-        switch(graphic.getShading()) {
-            case CYCLIC:
-                shadingElement = doc.createElement("cyclicshading");
-                break;
-            case VERTICAL:
-                shadingElement = doc.createElement("verticalshading");
-                break;
-            case HORIZONTAL:
-                shadingElement = doc.createElement("horizontalshading");
-                break;
-            case NONE:
-            default:
-                return;
-        }
+        Element shadingElement = doc.createElement(graphic.getShading().toString().toLowerCase());
         
         /* Add the shading element to the graphic element */
         graphicElement.appendChild(shadingElement);
@@ -371,6 +340,7 @@ public class XMLWriter {
 	    videoElement.setAttribute("sourcefile", video.getSourcefile());
 	    videoElement.setAttribute("xstart", String.valueOf(video.getXStart()));
         videoElement.setAttribute("ystart", String.valueOf(video.getYStart()));
+        videoElement.setAttribute("xend", String.valueOf(video.getXEnd()));
 	}
 	
 	/** Add an answer box */
@@ -412,32 +382,10 @@ public class XMLWriter {
 	        multipleChoiceElement.appendChild(answerElement);
 	        
 	        /* Set the correct attribute */
-	        if(answer.isCorrect()) {
-	            answerElement.setAttribute("correct", "true");
-	        } else {
-	            answerElement.setAttribute("correct", "false");
-	        }
+	        answerElement.setAttribute("correct", String.valueOf(answer.isCorrect()));
 	        
 	        /* Set the text */
 	        answerElement.appendChild(doc.createTextNode(answer.getText()));
 	    }
-	}
-	
-	/** Add a button */
-	public void addButton(ButtonObject button, Element pageElement, Document doc) {
-	    /* Create the button element and add it to the page element */
-	    Element buttonElement = doc.createElement("button");
-	    pageElement.appendChild(buttonElement);
-	    
-	    /* Set the attributes */
-	    buttonElement.setAttribute("xstart", String.valueOf(button.getXStart()));
-	    buttonElement.setAttribute("ystart", String.valueOf(button.getYStart()));
-	    buttonElement.setAttribute("xend", String.valueOf(button.getxEnd()));
-        buttonElement.setAttribute("yend", String.valueOf(button.getxEnd()));
-        buttonElement.setAttribute("function", String.valueOf(button.getFunction()));
-        buttonElement.setAttribute("visible", String.valueOf(button.isVisible()));
-        
-        /* Set the text */
-        buttonElement.appendChild(doc.createTextNode(button.getText()));
 	}
 }
