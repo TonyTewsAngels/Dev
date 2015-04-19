@@ -400,22 +400,30 @@ public class Audio {
 	
 	/** Programmatically play this audio track. */
     public void play() {
-        player.play();
+        if(player != null) {
+            player.play();
+        }
     }
     
     /** Programmatically pause this audio track. */
     public void pause() {
-    	player.pause();
+        if(player != null) {
+            player.pause();
+        }
     }
     
     /** Programatically stop this audio track. */
     public void stop() {
-    	player.stop();
+        if(player != null) {
+            player.stop();
+        }
     }
     
     /** Programmatically dispose of this audio track. */
     public void dispose() {
-    	player.dispose();
+        if(player != null) {
+            player.dispose();
+        }
     }
     
     /** Programmatically resizes this video. */
