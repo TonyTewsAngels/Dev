@@ -10,12 +10,9 @@ import java.io.File;
 import java.util.ArrayList;
 
 import teacheasy.data.*;
-import teacheasy.data.GraphicObject;
 import teacheasy.mediahandler.*;
 import wavemedia.graphic.*;
-import wavemedia.text.Alignment;
-import wavemedia.text.TextAttribute;
-import wavemedia.text.TextHandler;
+import wavemedia.text.*;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
@@ -129,40 +126,33 @@ public class Renderer {
     
     /** Render a text box on a page */
     private void renderText(TextObject text) {
-        /* Clear the handler buffer */
-        textHandler.clearBuffer();
+        float xstart = (float)bounds.getMaxX() * text.getXStart();
+        float ystart = (float)bounds.getMaxY() * text.getYStart();
+        float xend = (float)bounds.getMaxX() * text.getXEnd();
+        float yend = (float)bounds.getMaxY() * text.getYEnd();
         
-        /* Loop through each rich text element */
-        for(int i = 0; i < text.textFragments.size(); i++) {
-            /* Get the rich text */
-            RichText richText = text.textFragments.get(i);
-            
-            /* Create an array of the attributes */
-            ArrayList<TextAttribute> attrs = new ArrayList<TextAttribute>();
-            if(richText.isBold()) attrs.add(TextAttribute.BOLD);
-            if(richText.isItalic()) attrs.add(TextAttribute.ITALIC);
-            if(richText.isUnderline()) attrs.add(TextAttribute.UNDERLINE);
-            if(richText.isSubscript()) attrs.add(TextAttribute.SUBSCRIPT);
-            if(richText.isSuperscript()) attrs.add(TextAttribute.SUPERSCRIPT);
-            if(richText.isStrikethrough()) attrs.add(TextAttribute.STRIKETHROUGH);         
-            
-            /* Add the rich text fragment to the buffer */
-            textHandler.addStringToBuffer(richText.getText(),
-                                          richText.getFont(),
-                                          richText.getFontSize(),
-                                          richText.getColor(),
-                                          "#00000000",
-                                          attrs.toArray(new TextAttribute[attrs.size()])); 
+        TextFragmentList fragmentList = new TextFragmentList();
+
+        for(RichText rt : text.textFragments) {
+            fragmentList.add(new TextHandlerObject.TextFragmentBuilder(rt.getText())
+                                                  .bold(rt.isBold())
+                                                  .italic(rt.isItalic())
+                                                  .underline(rt.isUnderline())
+                                                  .superscript(rt.isSuperscript())
+                                                  .subscript(rt.isSubscript())
+                                                  .strikethrough(rt.isStrikethrough())
+                                                  .fontName(rt.getFont())
+                                                  .fontColor(rt.getColor())
+                                                  .fontSize(rt.getFontSize())
+                                                  .newline(rt.isNewLine())
+                                                  .build());
         }
         
-        /* Draw the buffer to the screen */
-        textHandler.drawBuffer((int)(bounds.getMaxX() * text.getXStart()),
-                               (int)(bounds.getMaxY() * text.getYStart()),
-                               (int)(bounds.getMaxX() * text.getXEnd()),
-                               (int)(bounds.getMaxY() * text.getYEnd()),
-                               "#00000000",
-                               Alignment.LEFT);
-        
+        textHandler.createTextbox(new TextHandlerObject.TextBoxBuilder(xstart, ystart)
+                                                       .xEnd(xend)
+                                                       .yEnd(yend)
+                                                       .textFragmentList(fragmentList)
+                                                       .build());
     }
     
     /** Render a video on a page */

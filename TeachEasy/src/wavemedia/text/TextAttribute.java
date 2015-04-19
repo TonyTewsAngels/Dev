@@ -1,10 +1,12 @@
+/** (c) Copyright by WaveMedia. */
 package wavemedia.text;
 
 /**
- * @author tjd511
+ * Enum type to handle attributes for text.
  * 
+ * @author tjd511
+ * @version 1.0 22/02/2015
  */
 public enum TextAttribute {
-    BOLD, ITALIC, UNDERLINE, STRIKETHROUGH, SUPERSCRIPT, SUBSCRIPT
+	BOLD, ITALIC, UNDERLINE, STRIKETHROUGH, SUPERSCRIPT, SUBSCRIPT
 }
-
