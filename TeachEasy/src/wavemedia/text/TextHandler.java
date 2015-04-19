@@ -3,6 +3,7 @@ package wavemedia.text;
 
 import java.util.ArrayList;
 import javafx.scene.Group;
+import javafx.scene.web.WebView;
 
 /**
  * Class for handling multiple textboxes on a javafx group.
@@ -19,6 +20,15 @@ public class TextHandler {
 	public TextHandler(Group group) {
 		this.group = group;
 
+		/*
+		 * This call is used as a small buxfix/workaround. The first webview
+		 * instantiation takes a much longer time than the successive webview
+		 * instantiations, so this is used to move the lag to the initialisation
+		 * of the handler (normally at the start of a slide show), instead of the
+		 * initialisation of the first text box.
+		 */
+		new WebView();
+
 		/* Initialise the list of all the graphics */
 		this.texts = new ArrayList<Text>();
 	}
@@ -30,7 +40,7 @@ public class TextHandler {
 	 * @param textBox
 	 *            a textBox object containing all the information about the
 	 *            textBox to be drawn. Must be formed using the TextBuilder.
-	 * @see {@link textHandler.TextHandlerObject}
+	 * @see {@link textHandler.TextObject}
 	 */
 	public void createTextbox(TextHandlerObject textBox) {
 		texts.add(new Text(group));
