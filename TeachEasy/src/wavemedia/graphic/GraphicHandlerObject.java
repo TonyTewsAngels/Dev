@@ -100,6 +100,7 @@ public class GraphicHandlerObject {
 		/* Populate an array list of stops from the already verified data */
 		for (int i = 0; i < shadingColors.size(); i++) {
 			if (verifyColor(shadingColors.get(i))) {
+				System.err.println("Stop: " + shadingColors.get(i));
 				stops.add(new Stop((double) stopOffset.get(i), convertStringToColor(shadingColors.get(i))));
 			}
 		}
@@ -433,6 +434,9 @@ public class GraphicHandlerObject {
 		public GraphicBuilder color(String color) {
 			if (verifyColor(color)) {
 				this.color = color;
+				
+				/* Also adds the first stop color value to the list */
+				shadingElement(color, 0);
 			}
 			return this;
 		}
@@ -490,7 +494,7 @@ public class GraphicHandlerObject {
 		 *            a float for the thickness of the outline
 		 */
 		public GraphicBuilder outlineThickness(float outlineThickness) {
-			if (outlineThickness <= 0) {
+			if (outlineThickness >= 0) {
 				this.outlineThickness = outlineThickness;
 			}
 			return this;
@@ -694,6 +698,7 @@ public class GraphicHandlerObject {
 		 */
 		public GraphicBuilder shadingElement(String shadingColor, float offset) {
 			if (verifyColor(shadingColor) && (offset >= 0) && (offset <= 1)) {
+				System.err.println(shadingColor + " " + offset);
 				shadingColors.add(shadingColor);
 				offsets.add(offset);
 			}

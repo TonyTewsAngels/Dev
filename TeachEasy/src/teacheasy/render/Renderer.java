@@ -177,9 +177,9 @@ public class Renderer {
     
     /** Render an audio object on a page */
     private void renderAudio(AudioObject audio) {
-        audioHandler.createAudio((double)(bounds.getMaxX() * audio.getXStart()),
-                                 (double)(bounds.getMaxY() * audio.getYStart()),
-                                 (double)bounds.getMaxX()*(audio.getXEnd() - audio.getXStart()),
+        audioHandler.createAudio((float)(bounds.getMaxX() * audio.getXStart()),
+                                 (float)(bounds.getMaxY() * audio.getYStart()),
+                                 (float)bounds.getMaxX()*(audio.getXEnd() - audio.getXStart()),
                                  audio.getSourcefile(),
                                  false,
                                  false,
@@ -212,7 +212,7 @@ public class Renderer {
                                                                               .outlineThickness(graphic.getOutlineThickness())
                                                                               .rotation(graphic.getRotation())
                                                                               .shadingType(graphic.getShading().toString())
-                                                                              .shadingElement(graphic.getShadingColor(), 0.5f)
+                                                                              .shadingElement(graphic.getShadingColor(), 1.0f)
                                                                               .solid(graphic.isSolid())
                                                                               .build());
     }

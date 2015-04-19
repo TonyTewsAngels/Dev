@@ -181,6 +181,7 @@ public class GraphicObject extends PageObject {
                            ", Color " + graphicColor + 
                            ", Solid " + solid + 
                            ", Outline Color " + lineColor +
+                           ", Outline Thickness " + outlineThickness +
                            ", Shadow " + shadow + 
                            ", Shading " + shading +
                            ", Shading Colour " + shadingColor +

@@ -29,6 +29,8 @@ public class XMLParser2 extends DefaultHandler {
     }
     
     public ArrayList<XMLNotification> parse(String file) {
+        lesson = new Lesson();
+        
         try {
             xmlReader = XMLReaderFactory.createXMLReader();
             
