@@ -17,6 +17,8 @@ import teacheasy.data.GraphicObject.*;
 import teacheasy.data.MultipleChoiceObject.*;
 import teacheasy.data.lessondata.*;
 import teacheasy.data.multichoice.Answer;
+import wavemedia.graphic.GraphicType;
+import wavemedia.graphic.Shading;
 
 import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
@@ -736,7 +738,7 @@ public class XMLParser extends DefaultHandler{
             invalidConstruct = true;
             return;
         } else {
-            gType = GraphicType.check(type.toUpperCase());
+            gType = GraphicType.valueOf(type.toUpperCase());
         }
         
         if(xstart == null) {
@@ -835,7 +837,7 @@ public class XMLParser extends DefaultHandler{
             return;
         }
         
-        currentGraphic.setShading(GraphicObject.Shading.CYCLIC);
+        currentGraphic.setShading(Shading.CYCLIC);
         currentGraphic.setShadingColor(shadingcolor);
     }
     
@@ -857,7 +859,7 @@ public class XMLParser extends DefaultHandler{
             return;
         }
         
-        currentGraphic.setShading(GraphicObject.Shading.VERTICAL);
+        currentGraphic.setShading(Shading.VERTICAL);
         currentGraphic.setShadingColor(shadingcolor);
     }
     
@@ -879,7 +881,7 @@ public class XMLParser extends DefaultHandler{
             return;
         }
         
-        currentGraphic.setShading(GraphicObject.Shading.HORIZONTAL);
+        currentGraphic.setShading(Shading.HORIZONTAL);
         currentGraphic.setShadingColor(shadingcolor);
     }
     

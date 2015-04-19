@@ -203,6 +203,18 @@ public class Renderer {
         float ystart = (float)bounds.getMaxY() * graphic.getYStart();
         float xend = (float)bounds.getMaxX() * graphic.getXEnd();
         float yend = (float)bounds.getMaxY() * graphic.getYEnd();
+        
+        graphicsHandler.createGraphic(new GraphicHandlerObject.GraphicBuilder(graphic.getGraphicType(), xstart, ystart)
+                                                                              .xEndPos(xend)
+                                                                              .yEndPos(yend)
+                                                                              .color(graphic.getGraphicColour())
+                                                                              .outlineColor(graphic.getLineColor())
+                                                                              .outlineThickness(graphic.getOutlineThickness())
+                                                                              .rotation(graphic.getRotation())
+                                                                              .shadingType(graphic.getShading().toString())
+                                                                              .shadingElement(graphic.getShadingColor(), 0.5f)
+                                                                              .solid(graphic.isSolid())
+                                                                              .build());
     }
     
     /** Add an answer box object to the screen */

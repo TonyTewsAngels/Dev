@@ -19,11 +19,11 @@
         <passboundary failmessage="fail" passmessage="pass">10</passboundary>
     </gradesettings>
     <slide backgroundcolor="#ffa0a0a0" number="1">
-    	<graphic graphiccolor="#ff000000" outlinethickness="4" rotation="0.0" shadow="false" solid="true" type="line" xend="0.6" xstart="0.15" yend="0.6" ystart="0.15"/>
-        <graphic graphiccolor="#ff005555" linecolor="#ffff0000" outlinethickness="5" rotation="0.0" shadow="false" solid="true" type="oval" xend="0.7" xstart="0.5" yend="0.7" ystart="0.5">
+    	<graphic graphiccolor="#ff000000" outlinethickness="1" rotation="0.0" shadow="false" solid="true" type="line" xend="0.6" xstart="0.15" yend="0.6" ystart="0.15"/>
+        <graphic graphiccolor="#ff005555" linecolor="#ffff0000" outlinethickness="1" rotation="0.0" shadow="false" solid="true" type="oval" xend="0.7" xstart="0.5" yend="0.7" ystart="0.5">
         	<horizontalshading shadingcolor="#ffff0000"/>
         </graphic>
-        <graphic graphiccolor="#ffff00ff" outlinethickness="0.5" rotation="0.0" shadow="false" solid="true" type="roundedrectangle" xend="0.2" xstart="0.1" yend="0.2" ystart="0.1">
+        <graphic graphiccolor="#ffff00ff" outlinethickness="1" rotation="0.0" shadow="false" solid="true" type="rectangle" xend="0.2" xstart="0.1" yend="0.2" ystart="0.1">
         	<cyclicshading shadingcolor="#ff00ff00"/>
         </graphic>
     </slide>

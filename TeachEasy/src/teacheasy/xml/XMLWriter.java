@@ -23,7 +23,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import teacheasy.data.*;
-import teacheasy.data.GraphicObject.Shading;
 import teacheasy.data.lessondata.*;
 import teacheasy.data.multichoice.Answer;
 

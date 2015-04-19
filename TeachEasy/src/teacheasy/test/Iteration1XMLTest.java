@@ -15,7 +15,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import teacheasy.data.lessondata.*;
-import teacheasy.data.GraphicObject.GraphicType;
+import wavemedia.graphic.GraphicType;
 import teacheasy.data.*;
 import teacheasy.data.MultipleChoiceObject.MultiChoiceType;
 import teacheasy.xml.*;
