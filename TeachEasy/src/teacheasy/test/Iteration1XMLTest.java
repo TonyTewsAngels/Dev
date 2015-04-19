@@ -32,12 +32,12 @@ import teacheasy.xml.util.XMLNotification;
  */
 public class Iteration1XMLTest {
 	private static XMLHandler handler;
-	private static XMLParser2 parser;
+	private static XMLParser parser;
 	private static XMLWriter writer;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		parser = new XMLParser2();
+		parser = new XMLParser();
 		writer = new XMLWriter();
 	}
 	

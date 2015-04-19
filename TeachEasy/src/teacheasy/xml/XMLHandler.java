@@ -21,7 +21,7 @@ import teacheasy.xml.util.XMLNotification;
  */
 public class XMLHandler {	
 	/** XML Parser */
-	private XMLParser2 xmlParser2;
+	private XMLParser xmlParser2;
 	
 	/** XML Writer */
 	private XMLWriter xmlWriter;
@@ -35,7 +35,7 @@ public class XMLHandler {
 	/** Constructor Method */
 	public XMLHandler() {
 		/* Instantiate the Parser */
-        xmlParser2 = new XMLParser2();
+        xmlParser2 = new XMLParser();
 		
 		/* Instantiate the Writer */
 		xmlWriter = new XMLWriter();

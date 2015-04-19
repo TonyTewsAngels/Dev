@@ -18,12 +18,12 @@ import teacheasy.xml.contenthandlers.SlideshowXMLHandler;
 import teacheasy.xml.util.XMLNotification;
 import teacheasy.xml.util.XMLNotification.Level;
 
-public class XMLParser2 extends DefaultHandler {
+public class XMLParser extends DefaultHandler {
     private Lesson lesson;
     private ArrayList<XMLNotification> errorList;
     private XMLReader xmlReader;
     
-    public XMLParser2() {
+    public XMLParser() {
         lesson = new Lesson();
         errorList = new ArrayList<XMLNotification>();
     }
