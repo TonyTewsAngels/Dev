@@ -1,12 +1,6 @@
 package teacheasy.debug;
 
-import java.io.File;
-import java.util.ArrayList;
-
-import teacheasy.data.Lesson;
-import teacheasy.data.Page;
-import teacheasy.runtime.RunTimeData;
-import teacheasy.xml.XMLHandler;
+import teacheasy.runtime.EditorRunTimeData;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,15 +8,11 @@ import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.*;
-import javafx.scene.shape.*;
-import javafx.scene.text.*;
 import javafx.stage.*;
-import javafx.stage.FileChooser.ExtensionFilter;
 
-public class RuntimeDataDummyUI extends Application { 
+public class EditorRuntimeDataDummyUI extends Application { 
     /* Runtime Data */
-    private RunTimeData runTimeData;
+    private EditorRunTimeData editorRunTimeData;
     
     /* GUI Objects */
     private Group group;
@@ -33,7 +23,7 @@ public class RuntimeDataDummyUI extends Application {
     private Rectangle2D bounds;
     
     /** Constructor method */
-    public RuntimeDataDummyUI() {
+    public EditorRuntimeDataDummyUI() {
         // Do Nothing
     }
 
@@ -70,16 +60,20 @@ public class RuntimeDataDummyUI extends Application {
         
         /* Add an open button to the file menu */
         MenuItem menuItemOpen = new MenuItem("Open");
-        menuFile.getItems().add(menuItemOpen);
         menuItemOpen.setId("FileOpen");
         menuItemOpen.setOnAction(new MenuEventHandler());
         
         /* Add a close button to the file menu */
         MenuItem menuItemClose = new MenuItem("Close");
-        menuFile.getItems().add(menuItemClose);
         menuItemClose.setId("FileClose");
         menuItemClose.setOnAction(new MenuEventHandler());
         
+        /* Add a new button to the file menu */
+        MenuItem menuItemNew = new MenuItem("New");
+        menuItemNew.setId("FileNew");
+        menuItemNew.setOnAction(new MenuEventHandler());
+        
+        menuFile.getItems().addAll(menuItemNew, menuItemClose, menuItemOpen);
         menuBar.getMenus().addAll(menuFile, menuEdit, menuPreview, menuHelp);
         
         /* Add the menu to the grid */
@@ -110,7 +104,7 @@ public class RuntimeDataDummyUI extends Application {
         grid.add(buttonRow, 0, 2);
         
         /* Instantiate the runtime data */
-        runTimeData = new RunTimeData(group, new Rectangle2D(0, 0, bounds.getMaxX()/2, bounds.getMaxY()/2));
+        editorRunTimeData = new EditorRunTimeData(group, new Rectangle2D(0, 0, bounds.getMaxX()/2, bounds.getMaxY()/2));
         
         /* Show the stage */
         primaryStage.show();
@@ -124,14 +118,14 @@ public class RuntimeDataDummyUI extends Application {
          * If there is a lesson open enable the relevant page 
          * buttons, if not disable both.
          */
-        if(runTimeData.isLessonOpen()) {
-            if(!runTimeData.isNextPage()) {
+        if(editorRunTimeData.isLessonOpen()) {
+            if(!editorRunTimeData.isNextPage()) {
                 nextPageButton.setDisable(true);
             } else {
                 nextPageButton.setDisable(false);
             }
             
-            if(!runTimeData.isPrevPage()) {
+            if(!editorRunTimeData.isPrevPage()) {
                 prevPageButton.setDisable(true);
             } else {
                 prevPageButton.setDisable(false);
@@ -144,20 +138,20 @@ public class RuntimeDataDummyUI extends Application {
     
     /** Next page button functionality */
     public void nextPageButtonPressed() {
-        runTimeData.nextPage();
+        editorRunTimeData.nextPage();
         updateUI();
     }
     
     /** Previous page button functionality */
     public void prevPageButtonPressed() {
-        runTimeData.prevPage();
+        editorRunTimeData.prevPage();
         updateUI();
     }
     
     /** File->Open menu option functionality */
     public void fileOpenPressed() {
         /* Open the file */
-        if(runTimeData.openLesson()) {
+        if(editorRunTimeData.openLesson()) {
             /* Opened Successfully */
         } else {
             System.out.print("Parse Failed");
@@ -170,7 +164,16 @@ public class RuntimeDataDummyUI extends Application {
     /** File->Close menu option functionality */
     public void fileClosePressed() {
         /* Close the current lesson */
-        runTimeData.closeLesson();
+        editorRunTimeData.closeLesson();
+        
+        /* Re-draw the window */
+        updateUI();
+    }
+    
+    /** File->New menu option functionality */
+    public void fileNewPressed() {
+        /* Close the current lesson */
+        editorRunTimeData.newLesson();
         
         /* Re-draw the window */
         updateUI();
@@ -214,7 +217,10 @@ public class RuntimeDataDummyUI extends Application {
                 fileOpenPressed();
             } else if(menuItem.getId().equals("FileClose")) {
                 fileClosePressed();
+            }  else if(menuItem.getId().equals("FileNew")) {
+                fileNewPressed();
             } 
         }
     } 
 }
+
