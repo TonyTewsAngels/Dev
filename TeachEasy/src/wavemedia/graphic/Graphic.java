@@ -61,7 +61,7 @@ public class Graphic {
 	 *            graphic to be drawn. Must be formed using the GraphicBuilder.
 	 * @see {@link graphicsHandler.Graphic}
 	 */
-	public void drawShape(GraphicObject graphic) {
+	public void drawShape(GraphicHandlerObject graphic) {
 		GraphicType graphicType = graphic.getGraphic();
 		float xStartPos = graphic.getXStartPos();
 		float yStartPos = graphic.getYStartPos();

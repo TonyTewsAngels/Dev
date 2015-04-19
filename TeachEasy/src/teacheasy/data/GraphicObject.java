@@ -7,6 +7,8 @@
 package teacheasy.data;
 
 import teacheasy.xml.XMLElement;
+import wavemedia.graphic.GraphicType;
+import wavemedia.graphic.Shading;
 
 /**
  * This class extends PageObject and encapsulates a single graphics object.
@@ -14,41 +16,7 @@ import teacheasy.xml.XMLElement;
  * @version 	1.0 05 Feb 2015
  * @author 		Lewis Thresh & Calum Armstrong
  */
-public class GraphicObject extends PageObject {
-
-	/** Enumeration of the various graphic types */
-	public static enum GraphicType {
-		OVAL,
-		RECTANGLE,
-		LINE,
-		TRIANGLE,
-		ROUNDEDRECTANGLE;
-		
-		public static GraphicType check(String str) {
-	        try {
-	            return valueOf(str);
-	        } catch (Exception ex) {
-	            return LINE;
-	        }
-	    }
-	}
-	
-	/** Enumeration of the various shading types */
-	public static enum Shading {
-	    NONE,
-	    CYCLIC,
-	    VERTICAL,
-	    HORIZONTAL;
-	    
-	    public static Shading check(String str) {
-	        try {
-	            return valueOf(str);
-	        } catch (Exception ex) {
-	            return NONE;
-	        }
-	    }
-	}
-	
+public class GraphicObject extends PageObject {		
 	/** Graphics Variables */
 	private GraphicType graphicType;
 	private float xEnd;

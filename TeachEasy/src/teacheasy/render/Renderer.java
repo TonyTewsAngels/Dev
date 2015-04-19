@@ -198,23 +198,11 @@ public class Renderer {
     }
     
     /** Render a graphic object on a page */
-    private void renderGraphic(GraphicObject graphic) {        
-        /* Set up the shading */
-        Shading shading;
-        switch(graphic.getShading()) {
-            case CYCLIC:
-                shading = Shading.CYCLIC;
-                break;
-            case HORIZONTAL:
-                shading = Shading.HORIZONTAL;
-                break;
-            case VERTICAL:
-                shading = Shading.VERTICAL;
-                break;
-            default:
-                shading = Shading.NONE;
-                break;
-        }
+    private void renderGraphic(GraphicObject graphic) {
+        float xstart = (float)bounds.getMaxX() * graphic.getXStart();
+        float ystart = (float)bounds.getMaxY() * graphic.getYStart();
+        float xend = (float)bounds.getMaxX() * graphic.getXEnd();
+        float yend = (float)bounds.getMaxY() * graphic.getYEnd();
     }
     
     /** Add an answer box object to the screen */

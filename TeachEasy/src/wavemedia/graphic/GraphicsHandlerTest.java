@@ -40,7 +40,7 @@ public class GraphicsHandlerTest extends Application {
 
 		graphicsHandler = new GraphicsHandler(group);
 
-		graphicsHandler.createGraphic(new GraphicObject.GraphicBuilder(GraphicType.SQUARE, 100, 100).length(50).color("#ffffff00")
+		graphicsHandler.createGraphic(new GraphicHandlerObject.GraphicBuilder(GraphicType.SQUARE, 100, 100).length(50).color("#ffffff00")
 				.build());
 
 		Button button1 = makeButton(200, 100, "1");

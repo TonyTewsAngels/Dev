@@ -7,12 +7,8 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
 import teacheasy.data.GraphicObject;
-import teacheasy.data.GraphicObject.GraphicType;
-import teacheasy.data.GraphicObject.Shading;
-import teacheasy.data.MultipleChoiceObject;
+import wavemedia.graphic.*;
 import teacheasy.data.Lesson;
-import teacheasy.data.MultipleChoiceObject.MultiChoiceType;
-import teacheasy.data.MultipleChoiceObject.Orientation;
 import teacheasy.data.Page;
 import teacheasy.xml.XMLElement;
 import teacheasy.xml.util.XMLNotification;
@@ -119,7 +115,13 @@ public class GraphicXMLHandler extends DefaultHandler{
             typeStr = new String("line");
         }
         
-        GraphicType type = GraphicType.check(typeStr.toUpperCase());
+        GraphicType type;
+        
+        try {
+            type = GraphicType.valueOf(typeStr.toUpperCase()); 
+        } catch(Exception e) {
+            type = GraphicType.LINE;
+        }
         
         boolean solid = XMLUtil.checkBool(solidStr, true, Level.ERROR, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Graphic) Solid setting ");
