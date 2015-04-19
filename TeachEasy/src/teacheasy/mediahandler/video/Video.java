@@ -348,6 +348,10 @@ public class Video {
      */
     public void setVisible(boolean visible) {
         if(videoFrame != null) {
+            if(fsInfo.isFullscreen()) {
+                fullscreen();
+            }
+            
             videoFrame.setVisible(visible);
         }
     }
