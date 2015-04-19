@@ -276,6 +276,15 @@ public class EditorRunTimeData {
         redraw(group, bounds);
     }
     
+    /** Add a new page to the current lesson */
+    public void newPage() {
+        lesson.pages.add(new Page(lesson.pages.size(), "#ffffffff"));
+        
+       setPageCount(lesson.pages.size());
+       setCurrentPage(lesson.pages.size() - 1);
+    }
+    
+    
     /** Redraw the content */
     public void redraw(Group group, Rectangle2D bounds) {        
         if(isLessonOpen()) {

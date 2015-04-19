@@ -16,6 +16,7 @@ public class EditorRuntimeDataDummyUI extends Application {
     
     /* GUI Objects */
     private Group group;
+    private Label text;
     private Button nextPageButton;
     private Button prevPageButton;
     
@@ -78,7 +79,13 @@ public class EditorRuntimeDataDummyUI extends Application {
         menuItemSave.setId("FileSave");
         menuItemSave.setOnAction(new MenuEventHandler());
         
+        /* Add a new page button to the edit menu */
+        MenuItem menuItemNewPage = new MenuItem("New Page");
+        menuItemNewPage.setId("EditNewPage");
+        menuItemNewPage.setOnAction(new MenuEventHandler());
+        
         menuFile.getItems().addAll(menuItemNew, menuItemOpen, menuItemSave, menuItemClose);
+        menuEdit.getItems().addAll(menuItemNewPage);
         menuBar.getMenus().addAll(menuFile, menuEdit, menuPreview, menuHelp);
         
         /* Add the menu to the grid */
@@ -108,6 +115,9 @@ public class EditorRuntimeDataDummyUI extends Application {
         /* Add the page buttons to the grid */
         grid.add(buttonRow, 0, 2);
         
+        text = new Label("");
+        grid.add(text, 0, 3);
+        
         /* Instantiate the runtime data */
         editorRunTimeData = new EditorRunTimeData(group, new Rectangle2D(0, 0, bounds.getMaxX()/2, bounds.getMaxY()/2));
         
@@ -123,6 +133,8 @@ public class EditorRuntimeDataDummyUI extends Application {
          * If there is a lesson open enable the relevant page 
          * buttons, if not disable both.
          */
+        text.setText((editorRunTimeData.getCurrentPageNumber()+1) + " / " + editorRunTimeData.getPageCount());
+        
         if(editorRunTimeData.isLessonOpen()) {
             if(!editorRunTimeData.isNextPage()) {
                 nextPageButton.setDisable(true);
@@ -234,7 +246,10 @@ public class EditorRuntimeDataDummyUI extends Application {
                 fileNewPressed();
             } else if(menuItem.getId().equals("FileSave")) {
                 fileSavePressed();
-            } 
+            } else if (menuItem.getId().equals("EditNewPage")) {
+                editorRunTimeData.newPage();
+                updateUI();
+            }
         }
     } 
 }
