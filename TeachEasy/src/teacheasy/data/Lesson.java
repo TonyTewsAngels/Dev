@@ -82,7 +82,9 @@ public class Lesson {
         System.out.println("Font Size: " + defaultSettings.getFontSize());
         System.out.println("Font Color: " + defaultSettings.getFontColour() + "\n");
         
-        System.out.println("Pass Boundary: " + gradeSettings.getPassBoundary() + "\n");
+        System.out.println("Pass Boundary: " + gradeSettings.getPassBoundary());
+        System.out.println("Pass Message: " + gradeSettings.getPassMessage());
+        System.out.println("Fail Message: " + gradeSettings.getFailMessage() + "\n");
         
         System.out.println("Page Count: " + pages.size() + "\n");
         

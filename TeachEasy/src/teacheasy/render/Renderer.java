@@ -11,12 +11,8 @@ import java.util.ArrayList;
 
 import teacheasy.data.*;
 import teacheasy.mediahandler.*;
-import wavemedia.graphic.GraphicsHandler;
-import wavemedia.graphic.Shading;
-import wavemedia.graphic.Shadow;
-import wavemedia.text.Alignment;
-import wavemedia.text.TextAttribute;
-import wavemedia.text.TextHandler;
+import wavemedia.graphic.*;
+import wavemedia.text.*;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
@@ -130,47 +126,40 @@ public class Renderer {
     
     /** Render a text box on a page */
     private void renderText(TextObject text) {
-        /* Clear the handler buffer */
-        textHandler.clearBuffer();
+        float xstart = (float)bounds.getMaxX() * text.getXStart();
+        float ystart = (float)bounds.getMaxY() * text.getYStart();
+        float xend = (float)bounds.getMaxX() * text.getXEnd();
+        float yend = (float)bounds.getMaxY() * text.getYEnd();
         
-        /* Loop through each rich text element */
-        for(int i = 0; i < text.textFragments.size(); i++) {
-            /* Get the rich text */
-            RichText richText = text.textFragments.get(i);
-            
-            /* Create an array of the attributes */
-            ArrayList<TextAttribute> attrs = new ArrayList<TextAttribute>();
-            if(richText.isBold()) attrs.add(TextAttribute.BOLD);
-            if(richText.isItalic()) attrs.add(TextAttribute.ITALIC);
-            if(richText.isUnderline()) attrs.add(TextAttribute.UNDERLINE);
-            if(richText.isSubscript()) attrs.add(TextAttribute.SUBSCRIPT);
-            if(richText.isSuperscript()) attrs.add(TextAttribute.SUPERSCRIPT);
-            if(richText.isStrikethrough()) attrs.add(TextAttribute.STRIKETHROUGH);         
-            
-            /* Add the rich text fragment to the buffer */
-            textHandler.addStringToBuffer(richText.getText(),
-                                          richText.getFont(),
-                                          richText.getFontSize(),
-                                          richText.getColor(),
-                                          "#00000000",
-                                          attrs.toArray(new TextAttribute[attrs.size()])); 
+        TextFragmentList fragmentList = new TextFragmentList();
+
+        for(RichText rt : text.textFragments) {
+            fragmentList.add(new TextHandlerObject.TextFragmentBuilder(rt.getText())
+                                                  .bold(rt.isBold())
+                                                  .italic(rt.isItalic())
+                                                  .underline(rt.isUnderline())
+                                                  .superscript(rt.isSuperscript())
+                                                  .subscript(rt.isSubscript())
+                                                  .strikethrough(rt.isStrikethrough())
+                                                  .fontName(rt.getFont())
+                                                  .fontColor(rt.getColor())
+                                                  .fontSize(rt.getFontSize())
+                                                  .newline(rt.isNewLine())
+                                                  .build());
         }
         
-        /* Draw the buffer to the screen */
-        textHandler.drawBuffer((int)(bounds.getMaxX() * text.getXStart()),
-                               (int)(bounds.getMaxY() * text.getYStart()),
-                               (int)(bounds.getMaxX()),
-                               (int)(bounds.getMaxY()),
-                               "#00000000",
-                               Alignment.LEFT);
-        
+        textHandler.createTextbox(new TextHandlerObject.TextBoxBuilder(xstart, ystart)
+                                                       .xEnd(xend)
+                                                       .yEnd(yend)
+                                                       .textFragmentList(fragmentList)
+                                                       .build());
     }
     
     /** Render a video on a page */
     private void renderVideo(VideoObject video) {
     	videoHandler.createVideo((float)bounds.getMaxX() * video.getXStart(),
     							(float)bounds.getMaxY() * video.getYStart(),
-							    800,
+							    (float)bounds.getMaxX()*(video.getXEnd() - video.getXStart()),
 							    video.getSourcefile(),
 							    false,
 							    false);
@@ -178,9 +167,9 @@ public class Renderer {
     
     /** Render an audio object on a page */
     private void renderAudio(AudioObject audio) {
-        audioHandler.createAudio((double)(bounds.getMaxX() * audio.getXStart()),
-                                 (double)(bounds.getMaxY() * audio.getYStart()),
-                                 300,
+        audioHandler.createAudio((float)(bounds.getMaxX() * audio.getXStart()),
+                                 (float)(bounds.getMaxY() * audio.getYStart()),
+                                 (float)bounds.getMaxX()*(audio.getXEnd() - audio.getXStart()),
                                  audio.getSourcefile(),
                                  false,
                                  false,
@@ -200,89 +189,22 @@ public class Renderer {
     
     /** Render a graphic object on a page */
     private void renderGraphic(GraphicObject graphic) {
-        /* Set up the shading */
-        Shading shading;
-        switch(graphic.getShading()) {
-            case CYCLIC:
-                shading = Shading.CYCLIC;
-                break;
-            case HORIZONTAL:
-                shading = Shading.HORIZONTAL;
-                break;
-            case VERTICAL:
-                shading = Shading.VERTICAL;
-                break;
-            default:
-                shading = Shading.NONE;
-                break;
-        }
+        float xstart = (float)bounds.getMaxX() * graphic.getXStart();
+        float ystart = (float)bounds.getMaxY() * graphic.getYStart();
+        float xend = (float)bounds.getMaxX() * graphic.getXEnd();
+        float yend = (float)bounds.getMaxY() * graphic.getYEnd();
         
-        /* Draw the appropriate graphic */
-        switch(graphic.getGraphicType()) {
-            case OVAL:
-                graphicsHandler.drawOval((float)(bounds.getMaxX() * graphic.getXStart()),
-                                         (float)(bounds.getMaxY() * graphic.getYStart()), 
-                                         (float)(bounds.getMaxX() * graphic.getXEnd()), 
-                                         (float)(bounds.getMaxY() * graphic.getYEnd()), 
-                                         Util.colorFromString(graphic.getGraphicColour()), 
-                                         graphic.isSolid(), 
-                                         Util.colorFromString(graphic.getLineColor()),
-                                         graphic.getOutlineThickness(), 
-                                         Shadow.NONE, 
-                                         graphic.getRotation(), 
-                                         shading,
-                                         Util.colorFromString(graphic.getShadingColor()));
-                break;
-            case RECTANGLE:
-                graphicsHandler.drawRectangle((float)(bounds.getMaxX() * graphic.getXStart()),
-                                              (float)(bounds.getMaxY() * graphic.getYStart()),
-                                              (float)(bounds.getMaxX() * graphic.getXEnd()),
-                                              (float)(bounds.getMaxY() * graphic.getYEnd()),
-                                              0.0f,
-                                              0.0f,
-                                              Util.colorFromString(graphic.getGraphicColour()),
-                                              graphic.isSolid(), 
-                                              Util.colorFromString(graphic.getLineColor()),
-                                              graphic.getOutlineThickness(),
-                                              Shadow.NONE, 
-                                              graphic.getRotation(), 
-                                              shading,
-                                              Util.colorFromString(graphic.getShadingColor()));
-                break;
-            case LINE:
-                graphicsHandler.drawLine((float)(bounds.getMaxX() * graphic.getXStart()),
-                                         (float)(bounds.getMaxY() * graphic.getYStart()), 
-                                         (float)(bounds.getMaxX() * graphic.getXEnd()), 
-                                         (float)(bounds.getMaxY() * graphic.getYEnd()), 
-                                         Util.colorFromString(graphic.getGraphicColour()), 
-                                         graphic.getOutlineThickness(), 
-                                         shading,
-                                         Util.colorFromString(graphic.getShadingColor()));
-                break;
-            case TRIANGLE:
-                System.out.println("Cannot Currently Draw Equi Triangle - Graphics Handler Unfinished");
-                graphicsHandler.drawEquiTriangle();
-                break;
-            case ROUNDEDRECTANGLE:
-                System.out.println("Cannot Currently Draw Rounded Rects - Graphics Handler Unfinished");
-                graphicsHandler.drawRectangle((float)(bounds.getMaxX() * graphic.getXStart()),
-                                              (float)(bounds.getMaxY() * graphic.getYStart()),
-                                              (float)(bounds.getMaxX() * graphic.getXEnd()),
-                                              (float)(bounds.getMaxY() * graphic.getYEnd()),
-                                              150.0f,
-                                              150.0f,
-                                              Util.colorFromString(graphic.getGraphicColour()),
-                                              graphic.isSolid(), 
-                                              Util.colorFromString(graphic.getLineColor()),
-                                              graphic.getOutlineThickness(),
-                                              Shadow.NONE, 
-                                              graphic.getRotation(), 
-                                              shading,
-                                              Util.colorFromString(graphic.getShadingColor()));
-                break;
-            default:
-                break;
-        }
+        graphicsHandler.createGraphic(new GraphicHandlerObject.GraphicBuilder(graphic.getGraphicType(), xstart, ystart)
+                                                                              .xEndPos(xend)
+                                                                              .yEndPos(yend)
+                                                                              .color(graphic.getGraphicColour())
+                                                                              .outlineColor(graphic.getLineColor())
+                                                                              .outlineThickness(graphic.getOutlineThickness())
+                                                                              .rotation(graphic.getRotation())
+                                                                              .shadingType(graphic.getShading().toString())
+                                                                              .shadingElement(graphic.getShadingColor(), 1.0f)
+                                                                              .solid(graphic.isSolid())
+                                                                              .build());
     }
     
     /** Add an answer box object to the screen */

@@ -130,7 +130,7 @@ public class MultipleChoiceObject extends PageObject {
                            ", Retry " + retry + ".");
         
         for(int i = 0; i < answers.size(); i++) {
-            System.out.println("\tCorrect Aswer: " + answers.get(i).getText());
+            System.out.println("\tAnswer: " + answers.get(i).getText() + ". Correct: " + answers.get(i).isCorrect());
         }
         
         System.out.println("");

@@ -23,7 +23,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import teacheasy.data.*;
-import teacheasy.data.GraphicObject.Shading;
 import teacheasy.data.lessondata.*;
 import teacheasy.data.multichoice.Answer;
 
@@ -372,7 +371,6 @@ public class XMLWriter {
 	    videoElement.setAttribute("sourcefile", video.getSourcefile());
 	    videoElement.setAttribute("xstart", String.valueOf(video.getXStart()));
         videoElement.setAttribute("ystart", String.valueOf(video.getYStart()));
-        videoElement.setAttribute("videoscreenshot", video.getScreenshotFile());
 	}
 	
 	/** Add an answer box */

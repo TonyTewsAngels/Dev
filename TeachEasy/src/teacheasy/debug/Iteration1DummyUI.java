@@ -14,7 +14,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -22,6 +21,7 @@ import javafx.stage.Stage;
 import teacheasy.data.Lesson;
 import teacheasy.debug.GeneralDummyGUI.buttonEventHandler;
 import teacheasy.xml.XMLHandler;
+import teacheasy.xml.util.XMLNotification;
 
 /**
  * This class provides a dummy UI for
@@ -126,17 +126,17 @@ public class Iteration1DummyUI extends Application {
         text.appendText("Parsing \'" + filename + "\'...\n");
         
         /* Parse the xml and get errors */
-        ArrayList<String> errors = xmlHandler.parseXML(filename);
+        ArrayList<XMLNotification> errorList = xmlHandler.parseXML2(filename);
         
         /* Output the errors */
-        text.appendText("Errors: " + errors.size() + ".\n");
+        text.appendText("Errors: " + errorList.size() + ".\n");
         
-        for(int i = 0; i < errors.size(); i++) {
-            text.appendText(errors.get(i) + ".\n");
+        for(int i = 0; i < errorList.size(); i++) {
+            text.appendText(errorList.get(i).toString() + ".\n");
         }
         
         /* Get the lesson if clean */
-        if(errors.size() == 0) {
+        if(errorList.size() == 0) {
             lesson = xmlHandler.getLesson();
         }
     }

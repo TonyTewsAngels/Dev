@@ -16,9 +16,26 @@ public class AudioObject extends PageObject {
 	boolean viewProgress;
 	
 	private String sourcefile;
+	private float xEnd;
+	private float startTime;
 	
-	/** Constructor Method */
-	public AudioObject (float nXStart, float nYStart, boolean nViewProgress,
+	/** Constructor method */
+	public AudioObject(float nXStart, float nYStart,
+	                   float nXEnd,
+	                   String nSourcefile,
+	                   float nStartTime,
+	                   boolean nViewProgress) {
+    
+        super(PageObjectType.AUDIO, nXStart, nYStart);
+        
+        this.xEnd = nXEnd;
+        this.viewProgress = nViewProgress;
+        this.sourcefile = nSourcefile;
+        this.startTime = nStartTime;
+    }
+	
+	/** Old compatability Constructor Method. Deprecated */
+	public AudioObject(float nXStart, float nYStart, boolean nViewProgress,
 					    String nSourcefile) {
 	
 		super(PageObjectType.AUDIO, nXStart, nYStart);
@@ -52,6 +69,22 @@ public class AudioObject extends PageObject {
         
         System.out.println(", Sourcefile " + sourcefile + 
                            ", View Progress " + viewProgress + ".\n");
+    }
+
+    public float getXEnd() {
+        return xEnd;
+    }
+
+    public void setXEnd(float nXEnd) {
+        this.xEnd = nXEnd;
+    }
+
+    public float getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(float nStartTime) {
+        this.startTime = nStartTime;
     }
 }
 

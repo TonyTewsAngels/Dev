@@ -1,389 +1,423 @@
 package wavemedia.text;
 
-import java.util.HashMap;
-
 import javafx.scene.text.Font;
 
 public class Defaults {
 
-    private static String backgroundColour = "#00FFFFFF";
-    private static String font = Font.getDefault().getName();
-    private static double fontSize = Font.getDefault().getSize();
-    private static String fontColor = "#FF000000";
-    private static String graphicColor = "#FF000000";
-    private static String highlightColor = "#FFFF0000";
-    private static float startTime = 0;
-    private static float duration = Float.MAX_VALUE;
-    private static String alignment = "none";
-    private static String textCase = "none";
-    private static float scale = 1;
-    private static int rotation = 0;
-    private static float cropx1 = 0;
-    private static float cropy1 = 0;
-    private static float cropx2 = 1;
-    private static float cropy2 = 1;
+	private String backgroundColor = "#00FFFFFF";
+	private String font = Font.getDefault().getName();
+	private double fontSize = Font.getDefault().getSize();
+	private String fontColor = "#FF000000";
+	private String graphicColor = "#FF000000";
+	private String highlightColor = "#FFFF0000";
+	private float startTime = 0;
+	private float duration = Float.MAX_VALUE;
+	private String alignment = "left";
+	private float scale = 1;
+	private int rotation = 0;
+	private float cropX1 = 0;
+	private float cropY1 = 0;
+	private float cropX2 = 1;
+	private float cropY2 = 1;
+	private boolean shapeSolidity = true;
+	private float stopValue = 0.5f;
+	private float outlineThickness = 1;
+	private String outlineColor = "#FF000000";
 
-    /**
-     * @return the backgroundColour
-     */
-    public static String getBackgroundColour() {
-        return backgroundColour;
-    }
+	public Defaults() {
 
-    /**
-     * @param backgroundColour
-     *            the backgroundColour to set
-     */
-    public static void setBackgroundColour(String string) {
-        try {
-            if (string.matches("^([#]([0-9a-fA-F]{8}))$")) {
-                backgroundColour = string;
-            }
-        } catch (NullPointerException npe) {
-            /* Do nothing */
-        }
-    }
+	}
 
-    /**
-     * @return the font
-     */
-    public static String getFont() {
-        return font;
-    }
+	public void printDefaults() {
+		System.out.println("Start of Document Defaults:");
+		System.out.println("BackgroundColour: " + backgroundColor);
+		System.out.println("Font: " + font);
+		System.out.println("FontSize: " + fontSize);
+		System.out.println("FontColor: " + fontColor);
+		System.out.println("GraphicColor: " + graphicColor);
+		System.out.println("HighlightColor: " + highlightColor);
+		System.out.println("StartTime: " + startTime);
+		System.out.println("Duration: " + duration);
+		System.out.println("Alignment: " + alignment);
+		System.out.println("Scale: " + scale);
+		System.out.println("Rotation: " + rotation);
+		System.out.println("CropX1: " + cropX1);
+		System.out.println("CropY1: " + cropY1);
+		System.out.println("CropX2: " + cropX2);
+		System.out.println("CropY2: " + cropY2);
+		System.out.println("End of Document Defaults\n");
+	}
 
-    /**
-     * @param font
-     *            the font to set
-     */
-    public static void setFont(String string) {
-        string = capitaliseEachFirstLetter(string);
-        if (Font.getFontNames().contains(string)) {
-            font = string;
-        }
-    }
+	/**
+	 * @return the backgroundColour
+	 */
+	public String getBackgroundColor() {
+		return this.backgroundColor;
+	}
 
-    /**
-     * @return the fontSize
-     */
-    public static double getFontSize() {
-        return fontSize;
-    }
+	/**
+	 * @param backgroundColour
+	 *            the backgroundColour to set
+	 */
+	public void setBackgroundColor(String string) {
+		if (Utils.validARGB(string)) {
+			this.backgroundColor = string;
+		}
+	}
+	
+	/**
+	 * @return the outlineColor
+	 */
+	public String getOutlineColor() {
+		return this.outlineColor;
+	}
 
-    /**
-     * @param fontSize
-     *            the fontSize to set
-     */
-    public static void setFontSize(String string) {
-        try {
-            double d = Double.parseDouble(string);
-            if((d > 0)) {
-                fontSize = d;
-            }
-        } catch (Exception e) {
-            /* Do nothing */
-        }
-    }
+	/**
+	 * @param string
+	 *            the outlineColor to set
+	 */
+	public void setOutlineColor(String string) {
+		if (Utils.validARGB(string)) {
+			this.outlineColor = string;
+		}
+	}
+	
+	public float getOutlineThickness() {
+		return this.outlineThickness;
+	}
 
-    /**
-     * @return the fontColor
-     */
-    public static String getFontColor() {
-        return fontColor;
-    }
+	public void setOutlineThickness(String string) {
+		try {
+			float f = Float.parseFloat(string);
+			if (Utils.withinRangeInclusive(0, 1, f)) {
+				this.outlineThickness = f;
+			}
+		} catch (Exception e) {
+			/* Do Nothing */
+		}
+	}
 
-    /**
-     * @param fontColor
-     *            the fontColor to set
-     */
-    public static void setFontColor(String string) {
-        try {
-            if (string.matches("^([#]([0-9a-fA-F]{8}))$")) {
-                fontColor = string;
-            }
-        } catch (NullPointerException npe) {
-            /* Do nothing */
-        }
-    }
+	/**
+	 * @return the font
+	 */
+	public String getFont() {
+		return this.font;
+	}
 
-    /**
-     * @return the graphicColour
-     */
-    public static String getGraphicColor() {
-        return graphicColor;
-    }
+	/**
+	 * @param font
+	 *            the font to set
+	 */
+	public void setFont(String string) {
+		string = Utils.capitaliseEachFirstLetter(string);
+		if (Font.getFontNames().contains(string)) {
+			this.font = string;
+		}
+	}
 
-    /**
-     * @param fillColour
-     *            the graphicColour to set
-     */
-    public static void setGraphicColor(String string) {
-        try {
-            if (string.matches("^([#]([0-9a-fA-F]{8}))$")) {
-                graphicColor = string;
-            }
-        } catch (NullPointerException npe) {
-            /* Do nothing */
-        }
-    }
+	/**
+	 * @return the fontSize
+	 */
+	public double getFontSize() {
+		return this.fontSize;
+	}
 
-    /**
-     * @return the graphicColour
-     */
-    public static String getHighlightColor() {
-        return highlightColor;
-    }
+	/**
+	 * @param fontSize
+	 *            the fontSize to set
+	 */
+	public void setFontSize(String string) {
+		try {
+			double d = Double.parseDouble(string);
+			if ((d > 0)) {
+				this.fontSize = d;
+			}
+		} catch (Exception e) {
+			/* Do nothing */
+		}
+	}
 
-    /**
-     * @param fillColour
-     *            the graphicColour to set
-     */
-    public static void setHighlightColor(String string) {
-        try {
-            if (string.matches("^([#]([0-9a-fA-F]{8}))$")) {
-                highlightColor = string;
-            }
-        } catch (NullPointerException npe) {
-            /* Do nothing */
-        }
-        
-    }
+	/**
+	 * @return the fontColor
+	 */
+	public String getFontColor() {
+		return this.fontColor;
+	}
 
-    public static void add(HashMap<String, String> hashMap) {
+	/**
+	 * @param fontColor
+	 *            the fontColor to set
+	 */
+	public void setFontColor(String string) {
+		if (Utils.validARGB(string)) {
+			this.fontColor = string;
+		}
+	}
 
-        setBackgroundColour(hashMap.get("backgroundcolor"));
-        setFont(hashMap.get("font"));
-        setFontColor(hashMap.get("fontcolor"));
-        setFontSize(hashMap.get("fontsize"));
-        setGraphicColor(hashMap.get("graphiccolor"));
-    }
+	/**
+	 * @return the graphicColour
+	 */
+	public String getGraphicColor() {
+		return this.graphicColor;
+	}
 
-    /**
-     * @return the startTime
-     */
-    public static float getStartTime() {
-        return startTime;
-    }
+	/**
+	 * @param fillColour
+	 *            the graphicColour to set
+	 */
+	public void setGraphicColor(String string) {
+		if (Utils.validARGB(string)) {
+			this.graphicColor = string;
+		}
+	}
 
-    /**
-     * @param startTime
-     *            the startTime to set
-     */
-    public static void setStartTime(String string) {
-        try {
-            float f = Float.parseFloat(string);
-            if(f >= 0) {
-                startTime = f;
-            }
-        } catch (Exception e) {
-            /* Do Nothing */
-        }
-    }
+	/**
+	 * @return the graphicColour
+	 */
+	public String getHighlightColor() {
+		return this.highlightColor;
+	}
 
-    /**
-     * @return the duration
-     */
-    public static float getDuration() {
-        return duration;
-    }
+	/**
+	 * @param string
+	 *            the graphicColor to set
+	 */
+	public void setHighlightColor(String string) {
+		if (Utils.validARGB(string)) {
+			this.highlightColor = string;
+		}
+	}
 
-    /**
-     * @param duration
-     *            the duration to set
-     */
-    public static void setDuration(String string) {
-        try {
-            float f = Float.parseFloat(string);
-            if(f > 0){
-                duration = f;
-            }
-        } catch (Exception e) {
-            /* Do Nothing */
-        }
-    }
+	/**
+	 * @return the startTime
+	 */
+	public float getStartTime() {
+		return this.startTime;
+	}
 
-    /**
-     * @return the alignment
-     */
-    public static String getAlignment() {
-        return alignment;
-    }
+	/**
+	 * @param startTime
+	 *            the startTime to set
+	 */
+	public void setStartTime(String string) {
+		try {
+			float f = Float.parseFloat(string);
+			if (f >= 0) {
+				this.startTime = f;
+			}
+		} catch (Exception e) {
+			/* Do Nothing */
+		}
+	}
 
-    /**
-     * @param alignment
-     *            the alignment to set
-     */
-    public static void setAlignment(String string) {
-        try {
-            if (string.matches("left|right|centre|none")) {
-                alignment = string;
-            }
-        } catch (Exception e) {
-            /* Do nothing */
-        }
-        
-    }
+	/**
+	 * @return the duration
+	 */
+	public float getDuration() {
+		return this.duration;
+	}
 
-    /**
-     * @return the textCase
-     */
-    public static String getTextCase() {
-        return textCase;
-    }
+	/**
+	 * @param duration
+	 *            the duration to set
+	 */
+	public void setDuration(String string) {
+		try {
+			if (string.toLowerCase().matches("float.max_value|infinite")) {
+				this.duration = Float.MAX_VALUE;
+			} else {
+				float f = Float.parseFloat(string);
+				if (f > 0) {
+					this.duration = f;
+				}
+			}
+		} catch (Exception e) {
+			/* Do Nothing */
+		}
+	}
 
-    /**
-     * @param textCase
-     *            the textCase to set
-     */
-    public static void setTextCase(String string) {
-        try {
-            if (string.matches("upper|lower|camel|none")) {
-                textCase = string;
-            }
-        } catch (Exception e) {
-            /* Do Nothing */
-        }
-    }
+	/**
+	 * @return the alignment
+	 */
+	public String getAlignment() {
+		return this.alignment;
+	}
 
-    /**
-     * @return the scale
-     */
-    public static float getScale() {
-        return scale;
-    }
+	/**
+	 * @param alignment
+	 *            the alignment to set
+	 */
+	public void setAlignment(String string) {
+		if (Utils.validAlignment(string)) {
+			this.alignment = string;
+		}
+	}
 
-    /**
-     * @param scale
-     *            the scale to set
-     */
-    public static void setScale(String string) {
-        try {
-            float f = Float.parseFloat(string);
-            if(f > 0) {
-                scale = f;
-            }
-        } catch (Exception e) {
-            /* Do Nothing */
-        }
-    }
+	/**
+	 * @return the scale
+	 */
+	public float getScale() {
+		return this.scale;
+	}
 
-    /**
-     * @return the rotation
-     */
-    public static int getRotation() {
-        return rotation;
-    }
+	/**
+	 * @param scale
+	 *            the scale to set
+	 */
+	public void setScale(String string) {
+		try {
+			float f = Float.parseFloat(string);
+			if (f > 0) {
+				this.scale = f;
+			}
+		} catch (Exception e) {
+			/* Do Nothing */
+		}
+	}
 
-    /**
-     * @param rotation
-     *            the rotation to set
-     */
-    public static void setRotation(String string) {
-        try {
-            int i = Integer.parseInt(string);
-            if((i >= 0) && (i <= 360)) {
-                rotation = i;
-            }
-        } catch (Exception e) {
-            /* Do Nothing */
-        }
-    }
+	/**
+	 * @return the rotation
+	 */
+	public int getRotation() {
+		return this.rotation;
+	}
 
-    /**
-     * @return the cropx1
-     */
-    public static float getCropx1() {
-        return cropx1;
-    }
+	/**
+	 * @param rotation
+	 *            the rotation to set
+	 */
+	public void setRotation(String string) {
+		try {
+			int i = Integer.parseInt(string);
+			if (Utils.withinRangeInclusive(0, 360, i)) {
+				this.rotation = i;
+			}
+		} catch (Exception e) {
+			/* Do Nothing */
+		}
+	}
 
-    /**
-     * @param cropx1
-     *            the cropx1 to set
-     */
-    public static void setCropx1(String string) {
-        try {
-            float f = Float.parseFloat(string);
-            if((f >= 0) && (f <= 1)) {
-                cropx1 = f;
-            }
-        } catch (Exception e) {
-            /* Do Nothing */
-        }
-    }
+	/**
+	 * @return the cropX1
+	 */
+	public float getCropX1() {
+		return this.cropX1;
+	}
 
-    /**
-     * @return the cropy1
-     */
-    public static float getCropy1() {
-        return cropy1;
-    }
+	/**
+	 * @param cropX1
+	 *            the cropX1 to set
+	 */
+	public void setCropX1(String string) {
+		try {
+			float f = Float.parseFloat(string);
+			if (Utils.withinRangeInclusive(0, 1, f)) {
+				this.cropX1 = f;
+			}
+		} catch (Exception e) {
+			/* Do Nothing */
+		}
+	}
 
-    /**
-     * @param cropy1
-     *            the cropy1 to set
-     */
-    public static void setCropy1(String string) {
-        try {
-            float f = Float.parseFloat(string);
-            if((f >= 0) && (f <= 1)) {
-                cropy1 = f;
-            }
-        } catch (Exception e) {
-            /* Do Nothing */
-        }
-    }
+	/**
+	 * @return the cropY1
+	 */
+	public float getCropY1() {
+		return this.cropY1;
+	}
 
-    /**
-     * @return the cropx2
-     */
-    public static float getCropx2() {
-        return cropx2;
-    }
+	/**
+	 * @param cropY1
+	 *            the cropY1 to set
+	 */
+	public void setCropY1(String string) {
+		try {
+			float f = Float.parseFloat(string);
+			if (Utils.withinRangeInclusive(0, 1, f)) {
+				this.cropY1 = f;
+			}
+		} catch (Exception e) {
+			/* Do Nothing */
+		}
+	}
 
-    /**
-     * @param cropx2
-     *            the cropx2 to set
-     */
-    public static void setCropx2(String string) {
-        try {
-            float f = Float.parseFloat(string);
-            if((f >= 0) && (f <= 1)) {
-                cropx2 = f;
-            }
-        } catch (Exception e) {
-            /* Do Nothing */
-        }
-    }
+	/**
+	 * @return the cropX2
+	 */
+	public float getCropX2() {
+		return this.cropX2;
+	}
 
-    /**
-     * @return the cropy2
-     */
-    public static float getCropy2() {
-        return cropy2;
-    }
+	/**
+	 * @param cropX2
+	 *            the cropX2 to set
+	 */
+	public void setCropX2(String string) {
+		try {
+			float f = Float.parseFloat(string);
+			if (Utils.withinRangeInclusive(0, 1, f)) {
+				this.cropX2 = f;
+			}
+		} catch (Exception e) {
+			/* Do Nothing */
+		}
+	}
 
-    /**
-     * @param cropy2
-     *            the cropy2 to set
-     */
-    public static void setCropy2(String string) {
-        try {
-            float f = Float.parseFloat(string);
-            if ((f >= 0) && (f <= 1)) {
-                cropy2 = f;
-            }
-        } catch (Exception e) {
-            /* Do Nothing */
-        }
-    }
-    
-    public static String capitaliseEachFirstLetter(String s) {
-        String[] words = s.split(" ");
-        String finalString = "";
-        for (String word : words) {
-            finalString += word.substring(0, 1).toUpperCase()
-                    + word.substring(1).toLowerCase() + " ";
-        }
-        return finalString.substring(0, finalString.length() - 1);
-    }
+	/**
+	 * @return the cropY2
+	 */
+	public float getCropY2() {
+		return this.cropY2;
+	}
+
+	/**
+	 * @param cropY2
+	 *            the cropY2 to set
+	 */
+	public void setCropY2(String string) {
+		try {
+			float f = Float.parseFloat(string);
+			if (Utils.withinRangeInclusive(0, 1, f)) {
+				this.cropY2 = f;
+			}
+		} catch (Exception e) {
+			/* Do Nothing */
+		}
+	}
+
+	/**
+	 * @return the shapeSolidity
+	 */
+	public boolean getShapeSolidity() {
+		return shapeSolidity;
+	}
+
+	/**
+	 * @param string the shapeSolidity to set
+	 */
+	public void setShapeSolidity(String string) {
+		this.shapeSolidity = Boolean.parseBoolean(string);
+	}
+
+	/**
+	 * @return the stopValue
+	 */
+	public float getStopValue() {
+		return stopValue;
+	}
+	
+	/**
+	 * @param cropX1
+	 *            the cropX1 to set
+	 */
+	public void setStopValue(String string) {
+		try {
+			float f = Float.parseFloat(string);
+			if (Utils.withinRangeInclusive(0, 1, f)) {
+				this.stopValue = f;
+			}
+		} catch (Exception e) {
+			/* Do Nothing */
+		}
+	}
 }
-

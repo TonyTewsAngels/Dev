@@ -34,21 +34,21 @@
             <richtext italic="true" font="arial" fontcolor="#ff0000ff">BLUE</richtext>
             <richtext>' note.</richtext>
         </text>
-   		<answerbox xstart="0.5" ystart ="0.7" characterlimit="2" correctanswer="f#~gb" marks="1" retry="true"/>
+   		<answerbox xstart="0.5" ystart ="0.7" characterlimit="2" correctanswer="f#~gb" marks="1" retry="true" numerical="false"/>
 	
 		<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.2" ystart="0.8">
             <richtext>Name the '</richtext>
             <richtext italic="true" font="arial" fontcolor="#ff00ff00">GREEN</richtext>
             <richtext>' note.</richtext>
         </text>
-		<answerbox xstart="0.5" ystart ="0.8" characterlimit="2" correctanswer="b" marks="1" retry="true"/>
+		<answerbox xstart="0.5" ystart ="0.8" characterlimit="2" correctanswer="b" marks="1" retry="true" numerical="false"/>
 
 		<text font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" xstart="0.2" ystart="0.9">
             <richtext>Name the '</richtext>
             <richtext italic="true" font="arial" fontcolor="#ffff0000">RED</richtext>
             <richtext>' note.</richtext>
         </text>
-		<answerbox xstart="0.5" ystart ="0.9" characterlimit="2" correctanswer="a" marks="1" retry="true"/>
+		<answerbox xstart="0.5" ystart ="0.9" characterlimit="2" correctanswer="a" marks="1" retry="true" numerical="false"/>
     </slide>
     
     <slide number="2" backgroundcolor="#ffccffcc">
