@@ -6,6 +6,7 @@
  */
 package teacheasy.debug;
 
+import teacheasy.mediahandler.ImageHandler;
 import javafx.application.Application;
 import javafx.event.*;
 import javafx.geometry.Rectangle2D;
@@ -24,12 +25,17 @@ import javafx.*;
  */
 public class ImageHandlerDummyGUI extends Application {
 
+	/*Image Handler*/
+	ImageHandler imageHandler;
+	
     /**
      * Override the start method inside the JavaFX Application
      * class. This is called to start the program.
      */
     @Override
     public void start(Stage primaryStage) {       
+
+    	
         /* Instantiate the scene and group */
         Group group = new Group();
         Scene scene = new Scene(group, 500, 500);
@@ -51,6 +57,17 @@ public class ImageHandlerDummyGUI extends Application {
         
         /* Add the button to the group */
         group.getChildren().addAll(btn);
+        
+        /*Instantiate the image handler*/
+        imageHandler = new ImageHandler(group);
+        
+        /*Use the image handler to create an image stored on disk*/
+        imageHandler.insertImage("rabbit.jpg", 0, 100, 1, 1, 0);
+        
+        /*Use the image handler to create an image stored online*/
+        imageHandler.insertImage("http://www.county-vets.co.uk/media/resources/rabbit.jpg",
+        		600, 100, 1, 1, 0);
+        
         
         /* Show the window */
         primaryStage.show(); 
