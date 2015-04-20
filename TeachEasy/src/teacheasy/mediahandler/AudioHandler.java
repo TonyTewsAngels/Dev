@@ -198,4 +198,13 @@ public class AudioHandler {
         audios.clear();
     }
     
+    /**
+     * Returns the number of audio clips currently being handled
+     * 
+     * @return Number of Audio clips being handled
+     */
+    public int getAudioCount() {
+        return audios.size();
+    }
+    
 }
