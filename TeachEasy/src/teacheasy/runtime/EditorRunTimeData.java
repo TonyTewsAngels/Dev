@@ -103,6 +103,12 @@ public class EditorRunTimeData {
             this.currentPage = nPage;
         }
         
+        if(isLessonOpen()) {
+            propertiesPane.update(lesson.pages.get(currentPage), null);
+        } else {
+            propertiesPane.update(null, null);
+        }
+        
         redraw(group, bounds);
     }
     
@@ -110,6 +116,9 @@ public class EditorRunTimeData {
     public void nextPage() {        
         if(currentPage < pageCount - 1) {
             currentPage++;
+            
+            propertiesPane.update(lesson.pages.get(currentPage), null);
+            
             redraw(group, bounds);
         }
     }
@@ -118,6 +127,9 @@ public class EditorRunTimeData {
     public void prevPage() {        
         if(currentPage > 0) {
             currentPage--;
+            
+            propertiesPane.update(lesson.pages.get(currentPage), null);
+            
             redraw(group, bounds);
         }
     }
@@ -183,6 +195,10 @@ public class EditorRunTimeData {
         /* Set the current page back to zero */
         setCurrentPage(0);
         
+        /* */
+        propertiesPane.update(lesson.pages.get(currentPage), null);
+        
+        /* */
         redraw(group, bounds);
     }
     
@@ -231,6 +247,9 @@ public class EditorRunTimeData {
         setPageCount(lesson.pages.size());
         setCurrentPage(0);
         setLessonOpen(true);
+        
+        propertiesPane.update(lesson.pages.get(currentPage), null);
+        
         redraw(group, bounds);
         
         return true;
