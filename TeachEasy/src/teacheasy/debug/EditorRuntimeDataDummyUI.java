@@ -133,9 +133,9 @@ public class EditorRuntimeDataDummyUI extends Application {
          * If there is a lesson open enable the relevant page 
          * buttons, if not disable both.
          */
-        text.setText((editorRunTimeData.getCurrentPageNumber()+1) + " / " + editorRunTimeData.getPageCount());
-        
         if(editorRunTimeData.isLessonOpen()) {
+            text.setText((editorRunTimeData.getCurrentPageNumber()+1) + " / " + editorRunTimeData.getPageCount());
+            
             if(!editorRunTimeData.isNextPage()) {
                 nextPageButton.setDisable(true);
             } else {
@@ -148,6 +148,8 @@ public class EditorRuntimeDataDummyUI extends Application {
                 prevPageButton.setDisable(false);
             }
         } else {
+            text.setText("No lesson open");
+            
             nextPageButton.setDisable(true);
             prevPageButton.setDisable(true);
         }

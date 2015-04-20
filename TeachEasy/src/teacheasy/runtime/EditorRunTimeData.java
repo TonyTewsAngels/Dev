@@ -34,7 +34,7 @@ import teacheasy.xml.util.XMLNotification.Level;
  * @version 1.0 19 Apr 2015
  */
 public class EditorRunTimeData {
-    /* */
+    /* Class level references */
     private Group group;
     private Rectangle2D bounds;
     
@@ -51,6 +51,12 @@ public class EditorRunTimeData {
     
     /* Renderer */
     private Renderer renderer;
+    
+    /* Boolean to indicate if an object is selected */
+    boolean objectSelected;
+    
+    /* Currently selected object */
+    PageObject selectedObject;
 
     /** Constructor method */
     public EditorRunTimeData(Group nGroup, Rectangle2D nBounds) {
@@ -72,6 +78,13 @@ public class EditorRunTimeData {
         /* Instantiate the renderer */
         renderer = new Renderer(group, bounds);
         
+        /* Initially no object is selected */
+        objectSelected = false;
+        
+        /* The selected object is initially null */
+        selectedObject = null;
+        
+        /* Draw the page */
         redraw(group, bounds);
     }
     
@@ -94,6 +107,8 @@ public class EditorRunTimeData {
         } else {
             this.currentPage = nPage;
         }
+        
+        redraw(group, bounds);
     }
     
     /** Move to the next page */
