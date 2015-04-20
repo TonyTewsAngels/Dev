@@ -19,6 +19,7 @@ public class EditorRuntimeDataDummyUI extends Application {
     private Label text;
     private Button nextPageButton;
     private Button prevPageButton;
+    private VBox propertiesPane;
     
     /* Screen size */
     private Rectangle2D bounds;
@@ -53,7 +54,7 @@ public class EditorRuntimeDataDummyUI extends Application {
         
         /* Construct the menu */
         MenuBar menuBar = new MenuBar();
-        menuBar.setPrefWidth(bounds.getMaxX());
+        menuBar.setPrefWidth(bounds.getMaxX()/2);
         Menu menuFile = new Menu("File");
         Menu menuEdit = new Menu("Edit");
         Menu menuPreview = new Menu("Preview");
@@ -97,6 +98,9 @@ public class EditorRuntimeDataDummyUI extends Application {
         /* Add the text area to the grid */
         grid.add(group, 0, 1);
         
+        propertiesPane = new VBox();
+        grid.add(propertiesPane, 1, 1);
+        
         /* Create page buttons */
         HBox buttonRow = new HBox();
         buttonRow.setAlignment(Pos.CENTER);
@@ -119,7 +123,7 @@ public class EditorRuntimeDataDummyUI extends Application {
         grid.add(text, 0, 3);
         
         /* Instantiate the runtime data */
-        editorRunTimeData = new EditorRunTimeData(group, new Rectangle2D(0, 0, bounds.getMaxX()/2, bounds.getMaxY()/2));
+        editorRunTimeData = new EditorRunTimeData(group, new Rectangle2D(0, 0, bounds.getMaxX()/2, bounds.getMaxY()/2), propertiesPane);
         
         /* Show the stage */
         primaryStage.show();

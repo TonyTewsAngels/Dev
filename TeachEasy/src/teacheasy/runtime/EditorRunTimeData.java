@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -52,14 +53,11 @@ public class EditorRunTimeData {
     /* Renderer */
     private Renderer renderer;
     
-    /* Boolean to indicate if an object is selected */
-    boolean objectSelected;
-    
-    /* Currently selected object */
-    PageObject selectedObject;
+    /* Properties Pane Controller */
+    private PropertiesPane propertiesPane;
 
     /** Constructor method */
-    public EditorRunTimeData(Group nGroup, Rectangle2D nBounds) {
+    public EditorRunTimeData(Group nGroup, Rectangle2D nBounds, VBox propPaneBox) {
         /* Set the class level variables */
         this.group = nGroup;
         this.bounds = nBounds;
@@ -78,11 +76,8 @@ public class EditorRunTimeData {
         /* Instantiate the renderer */
         renderer = new Renderer(group, bounds);
         
-        /* Initially no object is selected */
-        objectSelected = false;
-        
-        /* The selected object is initially null */
-        selectedObject = null;
+        /* Instantiate the properties pane conroller */
+        propertiesPane = new PropertiesPane(propPaneBox);
         
         /* Draw the page */
         redraw(group, bounds);
