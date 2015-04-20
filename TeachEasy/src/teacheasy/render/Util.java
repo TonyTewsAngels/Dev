@@ -29,4 +29,12 @@ public class Util {
 
         return new Color(fR, fG, fB, fA);
     }
+    
+    /** Convert a JavaFX color into an ARGB hex string */
+    public static String stringFromColor(Color color) {
+        String alpha = new String(color.toString().substring(8, 10));
+        String colStr = new String(color.toString().substring(2, 8));
+        
+        return new String("#" + alpha + colStr);
+    }
 }

@@ -12,9 +12,6 @@ import java.util.ArrayList;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -77,7 +74,7 @@ public class EditorRunTimeData {
         renderer = new Renderer(group, bounds);
         
         /* Instantiate the properties pane conroller */
-        propertiesPane = new PropertiesPane(propPaneBox);
+        propertiesPane = new PropertiesPane(propPaneBox, this);
         
         /* Draw the page */
         redraw(group, bounds);
@@ -316,6 +313,17 @@ public class EditorRunTimeData {
     
     /** Redraw the content */
     public void redraw(Group group, Rectangle2D bounds) {        
+        if(isLessonOpen()) {
+            /* Render the current page */
+            renderer.renderPage(lesson.pages.get(currentPage));
+        } else {
+            /* Render the no lesson loaded screen */
+            renderer.renderUnLoaded();
+        }
+    }
+    
+    /** Redraw the content */
+    public void redraw() {        
         if(isLessonOpen()) {
             /* Render the current page */
             renderer.renderPage(lesson.pages.get(currentPage));
