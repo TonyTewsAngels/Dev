@@ -50,7 +50,7 @@ public class PropertiesPane {
         this.pane = nPane;
         this.editorRuntime = parent;
         
-        imagePropertiesController = new ImagePropertiesController();
+        imagePropertiesController = new ImagePropertiesController(this);
         
         currentController = new VBox();
         
@@ -160,6 +160,10 @@ public class PropertiesPane {
      */
     public PageObject getSelectedObject() {
         return selectedObject;
+    }
+    
+    public void redraw() {
+        editorRuntime.redraw();
     }
     
     /**

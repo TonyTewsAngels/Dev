@@ -307,8 +307,8 @@ public class EditorRunTimeData {
     public void newPage() {
         lesson.pages.add(new Page(lesson.pages.size(), "#ffffffff"));
         
-       setPageCount(lesson.pages.size());
-       setCurrentPage(lesson.pages.size() - 1);
+        setPageCount(lesson.pages.size());
+        setCurrentPage(lesson.pages.size() - 1);
     }
     
     public void nextObject() {
