@@ -59,6 +59,7 @@ public class EditorRuntimeDataDummyUI extends Application {
         Menu menuEdit = new Menu("Edit");
         Menu menuPreview = new Menu("Preview");
         Menu menuHelp = new Menu("Help");
+        Menu menuDebug = new Menu("Debug");
         
         /* Add an open button to the file menu */
         MenuItem menuItemOpen = new MenuItem("Open");
@@ -85,9 +86,15 @@ public class EditorRuntimeDataDummyUI extends Application {
         menuItemNewPage.setId("EditNewPage");
         menuItemNewPage.setOnAction(new MenuEventHandler());
         
+        /* Add a next page object button to the debug menu */
+        MenuItem menuItemNextObject = new MenuItem("Next Object");
+        menuItemNextObject.setId("DebugNextObject");
+        menuItemNextObject.setOnAction(new MenuEventHandler());
+        
         menuFile.getItems().addAll(menuItemNew, menuItemOpen, menuItemSave, menuItemClose);
         menuEdit.getItems().addAll(menuItemNewPage);
-        menuBar.getMenus().addAll(menuFile, menuEdit, menuPreview, menuHelp);
+        menuDebug.getItems().addAll(menuItemNextObject);
+        menuBar.getMenus().addAll(menuFile, menuEdit, menuPreview, menuHelp, menuDebug);
         
         /* Add the menu to the grid */
         grid.add(menuBar, 0, 0);
@@ -254,6 +261,9 @@ public class EditorRuntimeDataDummyUI extends Application {
                 fileSavePressed();
             } else if (menuItem.getId().equals("EditNewPage")) {
                 editorRunTimeData.newPage();
+                updateUI();
+            }  else if (menuItem.getId().equals("DebugNextObject")) {
+                editorRunTimeData.nextObject();
                 updateUI();
             }
         }

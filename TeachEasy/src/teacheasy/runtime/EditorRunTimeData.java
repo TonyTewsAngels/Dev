@@ -311,6 +311,28 @@ public class EditorRunTimeData {
        setCurrentPage(lesson.pages.size() - 1);
     }
     
+    public void nextObject() {
+        int index;
+        
+        if(lesson.pages.get(currentPage).pageObjects.size() == 0) {
+            return;
+        }
+        
+        if(propertiesPane.getSelectedObject() == null) {
+            index = -1;
+        } else {
+            index = lesson.pages.get(currentPage).pageObjects.indexOf(propertiesPane.getSelectedObject());  
+        }
+
+        index++;
+        
+        if(index == lesson.pages.get(currentPage).pageObjects.size()) {
+            index = 0;
+        }
+        
+        propertiesPane.update(lesson.pages.get(currentPage), lesson.pages.get(currentPage).pageObjects.get(index));
+    }
+    
     
     /** Redraw the content */
     public void redraw(Group group, Rectangle2D bounds) {        

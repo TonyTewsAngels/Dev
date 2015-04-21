@@ -6,6 +6,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import teacheasy.data.ImageObject;
 import teacheasy.data.Page;
 import teacheasy.data.PageObject;
 import teacheasy.render.Util;
@@ -31,6 +32,10 @@ public class PropertiesPane {
     /* UI Element to change the page background color */
     private ColorPicker backgroundColorPicker;
     
+    private ImagePropertiesController imagePropertiesController;
+    
+    private VBox currentController;
+    
     /**
      * Constructor.
      * 
@@ -44,6 +49,10 @@ public class PropertiesPane {
         /* Initialise references */
         this.pane = nPane;
         this.editorRuntime = parent;
+        
+        imagePropertiesController = new ImagePropertiesController();
+        
+        currentController = new VBox();
         
         /* Initialise a blank page title label */
         pageTitle = new Label("");
@@ -61,7 +70,7 @@ public class PropertiesPane {
         selectionTitle = new Label("");
         
         /* Add the new components to the properties pane */
-        pane.getChildren().addAll(pageTitle, backgroundColor, selectionTitle);
+        pane.getChildren().addAll(pageTitle, backgroundColor, selectionTitle, currentController);
         
         /* Set the pane's spacing */
         pane.setSpacing(10);
@@ -83,6 +92,22 @@ public class PropertiesPane {
     public void update(Page nSelectedPage, PageObject nSelectedObject) {
         this.selectedPage = nSelectedPage;
         this.selectedObject = nSelectedObject;
+        
+        pane.getChildren().remove(currentController);
+        
+        if(selectedObject != null) {
+            switch(selectedObject.getType()) {
+                case IMAGE:
+                    imagePropertiesController.update((ImageObject)selectedObject);
+                    currentController = imagePropertiesController.getImageProperties();
+                    break;
+                default:
+                    currentController = new VBox();
+                    break;
+            }
+        }
+
+        pane.getChildren().add(currentController);
         
         update();
     }
