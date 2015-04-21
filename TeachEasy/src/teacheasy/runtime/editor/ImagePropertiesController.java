@@ -1,10 +1,12 @@
 package teacheasy.runtime.editor;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import teacheasy.data.ImageObject;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 
 /**
  * Encapsulates functionality relating to editor
@@ -30,6 +32,9 @@ public class ImagePropertiesController {
     private TextField yEndProperty;
     private TextField rotationProperty;
     
+    /* The button for choosing a new file */
+    private Button fileButton;
+    
     /**
      * Constructor. 
      * 
@@ -44,8 +49,13 @@ public class ImagePropertiesController {
         
         /* Set up the UI container */
         imageProperties = new VBox();
+        imageProperties.setSpacing(5);
+        imageProperties.setPadding(new Insets(5));
         
-        /* Setup the xStart property field */
+        /* Set up the file select button */
+        fileButton = PropertiesUtil.addFileField("file", "File: ", fileButton, imageProperties, new ButtonPressedHandler());
+        
+        /* Set up the property fields */
         xStartProperty = PropertiesUtil.addPropertyField("xStart", "X Start: ", xStartProperty, imageProperties, new PropertyChangedHandler());
         yStartProperty = PropertiesUtil.addPropertyField("yStart", "Y Start: ", yStartProperty, imageProperties, new PropertyChangedHandler());
         xEndProperty = PropertiesUtil.addPropertyField("xEnd", "X End: ", xEndProperty, imageProperties, new PropertyChangedHandler());
@@ -109,6 +119,18 @@ public class ImagePropertiesController {
             
             update();
             parent.redraw();
+        }
+    }
+    
+    public class ButtonPressedHandler implements EventHandler<ActionEvent> {
+        public void handle(ActionEvent e) {
+            Button source = (Button)e.getSource();
+            
+            if(source.getId() == "file") {
+                selectedImage.setSourcefile(PropertiesUtil.validateImage(selectedImage.getSourcefile()));
+                update();
+                parent.redraw();
+            }
         }
     }
 }
