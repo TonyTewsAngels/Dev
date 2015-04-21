@@ -18,6 +18,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 import teacheasy.data.*;
 import teacheasy.render.Renderer;
+import teacheasy.runtime.editor.PropertiesPane;
 import teacheasy.xml.*;
 import teacheasy.xml.util.XMLNotification;
 import teacheasy.xml.util.XMLNotification.Level;
