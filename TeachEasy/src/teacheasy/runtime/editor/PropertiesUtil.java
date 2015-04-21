@@ -144,4 +144,23 @@ public class PropertiesUtil {
         
         return file.getAbsolutePath();
     }
+    
+    /**
+     * Handles choosing a new video source file.
+     * 
+     * @param defaultVal The value to be returned if the file cannot be opened.
+     * 
+     * @return Either the path of the new file, or the path of the default file.
+     */
+    public static String validateVideo(String defaultVal) {
+        FileChooser chooser = new FileChooser();
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Videos", "*.mp4", "*.flv"));
+        File file = chooser.showOpenDialog(new Stage());
+        
+        if(file == null || !file.exists()) {
+            return defaultVal;
+        }
+        
+        return file.getAbsolutePath();
+    }
 }

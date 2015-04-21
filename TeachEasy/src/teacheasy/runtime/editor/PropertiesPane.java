@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import teacheasy.data.ImageObject;
 import teacheasy.data.Page;
 import teacheasy.data.PageObject;
+import teacheasy.data.VideoObject;
 import teacheasy.render.Util;
 import teacheasy.runtime.EditorRunTimeData;
 
@@ -42,6 +43,7 @@ public class PropertiesPane {
     private ColorPicker backgroundColorPicker;
     
     private ImagePropertiesController imagePropertiesController;
+    private VideoPropertiesController videoPropertiesController;
     
     private VBox currentController;
     
@@ -60,6 +62,7 @@ public class PropertiesPane {
         this.editorRuntime = parent;
         
         imagePropertiesController = new ImagePropertiesController(this);
+        videoPropertiesController = new VideoPropertiesController(this);
         
         currentController = new VBox();
         
@@ -110,6 +113,10 @@ public class PropertiesPane {
                     imagePropertiesController.update((ImageObject)selectedObject);
                     currentController = imagePropertiesController.getImageProperties();
                     break;
+                case VIDEO:
+                    videoPropertiesController.update((VideoObject)selectedObject);
+                    currentController = videoPropertiesController.getVideoProperties();
+                    break;
                 default:
                     currentController = new VBox();
                     break;
@@ -135,7 +142,6 @@ public class PropertiesPane {
             /* Update the background color component */
             backgroundColorPicker.setDisable(true);
             backgroundColorPicker.setValue(Util.colorFromString("#ffffffff"));
-            backgroundColorPicker.fireEvent(new ActionEvent(backgroundColorPicker, backgroundColorPicker));
         } else {
             /* Update the page title */
             pageTitle.setText("Page " + selectedPage.getNumber() + "\n");
@@ -143,8 +149,9 @@ public class PropertiesPane {
             /* Update the background color component */
             backgroundColorPicker.setDisable(false);
             backgroundColorPicker.setValue(Util.colorFromString(selectedPage.getPageColour()));
-            backgroundColorPicker.fireEvent(new ActionEvent(backgroundColorPicker, backgroundColorPicker));
         }
+        
+        backgroundColorPicker.fireEvent(new ActionEvent(backgroundColorPicker, backgroundColorPicker));
         
         /* Update the object options */
         if(selectedObject == null) {
