@@ -12,6 +12,15 @@ import teacheasy.data.PageObject;
 import teacheasy.render.Util;
 import teacheasy.runtime.EditorRunTimeData;
 
+/**
+ * Encapsulates functionality relating to the properties pane of
+ * the editor. Displays values related to the selected page and
+ * allows their modification. Contains classes to encapsulate editor
+ * functionality for specific object types.
+ * 
+ * @author Alistair Jewers
+ * @version 1.0 Apr 21 2015
+ */
 public class PropertiesPane {
     /* A reference to the editor runtime instance that contains this properties pane */
     private EditorRunTimeData editorRuntime;
@@ -105,6 +114,8 @@ public class PropertiesPane {
                     currentController = new VBox();
                     break;
             }
+        } else {
+            currentController = new VBox();
         }
 
         pane.getChildren().add(currentController);
