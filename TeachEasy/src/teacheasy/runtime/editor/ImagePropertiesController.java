@@ -127,7 +127,7 @@ public class ImagePropertiesController {
             Button source = (Button)e.getSource();
             
             if(source.getId() == "file") {
-                selectedImage.setSourcefile(PropertiesUtil.validateImage(selectedImage.getSourcefile()));
+                selectedImage.setSourcefile(PropertiesUtil.validateFile(selectedImage.getSourcefile(), "Images", "*.png", "*.jpg", "*.jpeg", "*.JPG", "*.gif", "*.bmp"));
                 update();
                 parent.redraw();
             }

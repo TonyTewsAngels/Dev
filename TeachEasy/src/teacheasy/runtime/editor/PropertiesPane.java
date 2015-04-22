@@ -6,6 +6,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import teacheasy.data.AudioObject;
 import teacheasy.data.ImageObject;
 import teacheasy.data.Page;
 import teacheasy.data.PageObject;
@@ -44,6 +45,7 @@ public class PropertiesPane {
     
     private ImagePropertiesController imagePropertiesController;
     private VideoPropertiesController videoPropertiesController;
+    private AudioPropertiesController audioPropertiesController;
     
     private VBox currentController;
     
@@ -63,6 +65,7 @@ public class PropertiesPane {
         
         imagePropertiesController = new ImagePropertiesController(this);
         videoPropertiesController = new VideoPropertiesController(this);
+        audioPropertiesController = new AudioPropertiesController(this);
         
         currentController = new VBox();
         
@@ -116,6 +119,10 @@ public class PropertiesPane {
                 case VIDEO:
                     videoPropertiesController.update((VideoObject)selectedObject);
                     currentController = videoPropertiesController.getVideoProperties();
+                    break;
+                case AUDIO:
+                    audioPropertiesController.update((AudioObject)selectedObject);
+                    currentController = audioPropertiesController.getAudioProperties();
                     break;
                 default:
                     currentController = new VBox();

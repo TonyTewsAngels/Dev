@@ -3,7 +3,7 @@ package teacheasy.runtime.editor;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import teacheasy.data.VideoObject;
+import teacheasy.data.AudioObject;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -15,15 +15,15 @@ import javafx.geometry.Insets;
  * @author Alistair Jewers
  * @version 1.0 Apr 21 2015
  */
-public class VideoPropertiesController {
+public class AudioPropertiesController {
     /* Reference to the properties pane responsible for this controller */
     private PropertiesPane parent;
     
     /* Currently selected image */
-    private VideoObject selectedVideo;
+    private AudioObject selectedAudio;
     
     /* The UI element to contain the editable properties */
-    private VBox videoProperties;
+    private VBox audioProperties;
     
     /* The text fields for the different properties */
     private TextField xStartProperty;
@@ -38,53 +38,53 @@ public class VideoPropertiesController {
      * 
      * @param nParent The properties pane responsible for this controller.
      */
-    public VideoPropertiesController(PropertiesPane nParent) {
+    public AudioPropertiesController(PropertiesPane nParent) {
         /* Set the parent reference */
         this.parent = nParent;
         
         /* Set the selected object null */
-        selectedVideo = null;
+        selectedAudio = null;
         
         /* Set up the UI container */
-        videoProperties = new VBox();
-        videoProperties.setSpacing(5);
-        videoProperties.setPadding(new Insets(5));
+        audioProperties = new VBox();
+        audioProperties.setSpacing(5);
+        audioProperties.setPadding(new Insets(5));
         
         /* Set up the file select button */
-        fileButton = PropertiesUtil.addFileField("file", "File: ", fileButton, videoProperties, new ButtonPressedHandler());
+        fileButton = PropertiesUtil.addFileField("file", "File: ", fileButton, audioProperties, new ButtonPressedHandler());
         
         /* Set up the property fields */
-        xStartProperty = PropertiesUtil.addPropertyField("xStart", "X Start: ", xStartProperty, videoProperties, new PropertyChangedHandler());
-        yStartProperty = PropertiesUtil.addPropertyField("yStart", "Y Start: ", yStartProperty, videoProperties, new PropertyChangedHandler());
-        xEndProperty = PropertiesUtil.addPropertyField("xEnd", "X End: ", xEndProperty, videoProperties, new PropertyChangedHandler());
+        xStartProperty = PropertiesUtil.addPropertyField("xStart", "X Start: ", xStartProperty, audioProperties, new PropertyChangedHandler());
+        yStartProperty = PropertiesUtil.addPropertyField("yStart", "Y Start: ", yStartProperty, audioProperties, new PropertyChangedHandler());
+        xEndProperty = PropertiesUtil.addPropertyField("xEnd", "X End: ", xEndProperty, audioProperties, new PropertyChangedHandler());
     }
 
-    public void update(VideoObject nVideo) {
-        selectedVideo = nVideo;
+    public void update(AudioObject nAudio) {
+        selectedAudio = nAudio;
         
         update();
     }
     
     public void update() {
-        if(selectedVideo == null) {
+        if(selectedAudio == null) {
             xStartProperty.setText("");
             yStartProperty.setText("");
             xEndProperty.setText("");
         } else {
-            xStartProperty.setText(String.valueOf(selectedVideo.getXStart()));
-            yStartProperty.setText(String.valueOf(selectedVideo.getYStart()));
-            xEndProperty.setText(String.valueOf(selectedVideo.getXEnd()));
+            xStartProperty.setText(String.valueOf(selectedAudio.getXStart()));
+            yStartProperty.setText(String.valueOf(selectedAudio.getYStart()));
+            xEndProperty.setText(String.valueOf(selectedAudio.getXEnd()));
         }
     }
     
-    public VBox getVideoProperties() {
-        return videoProperties;
+    public VBox getAudioProperties() {
+        return audioProperties;
     }
 
     public class PropertyChangedHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent e) {
-            if(selectedVideo == null) {
+            if(selectedAudio == null) {
                 return;
             }
             
@@ -92,13 +92,13 @@ public class VideoPropertiesController {
             
             switch(source.getId()) {
                 case "xStart":
-                    selectedVideo.setXStart(PropertiesUtil.validatePosition(source.getText(), selectedVideo.getXStart()));
+                    selectedAudio.setXStart(PropertiesUtil.validatePosition(source.getText(), selectedAudio.getXStart()));
                     break;
                 case "yStart":
-                    selectedVideo.setYStart(PropertiesUtil.validatePosition(source.getText(), selectedVideo.getYStart()));
+                    selectedAudio.setYStart(PropertiesUtil.validatePosition(source.getText(), selectedAudio.getYStart()));
                     break;
                 case "xEnd":
-                    selectedVideo.setXEnd(PropertiesUtil.validatePosition(source.getText(), selectedVideo.getXEnd()));
+                    selectedAudio.setXEnd(PropertiesUtil.validatePosition(source.getText(), selectedAudio.getXEnd()));
                     break;
                 default:
                     break;
@@ -114,7 +114,7 @@ public class VideoPropertiesController {
             Button source = (Button)e.getSource();
             
             if(source.getId() == "file") {
-                selectedVideo.setSourcefile(PropertiesUtil.validateFile(selectedVideo.getSourcefile(), "Videos","*.mp4", "*.flv"));
+                selectedAudio.setSourcefile(PropertiesUtil.validateFile(selectedAudio.getSourcefile(), "Audio: ", "*.wav", "*.mp3"));
                 update();
                 parent.redraw();
             }

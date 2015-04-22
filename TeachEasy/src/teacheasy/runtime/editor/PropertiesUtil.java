@@ -127,34 +127,19 @@ public class PropertiesUtil {
     }
     
     /**
-     * Handles choosing a new image source file.
+     * Handles choosing a new source file.
      * 
      * @param defaultVal The value to be returned if the file cannot be opened.
      * 
-     * @return Either the path of the new file, or the path of the default file.
-     */
-    public static String validateImage(String defaultVal) {
-        FileChooser chooser = new FileChooser();
-        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.JPG", "*.gif", "*.bmp"));
-        File file = chooser.showOpenDialog(new Stage());
-        
-        if(file == null || !file.exists()) {
-            return defaultVal;
-        }
-        
-        return file.getAbsolutePath();
-    }
-    
-    /**
-     * Handles choosing a new video source file.
+     * @param filterTitle The title of the file extension filter.
      * 
-     * @param defaultVal The value to be returned if the file cannot be opened.
+     * @param fileTypes A collection of file types for the filter.
      * 
      * @return Either the path of the new file, or the path of the default file.
-     */
-    public static String validateVideo(String defaultVal) {
+     */    
+    public static String validateFile(String defaultVal, String filterTitle, String... fileTypes) {
         FileChooser chooser = new FileChooser();
-        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Videos", "*.mp4", "*.flv"));
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(filterTitle, fileTypes));
         File file = chooser.showOpenDialog(new Stage());
         
         if(file == null || !file.exists()) {
