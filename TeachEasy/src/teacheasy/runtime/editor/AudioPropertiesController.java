@@ -1,6 +1,7 @@
 package teacheasy.runtime.editor;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import teacheasy.data.AudioObject;
@@ -33,6 +34,9 @@ public class AudioPropertiesController {
     /* The button for choosing a new file */
     private Button fileButton;
     
+    /* The check box for the view progress property */
+    private CheckBox viewProgressProperty;
+    
     /**
      * Constructor. 
      * 
@@ -57,6 +61,9 @@ public class AudioPropertiesController {
         xStartProperty = PropertiesUtil.addPropertyField("xStart", "X Start: ", xStartProperty, audioProperties, new PropertyChangedHandler());
         yStartProperty = PropertiesUtil.addPropertyField("yStart", "Y Start: ", yStartProperty, audioProperties, new PropertyChangedHandler());
         xEndProperty = PropertiesUtil.addPropertyField("xEnd", "X End: ", xEndProperty, audioProperties, new PropertyChangedHandler());
+        
+        /* Set up the view progress field */
+        viewProgressProperty = PropertiesUtil.addBooleanField("viewProgress", "View Progress: ", viewProgressProperty, audioProperties, new BooleanPropertyChangedHandler());
     }
 
     public void update(AudioObject nAudio) {
@@ -70,10 +77,12 @@ public class AudioPropertiesController {
             xStartProperty.setText("");
             yStartProperty.setText("");
             xEndProperty.setText("");
+            viewProgressProperty.setSelected(false);
         } else {
             xStartProperty.setText(String.valueOf(selectedAudio.getXStart()));
             yStartProperty.setText(String.valueOf(selectedAudio.getYStart()));
             xEndProperty.setText(String.valueOf(selectedAudio.getXEnd()));
+            viewProgressProperty.setSelected(selectedAudio.isViewProgress());
         }
     }
     
@@ -118,6 +127,28 @@ public class AudioPropertiesController {
                 update();
                 parent.redraw();
             }
+        }
+    }
+    
+    public class BooleanPropertyChangedHandler implements EventHandler<ActionEvent> {
+        @Override
+        public void handle(ActionEvent e) {
+            if(selectedAudio == null) {
+                return;
+            }
+            
+            CheckBox source = (CheckBox)e.getSource();
+            
+            switch(source.getId()) {
+                case "viewProgress":
+                    selectedAudio.setViewProgress(source.isSelected());
+                    break;
+                default:
+                    break;
+            }
+            
+            update();
+            parent.redraw();
         }
     }
 }
