@@ -194,6 +194,12 @@ public class Renderer {
         float xend = (float)bounds.getMaxX() * graphic.getXEnd();
         float yend = (float)bounds.getMaxY() * graphic.getYEnd();
         
+        String shadowStr = new String("none");
+        
+        if(graphic.isShadow()) {
+            shadowStr = new String("normal");
+        }
+        
         graphicsHandler.createGraphic(new GraphicHandlerObject.GraphicBuilder(graphic.getGraphicType(), xstart, ystart)
                                                                               .xEndPos(xend)
                                                                               .yEndPos(yend)
@@ -204,6 +210,7 @@ public class Renderer {
                                                                               .shadingType(graphic.getShading().toString())
                                                                               .shadingElement(graphic.getShadingColor(), 1.0f)
                                                                               .solid(graphic.isSolid())
+                                                                              .shadow(shadowStr)
                                                                               .build());
     }
     

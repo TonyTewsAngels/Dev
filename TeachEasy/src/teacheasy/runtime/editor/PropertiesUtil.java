@@ -5,6 +5,9 @@ import java.io.File;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -53,12 +56,12 @@ public class PropertiesUtil {
     
     /**
      * Adds a 'file' field to a property pane controller to
-     * allow a sourcefile to be changed.
+     * allow a source file to be changed.
      * 
      * @param id The ID to set on the button.
      * @param text The text to display next to the button.
      * @param button The button object to instantiate.
-     * @param container The container to place the propert in.
+     * @param container The container to place the property in.
      * @param pressHandler The handler for when the button is pressed.
      * 
      * @return The newly constructed button.
@@ -80,6 +83,86 @@ public class PropertiesUtil {
         
         /* Return the button so it can be used */
         return button;
+    }
+    
+    /**
+     * Adds a boolean field to a property pane controller to
+     * allow a boolean property to be changed. Takes check box form.
+     * 
+     * @param id The ID to set on the check box.
+     * @param text The text to display next to the check box.
+     * @param checkBox The check box to instantiate.
+     * @param container The container to place the property in.
+     * @param pressHandler The handler for when the check box is pressed.
+     * 
+     * @return The newly constructed check box.
+     */
+    public static CheckBox addBooleanField(String id, String text, CheckBox checkBox, VBox container, EventHandler<ActionEvent> pressHandler) {
+        /* Create a row to hold the components*/
+        HBox newRow = new HBox();
+        
+        /* Set up the check box */
+        checkBox = new CheckBox();
+        checkBox.setId(id);
+        checkBox.setOnAction(pressHandler);
+        
+        /* Add the components to the row */
+        newRow.getChildren().addAll(new Label(text), checkBox);
+        
+        /* Add the row to the containing VBox */
+        container.getChildren().add(newRow);
+        
+        /* Return the check box so it can be used */
+        return checkBox;
+    }
+    
+    /**
+     * 
+     * 
+     * @param id The ID to set on the color picker.
+     * @param text The text to display next to the color picker.
+     * @param picker The color picker to instantiate.
+     * @param container The container to place the property in.
+     * @param changeHandler The handler for when the color picker is pressed.
+     * 
+     * @return The newly constructed Color Picker.
+     */
+    public static ColorPicker addColorField(String id, String text, ColorPicker picker, VBox container, EventHandler<ActionEvent> changeHandler) {
+        /* Create a row to hold the components*/
+        HBox newRow = new HBox();
+        
+        /* Set up the color picker */
+        picker = new ColorPicker();
+        picker.setId(id);
+        picker.setOnAction(changeHandler);
+        
+        /* Add the components to the row */
+        newRow.getChildren().addAll(new Label(text), picker);
+        
+        /* Add the row to the containing VBox */
+        container.getChildren().add(newRow);
+        
+        /* Return the color picker so it can be used */
+        return picker;
+    }
+    
+    public static ComboBox<String> addSelectionField(String id, String text, ComboBox<String> comboBox, VBox container, EventHandler<ActionEvent> selectionHandler) {
+        /* Create a row to hold the components*/
+        HBox newRow = new HBox();
+        
+        /* Set up the combo box */
+        comboBox = new ComboBox<String>();
+        comboBox.setId(id);
+        comboBox.setOnAction(selectionHandler);
+        
+        /* Add the components to the row */
+        newRow.getChildren().addAll(new Label(text), comboBox);
+        
+        /* Add the row to the containing VBox */
+        container.getChildren().add(newRow);
+        
+        /* Return the combo box so it can be used */
+        return comboBox;
     }
     
     /**
@@ -107,18 +190,38 @@ public class PropertiesUtil {
     }
     
     /**
-     * Validates a newly entered rotation value.
+     * Validates a newly entered float value.
      * 
      * @param str The value entered as a string.
      * @param defaultVal The default value to return if the entered value is invalid.
      * 
      * @return Either the entered value as a float, or the default value.
      */
-    public static float validateRotation(String str, float defaultVal) {
+    public static float validateFloat(String str, float defaultVal) {
         float val = 0.0f;
         
         try {
             val = Float.parseFloat(str);
+        } catch (NumberFormatException nfe) {
+            return defaultVal;
+        }
+        
+        return val;
+    }
+    
+    /**
+     * Validates a newly entered integer value.
+     * 
+     * @param str The value entered as a string.
+     * @param defaultVal The default value to return if the entered value is invalid.
+     * 
+     * @return Either the entered value as a integer, or the default value.
+     */
+    public static int validateInt(String str, int defaultVal) {
+        int val = 0;
+        
+        try {
+            val = Integer.parseInt(str);
         } catch (NumberFormatException nfe) {
             return defaultVal;
         }

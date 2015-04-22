@@ -971,8 +971,8 @@ public class Graphic {
 	private Color convertStringToColor(String colorString) {
 		double a = Integer.parseInt(colorString.substring(alphaStartChar, alphaEndChar), 16) / 255.0;
 		double r = Integer.parseInt(colorString.substring(rStartChar, rEndChar), 16) / 255.0;
-		double b = Integer.parseInt(colorString.substring(gStartChar, gEndChar), 16) / 255.0;
-		double g = Integer.parseInt(colorString.substring(bStartChar, bEndChar), 16) / 255.0;
+		double g = Integer.parseInt(colorString.substring(gStartChar, gEndChar), 16) / 255.0;
+		double b = Integer.parseInt(colorString.substring(bStartChar, bEndChar), 16) / 255.0;
 
 		return new Color(r, g, b, a);
 	}

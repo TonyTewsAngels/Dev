@@ -112,7 +112,7 @@ public class ImagePropertiesController {
                     selectedImage.setYEnd(PropertiesUtil.validatePosition(source.getText(), selectedImage.getYEnd()));
                     break;
                 case "rotation":
-                    selectedImage.setRotation(PropertiesUtil.validateRotation(source.getText(), selectedImage.getRotation()));
+                    selectedImage.setRotation(PropertiesUtil.validateFloat(source.getText(), selectedImage.getRotation()));
                 default:
                     break;
             }

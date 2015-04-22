@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import teacheasy.data.AudioObject;
 import teacheasy.data.GraphicObject;
@@ -75,20 +74,17 @@ public class PropertiesPane {
         /* Initialise a blank page title label */
         pageTitle = new Label("");
         
-        /* Set up the color picer for the slide background color */
-        backgroundColorPicker = new ColorPicker();
-        backgroundColorPicker.setOnAction(new BackgroundColorChangeHandler());
-        
-        /* Set up the row in the properties pane for the background color */
-        HBox backgroundColor = new HBox();
-        backgroundColor.getChildren().addAll(new Label("Background Color: "), backgroundColorPicker);
-        backgroundColor.setSpacing(10);
-        
         /* Initialise a blank selection title label */
         selectionTitle = new Label("");
         
-        /* Add the new components to the properties pane */
-        pane.getChildren().addAll(pageTitle, backgroundColor, selectionTitle, currentController);
+        /* Add the page title to the properties pane */
+        pane.getChildren().add(pageTitle);
+        
+        /* Add the background color picker to the properties pane */
+        backgroundColorPicker = PropertiesUtil.addColorField("bgColor", "Background Color: ", backgroundColorPicker, pane, new BackgroundColorChangeHandler());
+        
+        /* Add the selected object parts of the properties pane */
+        pane.getChildren().addAll(selectionTitle, currentController);
         
         /* Set the pane's spacing */
         pane.setSpacing(10);
