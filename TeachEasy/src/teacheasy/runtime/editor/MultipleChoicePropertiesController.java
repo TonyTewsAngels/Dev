@@ -7,6 +7,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
@@ -16,6 +17,7 @@ import teacheasy.data.multichoice.Answer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import teacheasy.data.MultipleChoiceObject.MultiChoiceType;
 import teacheasy.data.MultipleChoiceObject.Orientation;;
 
 /**
@@ -45,6 +47,7 @@ public class MultipleChoicePropertiesController {
     
     /* The drop down list of orientations */
     private ComboBox<String> orientationProperty;
+    private ComboBox<String> typeProperty;
     
     /* The button for creating a new answer */
     private Button newAnswerButton;
@@ -74,7 +77,12 @@ public class MultipleChoicePropertiesController {
         yStartProperty = PropertiesUtil.addPropertyField("yStart", "Y Start: ", yStartProperty, multipleChoiceProperties, new PropertyChangedHandler());
         marksProperty = PropertiesUtil.addPropertyField("marks", "Marks: ", marksProperty, multipleChoiceProperties, new PropertyChangedHandler());
         
-        /* Set up the orientation property field */
+        /* Set up the type and orientation property fields */
+        typeProperty = PropertiesUtil.addSelectionField("type", "Type: ", typeProperty, multipleChoiceProperties, new SelectionPropertyChangedHandler());
+        for(MultiChoiceType t : MultiChoiceType.values()) {
+            typeProperty.getItems().add(t.toString());
+        }
+        
         orientationProperty = PropertiesUtil.addSelectionField("orientation", "Orientation: ", orientationProperty, multipleChoiceProperties, new SelectionPropertyChangedHandler());
         for(Orientation o : Orientation.values()) {
             orientationProperty.getItems().add(o.toString());
@@ -107,7 +115,7 @@ public class MultipleChoicePropertiesController {
         TableColumn<AnswerProperty, Boolean> correctColumn = new TableColumn<AnswerProperty, Boolean>("Correct");
         correctColumn.setMinWidth(100);
         correctColumn.setCellValueFactory(new PropertyValueFactory<AnswerProperty, Boolean>("correct"));
-        correctColumn.setCellFactory(TextFieldTableCell.<AnswerProperty, Boolean>forTableColumn(new BooleanStringConverter()));
+        correctColumn.setCellFactory(ComboBoxTableCell.<AnswerProperty, Boolean>forTableColumn(new BooleanStringConverter(), true, false));
         correctColumn.setOnEditCommit(new correctChangedHandler());
         
         answerTable.getColumns().add(answerColumn);
@@ -127,6 +135,8 @@ public class MultipleChoicePropertiesController {
             xStartProperty.setText("");
             yStartProperty.setText("");
             marksProperty.setText("");
+            orientationProperty.setValue("");
+            typeProperty.setValue("");
             retryProperty.setSelected(false);
             answerTable.getItems().clear();
             
@@ -134,6 +144,8 @@ public class MultipleChoicePropertiesController {
             xStartProperty.setText(String.valueOf(selectedMultipleChoice.getXStart()));
             yStartProperty.setText(String.valueOf(selectedMultipleChoice.getYStart()));
             marksProperty.setText(String.valueOf(selectedMultipleChoice.getMarks()));
+            typeProperty.setValue(selectedMultipleChoice.getMultiChoiceType().toString());
+            orientationProperty.setValue(selectedMultipleChoice.getOrientation().toString());
             retryProperty.setSelected(selectedMultipleChoice.isRetry());
             answerTable.getItems().clear();
             for(Answer a : selectedMultipleChoice.getAnswers()) {
@@ -198,6 +210,9 @@ public class MultipleChoicePropertiesController {
             switch(source.getId()) {
                 case "orientation":
                     selectedMultipleChoice.setOrientation(Orientation.valueOf(source.getValue()));
+                    break;
+                case "type":
+                    selectedMultipleChoice.setType(MultiChoiceType.valueOf(source.getValue()));
                     break;
                 default:
                     break;
