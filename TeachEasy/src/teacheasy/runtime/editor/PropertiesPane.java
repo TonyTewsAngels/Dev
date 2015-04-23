@@ -10,6 +10,7 @@ import teacheasy.data.GraphicObject;
 import teacheasy.data.ImageObject;
 import teacheasy.data.Page;
 import teacheasy.data.PageObject;
+import teacheasy.data.TextObject;
 import teacheasy.data.VideoObject;
 import teacheasy.render.Util;
 import teacheasy.runtime.EditorRunTimeData;
@@ -43,6 +44,7 @@ public class PropertiesPane {
     /* UI Element to change the page background color */
     private ColorPicker backgroundColorPicker;
     
+    private TextPropertiesController textPropertiesController;
     private ImagePropertiesController imagePropertiesController;
     private VideoPropertiesController videoPropertiesController;
     private AudioPropertiesController audioPropertiesController;
@@ -64,6 +66,7 @@ public class PropertiesPane {
         this.pane = nPane;
         this.editorRuntime = parent;
         
+        textPropertiesController = new TextPropertiesController(this);
         imagePropertiesController = new ImagePropertiesController(this);
         videoPropertiesController = new VideoPropertiesController(this);
         audioPropertiesController = new AudioPropertiesController(this);
@@ -111,6 +114,10 @@ public class PropertiesPane {
         
         if(selectedObject != null) {
             switch(selectedObject.getType()) {
+                case TEXT:
+                    textPropertiesController.update((TextObject)selectedObject);
+                    currentController = textPropertiesController.getTextProperties();
+                    break;  
                 case IMAGE:
                     imagePropertiesController.update((ImageObject)selectedObject);
                     currentController = imagePropertiesController.getImageProperties();
@@ -154,7 +161,7 @@ public class PropertiesPane {
             backgroundColorPicker.setValue(Util.colorFromString("#ffffffff"));
         } else {
             /* Update the page title */
-            pageTitle.setText("Page " + selectedPage.getNumber() + "\n");
+            pageTitle.setText("Page " + (selectedPage.getNumber()+1) + "\n");
             
             /* Update the background color component */
             backgroundColorPicker.setDisable(false);

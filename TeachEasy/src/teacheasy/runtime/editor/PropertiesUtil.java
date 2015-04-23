@@ -225,7 +225,7 @@ public class PropertiesUtil {
         } catch (NumberFormatException nfe) {
             return defaultVal;
         }
-        
+
         return val;
     }
     

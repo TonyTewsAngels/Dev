@@ -143,7 +143,7 @@ public class Renderer {
                                                   .strikethrough(rt.isStrikethrough())
                                                   .fontName(rt.getFont())
                                                   .fontColor(rt.getColor())
-                                                  .fontSize(rt.getFontSize())
+                                                  .fontSize(text.getFontSize())
                                                   .newline(rt.isNewLine())
                                                   .build());
         }
@@ -173,8 +173,8 @@ public class Renderer {
                                  audio.getSourcefile(),
                                  false,
                                  false,
-                                 audio.isViewProgress(),
-                                 false);
+                                 true,
+                                 !audio.isViewProgress());
     }
     
     /** Render an image on a page */
