@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import teacheasy.data.AudioObject;
 import teacheasy.data.GraphicObject;
 import teacheasy.data.ImageObject;
+import teacheasy.data.MultipleChoiceObject;
 import teacheasy.data.Page;
 import teacheasy.data.PageObject;
 import teacheasy.data.TextObject;
@@ -49,6 +50,7 @@ public class PropertiesPane {
     private VideoPropertiesController videoPropertiesController;
     private AudioPropertiesController audioPropertiesController;
     private GraphicPropertiesController graphicPropertiesController;
+    private MultipleChoicePropertiesController multipleChoicePropertiesController;
     
     private VBox currentController;
     
@@ -71,6 +73,7 @@ public class PropertiesPane {
         videoPropertiesController = new VideoPropertiesController(this);
         audioPropertiesController = new AudioPropertiesController(this);
         graphicPropertiesController = new GraphicPropertiesController(this);
+        multipleChoicePropertiesController = new MultipleChoicePropertiesController(this);
         
         currentController = new VBox();
         
@@ -133,6 +136,10 @@ public class PropertiesPane {
                 case GRAPHIC:
                     graphicPropertiesController.update((GraphicObject)selectedObject);
                     currentController = graphicPropertiesController.getGraphicProperties();
+                    break;
+                case MULTIPLE_CHOICE:
+                    multipleChoicePropertiesController.update((MultipleChoiceObject)selectedObject);
+                    currentController = multipleChoicePropertiesController.getMultipleChoiceProperties();
                     break;
                 default:
                     currentController = new VBox();
