@@ -141,8 +141,8 @@ public class Renderer {
                                                   .superscript(rt.isSuperscript())
                                                   .subscript(rt.isSubscript())
                                                   .strikethrough(rt.isStrikethrough())
-                                                  .fontName(rt.getFont())
-                                                  .fontColor(rt.getColor())
+                                                  .fontName(text.getFont())
+                                                  .fontColor(text.getColor())
                                                   .fontSize(text.getFontSize())
                                                   .newline(rt.isNewLine())
                                                   .build());
