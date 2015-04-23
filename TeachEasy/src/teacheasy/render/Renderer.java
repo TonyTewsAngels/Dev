@@ -6,9 +6,6 @@
  */
 package teacheasy.render;
 
-import java.io.File;
-import java.util.ArrayList;
-
 import teacheasy.data.*;
 import teacheasy.mediahandler.*;
 import wavemedia.graphic.*;
