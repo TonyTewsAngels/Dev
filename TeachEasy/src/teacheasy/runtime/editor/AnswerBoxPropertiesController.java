@@ -9,53 +9,53 @@ import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
-import javafx.util.converter.BooleanStringConverter;
-import teacheasy.data.MultipleChoiceObject;
-import teacheasy.data.multichoice.Answer;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import teacheasy.data.MultipleChoiceObject.MultiChoiceType;
-import teacheasy.data.MultipleChoiceObject.Orientation;;
+import teacheasy.data.AnswerBoxObject;
+import teacheasy.data.multichoice.Answer;
 
 /**
  * Encapsulates functionality relating to editor
- * functionality for Multiple Choice objects.
+ * functionality for Answer Box objects.
  * 
  * @author Alistair Jewers
  * @version 1.0 Apr 21 2015
  */
-public class MultipleChoicePropertiesController {
+public class AnswerBoxPropertiesController {
     /* Reference to the properties pane responsible for this controller */
     private PropertiesPane parent;
     
     /* Currently selected image */
-    private MultipleChoiceObject selectedMultipleChoice;
+    private AnswerBoxObject selectedAnswerBox;
     
     /* The UI element to contain the editable properties */
-    private VBox multipleChoiceProperties;
+    private VBox answerBoxProperties;
     
     /* The text fields for the different properties */
     private TextField xStartProperty;
     private TextField yStartProperty;
     private TextField marksProperty;
+    private TextField characterLimitProperty;
+    private TextField upperLimitProperty;
+    private TextField lowerLimitProperty;
     
     /* The  retry property */
     private CheckBox retryProperty;
+    private CheckBox numericalProperty;
     
     /* The drop down list of orientations */
     private ComboBox<String> orientationProperty;
     private ComboBox<String> typeProperty;
     
     /* The buttons for adding and removing answers */
-    private Button newAnswerButton;
-    private Button removeAnswerButton;
+    private HBox answerButtons;
     
     /* The answer table */
     private TableView<AnswerProperty> answerTable;
@@ -65,50 +65,46 @@ public class MultipleChoicePropertiesController {
      * 
      * @param nParent The properties pane responsible for this controller.
      */
-    public MultipleChoicePropertiesController(PropertiesPane nParent) {
+    public AnswerBoxPropertiesController(PropertiesPane nParent) {
         /* Set the parent reference */
         this.parent = nParent;
         
         /* Set the selected object null */
-        selectedMultipleChoice = null;
+        selectedAnswerBox = null;
         
         /* Set up the UI container */
-        multipleChoiceProperties = new VBox();
-        multipleChoiceProperties.setSpacing(5);
-        multipleChoiceProperties.setPadding(new Insets(5));
+        answerBoxProperties = new VBox();
+        answerBoxProperties.setSpacing(5);
+        answerBoxProperties.setPadding(new Insets(5));
 
         /* Set up the property fields */
-        xStartProperty = PropertiesUtil.addPropertyField("xStart", "X Start: ", xStartProperty, multipleChoiceProperties, new PropertyChangedHandler());
-        yStartProperty = PropertiesUtil.addPropertyField("yStart", "Y Start: ", yStartProperty, multipleChoiceProperties, new PropertyChangedHandler());
-        marksProperty = PropertiesUtil.addPropertyField("marks", "Marks: ", marksProperty, multipleChoiceProperties, new PropertyChangedHandler());
-        
-        /* Set up the type and orientation property fields */
-        typeProperty = PropertiesUtil.addSelectionField("type", "Type: ", typeProperty, multipleChoiceProperties, new SelectionPropertyChangedHandler());
-        for(MultiChoiceType t : MultiChoiceType.values()) {
-            typeProperty.getItems().add(t.toString());
-        }
-        
-        orientationProperty = PropertiesUtil.addSelectionField("orientation", "Orientation: ", orientationProperty, multipleChoiceProperties, new SelectionPropertyChangedHandler());
-        for(Orientation o : Orientation.values()) {
-            orientationProperty.getItems().add(o.toString());
-        }
-        
+        xStartProperty = PropertiesUtil.addPropertyField("xStart", "X Start: ", xStartProperty, answerBoxProperties, new PropertyChangedHandler());
+        yStartProperty = PropertiesUtil.addPropertyField("yStart", "Y Start: ", yStartProperty, answerBoxProperties, new PropertyChangedHandler());
+        marksProperty = PropertiesUtil.addPropertyField("marks", "Marks: ", marksProperty, answerBoxProperties, new PropertyChangedHandler());
+        characterLimitProperty = PropertiesUtil.addPropertyField("characterLimit", "Character Limit: ", characterLimitProperty, answerBoxProperties, new PropertyChangedHandler());
+        upperLimitProperty = PropertiesUtil.addPropertyField("upperLimit", "Upper Limit: ", upperLimitProperty, answerBoxProperties, new PropertyChangedHandler());
+        lowerLimitProperty = PropertiesUtil.addPropertyField("lowerLimit", "Lower Limit: ", lowerLimitProperty, answerBoxProperties, new PropertyChangedHandler());
+
         /* Set up the rety property field */
-        retryProperty = PropertiesUtil.addBooleanField("retry", "Retry: ", retryProperty, multipleChoiceProperties, new BooleanPropertyChangedHandler());
+        retryProperty = PropertiesUtil.addBooleanField("retry", "Retry: ", retryProperty, answerBoxProperties, new BooleanPropertyChangedHandler());
+        numericalProperty = PropertiesUtil.addBooleanField("numerical", "Numerical: ", retryProperty, answerBoxProperties, new BooleanPropertyChangedHandler());
         
         /* Construct the table for the editable answers */
         setupAnswerTable();
         
         /* Set up the new answer button */
-        newAnswerButton = new Button("Add Answer");
+        Button newAnswerButton= new Button("Add Answer");
         newAnswerButton.setId("newAnswer");
         newAnswerButton.setOnAction(new ButtonPressedHandler());
         
-        removeAnswerButton = new Button("Remove Selected");
+        Button removeAnswerButton = new Button("Remove Selected");
         removeAnswerButton.setId("removeAnswer");
         removeAnswerButton.setOnAction(new ButtonPressedHandler());
         
-        multipleChoiceProperties.getChildren().addAll(newAnswerButton, removeAnswerButton);
+        answerButtons = new HBox();
+        answerButtons.getChildren().addAll(newAnswerButton, removeAnswerButton);
+        
+        answerBoxProperties.getChildren().add(answerButtons);
     }
     
     public void setupAnswerTable() {
@@ -122,12 +118,6 @@ public class MultipleChoicePropertiesController {
         answerColumn.setCellFactory(TextFieldTableCell.<AnswerProperty>forTableColumn());
         answerColumn.setOnEditCommit(new AnswerChangedHandler());
         
-        TableColumn<AnswerProperty, Boolean> correctColumn = new TableColumn<AnswerProperty, Boolean>("Correct");
-        correctColumn.setMinWidth(100);
-        correctColumn.setCellValueFactory(new PropertyValueFactory<AnswerProperty, Boolean>("correct"));
-        correctColumn.setCellFactory(ComboBoxTableCell.<AnswerProperty, Boolean>forTableColumn(new BooleanStringConverter(), true, false));
-        correctColumn.setOnEditCommit(new CorrectChangedHandler());
-        
         TableColumn<AnswerProperty, Boolean> deleteColumn = new TableColumn<AnswerProperty, Boolean>("Remove");
         deleteColumn.setMinWidth(100);
         deleteColumn.setEditable(true);
@@ -135,49 +125,69 @@ public class MultipleChoicePropertiesController {
         deleteColumn.setCellFactory(CheckBoxTableCell.forTableColumn(deleteColumn));
         
         answerTable.getColumns().add(answerColumn);
-        answerTable.getColumns().add(correctColumn);
         answerTable.getColumns().add(deleteColumn);
         
-        multipleChoiceProperties.getChildren().add(answerTable);
+        answerBoxProperties.getChildren().add(answerTable);
     }
 
-    public void update(MultipleChoiceObject nMChoice) {
-        selectedMultipleChoice = nMChoice;
+    public void update(AnswerBoxObject nAnswerBox) {
+        selectedAnswerBox = nAnswerBox;
         
         update();
     }
     
     public void update() {
-        if(selectedMultipleChoice == null) {
+        if(selectedAnswerBox == null) {
             xStartProperty.setText("");
             yStartProperty.setText("");
             marksProperty.setText("");
+            characterLimitProperty.setText("");
+            upperLimitProperty.setText("");
+            lowerLimitProperty.setText("");
             orientationProperty.setValue("");
             typeProperty.setValue("");
             retryProperty.setSelected(false);
+            numericalProperty.setSelected(false);
             answerTable.getItems().clear();
         } else {
-            xStartProperty.setText(String.valueOf(selectedMultipleChoice.getXStart()));
-            yStartProperty.setText(String.valueOf(selectedMultipleChoice.getYStart()));
-            marksProperty.setText(String.valueOf(selectedMultipleChoice.getMarks()));
-            typeProperty.setValue(selectedMultipleChoice.getMultiChoiceType().toString());
-            orientationProperty.setValue(selectedMultipleChoice.getOrientation().toString());
-            retryProperty.setSelected(selectedMultipleChoice.isRetry());
+            xStartProperty.setText(String.valueOf(selectedAnswerBox.getXStart()));
+            yStartProperty.setText(String.valueOf(selectedAnswerBox.getYStart()));
+            marksProperty.setText(String.valueOf(selectedAnswerBox.getMarks()));
+            characterLimitProperty.setText(String.valueOf(selectedAnswerBox.getCharacterLimit()));
+            retryProperty.setSelected(selectedAnswerBox.isRetry());
+            numericalProperty.setSelected(selectedAnswerBox.isNumerical());
             answerTable.getItems().clear();
-            for(Answer a : selectedMultipleChoice.getAnswers()) {
-                answerTable.getItems().add(new AnswerProperty(a));
+            answerBoxProperties.getChildren().removeAll(answerTable, answerButtons);
+            
+            if(!selectedAnswerBox.isNumerical()) {
+                upperLimitProperty.setDisable(true);
+                lowerLimitProperty.setDisable(true);
+                
+                answerBoxProperties.getChildren().addAll(answerTable, answerButtons);
+                
+                for(Answer a : selectedAnswerBox.getAnswers()) {
+                    answerTable.getItems().add(new AnswerProperty(a));
+                }
+            } else {
+                upperLimitProperty.setDisable(false);
+                lowerLimitProperty.setDisable(false);
+                
+                if(selectedAnswerBox.getAnswers().size() >= 2) {
+                    lowerLimitProperty.setText(selectedAnswerBox.getAnswers().get(0).getText());
+                    upperLimitProperty.setText(selectedAnswerBox.getAnswers().get(1).getText());
+                }
             }
         }
     }
     
-    public VBox getMultipleChoiceProperties() {
-        return multipleChoiceProperties;
+    public VBox getAnswerBoxProperties() {
+        return answerBoxProperties;
     }
 
     public class PropertyChangedHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent e) {
-            if(selectedMultipleChoice == null) {
+            if(selectedAnswerBox == null) {
                 return;
             }
             
@@ -185,13 +195,16 @@ public class MultipleChoicePropertiesController {
             
             switch(source.getId()) {
                 case "xStart":
-                    selectedMultipleChoice.setXStart(PropertiesUtil.validatePosition(source.getText(), selectedMultipleChoice.getXStart()));
+                    selectedAnswerBox.setXStart(PropertiesUtil.validatePosition(source.getText(), selectedAnswerBox.getXStart()));
                     break;
                 case "yStart":
-                    selectedMultipleChoice.setYStart(PropertiesUtil.validatePosition(source.getText(), selectedMultipleChoice.getYStart()));
+                    selectedAnswerBox.setYStart(PropertiesUtil.validatePosition(source.getText(), selectedAnswerBox.getYStart()));
                     break;
                 case "marks":
-                    selectedMultipleChoice.setMarks(PropertiesUtil.validateInt(source.getText(), selectedMultipleChoice.getMarks()));
+                    selectedAnswerBox.setMarks(PropertiesUtil.validateInt(source.getText(), selectedAnswerBox.getMarks()));
+                    break;
+                case "characterLimit":
+                    selectedAnswerBox.setCharacterLimit(PropertiesUtil.validateInt(source.getText(), selectedAnswerBox.getCharacterLimit()));
                     break;
                 default:
                     break;
@@ -204,16 +217,20 @@ public class MultipleChoicePropertiesController {
     
     public class ButtonPressedHandler implements EventHandler<ActionEvent> {
         public void handle(ActionEvent e) {
+            if(selectedAnswerBox == null) {
+                return;
+            }
+            
             Button source = (Button)e.getSource();
             
             switch(source.getId()){
                 case "newAnswer":
-                    selectedMultipleChoice.addAnswer(new Answer("New Answer", true));
+                    selectedAnswerBox.addAnswer(new Answer("New Answer", true));
                     break;
                 case "removeAnswer":
                     for(AnswerProperty a : answerTable.getItems()) {
                         if(a.getRemove()) {
-                            selectedMultipleChoice.removeAnswer(a.getAnswerObject());
+                            selectedAnswerBox.removeAnswer(a.getAnswerObject());
                         }
                     }
                     break; 
@@ -224,35 +241,10 @@ public class MultipleChoicePropertiesController {
         }
     }
     
-    public class SelectionPropertyChangedHandler implements EventHandler<ActionEvent> {
-        @Override
-        public void handle(ActionEvent e) {
-            if(selectedMultipleChoice == null) {
-                return;
-            }
-            
-            ComboBox<String> source = (ComboBox<String>)e.getSource();
-            
-            switch(source.getId()) {
-                case "orientation":
-                    selectedMultipleChoice.setOrientation(Orientation.valueOf(source.getValue()));
-                    break;
-                case "type":
-                    selectedMultipleChoice.setType(MultiChoiceType.valueOf(source.getValue()));
-                    break;
-                default:
-                    break;
-            }
-            
-            update();
-            parent.redraw();
-        }
-    }
-    
     public class BooleanPropertyChangedHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent e) {
-            if(selectedMultipleChoice == null) {
+            if(selectedAnswerBox == null) {
                 return;
             }
             
@@ -260,8 +252,10 @@ public class MultipleChoicePropertiesController {
             
             switch(source.getId()) {
                 case "retry":
-                    selectedMultipleChoice.setRetry(source.isSelected());
+                    selectedAnswerBox.setRetry(source.isSelected());
                     break;
+                case "numerical":
+                    selectedAnswerBox.setNumerical(source.isSelected());
                 default:
                     break;
             }
@@ -277,17 +271,6 @@ public class MultipleChoicePropertiesController {
             ((AnswerProperty) t.getTableView().getItems().get(
                 t.getTablePosition().getRow())
                 ).setAnswer(t.getNewValue());
-            
-            parent.redraw();
-        }
-    }
-    
-    public class CorrectChangedHandler implements EventHandler<CellEditEvent<AnswerProperty, Boolean>> {
-        @Override
-        public void handle(CellEditEvent<AnswerProperty, Boolean> t) {            
-            ((AnswerProperty) t.getTableView().getItems().get(
-                t.getTablePosition().getRow())
-                ).setCorrect(t.getNewValue());
             
             parent.redraw();
         }

@@ -6,6 +6,10 @@
  */
 package teacheasy.data;
 
+import java.util.ArrayList;
+
+import teacheasy.data.multichoice.Answer;
+
 /**
  * Class for holding answer box data
  * 
@@ -15,9 +19,10 @@ package teacheasy.data;
 public class AnswerBoxObject extends PageObject {
 	private int characterLimit;
 	private int marks;
-	private String correctAnswers;
 	private boolean retry;
 	private boolean numerical;
+	
+	private ArrayList<Answer> answers;
 	
 	/** Constructor Method */
 	public AnswerBoxObject(float nXStart, float nYStart, int nCharacterLimit,
@@ -29,9 +34,15 @@ public class AnswerBoxObject extends PageObject {
 		/* Instantiate class level variables */
 		this.characterLimit = nCharacterLimit;
 		this.marks = nMarks;
-		this.correctAnswers = nCorrectAnswers;
 		this.retry = nRetry;
 		this.numerical = nNumerical;
+		
+		answers = new ArrayList<Answer>();
+		
+		String split[] = nCorrectAnswers.split("~");
+		for(int i = 0; i < split.length; i++) {
+		    answers.add(new Answer(split[i], true));
+		}
 	}
 	
 	/** Get the character limit  */
@@ -56,12 +67,38 @@ public class AnswerBoxObject extends PageObject {
 	
 	/** Get the correct answers string */
 	public String getCorrectAnswers() {
+	    String correctAnswers = "";
+	    
+	    for(Answer a : answers){
+	        correctAnswers = new String(correctAnswers + "~" + a.getText());
+	    }
+	    
 		return correctAnswers;
 	}
 
 	/** Set the correct answers string */
 	public void setCorrectAnswers(String correctAnswers) {
-		this.correctAnswers = correctAnswers;
+	    String split[] = correctAnswers.split("~");
+        for(int i = 0; i < split.length; i++) {
+            answers.add(new Answer(split[i], true));
+        }
+	}
+	
+	/** Add an answer */
+	public void addAnswer(Answer answer) {
+	    answers.add(answer);
+	}
+	
+	/** Remove an answer */
+	public void removeAnswer(Answer answer) {
+	    if(answers.contains(answer)) {
+	        answers.remove(answer);
+	    }
+	}
+	
+	/** Returns the array list of answers */
+	public ArrayList<Answer> getAnswers() {
+	    return answers;
 	}
 
 	/** Check the retry flag */
@@ -90,8 +127,12 @@ public class AnswerBoxObject extends PageObject {
         
         System.out.println(", Character Limit " + characterLimit + 
                            ", Marks " + marks + 
-                           ", Correct Answers " + correctAnswers +
-                           ", Retry " + retry + ".\n");
+                           ", Retry " + retry +
+                           ", Correct Answers: ");
+        
+        for(Answer a : answers) {
+            System.out.println(a.getText());
+        }
     }
 }
 

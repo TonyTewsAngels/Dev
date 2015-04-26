@@ -3,7 +3,6 @@ package teacheasy.runtime.editor;
 import teacheasy.data.multichoice.Answer;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
 
 public class AnswerProperty {
     private final SimpleStringProperty answer;

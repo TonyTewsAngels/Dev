@@ -119,6 +119,7 @@ public class GraphicPropertiesController {
             shadowProperty.setSelected(selectedGraphic.isShadow());
             graphicColorProperty.setValue(Util.colorFromString(selectedGraphic.getGraphicColour()));
             lineColorProperty.setValue(Util.colorFromString(selectedGraphic.getLineColor()));
+            typeProperty.setValue(selectedGraphic.getGraphicType().toString());
         }
         
         graphicColorProperty.fireEvent(new ActionEvent(graphicColorProperty, graphicColorProperty));
