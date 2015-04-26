@@ -1,5 +1,6 @@
 package teacheasy.debug;
 
+import teacheasy.data.PageObject.PageObjectType;
 import teacheasy.runtime.EditorRunTimeData;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -86,13 +87,20 @@ public class EditorRuntimeDataDummyUI extends Application {
         menuItemNewPage.setId("EditNewPage");
         menuItemNewPage.setOnAction(new MenuEventHandler());
         
+        Menu menuItemNewObject = new Menu("Add...");
+        
+        MenuItem menuItemNewImage = new MenuItem("Add New Image");
+        menuItemNewImage.setId("EditNewImage");
+        menuItemNewImage.setOnAction(new MenuEventHandler());
+        menuItemNewObject.getItems().add(menuItemNewImage);
+        
         /* Add a next page object button to the debug menu */
         MenuItem menuItemNextObject = new MenuItem("Next Object");
         menuItemNextObject.setId("DebugNextObject");
         menuItemNextObject.setOnAction(new MenuEventHandler());
         
         menuFile.getItems().addAll(menuItemNew, menuItemOpen, menuItemSave, menuItemClose);
-        menuEdit.getItems().addAll(menuItemNewPage);
+        menuEdit.getItems().addAll(menuItemNewPage, menuItemNewObject);
         menuDebug.getItems().addAll(menuItemNextObject);
         menuBar.getMenus().addAll(menuFile, menuEdit, menuPreview, menuHelp, menuDebug);
         
@@ -262,7 +270,10 @@ public class EditorRuntimeDataDummyUI extends Application {
             } else if (menuItem.getId().equals("EditNewPage")) {
                 editorRunTimeData.newPage();
                 updateUI();
-            }  else if (menuItem.getId().equals("DebugNextObject")) {
+            } else if (menuItem.getId().equals("EditNewImage")) {
+                editorRunTimeData.newObject(PageObjectType.IMAGE);
+                updateUI();
+            }else if (menuItem.getId().equals("DebugNextObject")) {
                 editorRunTimeData.nextObject();
                 updateUI();
             }

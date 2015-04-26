@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
 
 import teacheasy.data.*;
+import teacheasy.data.PageObject.PageObjectType;
 import teacheasy.render.Renderer;
 import teacheasy.runtime.editor.PropertiesPane;
 import teacheasy.xml.*;
@@ -309,6 +310,11 @@ public class EditorRunTimeData {
         
         setPageCount(lesson.pages.size());
         setCurrentPage(lesson.pages.size() - 1);
+    }
+    
+    /** Add a new object to the current page */
+    public void newObject(PageObjectType type) {
+        System.out.println("Adding new " + type.toString());
     }
     
     public void nextObject() {
