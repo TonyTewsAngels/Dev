@@ -120,6 +120,12 @@ public class MultipleChoiceObject extends PageObject {
         answers.add(answer);
     }
     
+    public void removeAnswer(Answer answer) {
+        if(answers.contains(answer)) {
+            answers.remove(answer);
+        }
+    }
+    
     /** Prints information about the object to the console */
     public void debugPrint() {
         super.debugPrint();

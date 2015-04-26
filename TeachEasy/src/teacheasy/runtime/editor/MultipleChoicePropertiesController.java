@@ -3,17 +3,23 @@ package teacheasy.runtime.editor;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 import javafx.util.converter.BooleanStringConverter;
 import teacheasy.data.MultipleChoiceObject;
 import teacheasy.data.multichoice.Answer;
+import javafx.beans.value.ObservableBooleanValue;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -49,8 +55,9 @@ public class MultipleChoicePropertiesController {
     private ComboBox<String> orientationProperty;
     private ComboBox<String> typeProperty;
     
-    /* The button for creating a new answer */
+    /* The buttons for adding and removing answers */
     private Button newAnswerButton;
+    private Button removeAnswerButton;
     
     /* The answer table */
     private TableView<AnswerProperty> answerTable;
@@ -98,7 +105,12 @@ public class MultipleChoicePropertiesController {
         newAnswerButton = new Button("Add Answer");
         newAnswerButton.setId("newAnswer");
         newAnswerButton.setOnAction(new ButtonPressedHandler());
-        multipleChoiceProperties.getChildren().add(newAnswerButton);
+        
+        removeAnswerButton = new Button("Remove Selected");
+        removeAnswerButton.setId("removeAnswer");
+        removeAnswerButton.setOnAction(new ButtonPressedHandler());
+        
+        multipleChoiceProperties.getChildren().addAll(newAnswerButton, removeAnswerButton);
     }
     
     public void setupAnswerTable() {
@@ -110,16 +122,23 @@ public class MultipleChoicePropertiesController {
         answerColumn.setEditable(true);
         answerColumn.setCellValueFactory(new PropertyValueFactory<AnswerProperty, String>("answer"));
         answerColumn.setCellFactory(TextFieldTableCell.<AnswerProperty>forTableColumn());
-        answerColumn.setOnEditCommit(new answerChangedHandler());
+        answerColumn.setOnEditCommit(new AnswerChangedHandler());
         
         TableColumn<AnswerProperty, Boolean> correctColumn = new TableColumn<AnswerProperty, Boolean>("Correct");
         correctColumn.setMinWidth(100);
         correctColumn.setCellValueFactory(new PropertyValueFactory<AnswerProperty, Boolean>("correct"));
         correctColumn.setCellFactory(ComboBoxTableCell.<AnswerProperty, Boolean>forTableColumn(new BooleanStringConverter(), true, false));
-        correctColumn.setOnEditCommit(new correctChangedHandler());
+        correctColumn.setOnEditCommit(new CorrectChangedHandler());
+        
+        TableColumn<AnswerProperty, Boolean> deleteColumn = new TableColumn<AnswerProperty, Boolean>("Remove");
+        deleteColumn.setMinWidth(100);
+        deleteColumn.setEditable(true);
+        deleteColumn.setCellValueFactory(new RemoveCallback());
+        deleteColumn.setCellFactory(CheckBoxTableCell.forTableColumn(deleteColumn));
         
         answerTable.getColumns().add(answerColumn);
         answerTable.getColumns().add(correctColumn);
+        answerTable.getColumns().add(deleteColumn);
         
         multipleChoiceProperties.getChildren().add(answerTable);
     }
@@ -139,7 +158,6 @@ public class MultipleChoicePropertiesController {
             typeProperty.setValue("");
             retryProperty.setSelected(false);
             answerTable.getItems().clear();
-            
         } else {
             xStartProperty.setText(String.valueOf(selectedMultipleChoice.getXStart()));
             yStartProperty.setText(String.valueOf(selectedMultipleChoice.getYStart()));
@@ -190,11 +208,21 @@ public class MultipleChoicePropertiesController {
         public void handle(ActionEvent e) {
             Button source = (Button)e.getSource();
             
-            if(source.getId() == "newAnswer") {
-                selectedMultipleChoice.addAnswer(new Answer("New Answer", true));
-                update();
-                parent.redraw();
+            switch(source.getId()){
+                case "newAnswer":
+                    selectedMultipleChoice.addAnswer(new Answer("New Answer", true));
+                    break;
+                case "removeAnswer":
+                    for(AnswerProperty a : answerTable.getItems()) {
+                        if(a.getRemove()) {
+                            selectedMultipleChoice.removeAnswer(a.getAnswerObject());
+                        }
+                    }
+                    break; 
             }
+            
+            update();
+            parent.redraw();
         }
     }
     
@@ -245,7 +273,7 @@ public class MultipleChoicePropertiesController {
         }
     }
     
-    public class answerChangedHandler implements EventHandler<CellEditEvent<AnswerProperty, String>> {
+    public class AnswerChangedHandler implements EventHandler<CellEditEvent<AnswerProperty, String>> {
         @Override
         public void handle(CellEditEvent<AnswerProperty, String> t) {
             ((AnswerProperty) t.getTableView().getItems().get(
@@ -256,14 +284,21 @@ public class MultipleChoicePropertiesController {
         }
     }
     
-    public class correctChangedHandler implements EventHandler<CellEditEvent<AnswerProperty, Boolean>> {
+    public class CorrectChangedHandler implements EventHandler<CellEditEvent<AnswerProperty, Boolean>> {
         @Override
-        public void handle(CellEditEvent<AnswerProperty, Boolean> t) {
+        public void handle(CellEditEvent<AnswerProperty, Boolean> t) {            
             ((AnswerProperty) t.getTableView().getItems().get(
                 t.getTablePosition().getRow())
                 ).setCorrect(t.getNewValue());
             
             parent.redraw();
+        }
+    }
+    
+    public class RemoveCallback implements Callback<TableColumn.CellDataFeatures<AnswerProperty, Boolean>, ObservableValue<Boolean>> {
+        @Override
+        public ObservableValue<Boolean> call(CellDataFeatures<AnswerProperty, Boolean> b) {
+            return b.getValue().getRemoveProperty();
         }
     }
 }
