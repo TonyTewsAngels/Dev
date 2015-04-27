@@ -1,12 +1,7 @@
 package teacheasy.debug;
 
-import java.io.File;
-import java.util.ArrayList;
-
-import teacheasy.data.Lesson;
-import teacheasy.data.Page;
-import teacheasy.runtime.RunTimeData;
-import teacheasy.xml.XMLHandler;
+import teacheasy.data.PageObject.PageObjectType;
+import teacheasy.runtime.EditorRunTimeData;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,26 +9,24 @@ import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.*;
-import javafx.scene.shape.*;
-import javafx.scene.text.*;
 import javafx.stage.*;
-import javafx.stage.FileChooser.ExtensionFilter;
 
-public class RuntimeDataDummyUI extends Application { 
+public class EditorRuntimeDataDummyUI extends Application { 
     /* Runtime Data */
-    private RunTimeData runTimeData;
+    private EditorRunTimeData editorRunTimeData;
     
     /* GUI Objects */
     private Group group;
+    private Label text;
     private Button nextPageButton;
     private Button prevPageButton;
+    private VBox propertiesPane;
     
     /* Screen size */
     private Rectangle2D bounds;
     
     /** Constructor method */
-    public RuntimeDataDummyUI() {
+    public EditorRuntimeDataDummyUI() {
         // Do Nothing
     }
 
@@ -62,25 +55,54 @@ public class RuntimeDataDummyUI extends Application {
         
         /* Construct the menu */
         MenuBar menuBar = new MenuBar();
-        menuBar.setPrefWidth(bounds.getMaxX());
+        menuBar.setPrefWidth(bounds.getMaxX()/2);
         Menu menuFile = new Menu("File");
         Menu menuEdit = new Menu("Edit");
         Menu menuPreview = new Menu("Preview");
         Menu menuHelp = new Menu("Help");
+        Menu menuDebug = new Menu("Debug");
         
         /* Add an open button to the file menu */
         MenuItem menuItemOpen = new MenuItem("Open");
-        menuFile.getItems().add(menuItemOpen);
         menuItemOpen.setId("FileOpen");
         menuItemOpen.setOnAction(new MenuEventHandler());
         
         /* Add a close button to the file menu */
         MenuItem menuItemClose = new MenuItem("Close");
-        menuFile.getItems().add(menuItemClose);
         menuItemClose.setId("FileClose");
         menuItemClose.setOnAction(new MenuEventHandler());
         
-        menuBar.getMenus().addAll(menuFile, menuEdit, menuPreview, menuHelp);
+        /* Add a new button to the file menu */
+        MenuItem menuItemNew = new MenuItem("New");
+        menuItemNew.setId("FileNew");
+        menuItemNew.setOnAction(new MenuEventHandler());
+        
+        /* Add a save button to the file menu */
+        MenuItem menuItemSave = new MenuItem("Save");
+        menuItemSave.setId("FileSave");
+        menuItemSave.setOnAction(new MenuEventHandler());
+        
+        /* Add a new page button to the edit menu */
+        MenuItem menuItemNewPage = new MenuItem("New Page");
+        menuItemNewPage.setId("EditNewPage");
+        menuItemNewPage.setOnAction(new MenuEventHandler());
+        
+        Menu menuItemNewObject = new Menu("Add...");
+        
+        MenuItem menuItemNewImage = new MenuItem("Add New Image");
+        menuItemNewImage.setId("EditNewImage");
+        menuItemNewImage.setOnAction(new MenuEventHandler());
+        menuItemNewObject.getItems().add(menuItemNewImage);
+        
+        /* Add a next page object button to the debug menu */
+        MenuItem menuItemNextObject = new MenuItem("Next Object");
+        menuItemNextObject.setId("DebugNextObject");
+        menuItemNextObject.setOnAction(new MenuEventHandler());
+        
+        menuFile.getItems().addAll(menuItemNew, menuItemOpen, menuItemSave, menuItemClose);
+        menuEdit.getItems().addAll(menuItemNewPage, menuItemNewObject);
+        menuDebug.getItems().addAll(menuItemNextObject);
+        menuBar.getMenus().addAll(menuFile, menuEdit, menuPreview, menuHelp, menuDebug);
         
         /* Add the menu to the grid */
         grid.add(menuBar, 0, 0);
@@ -90,6 +112,9 @@ public class RuntimeDataDummyUI extends Application {
         
         /* Add the text area to the grid */
         grid.add(group, 0, 1);
+        
+        propertiesPane = new VBox();
+        grid.add(propertiesPane, 1, 1);
         
         /* Create page buttons */
         HBox buttonRow = new HBox();
@@ -109,8 +134,11 @@ public class RuntimeDataDummyUI extends Application {
         /* Add the page buttons to the grid */
         grid.add(buttonRow, 0, 2);
         
+        text = new Label("");
+        grid.add(text, 0, 3);
+        
         /* Instantiate the runtime data */
-        runTimeData = new RunTimeData(group, new Rectangle2D(0, 0, bounds.getMaxX()/2, bounds.getMaxY()/2));
+        editorRunTimeData = new EditorRunTimeData(group, new Rectangle2D(0, 0, bounds.getMaxX()/2, bounds.getMaxY()/2), propertiesPane);
         
         /* Show the stage */
         primaryStage.show();
@@ -124,19 +152,23 @@ public class RuntimeDataDummyUI extends Application {
          * If there is a lesson open enable the relevant page 
          * buttons, if not disable both.
          */
-        if(runTimeData.isLessonOpen()) {
-            if(!runTimeData.isNextPage()) {
+        if(editorRunTimeData.isLessonOpen()) {
+            text.setText((editorRunTimeData.getCurrentPageNumber()+1) + " / " + editorRunTimeData.getPageCount());
+            
+            if(!editorRunTimeData.isNextPage()) {
                 nextPageButton.setDisable(true);
             } else {
                 nextPageButton.setDisable(false);
             }
             
-            if(!runTimeData.isPrevPage()) {
+            if(!editorRunTimeData.isPrevPage()) {
                 prevPageButton.setDisable(true);
             } else {
                 prevPageButton.setDisable(false);
             }
         } else {
+            text.setText("No lesson open");
+            
             nextPageButton.setDisable(true);
             prevPageButton.setDisable(true);
         }
@@ -144,20 +176,20 @@ public class RuntimeDataDummyUI extends Application {
     
     /** Next page button functionality */
     public void nextPageButtonPressed() {
-        runTimeData.nextPage();
+        editorRunTimeData.nextPage();
         updateUI();
     }
     
     /** Previous page button functionality */
     public void prevPageButtonPressed() {
-        runTimeData.prevPage();
+        editorRunTimeData.prevPage();
         updateUI();
     }
     
     /** File->Open menu option functionality */
     public void fileOpenPressed() {
         /* Open the file */
-        if(runTimeData.openLesson()) {
+        if(editorRunTimeData.openLesson()) {
             /* Opened Successfully */
         } else {
             System.out.print("Parse Failed");
@@ -170,7 +202,24 @@ public class RuntimeDataDummyUI extends Application {
     /** File->Close menu option functionality */
     public void fileClosePressed() {
         /* Close the current lesson */
-        runTimeData.closeLesson();
+        editorRunTimeData.closeLesson();
+        
+        /* Re-draw the window */
+        updateUI();
+    }
+    
+    /** File->New menu option functionality */
+    public void fileNewPressed() {
+        /* Close the current lesson */
+        editorRunTimeData.newLesson();
+        
+        /* Re-draw the window */
+        updateUI();
+    }
+    /** File->Save menu option functionality */
+    public void fileSavePressed() {
+        /* Close the current lesson */
+        editorRunTimeData.saveLesson();
         
         /* Re-draw the window */
         updateUI();
@@ -214,7 +263,21 @@ public class RuntimeDataDummyUI extends Application {
                 fileOpenPressed();
             } else if(menuItem.getId().equals("FileClose")) {
                 fileClosePressed();
-            } 
+            } else if(menuItem.getId().equals("FileNew")) {
+                fileNewPressed();
+            } else if(menuItem.getId().equals("FileSave")) {
+                fileSavePressed();
+            } else if (menuItem.getId().equals("EditNewPage")) {
+                editorRunTimeData.newPage();
+                updateUI();
+            } else if (menuItem.getId().equals("EditNewImage")) {
+                editorRunTimeData.newObject(PageObjectType.IMAGE);
+                updateUI();
+            }else if (menuItem.getId().equals("DebugNextObject")) {
+                editorRunTimeData.nextObject();
+                updateUI();
+            }
         }
     } 
 }
+

@@ -6,9 +6,6 @@
  */
 package teacheasy.render;
 
-import java.io.File;
-import java.util.ArrayList;
-
 import teacheasy.data.*;
 import teacheasy.mediahandler.*;
 import wavemedia.graphic.*;
@@ -121,7 +118,7 @@ public class Renderer {
     public void clearPage() {
         videoHandler.clearVideos();
         audioHandler.clearAudios();
-        group.getChildren().removeAll();
+        group.getChildren().clear();
     }
     
     /** Render a text box on a page */
@@ -141,9 +138,9 @@ public class Renderer {
                                                   .superscript(rt.isSuperscript())
                                                   .subscript(rt.isSubscript())
                                                   .strikethrough(rt.isStrikethrough())
-                                                  .fontName(rt.getFont())
-                                                  .fontColor(rt.getColor())
-                                                  .fontSize(rt.getFontSize())
+                                                  .fontName(text.getFont())
+                                                  .fontColor(text.getColor())
+                                                  .fontSize(text.getFontSize())
                                                   .newline(rt.isNewLine())
                                                   .build());
         }
@@ -173,8 +170,8 @@ public class Renderer {
                                  audio.getSourcefile(),
                                  false,
                                  false,
-                                 audio.isViewProgress(),
-                                 false);
+                                 true,
+                                 !audio.isViewProgress());
     }
     
     /** Render an image on a page */
@@ -194,6 +191,12 @@ public class Renderer {
         float xend = (float)bounds.getMaxX() * graphic.getXEnd();
         float yend = (float)bounds.getMaxY() * graphic.getYEnd();
         
+        String shadowStr = new String("none");
+        
+        if(graphic.isShadow()) {
+            shadowStr = new String("normal");
+        }
+        
         graphicsHandler.createGraphic(new GraphicHandlerObject.GraphicBuilder(graphic.getGraphicType(), xstart, ystart)
                                                                               .xEndPos(xend)
                                                                               .yEndPos(yend)
@@ -204,6 +207,7 @@ public class Renderer {
                                                                               .shadingType(graphic.getShading().toString())
                                                                               .shadingElement(graphic.getShadingColor(), 1.0f)
                                                                               .solid(graphic.isSolid())
+                                                                              .shadow(shadowStr)
                                                                               .build());
     }
     
