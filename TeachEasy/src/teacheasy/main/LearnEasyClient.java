@@ -132,7 +132,7 @@ public class LearnEasyClient extends Application {
 
         nextBtn.setText("Next");
         nextBtn.setId("nextBtn");
-        nextBtn.setOnAction(new UIButtonEventHandler());
+		nextBtn.setOnAction(new UIButtonEventHandler());
         
         /* Create Menubar */
         MenuBar menuBar = new MenuBar();

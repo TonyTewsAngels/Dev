@@ -23,6 +23,7 @@ import teacheasy.render.Renderer;
 import teacheasy.xml.*;
 import teacheasy.xml.util.XMLNotification;
 import teacheasy.xml.util.XMLNotification.Level;
+import teacheasy.mediahandler.AnswerBoxHandler;
 
 /**
  * This class encapsulates the current state of the
@@ -51,7 +52,7 @@ public class RunTimeData {
     
     /* Renderer */
     private Renderer renderer;
-
+        
     /** Constructor method */
     public RunTimeData(Group nGroup, Rectangle2D nBounds) {
         /* Set the class level variables */
@@ -99,12 +100,31 @@ public class RunTimeData {
     /** Move to the next page */
     public void nextPage() {        
         if(currentPage < pageCount - 1) {
-            currentPage++;
-            redraw(group, bounds);
+        	if (attemptedAllAvailableMarks())
+        	{
+                currentPage++;
+                redraw(group, bounds);
+                System.out.println("all attempted");
+        	}
+        	else {
+        		System.out.println("not all attempted");
+        	}
+
         }
     }
     
-    /** Move to the previous page */
+    /** Checks if all marks available on the current page have been attempted */
+    private boolean attemptedAllAvailableMarks() {
+    	
+		if (!renderer.answerBoxHandler.AllQuestionsAttempted()) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
+	/** Move to the previous page */
     public void prevPage() {        
         if(currentPage > 0) {
             currentPage--;

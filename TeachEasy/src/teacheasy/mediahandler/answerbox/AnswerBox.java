@@ -42,6 +42,7 @@ public class AnswerBox {
     private double yStart;
     private boolean isNumerical;
     private boolean validInput;
+    public boolean buttonPressed;
 
     /* UI Elements */
     private Group group;
@@ -234,6 +235,7 @@ public class AnswerBox {
             if (id.equals("check answer") && answerField.isEditable() == true) {
                 answerIsCorrect = checkAnswer(marks);
                 displayFeedback();
+                buttonPressed = true;
             }
         }
     }

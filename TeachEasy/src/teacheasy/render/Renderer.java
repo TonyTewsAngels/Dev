@@ -31,7 +31,7 @@ public class Renderer {
     private ImageHandler imageHandler;
     private TextHandler textHandler;
     private GraphicsHandler graphicsHandler;
-    private AnswerBoxHandler answerBoxHandler;
+    public AnswerBoxHandler answerBoxHandler;
     private MultipleChoiceHandler multipleChoiceHandler;
     private AudioHandler audioHandler;
    

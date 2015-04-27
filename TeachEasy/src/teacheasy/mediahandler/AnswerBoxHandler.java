@@ -32,5 +32,15 @@ public class AnswerBoxHandler {
 		answerBox.add(new AnswerBox(xStart, yStart, characterLimit, retry,
 				correctAnswers,marks,isNumerical, group));
 	}
+	
+	/** Checks to see if all questions on the current page have been attempted */
+	public boolean AllQuestionsAttempted() {
+		for (int i=0; i < answerBox.size(); i++) {
+			if (!answerBox.get(i).buttonPressed) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 }
