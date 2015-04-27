@@ -4,7 +4,11 @@
  */
 package teacheasy.mediahandler;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import javafx.scene.Group;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -44,8 +48,30 @@ public class ImageHandler {
 			double locationY, double widthSize, double heightSize, double rotationDegree) {
 		double imageWidth;
 		double imageHeight;
+		
+		Image image;
 
-		Image image = new Image("file:" + imageName);
+		if (imageName.startsWith("http")) {
+			/*File is a web resource, check that it exists*/
+			if(!mediaExists(imageName)) {
+				/*Add a label to notify user that media was unavailable*/
+                Label label = new Label("Media Unavailable");
+                label.relocate(locationX, locationY);
+                group.getChildren().add(label);
+                
+                /*return to halt creation of image*/
+                return;
+			}
+			
+			image = new Image("URL:" + imageName);
+			
+		} else {
+			
+			/*File is a local Resource*/
+			image = new Image("file:" + imageName);
+			
+		}
+		
 		imageWidth = image.getWidth();
 		imageHeight = image.getHeight();
 		ImageView imageView = new ImageView(image);
@@ -57,4 +83,30 @@ public class ImageHandler {
 		imageView.relocate(locationX, locationY);
 		group.getChildren().add(imageView);
 	}
+	
+    /** 
+     * Utility function, checks if an online image exists
+     * 
+     * @param url The URL to check
+     */
+    private static boolean mediaExists(String url){
+        try {
+          /* Do not follow redirects */
+          HttpURLConnection.setFollowRedirects(false);
+          
+          /* Open a connection to the media */
+          HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
+          
+          /* Use a head only request to just retrieve metadata */
+          con.setRequestMethod("HEAD");
+          
+          /* If a response code of 200 (okay) is received, the media is available */
+          return (con.getResponseCode() == HttpURLConnection.HTTP_OK);
+        }
+        catch (Exception e) {
+           return false;
+        }
+      }
+	
+	
 }
