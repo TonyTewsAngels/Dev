@@ -32,13 +32,13 @@ import javafx.*;
 
 /**
  * 
- * TeachEasy GUI based on BorderLayout
+ * TeachEasy GUI based on BorderLayout TE_GUI_3 (Check Lucid chart diagram)
  * 
  * @author Lewis Thresh
  * @version 1.0 18 April 2015
  */
 
-public class TE_GUI_2 extends Application {
+public class TE_GUI_3 extends Application {
 
 Text text, botText, propText;
 	
@@ -59,11 +59,12 @@ Text text, botText, propText;
 	
         /* Instantiate content of Group */
         GridPane masterGrid = new GridPane();
-        
         BorderPane masterBorder = new BorderPane();
         GridPane topGrid = new GridPane();
         MenuBar menuBar = new MenuBar();
         HBox topBar = new HBox(100);
+        GridPane innerGrid = new GridPane();
+        BorderPane innerBorder = new BorderPane();
         Group contentPanel = new Group();
         VBox propertiesPanel = new VBox();
         HBox bottomBar = new HBox();      
@@ -124,8 +125,22 @@ Text text, botText, propText;
         botRow.setMaxHeight(100);
         masterGrid.getRowConstraints().add(botRow);
    
+        /* Row constraints for innerGrid */
         
-      //  masterBorder.setPrefSize(1000, 1000);
+        ColumnConstraints contentRow = new ColumnConstraints();
+        contentRow.setMaxWidth(100);
+        innerGrid.getColumnConstraints().add(contentRow);
+        
+        ColumnConstraints centerRow = new ColumnConstraints();
+        centerRow.setFillWidth(true);
+        centerRow.setHgrow(Priority.ALWAYS);
+    //    centerRow.setMaxWidth(500);
+        innerGrid.getColumnConstraints().add(centerRow);
+    	
+    	
+        ColumnConstraints propertiesRow = new ColumnConstraints();
+        propertiesRow.setMaxWidth(100);
+        innerGrid.getColumnConstraints().add(propertiesRow);
         
         
         /* Add content to panes */
@@ -133,20 +148,17 @@ Text text, botText, propText;
         masterGroup.getChildren().addAll(masterGrid);
         
         masterGrid.add(masterBorder, 0, 0);
-        masterGrid.add(bottomBar,0 ,1);
-        
-        masterBorder.setMinSize(500,400);
-        masterBorder.setPrefSize(700,700);
-        masterBorder.setMaxSize(10000,10000);
+        masterGrid.add(bottomBar,0 ,2);
         
         masterBorder.setTop(topGrid);
-//        masterBorder.setLeft(contentPanel);
-        masterBorder.setLeft(contentPanel);
-       // masterBorder.getMaxWidth(Left,100);
-        masterBorder.setAlignment(propertiesPanel, Pos.TOP_RIGHT);
-
-        masterBorder.setRight(propertiesPanel);
-        //masterBorder.setBottom(bottomBar);
+ 
+        masterBorder.setCenter(innerGrid);
+        //masterBorder.setRight(propertiesPanel);
+        
+        innerGrid.add(contentPanel,0,0);
+        innerGrid.add(propertiesPanel,1,0);
+       // innerGrid.add(propertiesPanel,2,0);
+        
         
         topGrid.add(menuBar,0,0);
         topGrid.add(topBar,0,1);
@@ -160,7 +172,7 @@ Text text, botText, propText;
         bottomBar.getChildren().addAll(botText);
         
         /* Setup the window */
-        primaryStage.setTitle("TE_GUI_2");
+        primaryStage.setTitle("TE_GUI_3");
         primaryStage.setScene(scene);
         
         /* Show the window */
