@@ -118,7 +118,7 @@ public class Renderer {
     public void clearPage() {
         videoHandler.clearVideos();
         audioHandler.clearAudios();
-        group.getChildren().removeAll();
+        group.getChildren().clear();
     }
     
     /** Render a text box on a page */
