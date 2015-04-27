@@ -32,7 +32,7 @@ public class Renderer {
     private TextHandler textHandler;
     private GraphicsHandler graphicsHandler;
     public AnswerBoxHandler answerBoxHandler;
-    private MultipleChoiceHandler multipleChoiceHandler;
+    public MultipleChoiceHandler multipleChoiceHandler;
     private AudioHandler audioHandler;
    
     /** Constructor */

@@ -116,7 +116,9 @@ public class RunTimeData {
     /** Checks if all marks available on the current page have been attempted */
     private boolean attemptedAllAvailableMarks() {
     	
-		if (!renderer.answerBoxHandler.AllQuestionsAttempted()) {
+		if ((!renderer.answerBoxHandler.AllAnswerBoxQuestionsAttempted() 
+				|| (!renderer.multipleChoiceHandler.AllMultipleChoiceQuestionsAttempted())) 
+				) {
 			return false;
 		}
 		else {

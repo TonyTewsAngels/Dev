@@ -34,7 +34,7 @@ public class AnswerBoxHandler {
 	}
 	
 	/** Checks to see if all questions on the current page have been attempted */
-	public boolean AllQuestionsAttempted() {
+	public boolean AllAnswerBoxQuestionsAttempted() {
 		for (int i=0; i < answerBox.size(); i++) {
 			if (!answerBox.get(i).buttonPressed) {
 				return false;

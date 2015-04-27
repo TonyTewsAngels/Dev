@@ -50,6 +50,7 @@ public class MultipleChoice{
 	private MultiChoiceType type;
 	private Orientation orientation;
 	private boolean retry;
+	 public boolean buttonPressed;
 	
 	/* Create Drop Down List  */
 	ComboBox dropDownList = new ComboBox();
@@ -84,8 +85,9 @@ public class MultipleChoice{
 		markButton = new Button("Mark");
 		markLabel = new Label("");
 		
+//		/* Initialise button pressed as false*/
+//		this.buttonPressed = false;
 		
-
 		/* Toggle group used to allow only one radio button to be selected */
 		ToggleGroup tGroup = new ToggleGroup();
 
@@ -318,6 +320,7 @@ public class MultipleChoice{
             } else {
                 handleIncorrect();
             }
+            buttonPressed = true;
         }
 	}
 

@@ -60,4 +60,14 @@ public class MultipleChoiceHandler {
 				                              orientation,
 				                              retry));
 	}
+	
+	/** Checks to see if all questions on the current page have been attempted */
+	public boolean AllMultipleChoiceQuestionsAttempted() {
+		for (int i=0; i < multipleChoice.size(); i++) {
+			if (!multipleChoice.get(i).buttonPressed) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

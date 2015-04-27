@@ -116,6 +116,9 @@ public class AnswerBox {
 
         /* Add box back to the main screen */
         group.getChildren().add(box);
+        
+//        /*Initialise the buttonPressed variable as false*/
+//        this.buttonPressed = false;
     }
 
     /**
