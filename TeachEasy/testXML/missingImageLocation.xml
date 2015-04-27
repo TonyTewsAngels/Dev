@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<slideshow>
+	<documentinfo>
+		<author>Mr Cash</author>
+		<version>1.1</version>
+		<comment>A comment about the lesson</comment>
+		<groupid>4</groupid>
+		<datecreated>13/02/15</datecreated>		
+		<totalmarks>20</totalmarks>
+		<lessonname>Algebra 1</lessonname>
+	</documentinfo>
+	<defaultsettings>
+		<backgroundcolor>#ff00ff00</backgroundcolor>
+		<font>arial</font>
+		<fontsize>24</fontsize>
+		<fontcolor>#ffffffff</fontcolor>
+	</defaultsettings>
+	<gradesettings>
+		<passboundary passmessage="Well done lad" failmessage="Work harder">10</passboundary>
+	</gradesettings>
+	<slide number="1" backgroundcolor="#ffcc00cc">
+		<text sourcefile="null" xstart="0.6" ystart="0.2" font="arial" fontsize="20" fontcolor="#ffffffff">
+			<richtext bold="true">Bold Text</richtext>
+			<richtext>Not Bold Text</richtext>
+			<richtext italic="true" newline="true">Italic text.</richtext>
+		</text>
+		<image xstart="0.5" ystart="0.5" scale="1.0" yscale="1" rotation="0"/>
+		<audio sourcefile="gavel.wav" xstart="0.5" ystart="0.1" viewprogress="false"/>
+		<video sourcefile="avengers.mkv" xstart="0.1" ystart="0.1" videoscreenshot="C:\Users\sadjlsd\videoicon.jpeg"/>
+		<graphic type="oval" xstart="0.5" ystart="0.5" xend="0.7" yend="0.7" solid="true" graphiccolor="#11223344" rotation="0" outlinethickness="0.5" shadow="false">
+			<cyclicshading shadingcolor="#88776655" />
+		</graphic>
+		<answerbox xstart="0.1" ystart="0.1" characterlimit="6" correctanswer="springs~spring" marks="5" retry="false"/>
+		<button xstart="0.1" ystart="0.1" xend="0.3" yend="0.3" function="1" visible="true">
+			Button Text
+		</button>
+		<multiplechoice xstart="0.2" ystart="0.2" type="checkbox" orientation="vertical" marks="1" retry="false">
+			<answer correct="false">Fish</answer>
+			<answer correct="true">Bear</answer>
+			<answer correct="true">Zebra</answer>
+			<answer correct="false">Komodo Dragon</answer>
+		</multiplechoice>
+	</slide>
+</slideshow>
+
+		
+		
+		
+	
+		

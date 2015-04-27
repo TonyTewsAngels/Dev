@@ -1,0 +1,61 @@
+#play{
+	-fx-background-color: rgba(0, 0, 0, 0);
+	-fx-insets: 0;
+	-fx-padding: 0 0 0 0;
+}
+
+#pause{
+	-fx-background-color: rgba(0, 0, 0, 0);
+	-fx-insets: 0;
+	-fx-padding: 0 0 0 0;
+}
+
+#stop{
+	-fx-background-color: rgba(0, 0, 0, 0);
+	-fx-insets: 0;
+	-fx-padding: 0 0 0 0;
+}
+
+#fullscreen{
+	-fx-background-color: rgba(0, 0, 0, 0);
+	-fx-insets: 0;
+	-fx-padding: 0 0 0 0;
+}
+
+#volume{
+	-fx-background-color: rgba(0, 0, 0, 0);
+	-fx-insets: 0;
+	-fx-padding: 0 0 0 0;
+}
+
+#controls{
+	-fx-background-color: rgba(0, 0, 0, 0);
+	-fx-insets: 0;
+	-fx-padding: 0 0 0 0;
+}
+
+#mute{
+	-fx-background-color: rgba(0, 0, 0, 0);
+	-fx-insets: 0;
+	-fx-padding: 0 0 0 0;
+}
+
+#slider {
+	-fx-padding: 5;
+}
+
+#slider:focused {
+	-fx-padding: 5;
+}
+
+#slider .track{
+	-fx-background-color: rgba(75, 75, 75, 0.55);
+}
+
+#slider .thumb{
+	-fx-background-color: rgba(235, 235, 235, 1);
+}
+
+#slider:focused .thumb {
+	fx-background-color: rgba(235, 235, 235, 1);
+}

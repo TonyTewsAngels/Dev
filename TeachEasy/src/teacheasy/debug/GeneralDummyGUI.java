@@ -10,6 +10,7 @@ import javafx.application.Application;
 import javafx.event.*;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -37,6 +38,7 @@ public class GeneralDummyGUI extends Application {
         /* Instantiate the scene and group */
         Group group = new Group();
         Scene scene = new Scene(group);
+        GridPane grid = new GridPane();
         
         /* Setup the window */
         primaryStage.setTitle("Hello World!");
@@ -50,15 +52,23 @@ public class GeneralDummyGUI extends Application {
         Button GUIBtn = new Button();
         
         /* Setup the button */
-        GUIBtn.relocate(100.0, 100.0);
         GUIBtn.setText("Say 'GUI'");
         GUIBtn.setId("GUIButton");
         
         /* Set the button to use the button event handler */
         GUIBtn.setOnAction(new buttonEventHandler());
         
+        /* Create a button */
+        Button GUIBtn2 = new Button();
+        
+        /* Setup the button */
+        GUIBtn2.setText("2");
+        GUIBtn2.setId("2");
+        
         /* Add the button to the group */
-        group.getChildren().addAll(GUIBtn);
+        group.getChildren().add(grid);
+        grid.add(GUIBtn, 0, 0);
+        grid.add(GUIBtn2, 0, 1);
         
         /* Show the window */
         primaryStage.show(); 

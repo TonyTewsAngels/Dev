@@ -7,6 +7,8 @@
 package teacheasy.data;
 
 import teacheasy.xml.XMLElement;
+import wavemedia.graphic.GraphicType;
+import wavemedia.graphic.Shading;
 
 /**
  * This class extends PageObject and encapsulates a single graphics object.
@@ -14,29 +16,7 @@ import teacheasy.xml.XMLElement;
  * @version 	1.0 05 Feb 2015
  * @author 		Lewis Thresh & Calum Armstrong
  */
-public class GraphicObject extends PageObject {
-
-	/** Enumeration of the various graphic types */
-	public static enum GraphicType {
-		OVAL,
-		RECTANGLE,
-		LINE;
-		
-		public static GraphicType check(String str) {
-	        try {
-	            return valueOf(str);
-	        } catch (Exception ex) {
-	            return LINE;
-	        }
-	    }
-	}
-	
-	/** Enumeration of the various shading types */
-	public static enum Shading {
-	    NONE,
-	    CYCLIC
-	}
-	
+public class GraphicObject extends PageObject {		
 	/** Graphics Variables */
 	private GraphicType graphicType;
 	private float xEnd;
@@ -45,15 +25,44 @@ public class GraphicObject extends PageObject {
 	private String graphicColor;
 	private boolean solid;
 	private float outlineThickness;
+	private String lineColor;
 	private boolean shadow;
 	
 	private Shading shading;
 	private String shadingColor;
 	
-	/** Constructor Method */
+	private float startTime;
+	private float duration;
+	
+    public GraphicObject(GraphicType nType, float nXStart, float nYStart, float nXEnd, 
+                         float nYEnd, float nRotation, String nGraphicColor,   
+                         boolean nSolid, String nLineColor, float nOutlineThickness,
+                         boolean nShadow,
+                         float nStartTime, float nDuration) {
+
+        super(PageObjectType.GRAPHIC, nXStart, nYStart);
+        
+        this.graphicType = nType;
+        this.xEnd = nXEnd;
+        this.yEnd = nYEnd;
+        this.rotation = nRotation;
+        this.graphicColor = nGraphicColor;
+        this.solid = nSolid;
+        this.lineColor = nLineColor;
+        this.outlineThickness = nOutlineThickness;
+        this.shadow = nShadow;
+        
+        this.startTime = nStartTime;
+        this.duration = nDuration;
+        
+        this.shading = Shading.NONE;
+        this.shadingColor = new String("#ff000000");
+    }
+	
+	/** Old Compatability Constructor Method, Deprecated.*/
 	public GraphicObject(GraphicType nType, float nXStart, float nYStart, float nXEnd, 
-						  float nYEnd, float nRotation, String nGraphicColor,   
-						  boolean nSolid, float nOutlineThickness, boolean nShadow) {
+						 float nYEnd, float nRotation, String nGraphicColor,   
+						 boolean nSolid, String nLineColor, float nOutlineThickness, boolean nShadow) {
 	    
 		super(PageObjectType.GRAPHIC, nXStart, nYStart);
 		
@@ -64,6 +73,7 @@ public class GraphicObject extends PageObject {
 		this.graphicColor = nGraphicColor;
 		this.solid = nSolid;
 		this.outlineThickness = nOutlineThickness;
+		this.lineColor = nLineColor;
 		this.shadow = nShadow;
 		
 		this.shading = Shading.NONE;
@@ -119,6 +129,14 @@ public class GraphicObject extends PageObject {
 	public void setSolid(boolean nSolid) {
 		this.solid = nSolid;
 	}
+	
+	public String getLineColor() {
+	    return lineColor;
+	}
+	
+	public void setLineColor(String nLineColor) {
+	    this.lineColor = nLineColor;
+	}
 
 	public float getOutlineThickness() {
 		return outlineThickness;
@@ -156,15 +174,33 @@ public class GraphicObject extends PageObject {
     public void debugPrint() {
         super.debugPrint();
         
-        System.out.println(", xEnd " + xEnd + 
+        System.out.println(", type " + graphicType.toString() +
+                           ", xEnd " + xEnd + 
                            ", yEnd " + yEnd + 
                            ", Rotation " + rotation +
                            ", Color " + graphicColor + 
                            ", Solid " + solid + 
+                           ", Outline Color " + lineColor +
                            ", Outline Thickness " + outlineThickness +
                            ", Shadow " + shadow + 
                            ", Shading " + shading +
                            ", Shading Colour " + shadingColor +
                            ".\n");
+    }
+
+    public float getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(float nStartTime) {
+        this.startTime = nStartTime;
+    }
+
+    public float getDuration() {
+        return duration;
+    }
+
+    public void setDuration(float nDuration) {
+        this.duration = nDuration;
     }
 }

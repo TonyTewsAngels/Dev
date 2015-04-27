@@ -59,6 +59,16 @@ public abstract class PageObject {
 	    return yStart;
 	}
 	
+	/** Set the xstart position */
+    public void setXStart(float nXStart) {
+        this.xStart = nXStart;
+    }
+    
+    /** Set the ystart position */
+    public void setYStart(float nYStart) {
+        this.yStart = nYStart;
+    }
+	
 	/** Get the type of this page object */
 	public PageObjectType getType() {
 	    return type;

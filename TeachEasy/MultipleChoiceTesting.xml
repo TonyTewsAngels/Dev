@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<slideshow>
+    <documentinfo>
+        <author>Mr Jewers</author>
+        <version>1.0</version>
+        <comment>Testing the Multiple Choice object</comment>
+        <groupid>4</groupid>
+        <datecreated>11/03/2015</datecreated>
+        <totalmarks>3</totalmarks>
+        <lessonname>MChoice Testing</lessonname>
+    </documentinfo>
+    <defaultsettings>
+        <backgroundcolor>#ff00ff00</backgroundcolor>
+        <font>arial</font>
+        <fontsize>24</fontsize>
+        <fontcolor>#ffffffff</fontcolor>
+    </defaultsettings>
+    <gradesettings>
+        <passboundary failmessage="fail" passmessage="pass">2</passboundary>
+    </gradesettings>
+    
+    <slide backgroundcolor="#ffffffff" number="1">
+		<multiplechoice xstart="0.1" ystart="0.1" type="checkbox" orientation="vertical" marks="1" retry="true">
+			<answer correct="true">Correct</answer>
+			<answer correct="false">Incorrect</answer>
+			<answer correct="true">Correct</answer>
+			<answer correct="false">Incorrect</answer>
+			<answer correct="true">Correct</answer>
+			<answer correct="false">Incorrect</answer>
+		</multiplechoice>
+		
+		<multiplechoice xstart="0.4" ystart="0.1" type="radio" orientation="vertical" marks="1" retry="true">
+			<answer correct="false">Incorrect</answer>
+			<answer correct="false">Incorrect</answer>
+			<answer correct="true">Correct</answer>
+			<answer correct="false">Incorrect</answer>
+		</multiplechoice>
+		
+		<multiplechoice xstart="0.7" ystart="0.1" type="dropdownlist" orientation="vertical" marks="1" retry="true">
+			<answer correct="false">Incorrect</answer>
+			<answer correct="false">Incorrect</answer>
+			<answer correct="true">Correct</answer>
+			<answer correct="false">Incorrect</answer>
+		</multiplechoice>
+	</slide>	
+	
+	<slide backgroundcolor="#ffffffff" number="2">	
+		<multiplechoice xstart="0.1" ystart="0.4" type="checkbox" orientation="horizontal" marks="1" retry="false">
+			<answer correct="true">Correct</answer>
+			<answer correct="false">Incorrect</answer>
+			<answer correct="true">Correct</answer>
+		</multiplechoice>
+		
+		<multiplechoice xstart="0.4" ystart="0.4" type="radio" orientation="horizontal" marks="1" retry="false">
+			<answer correct="false">Incorrect</answer>
+			<answer correct="false">Incorrect</answer>
+			<answer correct="true">Correct</answer>
+			<answer correct="false">Incorrect</answer>
+		</multiplechoice>
+		
+		<multiplechoice xstart="0.7" ystart="0.4" type="dropdownlist" orientation="horizontal" marks="1" retry="false">
+			<answer correct="false">Incorrect</answer>
+			<answer correct="false">Incorrect</answer>
+			<answer correct="true">Correct</answer>
+			<answer correct="false">Incorrect</answer>
+		</multiplechoice>
+    </slide>
+    
+</slideshow>

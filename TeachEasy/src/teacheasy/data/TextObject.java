@@ -17,12 +17,33 @@ import java.util.List;
  */
 public class TextObject extends PageObject {
     public List<RichText> textFragments;
-    private String sourceFile;
+    
+    private float xEnd, yEnd;
     private String font;
 	private int fontSize;
 	private String color;
+	private float duration, startTime;
+	private String sourceFile;
 	
 	/** Constructor method */
+    public TextObject(float nXStart, float nYStart, float nXEnd, float nYEnd,  
+                      String nFont, int nFontSize, String nColor, String nSourceFile,
+                      float nDuration, float nStartTime) {
+        super(PageObjectType.TEXT, nXStart, nYStart);
+        
+        this.xEnd = nXEnd;
+        this.yEnd = nYEnd;
+        this.font = nFont;
+        this.fontSize = nFontSize;
+        this.color = nColor;
+        this.duration = nDuration;
+        this.startTime = nStartTime;
+        this.sourceFile = nSourceFile;
+        
+        textFragments = new ArrayList<RichText>();
+    }
+	
+	/** Old Compatibility Constructor method, deprecated */
 	public TextObject(float nXStart, float nYStart, String nSourceFile, 
 	                  String nFont, int nFontSize, String nColor) {
 		super(PageObjectType.TEXT, nXStart, nYStart);
@@ -36,13 +57,20 @@ public class TextObject extends PageObject {
 	}
 
 	/* Get and set functions */
+	public float getXEnd() {
+	    return xEnd;
+	}
 	
-    public String getSourceFile() {
-        return sourceFile;
+	public void setXEnd(float nXEnd) {
+        this.xEnd = nXEnd;
     }
-
-    public void setSourceFile(String nSourceFile) {
-        this.sourceFile = nSourceFile;
+	
+	public float getYEnd() {
+        return yEnd;
+    }
+    
+    public void setYEnd(float nYEnd) {
+        this.yEnd = nYEnd;
     }
 
     public String getFont() {
@@ -67,6 +95,30 @@ public class TextObject extends PageObject {
 
     public void setColor(String nColor) {
         this.color = nColor;
+    }
+    
+    public float getDuration() {
+        return duration;
+    }
+    
+    public void setDuration(float nDuration) {
+        this.duration = nDuration;
+    }
+    
+    public float getStartTime() {
+        return startTime;
+    }
+    
+    public void setStartTime(float nStartTime) {
+        this.startTime = nStartTime;
+    }
+    
+    public String getSourceFile() {
+        return sourceFile;
+    }
+
+    public void setSourceFile(String nSourceFile) {
+        this.sourceFile = nSourceFile;
     }
     
     public void debugPrint() {
