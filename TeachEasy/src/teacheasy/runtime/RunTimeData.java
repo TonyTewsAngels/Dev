@@ -9,12 +9,19 @@ package teacheasy.runtime;
 import java.io.File;
 import java.util.ArrayList;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBoxBuilder;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
 
@@ -107,13 +114,33 @@ public class RunTimeData {
                 System.out.println("all attempted");
         	}
         	else {
-        		System.out.println("not all attempted");
+        		displayWarning();
         	}
 
         }
     }
     
-    /** Checks if all marks available on the current page have been attempted */
+    /** Informs user that not all questions have been attempted
+     * and gives them the option of either continuing with the lesson
+     * or completing the questions
+     */
+    private void displayWarning() {
+    	
+    	Stage dialogStage = new Stage();
+    	dialogStage.initModality(Modality.WINDOW_MODAL);
+    	dialogStage.setScene(new Scene(VBoxBuilder.create().
+    			children(new Text("You haven't attempted every mark available on this page yet!" +
+    					"\n\nAre you sure you want to continue to the next page without" +
+    					" attempting them? \n\nYou cannot attempt them later."),
+    					new Button("Yes"), new Text("\n"), new Button("No")).
+    			alignment(Pos.CENTER).padding(new Insets(5)).build()));
+    	dialogStage.show();
+    	
+    	
+    	
+	}
+
+	/** Checks if all marks available on the current page have been attempted */
     private boolean attemptedAllAvailableMarks() {
     	
 		if ((!renderer.answerBoxHandler.AllAnswerBoxQuestionsAttempted() 
