@@ -148,6 +148,7 @@ public class RunTimeData {
         dialogCheck.setId("dialog check box");
         dialogCheck.setIndeterminate(false);
         dialogCheck.setSelected(false);
+        /* What to do if the check box is selected */
         dialogCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
         	public void changed(ObservableValue<? extends Boolean> ov,
         			Boolean old_val, Boolean new_val) {
@@ -157,15 +158,14 @@ public class RunTimeData {
         	}
         });
     	
-        /* Create the dialog box */
+        /* Create the dialog box and draw on screen */
     	dialogStage = new Stage();
     	dialogStage.initModality(Modality.APPLICATION_MODAL);
     	dialogStage.setScene(new Scene(VBoxBuilder.create().
     			children(new Text("You haven't attempted every mark available on this page yet!" +
-    					"\n\nAre you sure you want to continue to the next page without" +
-    					" attempting them? \n\nYou cannot attempt them later."),
-    					yesButton, new Text("\n"), noButton, new Text("\n"),
-    					dialogCheck).
+    					"\nAre you sure you want to continue to the next page without" +
+    					" attempting them? \nYou won't be able to attempt them later."),
+    					yesButton, noButton, dialogCheck).
     			alignment(Pos.CENTER).padding(new Insets(5)).build()));
     	dialogStage.show();
 	}
