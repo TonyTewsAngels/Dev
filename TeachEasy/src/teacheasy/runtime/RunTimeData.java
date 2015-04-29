@@ -9,6 +9,8 @@ package teacheasy.runtime;
 import java.io.File;
 import java.util.ArrayList;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -31,6 +33,7 @@ import teacheasy.xml.*;
 import teacheasy.xml.util.XMLNotification;
 import teacheasy.xml.util.XMLNotification.Level;
 import teacheasy.mediahandler.AnswerBoxHandler;
+import teacheasy.mediahandler.answerbox.AnswerBox.ButtonEventHandler;
 
 /**
  * This class encapsulates the current state of the
@@ -45,6 +48,7 @@ public class RunTimeData {
     /* */
     private Group group;
     private Rectangle2D bounds;
+    private Stage dialogStage;
     
     /* Class level variables */
     private int pageCount;
@@ -107,6 +111,7 @@ public class RunTimeData {
     /** Move to the next page */
     public void nextPage() {        
         if(currentPage < pageCount - 1) {
+        	/* Check to see if user has attempted all questions */
         	if (attemptedAllAvailableMarks())
         	{
                 currentPage++;
@@ -126,19 +131,50 @@ public class RunTimeData {
      */
     private void displayWarning() {
     	
-    	Stage dialogStage = new Stage();
+        /* Create buttons for user to click */
+        Button yesButton = new Button("Yes");
+        yesButton.setId("yes");
+        yesButton.setOnAction(new ButtonEventHandler());
+        Button noButton = new Button("No");
+        noButton.setId("no");
+        noButton.setOnAction(new ButtonEventHandler());
+    	
+    	dialogStage = new Stage();
     	dialogStage.initModality(Modality.WINDOW_MODAL);
     	dialogStage.setScene(new Scene(VBoxBuilder.create().
     			children(new Text("You haven't attempted every mark available on this page yet!" +
     					"\n\nAre you sure you want to continue to the next page without" +
     					" attempting them? \n\nYou cannot attempt them later."),
-    					new Button("Yes"), new Text("\n"), new Button("No")).
+    					yesButton, new Text("\n"), noButton).
     			alignment(Pos.CENTER).padding(new Insets(5)).build()));
     	dialogStage.show();
-    	
-    	
-    	
 	}
+    
+    /**
+     * Button Event Handler Class
+     */
+    public class ButtonEventHandler implements EventHandler<ActionEvent> {
+        @Override
+        public void handle(ActionEvent e) {
+            /* Get the button that was pressed */
+            Button button = (Button) e.getSource();
+
+            /* Get the id of the button pressed */
+            String id = button.getId();
+
+            /* Act according to id */
+            /* If user wants to continue, go to next page */
+            if (id.equals("yes")) {
+                currentPage++;
+                redraw(group, bounds);   
+                dialogStage.close();
+            }
+            /*If user wants to attempt questions close the dialog */
+            else if (id.equals("no")) {
+            	dialogStage.close();
+            }
+        }
+    }
 
 	/** Checks if all marks available on the current page have been attempted */
     private boolean attemptedAllAvailableMarks() {
