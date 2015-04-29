@@ -9,6 +9,8 @@ package teacheasy.runtime;
 import java.io.File;
 import java.util.ArrayList;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -17,6 +19,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBoxBuilder;
 import javafx.scene.paint.Color;
@@ -54,6 +57,7 @@ public class RunTimeData {
     private int pageCount;
     private int currentPage;
     private boolean lessonOpen;
+    private boolean hideDialog = false;
     
     /* Current Lesson */
     private Lesson lesson;
@@ -112,16 +116,16 @@ public class RunTimeData {
     public void nextPage() {        
         if(currentPage < pageCount - 1) {
         	/* Check to see if user has attempted all questions */
-        	if (attemptedAllAvailableMarks())
+        	if ((attemptedAllAvailableMarks()) || (hideDialog))
         	{
                 currentPage++;
                 redraw(group, bounds);
                 System.out.println("all attempted");
         	}
-        	else {
+        	/* Check to see if user has ticked check box */
+        	else if (!hideDialog) {
         		displayWarning();
         	}
-
         }
     }
     
@@ -131,13 +135,28 @@ public class RunTimeData {
      */
     private void displayWarning() {
     	
-        /* Create buttons for user to click */
+        /* Create buttons */
         Button yesButton = new Button("Yes");
         yesButton.setId("yes");
         yesButton.setOnAction(new ButtonEventHandler());
+        
         Button noButton = new Button("No");
         noButton.setId("no");
         noButton.setOnAction(new ButtonEventHandler());
+        
+        /* Check box giving user the option to never see warning again */
+        final CheckBox dialogCheck = new CheckBox("Don't show me this again");
+        dialogCheck.setId("dialog check box");
+        dialogCheck.setIndeterminate(false);
+        dialogCheck.setSelected(false);
+        dialogCheck.selectedProperty().addListener(new ChangeListener<Boolean>() {
+        	public void changed(ObservableValue<? extends Boolean> ov,
+        			Boolean old_val, Boolean new_val) {
+        			if (dialogCheck.isSelected()) {
+        				hideDialog = true;
+        			}
+        	}
+        });
     	
     	dialogStage = new Stage();
     	dialogStage.initModality(Modality.WINDOW_MODAL);
@@ -145,7 +164,8 @@ public class RunTimeData {
     			children(new Text("You haven't attempted every mark available on this page yet!" +
     					"\n\nAre you sure you want to continue to the next page without" +
     					" attempting them? \n\nYou cannot attempt them later."),
-    					yesButton, new Text("\n"), noButton).
+    					yesButton, new Text("\n"), noButton, new Text("\n"),
+    					dialogCheck).
     			alignment(Pos.CENTER).padding(new Insets(5)).build()));
     	dialogStage.show();
 	}
