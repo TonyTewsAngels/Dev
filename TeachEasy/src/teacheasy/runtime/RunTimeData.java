@@ -120,7 +120,6 @@ public class RunTimeData {
         	{
                 currentPage++;
                 redraw(group, bounds);
-                System.out.println("all attempted");
         	}
         	/* Check to see if user has ticked check box */
         	else if (!hideDialog) {
@@ -158,8 +157,9 @@ public class RunTimeData {
         	}
         });
     	
+        /* Create the dialog box */
     	dialogStage = new Stage();
-    	dialogStage.initModality(Modality.WINDOW_MODAL);
+    	dialogStage.initModality(Modality.APPLICATION_MODAL);
     	dialogStage.setScene(new Scene(VBoxBuilder.create().
     			children(new Text("You haven't attempted every mark available on this page yet!" +
     					"\n\nAre you sure you want to continue to the next page without" +
