@@ -70,4 +70,11 @@ public class MultipleChoiceHandler {
 		}
 		return true;
 	}
+	
+	/** Greys out all of the multiple choices currently on page */
+	public void DisableAllMultipleChoices() {
+		for (int i=0; i < multipleChoice.size(); i++) {
+			multipleChoice.get(i).disable();
+		}
+	}
 }

@@ -185,9 +185,11 @@ public class RunTimeData {
             /* Act according to id */
             /* If user wants to continue, go to next page */
             if (id.equals("yes")) {
+            	dialogStage.close();
+            	System.out.println("BEFORE:" + currentPage);
                 currentPage++;
-                redraw(group, bounds);   
-                dialogStage.close();
+                redraw(group, bounds); 
+                System.out.println("AFTER:" + currentPage);
             }
             /*If user wants to attempt questions close the dialog */
             else if (id.equals("no")) {
@@ -214,9 +216,10 @@ public class RunTimeData {
         if(currentPage > 0) {
             currentPage--;
             redraw(group, bounds);
+            System.out.println("current page :" + currentPage);
             /* grey out the available marks */
             renderer.answerBoxHandler.DisableAllAnswerBoxes();
-            
+            renderer.multipleChoiceHandler.DisableAllMultipleChoices();
         }
     }
     
@@ -230,7 +233,7 @@ public class RunTimeData {
     }
     
     /** Check if there is a previous page */
-    public boolean isPrevPage() {
+	public boolean isPrevPage() {
         if(currentPage > 0) {
             return true;
         } else {

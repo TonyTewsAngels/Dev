@@ -47,6 +47,7 @@ public class AnswerBoxHandler {
 	public void DisableAllAnswerBoxes() {
 		for (int i=0; i < answerBox.size(); i++) {
 			answerBox.get(i).answerField.setDisable(true);
+			answerBox.get(i).checkAnswerButton.setDisable(true);
 		}
 	}
 

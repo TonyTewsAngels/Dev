@@ -48,7 +48,7 @@ public class AnswerBox {
     private Group group;
     public TextField answerField;
     private HBox box;
-    private Button checkAnswerButton;
+    public Button checkAnswerButton;
     private Label feedbackLabel;
 
     /** Constructor method */

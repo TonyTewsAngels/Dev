@@ -284,7 +284,7 @@ public class MultipleChoice{
 	/**
 	 * Method to disable the set of answer options
 	 */
-	private void disable() {
+	public void disable() {
 	    /* Disable the appropriate answer objects */
 	    switch(type) {
 	        case CHECKBOX:
