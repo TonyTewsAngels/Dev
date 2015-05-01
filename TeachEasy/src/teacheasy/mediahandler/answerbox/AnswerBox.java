@@ -46,7 +46,7 @@ public class AnswerBox {
 
     /* UI Elements */
     private Group group;
-    private TextField answerField;
+    public TextField answerField;
     private HBox box;
     private Button checkAnswerButton;
     private Label feedbackLabel;

@@ -214,6 +214,9 @@ public class RunTimeData {
         if(currentPage > 0) {
             currentPage--;
             redraw(group, bounds);
+            /* grey out the available marks */
+            renderer.answerBoxHandler.DisableAllAnswerBoxes();
+            
         }
     }
     

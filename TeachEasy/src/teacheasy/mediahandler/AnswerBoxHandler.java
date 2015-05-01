@@ -42,5 +42,12 @@ public class AnswerBoxHandler {
 		}
 		return true;
 	}
+	
+	/**Greys out all of the answer boxes on a page */
+	public void DisableAllAnswerBoxes() {
+		for (int i=0; i < answerBox.size(); i++) {
+			answerBox.get(i).answerField.setDisable(true);
+		}
+	}
 
 }
