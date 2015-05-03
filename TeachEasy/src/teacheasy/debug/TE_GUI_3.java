@@ -41,7 +41,7 @@ import javafx.*;
 
 public class TE_GUI_3 extends Application {
 
-Text text, botText, propText;
+Text text, botText, propText, titleText;
 	
 	/**
      * Override the start method inside the JavaFX Application
@@ -55,36 +55,26 @@ Text text, botText, propText;
         Rectangle2D bounds = screen.getVisualBounds();
         
         /* Instantiate the scene and group */
-        Group masterGroup = new Group();  
         GridPane innerGrid = new GridPane();
         Scene scene = new Scene(innerGrid, 500, 500);
 	
         /* Instantiate content of Group */
-        GridPane masterGrid = new GridPane();
-        BorderPane masterBorder = new BorderPane();
         GridPane topGrid = new GridPane();
         MenuBar menuBar = new MenuBar();
-        HBox topBar = new HBox(100);
-        //GridPane innerGrid = new GridPane();
-        BorderPane innerBorder = new BorderPane();
-        
-        AnchorPane propertiesAnchor = new AnchorPane();
-        
+        HBox topBar = new HBox(5);
+        HBox titleBox = new HBox();
+        HBox preview = new HBox();
         Group contentPanel = new Group();
         VBox propertiesPanel = new VBox();
         HBox bottomBar = new HBox();      
 
         
         /* Set layout colours */
-        
-      //  masterBorder.setStyle("-fx-background-color: black;");
-        topBar.setStyle("-fx-background-color: green;");
+        topGrid.setStyle("-fx-background-color: Grey;");
         propertiesPanel.setStyle("-fx-background-color: yellow;");
-        contentPanel.setStyle("-fx-background-color: white;");
-        bottomBar.setStyle("-fx-background-color: blue;");
-        masterGrid.setStyle("-fx-background-color: pink;");
-        propertiesAnchor.setStyle("-fx-background-color: black;");
-        
+        contentPanel.setStyle("-fx-background-color: rgb(101, 4, 7);");
+        bottomBar.setStyle("-fx-background-color: Grey;");
+        innerGrid.setStyle("-fx-background-color: rgb(101, 4, 7);");
         
         /* Setup Menubar */
         Menu menuFile = new Menu("File");
@@ -110,6 +100,11 @@ Text text, botText, propText;
         propText.setFont(Font.font("Verdana", 20));
         propText.setId("botText");
         
+        titleText = new Text(1, 1,"TITLE");
+        titleText.setFont(Font.font("Verdana", 30));
+        titleText.setId("titleText");
+        
+        
         /* Page */
         
         Rectangle r = new Rectangle();
@@ -118,45 +113,47 @@ Text text, botText, propText;
         r.setFill(Color.WHITE);
         r.setEffect(new DropShadow());
         
-        /* Button */
+        /* Buttons */
         
         Button butt = new Button("Dummy");
         
- 
+        Button text = new Button("Text");
+        Button image = new Button("Image");
+        Button video = new Button("Video");
+        Button tick = new Button("Ticks");
+        Button graphic = new Button("Graphics");
+        Button audio = new Button("Audio");
+        
+        Button prev = new Button("Preview");
+        
+        
+        
+        /* Top Bar Constraints */
+        
+        ColumnConstraints topFarLeft = new ColumnConstraints();
+        topFarLeft.setMaxWidth(50);
+        topGrid.getColumnConstraints().add(topFarLeft);
+        
+        ColumnConstraints stretchLeft = new ColumnConstraints();
+        stretchLeft.setFillWidth(true);
+        stretchLeft.setHgrow(Priority.SOMETIMES);
+        topGrid.getColumnConstraints().add(stretchLeft);
+        
+        ColumnConstraints topCentre = new ColumnConstraints();
+        topCentre.setMaxWidth(50);
+        topGrid.getColumnConstraints().add(topCentre);
+        
+        ColumnConstraints stretchRight = new ColumnConstraints();
+        stretchRight.setFillWidth(true);
+        stretchRight.setHgrow(Priority.SOMETIMES);
+        topGrid.getColumnConstraints().add(stretchRight);
+        
+        ColumnConstraints topFarRight = new ColumnConstraints();
+        topFarRight.setMaxWidth(50);
+        topGrid.getColumnConstraints().add(topFarRight);
         
         
         /* Set row constraints */
-        
-   /*     RowConstraints midRow = new RowConstraints();
-        midRow.setFillHeight(true);
-        midRow.setVgrow(Priority.ALWAYS);
-        masterGrid.getRowConstraints().add(midRow);*/
-    	
-     /*   RowConstraints topRow = new RowConstraints();
-        topRow.setMaxHeight(1000);
-        masterGrid.getRowConstraints().add(topRow);
-        
-        RowConstraints midRow = new RowConstraints();
-        midRow.setMaxHeight(1000);
-        masterGrid.getRowConstraints().add(midRow);
-        
-        RowConstraints botRow = new RowConstraints();
-        botRow.setMaxHeight(1000);
-        masterGrid.getRowConstraints().add(botRow);*/
-        
-/*        ColumnConstraints masterCol = new ColumnConstraints();
-        masterCol.setMaxWidth(800);
-        masterGrid.getColumnConstraints().add(masterCol);*/
-        
-       /* ColumnConstraints masterCol = new ColumnConstraints();
-        masterCol.setFillWidth(true);
-        masterCol.setHgrow(Priority.ALWAYS);
-     //   masterCol.setPrefWidth(2000);
-       // masterCol.setMaxWidth(2000);
-        masterGrid.getColumnConstraints().add(masterCol);*/
-   
-        
-        
         RowConstraints topRow = new RowConstraints();
         topRow.setMaxHeight(900);
         innerGrid.getRowConstraints().add(topRow);
@@ -176,16 +173,12 @@ Text text, botText, propText;
         innerGrid.getRowConstraints().add(innerBot);
     	
         RowConstraints botBarRow = new RowConstraints();
-        botBarRow.setMaxHeight(900);
+        botBarRow.setMaxHeight(1000);
         innerGrid.getRowConstraints().add(botBarRow);
         
         
         /* Column constraints for innerGrid */
-        
-  /*      ColumnConstraints farLeft = new ColumnConstraints();
-        farLeft.setMaxWidth(10);
-        innerGrid.getColumnConstraints().add(farLeft); */
-        
+
         ColumnConstraints farLeft = new ColumnConstraints();
         farLeft.setFillWidth(true);
        // centerRow.setMaxWidth(100);
@@ -208,36 +201,23 @@ Text text, botText, propText;
         
         /* Add content to panes */
         
-       // masterGroup.getChildren().addAll(innerGrid);
-        
-//        masterGrid.add(masterBorder, 0, 0);
-  /*      masterGrid.add(topGrid,0,0);
-        masterGrid.add(innerGrid,0,1);
-        masterGrid.add(bottomBar,0 ,2);
-        */
-     /*   masterBorder.setTop(topGrid);
-        masterBorder.setCenter(propertiesAnchor);
-        masterBorder.setRight(propertiesAnchor);*/
-        
-       // propertiesAnchor.setLeftAnchor(innerGrid, 10.0);
-       // propertiesAnchor.setRightAnchor(propertiesPanel, 10.0);
         innerGrid.add(topGrid,0,0,4,1);
         innerGrid.add(contentPanel,1,1);
-        innerGrid.add(propertiesPanel,3,1);
-        innerGrid.add(bottomBar,0,2,4,1);
-     /*   AnchorPane.setTopAnchor(topGrid, 1.0);
-        AnchorPane.setTopAnchor(innerGrid, 50.0);
-        AnchorPane.setTopAnchor(propertiesPanel, 50.0);
+        innerGrid.add(propertiesPanel,3,1,1,3);
+        innerGrid.add(bottomBar,0,4,4,1);
+
+        topGrid.add(menuBar,0,0,5,1);
+        topGrid.add(titleBox,0,1);
+        topGrid.add(topBar,2,1);
+        topGrid.add(preview,4,1);
         
-        AnchorPane.setLeftAnchor(innerGrid, 50.0);
-        AnchorPane.setRightAnchor(propertiesPanel, 10.0);
+        topBar.setAlignment(Pos.BASELINE_CENTER);
+        titleBox.setAlignment(Pos.BASELINE_LEFT);
+        preview.setAlignment(Pos.BASELINE_RIGHT);
         
-        propertiesAnchor.getChildren().addAll(topGrid,propertiesPanel,innerGrid);
-        */
-        topGrid.add(menuBar,0,0);
-        topGrid.add(topBar,0,1);
-        
-        topBar.getChildren().addAll(text);
+        titleBox.getChildren().addAll(titleText);
+        preview.getChildren().addAll(prev);
+        topBar.getChildren().addAll(text,image,video,tick,graphic,audio);
         
         contentPanel.getChildren().addAll(r);
         
