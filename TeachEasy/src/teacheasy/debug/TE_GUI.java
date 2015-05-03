@@ -184,7 +184,7 @@ public class TE_GUI extends Application{
       /*  masterGrid.add(innerBorder, 0, 1);*/
         masterGrid.add(bottemBar, 0, 2);
        
-        
+
         
         /* Content of innerGrid */
         innerGrid.add(topBar, 0, 0);
