@@ -92,6 +92,11 @@ public class EditorRuntimeDataDummyUI extends Application {
         menuItemRemovePage.setId("EditRemovePage");
         menuItemRemovePage.setOnAction(new MenuEventHandler());
         
+        /* Add a remove object button to the edit menu */
+        MenuItem menuItemRemoveObject = new MenuItem("Remove Object");
+        menuItemRemoveObject.setId("EditRemoveObject");
+        menuItemRemoveObject.setOnAction(new MenuEventHandler());
+        
         Menu menuItemNewObject = new Menu("Add...");
         
         MenuItem menuItemNewImage = new MenuItem("Add New Image");
@@ -135,7 +140,7 @@ public class EditorRuntimeDataDummyUI extends Application {
         menuItemNextObject.setOnAction(new MenuEventHandler());
         
         menuFile.getItems().addAll(menuItemNew, menuItemOpen, menuItemSave, menuItemClose);
-        menuEdit.getItems().addAll(menuItemNewPage, menuItemRemovePage, menuItemNewObject);
+        menuEdit.getItems().addAll(menuItemNewPage, menuItemRemovePage, menuItemNewObject, menuItemRemoveObject);
         menuDebug.getItems().addAll(menuItemNextObject);
         menuBar.getMenus().addAll(menuFile, menuEdit, menuPreview, menuHelp, menuDebug);
         
@@ -329,7 +334,13 @@ public class EditorRuntimeDataDummyUI extends Application {
             } else if (menuItem.getId().equals("EditNewGraphic")) {
                 editorRunTimeData.newObject(PageObjectType.GRAPHIC);
                 updateUI();
-            } else if (menuItem.getId().equals("DebugNextObject")) {
+            } else if (menuItem.getId().equals("EditRemovePage")) {
+                editorRunTimeData.removePage();
+                updateUI();
+            } else if (menuItem.getId().equals("EditRemoveObject")) {
+                editorRunTimeData.removeObject();
+                updateUI();
+            } else if(menuItem.getId().equals("DebugNextObject")) {
                 editorRunTimeData.nextObject();
                 updateUI();
             }

@@ -315,6 +315,10 @@ public class EditorRunTimeData {
     
     /** Remove the current page */
     public void removePage() {
+        if(!isLessonOpen()) {
+            return;
+        }
+        
         if(lesson.pages.size() <= 1) {
             lesson.pages.get(currentPage).pageObjects.clear();
             return;
@@ -344,6 +348,27 @@ public class EditorRunTimeData {
                         lesson.pages.get(currentPage).pageObjects.size() - 1));
         
         redraw();
+    }
+    
+    /** Remove the current object from the page */
+    public void removeObject() {
+        if(!isLessonOpen()) {
+            return;
+        }
+        
+        if(propertiesPane.getSelectedObject() == null) {
+            return;
+        }
+        
+        int index = lesson.pages.get(currentPage).pageObjects.indexOf(propertiesPane.getSelectedObject());
+        
+        if(index == -1 || index == lesson.pages.get(currentPage).pageObjects.size()) {
+            return;
+        }
+        
+        lesson.pages.get(currentPage).pageObjects.remove(index);
+        
+        propertiesPane.update(lesson.pages.get(currentPage), null);
     }
     
     public void nextObject() {
