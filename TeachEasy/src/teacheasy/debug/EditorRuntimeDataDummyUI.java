@@ -87,6 +87,11 @@ public class EditorRuntimeDataDummyUI extends Application {
         menuItemNewPage.setId("EditNewPage");
         menuItemNewPage.setOnAction(new MenuEventHandler());
         
+        /* Add a remove page button to the edit menu */
+        MenuItem menuItemRemovePage = new MenuItem("Remove Page");
+        menuItemRemovePage.setId("EditRemovePage");
+        menuItemRemovePage.setOnAction(new MenuEventHandler());
+        
         Menu menuItemNewObject = new Menu("Add...");
         
         MenuItem menuItemNewImage = new MenuItem("Add New Image");
@@ -130,7 +135,7 @@ public class EditorRuntimeDataDummyUI extends Application {
         menuItemNextObject.setOnAction(new MenuEventHandler());
         
         menuFile.getItems().addAll(menuItemNew, menuItemOpen, menuItemSave, menuItemClose);
-        menuEdit.getItems().addAll(menuItemNewPage, menuItemNewObject);
+        menuEdit.getItems().addAll(menuItemNewPage, menuItemRemovePage, menuItemNewObject);
         menuDebug.getItems().addAll(menuItemNextObject);
         menuBar.getMenus().addAll(menuFile, menuEdit, menuPreview, menuHelp, menuDebug);
         
@@ -299,6 +304,9 @@ public class EditorRuntimeDataDummyUI extends Application {
                 fileSavePressed();
             } else if (menuItem.getId().equals("EditNewPage")) {
                 editorRunTimeData.newPage();
+                updateUI();
+            } else if (menuItem.getId().equals("EditRemovePage")) {
+                editorRunTimeData.removePage();
                 updateUI();
             } else if (menuItem.getId().equals("EditNewImage")) {
                 editorRunTimeData.newObject(PageObjectType.IMAGE);

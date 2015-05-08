@@ -313,6 +313,19 @@ public class EditorRunTimeData {
         setCurrentPage(lesson.pages.size() - 1);
     }
     
+    /** Remove the current page */
+    public void removePage() {
+        if(lesson.pages.size() <= 1) {
+            lesson.pages.get(currentPage).pageObjects.clear();
+            return;
+        }
+        
+        lesson.pages.remove(currentPage);
+        
+        setPageCount(lesson.pages.size());
+        setCurrentPage(0);
+    }
+    
     /** Add a new object to the current page */
     public void newObject(PageObjectType type) {
         if(!isLessonOpen()) {
@@ -321,14 +334,16 @@ public class EditorRunTimeData {
         
         NewObjectController.addObject(lesson.pages.get(currentPage), type);
         
+        if(lesson.pages.get(currentPage).pageObjects.size() == 0) {
+            return;
+        }
+        
         propertiesPane.update(
                 lesson.pages.get(currentPage),
                 lesson.pages.get(currentPage).pageObjects.get(
                         lesson.pages.get(currentPage).pageObjects.size() - 1));
         
         redraw();
-        
-        System.out.println("Adding new " + type.toString());
     }
     
     public void nextObject() {
