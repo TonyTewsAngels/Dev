@@ -352,11 +352,7 @@ public class EditorRunTimeData {
     
     /** Remove the current object from the page */
     public void removeObject() {
-        if(!isLessonOpen()) {
-            return;
-        }
-        
-        if(propertiesPane.getSelectedObject() == null) {
+        if(!isLessonOpen() || propertiesPane.getSelectedObject() == null) {
             return;
         }
         
@@ -371,6 +367,7 @@ public class EditorRunTimeData {
         propertiesPane.update(lesson.pages.get(currentPage), null);
     }
     
+    /** Move selection to the next object */
     public void nextObject() {
         int index;
         

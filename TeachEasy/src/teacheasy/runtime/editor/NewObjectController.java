@@ -20,7 +20,20 @@ import teacheasy.data.VideoObject;
 import teacheasy.data.multichoice.Answer;
 import wavemedia.graphic.GraphicType;
 
+/**
+ * Includes static methods for adding objects to a given page.
+ * 
+ * @author Alistair Jewers
+ * @version 1.0 09 May 2015
+ *
+ */
 public class NewObjectController {
+    /**
+     * Add an object to a page.
+     * 
+     * @param page The page to add the object to.
+     * @param type The type of the object to add.
+     */
     public static void addObject(Page page, PageObjectType type) {
         switch(type) {
             case ANSWER_BOX:
@@ -49,6 +62,11 @@ public class NewObjectController {
         }
     }
     
+    /**
+     * Add an image to a page by selecting a file.
+     * 
+     * @param page The page to add the image to.
+     */
     public static void addImageObject(Page page) {
         FileChooser fc = new FileChooser();
         fc.setTitle("Open Image");
@@ -67,6 +85,11 @@ public class NewObjectController {
         page.pageObjects.add(image);
     }
     
+    /**
+     * Add a video to a page by selecting a file.
+     * 
+     * @param page The page to add the video to.
+     */
     public static void addVideoObject(Page page) {
         FileChooser fc = new FileChooser();
         fc.setTitle("Open Video");
@@ -85,6 +108,11 @@ public class NewObjectController {
         page.pageObjects.add(video);
     }
     
+    /**
+     * Add an audio clip to a page by selecting a file.
+     * 
+     * @param page The page to add the clip to.
+     */
     public static void addAudioObject(Page page) {
         FileChooser fc = new FileChooser();
         fc.setTitle("Open Audio");
@@ -103,6 +131,11 @@ public class NewObjectController {
         page.pageObjects.add(audio);
     }
     
+    /**
+     * Add a new text box to a page.
+     * 
+     * @param page The page to add the text box to.
+     */
     public static void addTextObject(Page page) {
         TextObject text = new TextObject(0.0f, 0.0f, 1.0f, 1.0f, "Arial", 20, "#ff000000", null, 0.0f, 0.0f);
         
@@ -111,6 +144,11 @@ public class NewObjectController {
         page.pageObjects.add(text);
     }
     
+    /**
+     * Add a new multiple choice question to a page.
+     * 
+     * @param page The page to add the multiple choice object to.
+     */
     public static void addMultipleChoiceObject(Page page) {
         MultipleChoiceObject multipleChoice = new MultipleChoiceObject(0.0f, 0.0f, Orientation.VERTICAL, MultiChoiceType.CHECKBOX, 1, true);
         
@@ -119,12 +157,22 @@ public class NewObjectController {
         page.pageObjects.add(multipleChoice);
     }
     
+    /**
+     * Add an answer box to a page.
+     * 
+     * @param page The page to add the answer box to.
+     */
     public static void addAnswerBoxObject(Page page) {
         AnswerBoxObject answerBox = new AnswerBoxObject(0.0f, 0.0f, 12, 1, "answer1~answer2", true, false);
         
         page.pageObjects.add(answerBox);
     }
     
+    /**
+     * Add a graphic to a page.
+     * 
+     * @param page The page to add the graphic to.
+     */
     public static void addGraphicObject(Page page) {
         GraphicObject graphic = new GraphicObject(GraphicType.OVAL, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, "#ff000000", true, "#ff000000", 2, false, 0.0f, 0.0f);
         
