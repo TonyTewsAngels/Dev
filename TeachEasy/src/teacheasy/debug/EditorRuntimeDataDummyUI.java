@@ -8,6 +8,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 
@@ -52,6 +54,7 @@ public class EditorRuntimeDataDummyUI extends Application {
         /* Set the scene */
         Scene scene = new Scene(grid, bounds.getMaxX(), bounds.getMaxY());
         primaryStage.setScene(scene);
+        scene.setOnKeyPressed(new KeyHandler());
         
         /* Construct the menu */
         MenuBar menuBar = new MenuBar();
@@ -345,6 +348,19 @@ public class EditorRuntimeDataDummyUI extends Application {
                 updateUI();
             }
         }
-    } 
+    }
+    
+    public class KeyHandler implements EventHandler<KeyEvent> {
+        @Override
+        public void handle(KeyEvent ke) {            
+            if(ke.getCode() == KeyCode.DELETE) {
+                editorRunTimeData.removeObject();
+            } else if(ke.getCode() == KeyCode.O && ke.isControlDown()) {
+                editorRunTimeData.openLesson();
+            } else if(ke.getCode() == KeyCode.N) {
+                editorRunTimeData.nextObject();
+            }
+        }
+    }
 }
 
