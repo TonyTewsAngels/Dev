@@ -94,6 +94,16 @@ public class EditorRuntimeDataDummyUI extends Application {
         menuItemNewImage.setOnAction(new MenuEventHandler());
         menuItemNewObject.getItems().add(menuItemNewImage);
         
+        MenuItem menuItemNewVideo = new MenuItem("Add New Video");
+        menuItemNewVideo.setId("EditNewVideo");
+        menuItemNewVideo.setOnAction(new MenuEventHandler());
+        menuItemNewObject.getItems().add(menuItemNewVideo);
+        
+        MenuItem menuItemNewAudio = new MenuItem("Add New Audio");
+        menuItemNewAudio.setId("EditNewAudio");
+        menuItemNewAudio.setOnAction(new MenuEventHandler());
+        menuItemNewObject.getItems().add(menuItemNewAudio);
+        
         /* Add a next page object button to the debug menu */
         MenuItem menuItemNextObject = new MenuItem("Next Object");
         menuItemNextObject.setId("DebugNextObject");
@@ -273,7 +283,13 @@ public class EditorRuntimeDataDummyUI extends Application {
             } else if (menuItem.getId().equals("EditNewImage")) {
                 editorRunTimeData.newObject(PageObjectType.IMAGE);
                 updateUI();
-            }else if (menuItem.getId().equals("DebugNextObject")) {
+            } else if (menuItem.getId().equals("EditNewVideo")) {
+                editorRunTimeData.newObject(PageObjectType.VIDEO);
+                updateUI();
+            } else if (menuItem.getId().equals("EditNewAudio")) {
+                editorRunTimeData.newObject(PageObjectType.AUDIO);
+                updateUI();
+            } else if (menuItem.getId().equals("DebugNextObject")) {
                 editorRunTimeData.nextObject();
                 updateUI();
             }

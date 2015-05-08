@@ -19,6 +19,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import teacheasy.data.*;
 import teacheasy.data.PageObject.PageObjectType;
 import teacheasy.render.Renderer;
+import teacheasy.runtime.editor.NewObjectController;
 import teacheasy.runtime.editor.PropertiesPane;
 import teacheasy.xml.*;
 import teacheasy.xml.util.XMLNotification;
@@ -314,6 +315,14 @@ public class EditorRunTimeData {
     
     /** Add a new object to the current page */
     public void newObject(PageObjectType type) {
+        if(!isLessonOpen()) {
+            return;
+        }
+        
+        NewObjectController.addObject(lesson.pages.get(currentPage), type);
+        
+        redraw();
+        
         System.out.println("Adding new " + type.toString());
     }
     
