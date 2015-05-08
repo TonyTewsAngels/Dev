@@ -321,6 +321,11 @@ public class EditorRunTimeData {
         
         NewObjectController.addObject(lesson.pages.get(currentPage), type);
         
+        propertiesPane.update(
+                lesson.pages.get(currentPage),
+                lesson.pages.get(currentPage).pageObjects.get(
+                        lesson.pages.get(currentPage).pageObjects.size() - 1));
+        
         redraw();
         
         System.out.println("Adding new " + type.toString());

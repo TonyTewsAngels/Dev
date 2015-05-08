@@ -9,6 +9,8 @@ import teacheasy.data.AudioObject;
 import teacheasy.data.ImageObject;
 import teacheasy.data.Page;
 import teacheasy.data.PageObject.PageObjectType;
+import teacheasy.data.RichText;
+import teacheasy.data.TextObject;
 import teacheasy.data.VideoObject;
 
 public class NewObjectController {
@@ -28,6 +30,7 @@ public class NewObjectController {
             case MULTIPLE_CHOICE:
                 break;
             case TEXT:
+                addTextObject(page);
                 break;
             case VIDEO:
                 addVideoObject(page);
@@ -89,5 +92,13 @@ public class NewObjectController {
         AudioObject audio = new AudioObject(0.0f, 0.0f, true, filePath);
         
         page.pageObjects.add(audio);
+    }
+    
+    public static void addTextObject(Page page) {
+        TextObject text = new TextObject(0.0f, 0.0f, 1.0f, 1.0f, "Arial", 20, "#ff000000", null, 0.0f, 0.0f);
+        
+        text.textFragments.add(new RichText("Enter Text Here", text.getFont(), text.getFontSize(), text.getColor()));
+        
+        page.pageObjects.add(text);
     }
 }

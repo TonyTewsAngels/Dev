@@ -104,6 +104,11 @@ public class EditorRuntimeDataDummyUI extends Application {
         menuItemNewAudio.setOnAction(new MenuEventHandler());
         menuItemNewObject.getItems().add(menuItemNewAudio);
         
+        MenuItem menuItemNewText = new MenuItem("Add New Text Box");
+        menuItemNewText.setId("EditNewText");
+        menuItemNewText.setOnAction(new MenuEventHandler());
+        menuItemNewObject.getItems().add(menuItemNewText);
+        
         /* Add a next page object button to the debug menu */
         MenuItem menuItemNextObject = new MenuItem("Next Object");
         menuItemNextObject.setId("DebugNextObject");
@@ -288,6 +293,9 @@ public class EditorRuntimeDataDummyUI extends Application {
                 updateUI();
             } else if (menuItem.getId().equals("EditNewAudio")) {
                 editorRunTimeData.newObject(PageObjectType.AUDIO);
+                updateUI();
+            } else if (menuItem.getId().equals("EditNewText")) {
+                editorRunTimeData.newObject(PageObjectType.TEXT);
                 updateUI();
             } else if (menuItem.getId().equals("DebugNextObject")) {
                 editorRunTimeData.nextObject();
