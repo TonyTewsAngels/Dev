@@ -109,6 +109,21 @@ public class EditorRuntimeDataDummyUI extends Application {
         menuItemNewText.setOnAction(new MenuEventHandler());
         menuItemNewObject.getItems().add(menuItemNewText);
         
+        MenuItem menuItemNewGraphic = new MenuItem("Add New Graphic");
+        menuItemNewGraphic.setId("EditNewGraphic");
+        menuItemNewGraphic.setOnAction(new MenuEventHandler());
+        menuItemNewObject.getItems().add(menuItemNewGraphic);
+        
+        MenuItem menuItemNewMultiChoice = new MenuItem("Add New Multiple Choice Question");
+        menuItemNewMultiChoice.setId("EditNewMultiChoice");
+        menuItemNewMultiChoice.setOnAction(new MenuEventHandler());
+        menuItemNewObject.getItems().add(menuItemNewMultiChoice);
+        
+        MenuItem menuItemNewAnswerBox = new MenuItem("Add New Answer Box");
+        menuItemNewAnswerBox.setId("EditNewAnswerBox");
+        menuItemNewAnswerBox.setOnAction(new MenuEventHandler());
+        menuItemNewObject.getItems().add(menuItemNewAnswerBox);
+        
         /* Add a next page object button to the debug menu */
         MenuItem menuItemNextObject = new MenuItem("Next Object");
         menuItemNextObject.setId("DebugNextObject");
@@ -296,6 +311,15 @@ public class EditorRuntimeDataDummyUI extends Application {
                 updateUI();
             } else if (menuItem.getId().equals("EditNewText")) {
                 editorRunTimeData.newObject(PageObjectType.TEXT);
+                updateUI();
+            } else if (menuItem.getId().equals("EditNewMultiChoice")) {
+                editorRunTimeData.newObject(PageObjectType.MULTIPLE_CHOICE);
+                updateUI();
+            } else if (menuItem.getId().equals("EditNewAnswerBox")) {
+                editorRunTimeData.newObject(PageObjectType.ANSWER_BOX);
+                updateUI();
+            } else if (menuItem.getId().equals("EditNewGraphic")) {
+                editorRunTimeData.newObject(PageObjectType.GRAPHIC);
                 updateUI();
             } else if (menuItem.getId().equals("DebugNextObject")) {
                 editorRunTimeData.nextObject();

@@ -5,29 +5,38 @@ import java.io.File;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import teacheasy.data.AnswerBoxObject;
 import teacheasy.data.AudioObject;
+import teacheasy.data.GraphicObject;
 import teacheasy.data.ImageObject;
+import teacheasy.data.MultipleChoiceObject;
+import teacheasy.data.MultipleChoiceObject.MultiChoiceType;
 import teacheasy.data.Page;
+import teacheasy.data.MultipleChoiceObject.Orientation;
 import teacheasy.data.PageObject.PageObjectType;
 import teacheasy.data.RichText;
 import teacheasy.data.TextObject;
 import teacheasy.data.VideoObject;
+import teacheasy.data.multichoice.Answer;
+import wavemedia.graphic.GraphicType;
 
 public class NewObjectController {
     public static void addObject(Page page, PageObjectType type) {
         switch(type) {
             case ANSWER_BOX:
-                
+                addAnswerBoxObject(page);
                 break;
             case AUDIO:
                 addAudioObject(page);
                 break;
             case GRAPHIC:
+                addGraphicObject(page);
                 break;
             case IMAGE:
                 addImageObject(page);
                 break;
             case MULTIPLE_CHOICE:
+                addMultipleChoiceObject(page);
                 break;
             case TEXT:
                 addTextObject(page);
@@ -100,5 +109,25 @@ public class NewObjectController {
         text.textFragments.add(new RichText("Enter Text Here", text.getFont(), text.getFontSize(), text.getColor()));
         
         page.pageObjects.add(text);
+    }
+    
+    public static void addMultipleChoiceObject(Page page) {
+        MultipleChoiceObject multipleChoice = new MultipleChoiceObject(0.0f, 0.0f, Orientation.VERTICAL, MultiChoiceType.CHECKBOX, 1, true);
+        
+        multipleChoice.addAnswer(new Answer("New Answer", true));
+        
+        page.pageObjects.add(multipleChoice);
+    }
+    
+    public static void addAnswerBoxObject(Page page) {
+        AnswerBoxObject answerBox = new AnswerBoxObject(0.0f, 0.0f, 12, 1, "answer1~answer2", true, false);
+        
+        page.pageObjects.add(answerBox);
+    }
+    
+    public static void addGraphicObject(Page page) {
+        GraphicObject graphic = new GraphicObject(GraphicType.OVAL, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, "#ff000000", true, "#ff000000", 2, false, 0.0f, 0.0f);
+        
+        page.pageObjects.add(graphic);
     }
 }
