@@ -10,6 +10,7 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 
@@ -55,6 +56,7 @@ public class EditorRuntimeDataDummyUI extends Application {
         Scene scene = new Scene(grid, bounds.getMaxX(), bounds.getMaxY());
         primaryStage.setScene(scene);
         scene.setOnKeyPressed(new KeyHandler());
+        scene.addEventFilter(MouseEvent.MOUSE_PRESSED, new ClickHandler());
         
         /* Construct the menu */
         MenuBar menuBar = new MenuBar();
@@ -259,6 +261,7 @@ public class EditorRuntimeDataDummyUI extends Application {
         /* Re-draw the window */
         updateUI();
     }
+    
     /** File->Save menu option functionality */
     public void fileSavePressed() {
         /* Close the current lesson */
@@ -266,6 +269,17 @@ public class EditorRuntimeDataDummyUI extends Application {
         
         /* Re-draw the window */
         updateUI();
+    }
+    
+    /** Mouse clicked */
+    public void mouseClicked(double x, double y) {       
+        Bounds bounds = group.localToScene(group.getBoundsInLocal());
+        
+        if(x > bounds.getMaxX() || x < bounds.getMinX() || y > bounds.getMaxY() || y < bounds.getMinY()) {
+            System.out.println("Click out of group");
+        } else {
+            System.out.println("X: " + x + " Y:" + y);
+        }
     }
     
     public static void main(String args[]) {
@@ -360,6 +374,13 @@ public class EditorRuntimeDataDummyUI extends Application {
             } else if(ke.getCode() == KeyCode.N) {
                 editorRunTimeData.nextObject();
             }
+        }
+    }
+    
+    public class ClickHandler implements EventHandler<MouseEvent> {
+        @Override
+        public void handle(MouseEvent me) {            
+            mouseClicked(me.getSceneX(), me.getSceneY());
         }
     }
 }
