@@ -138,6 +138,8 @@ public class MultipleChoicePropertiesController {
         answerTable.getColumns().add(correctColumn);
         answerTable.getColumns().add(deleteColumn);
         
+        answerTable.setMaxHeight(160);
+        
         multipleChoiceProperties.getChildren().add(answerTable);
     }
 
