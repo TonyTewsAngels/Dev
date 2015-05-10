@@ -19,6 +19,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import teacheasy.data.*;
 import teacheasy.data.PageObject.PageObjectType;
 import teacheasy.render.Renderer;
+import teacheasy.runtime.editor.MouseController;
 import teacheasy.runtime.editor.NewObjectController;
 import teacheasy.runtime.editor.PropertiesPane;
 import teacheasy.xml.*;
@@ -272,6 +273,10 @@ public class EditorRunTimeData {
         /* Get the file to save */
         File file = fileChooser.showSaveDialog(new Stage());
         
+        if(file == null) {
+            return;
+        }
+        
         String filePath = file.getAbsolutePath();
         
         if(!filePath.endsWith(".xml")) {
@@ -392,14 +397,24 @@ public class EditorRunTimeData {
     
     /** Mouse Pressed in the page area */
     public void mousePressed(double x, double y) {
+        if(!isLessonOpen()) {
+            return;
+        }
+        
         float relativeX = (float)x/(float)bounds.getMaxX();
         float relativeY = (float)y/(float)bounds.getMaxY();
         
         System.out.println("Press: " + relativeX + ", " + relativeY);
+        
+        MouseController.mousePressed(lesson.pages.get(currentPage), propertiesPane, relativeX, relativeY);
     }
     
     /** Mouse released in the page area */
     public void mouseReleased(double x, double y) {
+        if(!isLessonOpen()) {
+            return;
+        }
+        
         float relativeX = (float)x/(float)bounds.getMaxX();
         float relativeY = (float)y/(float)bounds.getMaxY();
         

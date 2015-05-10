@@ -56,6 +56,8 @@ public class PropertiesPane {
     
     private VBox currentController;
     
+    public boolean redrawBlock = false;
+    
     /**
      * Constructor.
      * 
@@ -212,7 +214,9 @@ public class PropertiesPane {
     }
     
     public void redraw() {
-        editorRuntime.redraw();
+        if(!redrawBlock) { 
+           editorRuntime.redraw(); 
+        }
     }
     
     /**
@@ -226,6 +230,5 @@ public class PropertiesPane {
                 editorRuntime.redraw();
             }
         }
-        
     }
 }
