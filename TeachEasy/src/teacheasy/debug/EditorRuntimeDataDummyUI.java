@@ -56,7 +56,8 @@ public class EditorRuntimeDataDummyUI extends Application {
         Scene scene = new Scene(grid, bounds.getMaxX(), bounds.getMaxY());
         primaryStage.setScene(scene);
         scene.setOnKeyPressed(new KeyHandler());
-        scene.addEventFilter(MouseEvent.MOUSE_PRESSED, new ClickHandler());
+        scene.addEventFilter(MouseEvent.MOUSE_PRESSED, new MousePressHandler());
+        scene.addEventFilter(MouseEvent.MOUSE_RELEASED, new MouseReleaseHandler());
         
         /* Construct the menu */
         MenuBar menuBar = new MenuBar();
@@ -271,14 +272,25 @@ public class EditorRuntimeDataDummyUI extends Application {
         updateUI();
     }
     
-    /** Mouse clicked */
-    public void mouseClicked(double x, double y) {       
+    /** Mouse pressed */
+    public void mousePressed(double x, double y) {       
         Bounds bounds = group.localToScene(group.getBoundsInLocal());
         
-        if(x > bounds.getMaxX() || x < bounds.getMinX() || y > bounds.getMaxY() || y < bounds.getMinY()) {
-            System.out.println("Click out of group");
+        if(!(x > bounds.getMaxX() || x < bounds.getMinX() || y > bounds.getMaxY() || y < bounds.getMinY())) {
+            editorRunTimeData.mousePressed(x, y);
         } else {
-            System.out.println("X: " + x + " Y:" + y);
+            /** Click is not in the group */
+        }
+    }
+    
+    /** Mouse released */
+    public void mouseReleased(double x, double y) {       
+Bounds bounds = group.localToScene(group.getBoundsInLocal());
+        
+        if(!(x > bounds.getMaxX() || x < bounds.getMinX() || y > bounds.getMaxY() || y < bounds.getMinY())) {
+            editorRunTimeData.mouseReleased(x, y);
+        } else {
+            /** Click is not in the group */
         }
     }
     
@@ -377,10 +389,17 @@ public class EditorRuntimeDataDummyUI extends Application {
         }
     }
     
-    public class ClickHandler implements EventHandler<MouseEvent> {
+    public class MousePressHandler implements EventHandler<MouseEvent> {
         @Override
         public void handle(MouseEvent me) {            
-            mouseClicked(me.getSceneX(), me.getSceneY());
+            mousePressed(me.getSceneX(), me.getSceneY());
+        }
+    }
+    
+    public class MouseReleaseHandler implements EventHandler<MouseEvent> {
+        @Override
+        public void handle(MouseEvent me) {            
+            mouseReleased(me.getSceneX(), me.getSceneY());
         }
     }
 }

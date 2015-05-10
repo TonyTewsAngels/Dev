@@ -390,6 +390,21 @@ public class EditorRunTimeData {
         propertiesPane.update(lesson.pages.get(currentPage), lesson.pages.get(currentPage).pageObjects.get(index));
     }
     
+    /** Mouse Pressed in the page area */
+    public void mousePressed(double x, double y) {
+        float relativeX = (float)x/(float)bounds.getMaxX();
+        float relativeY = (float)y/(float)bounds.getMaxY();
+        
+        System.out.println("Press: " + relativeX + ", " + relativeY);
+    }
+    
+    /** Mouse released in the page area */
+    public void mouseReleased(double x, double y) {
+        float relativeX = (float)x/(float)bounds.getMaxX();
+        float relativeY = (float)y/(float)bounds.getMaxY();
+        
+        System.out.println("Release: " + relativeX + ", " + relativeY);
+    }
     
     /** Redraw the content */
     public void redraw(Group group, Rectangle2D bounds) {        
