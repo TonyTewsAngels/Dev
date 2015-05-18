@@ -34,6 +34,7 @@ import javafx.scene.text.Text;
 import javafx.scene.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.*;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
@@ -49,7 +50,7 @@ import javafx.event.ActionEvent;
 
 public class TE_GUI_3 extends Application {
 
-Text text, botText, propText, titleText;
+Text text, botText, propText, titleText, page1, page2, page3;
 Image textIm;
 	
 	/**
@@ -153,8 +154,48 @@ Image textIm;
         
         Button prev = new Button("Preview");
 
+        /* Dummy Page Content */
+        
+        page1 = new Text(1, 1,"page1");
+        page2 = new Text(1, 1,"page2");
+        page3 = new Text(1, 1,"page3");
+        
+        
+        Text[] pages = new Text[3];
+        final Pagination pagination;
+        
         
         /* Create page tabs */
+        
+        for (int i = 0; i < 3; i++) {
+
+            //images[i] = new Image(PaginationSample.class.getResource("page" + (i + 1) + ".jpg").toExternalForm(), false);
+
+        	pages[i] = new Text(TE_GUI_3.class.getResource("page" + (i + 1)).toExternalForm());
+        	
+        }
+
+        pagination = PaginationBuilder.create().pageCount(3).pageFactory(new Callback<Integer, Node>() {           
+
+            @Override public Node call(Integer pageIndex) {
+
+                return pageCounter(pageIndex);
+
+            }
+
+			private Node pageCounter(Integer pageIndex) {
+				// TODO Auto-generated method stub
+				
+				HBox pageBox = new HBox();
+				Text iv = new Text(pages[pageIndex]);
+				pageBox.getChildren().addAll(iv);
+				
+				return null;
+			}
+
+        }).build();
+        
+        
         
         /* Re-skin buttons */
         
@@ -216,6 +257,7 @@ Image textIm;
         final  ImageView graphicBoxHO = new ImageView(graphicImHO);
         final  ImageView graphicBoxPR= new ImageView(graphicImPR);
         
+        
         final  ImageView queBoxST = new ImageView(queImST);
         final  ImageView queBoxPR = new ImageView(queImPR);
         final  ImageView queBoxHO= new ImageView(queImHO);
@@ -232,7 +274,6 @@ Image textIm;
         video.setGraphic(vidBoxST); 
         tick.setGraphic(mulBoxST); 
         graphic.setGraphic(graphicBoxST); 
-        
      /*   audio.setGraphic(audioBoxST); */
         
 
@@ -344,6 +385,7 @@ Image textIm;
         }*/
         
         
+        
         // Mouse Pressed
         
         text.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -379,8 +421,8 @@ Image textIm;
         });
         
       
-        //Mouse Released
         
+        //Mouse Released
         
 	   text.setOnMouseReleased(new EventHandler<MouseEvent>() {	
 	        public void handle(MouseEvent event) {
@@ -418,19 +460,19 @@ Image textIm;
 		});
 	   
 	   
-		    //Mouse Entered
-	        
-	        
+		   
+		//Mouse Entered
+		    
 		   text.setOnMouseEntered(new EventHandler<MouseEvent>() {	
 		        public void handle(MouseEvent event) {
-	        		text.setGraphic(textBoxHO); 
+		    		text.setGraphic(textBoxHO); 
 			}
 			});
 		   
 		   image.setOnMouseEntered(new EventHandler<MouseEvent>() {
 			   	public void handle(MouseEvent event) {
-	       		
-	               image.setGraphic(imBoxHO); 
+		   		
+		           image.setGraphic(imBoxHO); 
 			}
 			});
 			   
@@ -453,46 +495,46 @@ Image textIm;
 		
 		            graphic.setGraphic(graphicBoxHO);
 		            /*audio.setGraphic(audioBoxST);*/
+		}
+		});
+	   
+			   
+		//Mouse Exited
+		    
+		   text.setOnMouseExited(new EventHandler<MouseEvent>() {	
+		        public void handle(MouseEvent event) {
+		    		text.setGraphic(textBoxST); 
 			}
 			});
-	   
-			    //Mouse Exited
-		        
-		        
-			   text.setOnMouseExited(new EventHandler<MouseEvent>() {	
-			        public void handle(MouseEvent event) {
-		        		text.setGraphic(textBoxST); 
-				}
-				});
+		   
+		   image.setOnMouseExited(new EventHandler<MouseEvent>() {
+			   	public void handle(MouseEvent event) {
+		   		
+		           image.setGraphic(imBoxST); 
+			}
+			});
 			   
-			   image.setOnMouseExited(new EventHandler<MouseEvent>() {
+			   video.setOnMouseExited(new EventHandler<MouseEvent>() {
 				   	public void handle(MouseEvent event) {
-		       		
-		               image.setGraphic(imBoxST); 
-				}
-				});
-				   
-				   video.setOnMouseExited(new EventHandler<MouseEvent>() {
-					   	public void handle(MouseEvent event) {
-			
-			              video.setGraphic(vidBoxST); 
-				}
-				});
-				   
-				   tick.setOnMouseExited(new EventHandler<MouseEvent>() {
-					   	public void handle(MouseEvent event) {
-			
-			             tick.setGraphic(mulBoxST); 
-				}
-				});
-				   
-				   graphic.setOnMouseExited(new EventHandler<MouseEvent>() {
-					   	public void handle(MouseEvent event) {
-			
-			            graphic.setGraphic(graphicBoxST);
-			            /*audio.setGraphic(audioBoxST);*/
-				}
-				});
+		
+		              video.setGraphic(vidBoxST); 
+			}
+			});
+			   
+			   tick.setOnMouseExited(new EventHandler<MouseEvent>() {
+				   	public void handle(MouseEvent event) {
+		
+		             tick.setGraphic(mulBoxST); 
+			}
+			});
+			   
+			   graphic.setOnMouseExited(new EventHandler<MouseEvent>() {
+				   	public void handle(MouseEvent event) {
+		
+		            graphic.setGraphic(graphicBoxST);
+		            /*audio.setGraphic(audioBoxST);*/
+		}
+		});
 
 	        
         
@@ -593,6 +635,7 @@ Image textIm;
         
         propertiesPanel.getChildren().addAll(propText, butt);
         
+        //Add Pagination in here
         bottomBar.getChildren().addAll(botText);
         
         /* Setup the window */
