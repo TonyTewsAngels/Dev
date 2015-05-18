@@ -35,6 +35,9 @@ import javafx.scene.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.*;
+import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
+
 
 /**
  * 
@@ -124,14 +127,32 @@ Image textIm;
         
         final Button text = new Button();
         text.setStyle("-fx-background-color: transparent;");
-        Button image = new Button();
-        Button video = new Button();
-        Button tick = new Button();
-        Button graphic = new Button();
-        Button audio = new Button();
-     
-        Button prev = new Button("Preview");
+        final Button image = new Button();
+        image.setStyle("-fx-background-color: transparent;");
+        final Button video = new Button();
+        video.setStyle("-fx-background-color: transparent;");
+        final Button tick = new Button();
+        tick.setStyle("-fx-background-color: transparent;");
+        final Button graphic = new Button();
+        graphic.setStyle("-fx-background-color: transparent;");
+        final Button audio = new Button();
+        audio.setStyle("-fx-background-color: transparent;");
         
+        /* Set the buttons to use a button event handler */
+        
+
+        
+        /* Set button IDs NOTE: THESE CAUSE AS NULLPOINTER EXCEPTION!!!!!!!!!!!!	*/
+     
+        /*text.setId("textBtn");
+        image.setId("imgBtn");
+        video.setId("vidBtn");
+        tick.setId("tickBtn");
+        graphic.setId("graphBtn");
+        audio.setId("audioBtn");*/
+        
+        Button prev = new Button("Preview");
+
         
         /* Create page tabs */
         
@@ -140,74 +161,80 @@ Image textIm;
         /* Import Images */
         
         //Text Box
-      /*  Image textImST = new Image(getClass().getResourceAsStream("/Workspace/Dev/TeachEasy/debug/topIcons/Textbox_ST_TOP_CIRC_Blue_T-01.png"));*/
         Image textImST = new Image(getClass().getResourceAsStream("topIcons/Textbox_ST_TOP_CIRC_Blue_T-01.png"));
         Image textImHO = new Image(getClass().getResourceAsStream("topIcons/Textbox_HO_TOP_CIRC_Blue_T-01.png"));
         Image textImPR = new Image(getClass().getResourceAsStream("topIcons/Textbox_PRE_TOP_CIRC_Blue_T-01.png"));
         
         //Image
-        Image imImST = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
-        Image imImHO = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
-        Image imImPR = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
+        Image imImST = new Image(getClass().getResourceAsStream("topIcons/Image_ST_TOP_CIRC_Blue_T-01.png"));
+        Image imImHO = new Image(getClass().getResourceAsStream("topIcons/Image_HO_TOP_CIRC_Blue_T-01.png"));
+        Image imImPR = new Image(getClass().getResourceAsStream("topIcons/Image_PRE_TOP_CIRC_Blue_T-01.png"));
         
         //Video
-        Image vidImST = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
-        Image vidImHO = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
-        Image vidImPR = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
+        Image vidImST = new Image(getClass().getResourceAsStream("topIcons/Video_ST_TOP_CIRC_Blue_T-01.png"));
+        Image vidImHO = new Image(getClass().getResourceAsStream("topIcons/Video_HO_TOP_CIRC_Blue_T-01.png"));
+        Image vidImPR = new Image(getClass().getResourceAsStream("topIcons/Video_PRE_TOP_CIRC_Blue_T-01.png"));
         
         //Audio
-        Image audioImST = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
-        Image audioImHO = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
-        Image audioImPR = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
+       /* Image audioImST = new Image(getClass().getResourceAsStream("topIcons/Audio_ST_TOP_CIRC_Blue_T-01.png"));
+        Image audioImHO = new Image(getClass().getResourceAsStream("topIcons/Textbox_ST_TOP_CIRC_Blue_T-01.png"));
+        Image audioImPR = new Image(getClass().getResourceAsStream("topIcons/Textbox_ST_TOP_CIRC_Blue_T-01.png"));*/
         
         //Graphics
-        Image graphicImST = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
-        Image graphicImHO = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
-        Image graphicImPR = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
+        Image graphicImST = new Image(getClass().getResourceAsStream("topIcons/Shape_ST_TOP_CIRC_Blue_T-01.png"));
+        Image graphicImHO = new Image(getClass().getResourceAsStream("topIcons/Shape_HO_TOP_CIRC_Blue_T-01.png"));
+        Image graphicImPR = new Image(getClass().getResourceAsStream("topIcons/Shape_PRE_TOP_CIRC_Blue_T-01.png"));
         
         //Question Box
-        Image queImST = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
-        Image queImHO = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
-        Image queImPR = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
+        Image queImST = new Image(getClass().getResourceAsStream("topIcons/Questionbox_ST_TOP_CIRC_Blue_T-01.png"));
+        Image queImHO = new Image(getClass().getResourceAsStream("topIcons/Questionbox_HO_TOP_CIRC_Blue_T-01.png"));
+        Image queImPR = new Image(getClass().getResourceAsStream("topIcons/Questionbox_PRE_TOP_CIRC_Blue_T-01.png"));
         
         //Multiple Choice
-        Image mulImST = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
-        Image mulImHO = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
-        Image mulImPR = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
+        Image mulImST = new Image(getClass().getResourceAsStream("topIcons/Choice_ST_TOP_CIRC_Blue_T-01.png"));
+        Image mulImHO = new Image(getClass().getResourceAsStream("topIcons/Choice_HO_TOP_CIRC_Blue_T-01.png"));
+        Image mulImPR = new Image(getClass().getResourceAsStream("topIcons/Choice_PRE_TOP_CIRC_Blue_T-01.png"));
         
         /* Image Views */
         final ImageView textBoxST = new ImageView(textImST);   
         final ImageView textBoxHO = new ImageView(textImHO);
         final ImageView textBoxPR= new ImageView(textImPR);
         
-        ImageView imBoxST = new ImageView(imImST);
-        ImageView imBoxHO = new ImageView(imImHO);
-        ImageView imBoxPR= new ImageView(imImPR);
+        final  ImageView imBoxST = new ImageView(imImST);
+        final  ImageView imBoxHO = new ImageView(imImHO);
+        final  ImageView imBoxPR= new ImageView(imImPR);
 
-        ImageView vidBoxST = new ImageView(vidImST);
-        ImageView vidBoxHO = new ImageView(vidImHO);
-        ImageView vidBoxPR= new ImageView(vidImPR);
+        final  ImageView vidBoxST = new ImageView(vidImST);
+        final  ImageView vidBoxHO = new ImageView(vidImHO);
+        final  ImageView vidBoxPR= new ImageView(vidImPR);
         
-        ImageView audioBoxST = new ImageView(textImST);
-        ImageView audioBoxHO = new ImageView(audioImHO);
-        ImageView audioBoxPR= new ImageView(audioImPR);
+   /*     final  ImageView audioBoxST = new ImageView(audioImST);
+        final  ImageView audioBoxHO = new ImageView(audioImHO);
+        final  ImageView audioBoxPR= new ImageView(audioImPR);*/
         
-        ImageView graphicBoxST = new ImageView(textImST);
-        ImageView graphicBoxHO = new ImageView(graphicImHO);
-        ImageView graphicBoxPR= new ImageView(graphicImPR);
+        final  ImageView graphicBoxST = new ImageView(graphicImST);
+        final  ImageView graphicBoxHO = new ImageView(graphicImHO);
+        final  ImageView graphicBoxPR= new ImageView(graphicImPR);
         
-        ImageView queBoxST = new ImageView(textImST);
-        ImageView queBoxPR = new ImageView(queImPR);
-        ImageView queBoxHO= new ImageView(queImHO);
+        final  ImageView queBoxST = new ImageView(queImST);
+        final  ImageView queBoxPR = new ImageView(queImPR);
+        final  ImageView queBoxHO= new ImageView(queImHO);
         
-        ImageView mulBoxST = new ImageView(mulImST);
-        ImageView mulBoxHO = new ImageView(mulImHO);
-        ImageView mulBoxPR= new ImageView(mulImPR);
+        final  ImageView mulBoxST = new ImageView(mulImST);
+        final  ImageView mulBoxHO = new ImageView(mulImHO);
+        final  ImageView mulBoxPR= new ImageView(mulImPR);
         
         
         /* Skin buttons */
         
         text.setGraphic(textBoxST); 
+        image.setGraphic(imBoxST); 
+        video.setGraphic(vidBoxST); 
+        tick.setGraphic(mulBoxST); 
+        graphic.setGraphic(graphicBoxST); 
+        
+     /*   audio.setGraphic(audioBoxST); */
+        
 
         
         /*Button dimensions*/
@@ -222,66 +249,254 @@ Image textIm;
         textBoxPR.setFitWidth(x);
         textBoxPR.setFitHeight(y);
         
+        imBoxST.setFitWidth(x);
+        imBoxST.setFitHeight(y);
+        imBoxHO.setFitWidth(x);
+        imBoxHO.setFitHeight(y);
+        imBoxPR.setFitWidth(x);
+        imBoxPR.setFitHeight(y);
+        
+        vidBoxST.setFitWidth(x);
+        vidBoxST.setFitHeight(y);
+        vidBoxHO.setFitWidth(x);
+        vidBoxHO.setFitHeight(y);
+        vidBoxPR.setFitWidth(x);
+        vidBoxPR.setFitHeight(y);
+        
+ /*       audioBoxST.setFitWidth(x);
+        audioBoxST.setFitHeight(y);
+        audioBoxHO.setFitWidth(x);
+        audioBoxHO.setFitHeight(y);
+        audioBoxPR.setFitWidth(x);
+        audioBoxPR.setFitHeight(y);
+        */
+        graphicBoxST.setFitWidth(x);
+        graphicBoxST.setFitHeight(y);
+        graphicBoxHO.setFitWidth(x);
+        graphicBoxHO.setFitHeight(y);
+        graphicBoxPR.setFitWidth(x);
+        graphicBoxPR.setFitHeight(y);
+        
+        queBoxST.setFitWidth(x);
+        queBoxST.setFitHeight(y);
+        queBoxHO.setFitWidth(x);
+        queBoxHO.setFitHeight(y);
+        queBoxPR.setFitWidth(x);
+        queBoxPR.setFitHeight(y);
+        
+        mulBoxST.setFitWidth(x);
+        mulBoxST.setFitHeight(y);
+        mulBoxHO.setFitWidth(x);
+        mulBoxHO.setFitHeight(y);
+        mulBoxPR.setFitWidth(x);
+        mulBoxPR.setFitHeight(y);
         
         
         /* Event Handler */
+        
+        
+     /*  text.setOnAction(new buttonEventHandler());
+       image.setOnAction(new buttonEventHandler());
+        
+       
+        
+        class buttonEventHandler implements EventHandler<ActionEvent> {
+        	
+        	
+        	
+        	@Override
+        	public void handle(ActionEvent e) {
+        		
+        		Button button = (Button)e.getSource();
+        		
+        		// Change image depending on the button ID 
+        		
+        		if(button.isPressed())	{
+	        		if(button.getId().equals("textBtn"))  {
+	        			text.setGraphic(textBoxPR); 	
+	        		}
+	        		else if (button.getId().equals("imgBtn"))  {
+	        			image.setGraphic(imBoxPR); 	
+	        		}
+	        		
+        		}
+        		
+        		
+        		else if(button.isHover())	{
+	        		if(button.getId().equals("textBtn"))  {
+	        			text.setGraphic(textBoxHO); 	
+	        		}
+	        		else if (button.getId().equals("imgBtn"))  {
+	        			image.setGraphic(imBoxHO); 	
+	        		}
+        		}
+        		
+        		else{
+        			if(button.getId().equals("textBtn"))  {
+	        			text.setGraphic(textBoxST); 	
+	        		}
+	        		else if (button.getId().equals("imgBtn"))  {
+	        			image.setGraphic(imBoxST); 	
+	        		}
+        		}
+        		
+        	}
+        }*/
+        
+        
+        // Mouse Pressed
         
         text.setOnMousePressed(new EventHandler<MouseEvent>() {
         	
         	public void handle(MouseEvent event) {
 
         		text.setGraphic(textBoxPR); 
-        		
         }
         });
         
-	   text.setOnMouseReleased(new EventHandler<MouseEvent>() {
-	        	
-	        	public void handle(MouseEvent event) {
-
-	        		text.setGraphic(textBoxST); 
+        image.setOnMousePressed(new EventHandler<MouseEvent>() {
+        	public void handle(MouseEvent event) {	
+        		image.setGraphic(imBoxPR); 
+        }
+        });
+        
+        video.setOnMousePressed(new EventHandler<MouseEvent>() {
+        	public void handle(MouseEvent event) {	
+        		video.setGraphic(vidBoxPR); 
+        }
+        });
+        
+        tick.setOnMousePressed(new EventHandler<MouseEvent>() {
+        	public void handle(MouseEvent event) {	
+        		tick.setGraphic(mulBoxPR); 
+        }
+        });
+        
+        graphic.setOnMousePressed(new EventHandler<MouseEvent>() {
+        	public void handle(MouseEvent event) {	
+        		graphic.setGraphic(graphicBoxPR);
+        }
+        });
+        
+      
+        //Mouse Released
+        
+        
+	   text.setOnMouseReleased(new EventHandler<MouseEvent>() {	
+	        public void handle(MouseEvent event) {
+        		text.setGraphic(textBoxST); 
 		}
 		});
 	   
-	   text.setOnMouseEntered(new EventHandler<MouseEvent>() {
-       	
-	       	public void handle(MouseEvent event) {
-	       		
-	       		System.out.println("HELLOOOOOOOO");
-			text.setGraphic(textBoxHO); 
+	   image.setOnMouseReleased(new EventHandler<MouseEvent>() {
+		   	public void handle(MouseEvent event) {
+       		
+               image.setGraphic(imBoxST); 
 		}
 		});
+		   
+		   video.setOnMouseReleased(new EventHandler<MouseEvent>() {
+			   	public void handle(MouseEvent event) {
+	
+	              video.setGraphic(vidBoxST); 
+		}
+		});
+		   
+		   tick.setOnMouseReleased(new EventHandler<MouseEvent>() {
+			   	public void handle(MouseEvent event) {
+	
+	             tick.setGraphic(mulBoxST); 
+		}
+		});
+		   
+		   graphic.setOnMouseReleased(new EventHandler<MouseEvent>() {
+			   	public void handle(MouseEvent event) {
+	
+	            graphic.setGraphic(graphicBoxST);
+	            /*audio.setGraphic(audioBoxST);*/
+		}
+		});
+	   
+	   
+		    //Mouse Entered
 	        
-	   text.setOnMouseExited(new EventHandler<MouseEvent>() {
-	       	
-	       	public void handle(MouseEvent event) {
+	        
+		   text.setOnMouseEntered(new EventHandler<MouseEvent>() {	
+		        public void handle(MouseEvent event) {
+	        		text.setGraphic(textBoxHO); 
+			}
+			});
+		   
+		   image.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			   	public void handle(MouseEvent event) {
 	       		
-	       		System.out.println("HELLOOOOOOOO");
-			text.setGraphic(textBoxST); 
-		}
-		});
-        
-     /*   text.setOnAction(new EventHandler<ActionEvent>() {
-        
-        	public void handle(ActionEvent event) {
-        		
-        		if (text. == true) 
-        		System.out.println("HELLOOOOOOOO");
-        		text.setGraphic(textBoxPR); 
-        		
-        	}
-        });*/
+	               image.setGraphic(imBoxHO); 
+			}
+			});
+			   
+			   video.setOnMouseEntered(new EventHandler<MouseEvent>() {
+				   	public void handle(MouseEvent event) {
+		
+		              video.setGraphic(vidBoxHO); 
+			}
+			});
+			   
+			   tick.setOnMouseEntered(new EventHandler<MouseEvent>() {
+				   	public void handle(MouseEvent event) {
+		
+		             tick.setGraphic(mulBoxHO); 
+			}
+			});
+			   
+			   graphic.setOnMouseEntered(new EventHandler<MouseEvent>() {
+				   	public void handle(MouseEvent event) {
+		
+		            graphic.setGraphic(graphicBoxHO);
+		            /*audio.setGraphic(audioBoxST);*/
+			}
+			});
+	   
+			    //Mouse Exited
+		        
+		        
+			   text.setOnMouseExited(new EventHandler<MouseEvent>() {	
+			        public void handle(MouseEvent event) {
+		        		text.setGraphic(textBoxST); 
+				}
+				});
+			   
+			   image.setOnMouseExited(new EventHandler<MouseEvent>() {
+				   	public void handle(MouseEvent event) {
+		       		
+		               image.setGraphic(imBoxST); 
+				}
+				});
+				   
+				   video.setOnMouseExited(new EventHandler<MouseEvent>() {
+					   	public void handle(MouseEvent event) {
+			
+			              video.setGraphic(vidBoxST); 
+				}
+				});
+				   
+				   tick.setOnMouseExited(new EventHandler<MouseEvent>() {
+					   	public void handle(MouseEvent event) {
+			
+			             tick.setGraphic(mulBoxST); 
+				}
+				});
+				   
+				   graphic.setOnMouseExited(new EventHandler<MouseEvent>() {
+					   	public void handle(MouseEvent event) {
+			
+			            graphic.setGraphic(graphicBoxST);
+			            /*audio.setGraphic(audioBoxST);*/
+				}
+				});
 
+	        
         
-    
-   
-     
-        
-       /* Image textIm = new Image("Textbox_ST_TOP_CIRC_Blue_T-01.png");
-        ImageView textBox = new ImageView();
-        textBox.setImage(textIm);
-        text.setGraphic(textBox);*/
-        
+
         
         /* Top Bar Constraints */
         
