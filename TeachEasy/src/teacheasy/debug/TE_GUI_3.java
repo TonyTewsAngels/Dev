@@ -17,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.InputEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -121,7 +122,7 @@ Image textIm;
         
         Button butt = new Button("Dummy");
         
-        Button text = new Button();
+        final Button text = new Button();
         text.setStyle("-fx-background-color: transparent;");
         Button image = new Button();
         Button video = new Button();
@@ -131,27 +132,20 @@ Image textIm;
      
         Button prev = new Button("Preview");
         
-        /*Button dimensions*/
-        
-     
-        
         
         /* Create page tabs */
         
         /* Re-skin buttons */
-      
-   
-        int x = 40;
-        int y = 40;
         
-        /* Images */
+        /* Import Images */
         
         //Text Box
-        Image textImST = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
-        Image textImHO = new Image(getClass().getResourceAsStream("Textbox_HO_TOP_CIRC_Blue_T-01.png"));
-        Image textImPR = new Image(getClass().getResourceAsStream("Textbox_PRE_TOP_CIRC_Blue_T-01.png"));
+      /*  Image textImST = new Image(getClass().getResourceAsStream("/Workspace/Dev/TeachEasy/debug/topIcons/Textbox_ST_TOP_CIRC_Blue_T-01.png"));*/
+        Image textImST = new Image(getClass().getResourceAsStream("topIcons/Textbox_ST_TOP_CIRC_Blue_T-01.png"));
+        Image textImHO = new Image(getClass().getResourceAsStream("topIcons/Textbox_HO_TOP_CIRC_Blue_T-01.png"));
+        Image textImPR = new Image(getClass().getResourceAsStream("topIcons/Textbox_PRE_TOP_CIRC_Blue_T-01.png"));
         
-        //Image
+       /* //Image
         Image imImST = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
         Image imImHO = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
         Image imImPR = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
@@ -179,26 +173,39 @@ Image textIm;
         //Multiple Choice
         Image mulImST = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
         Image mulImHO = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
-        Image mulImPR = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
+        Image mulImPR = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));*/
         
         /* Image Views */
-        ImageView textBox = new ImageView(textImST);
-        
-        
-        
-        /* Enent Handlers */
-        final InvalidationListener hoverListener = new InvalidationListener() {
-            public void invalidated(Observable ov) {
-               if (textBoxST.isHover()) {
-            	   ImageView textBox = new ImageView(textImHO);
-                } else {
-                    text.setText("not hovered");
-              }
-            }
-        }
-        
+        ImageView textBoxST = new ImageView(textImST);   
         ImageView textBoxHO = new ImageView(textImHO);
-        ImageView textBoxPR= new ImageView(textImPR);
+        final ImageView textBoxPR= new ImageView(textImPR);
+        
+        /* Skin buttons */
+        
+        text.setGraphic(textBoxST); 
+
+        
+        /*Button dimensions*/
+
+        int x = 40;
+        int y = 40;
+        
+        textBoxST.setFitWidth(x);
+        textBoxST.setFitHeight(y);
+        
+        
+        
+        /* Event Handler */
+        
+        text.setOnAction(new EventHandler<ActionEvent>() {
+        	
+        	public void handle(ActionEvent event) {
+        		System.out.println("HELLOOOOOOOO");
+        		text.setGraphic(textBoxPR); 
+        		
+        	}
+        });
+
         
        /* ImageView imImST = new ImageView(imImST);
         ImageView imImHO = new ImageView(imImHO);
@@ -224,27 +231,13 @@ Image textIm;
         ImageView mulImHO = new ImageView(mulImHO);
         ImageView mulImPR= new ImageView(mulImPR);
         */
-        
-        text.setGraphic(textBoxST); 
-
-        textBoxST.setFitWidth(x);
-        textBoxST.setFitHeight(y);
-        
+   
+     
         
        /* Image textIm = new Image("Textbox_ST_TOP_CIRC_Blue_T-01.png");
         ImageView textBox = new ImageView();
         textBox.setImage(textIm);
         text.setGraphic(textBox);*/
-        
-
-        
-        
-      
-        
-textBox.setOnMousePressed(new EventHandler<MouseEvent>(){
-	public void handle(MouseEvent me) {textBoxPressed();}
-});
-        
         
         
         /* Top Bar Constraints */
