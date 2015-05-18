@@ -145,7 +145,7 @@ Image textIm;
         Image textImHO = new Image(getClass().getResourceAsStream("topIcons/Textbox_HO_TOP_CIRC_Blue_T-01.png"));
         Image textImPR = new Image(getClass().getResourceAsStream("topIcons/Textbox_PRE_TOP_CIRC_Blue_T-01.png"));
         
-       /* //Image
+        //Image
         Image imImST = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
         Image imImHO = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
         Image imImPR = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
@@ -173,12 +173,37 @@ Image textIm;
         //Multiple Choice
         Image mulImST = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
         Image mulImHO = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
-        Image mulImPR = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));*/
+        Image mulImPR = new Image(getClass().getResourceAsStream("Textbox_ST_TOP_CIRC_Blue_T-01.png"));
         
         /* Image Views */
-        ImageView textBoxST = new ImageView(textImST);   
-        ImageView textBoxHO = new ImageView(textImHO);
+        final ImageView textBoxST = new ImageView(textImST);   
+        final ImageView textBoxHO = new ImageView(textImHO);
         final ImageView textBoxPR= new ImageView(textImPR);
+        
+        ImageView imBoxST = new ImageView(imImST);
+        ImageView imBoxHO = new ImageView(imImHO);
+        ImageView imBoxPR= new ImageView(imImPR);
+
+        ImageView vidBoxST = new ImageView(vidImST);
+        ImageView vidBoxHO = new ImageView(vidImHO);
+        ImageView vidBoxPR= new ImageView(vidImPR);
+        
+        ImageView audioBoxST = new ImageView(textImST);
+        ImageView audioBoxHO = new ImageView(audioImHO);
+        ImageView audioBoxPR= new ImageView(audioImPR);
+        
+        ImageView graphicBoxST = new ImageView(textImST);
+        ImageView graphicBoxHO = new ImageView(graphicImHO);
+        ImageView graphicBoxPR= new ImageView(graphicImPR);
+        
+        ImageView queBoxST = new ImageView(textImST);
+        ImageView queBoxPR = new ImageView(queImPR);
+        ImageView queBoxHO= new ImageView(queImHO);
+        
+        ImageView mulBoxST = new ImageView(mulImST);
+        ImageView mulBoxHO = new ImageView(mulImHO);
+        ImageView mulBoxPR= new ImageView(mulImPR);
+        
         
         /* Skin buttons */
         
@@ -192,45 +217,63 @@ Image textIm;
         
         textBoxST.setFitWidth(x);
         textBoxST.setFitHeight(y);
+        textBoxHO.setFitWidth(x);
+        textBoxHO.setFitHeight(y);
+        textBoxPR.setFitWidth(x);
+        textBoxPR.setFitHeight(y);
         
         
         
         /* Event Handler */
         
-        text.setOnAction(new EventHandler<ActionEvent>() {
+        text.setOnMousePressed(new EventHandler<MouseEvent>() {
         	
+        	public void handle(MouseEvent event) {
+
+        		text.setGraphic(textBoxPR); 
+        		
+        }
+        });
+        
+	   text.setOnMouseReleased(new EventHandler<MouseEvent>() {
+	        	
+	        	public void handle(MouseEvent event) {
+
+	        		text.setGraphic(textBoxST); 
+		}
+		});
+	   
+	   text.setOnMouseEntered(new EventHandler<MouseEvent>() {
+       	
+	       	public void handle(MouseEvent event) {
+	       		
+	       		System.out.println("HELLOOOOOOOO");
+			text.setGraphic(textBoxHO); 
+		}
+		});
+	        
+	   text.setOnMouseExited(new EventHandler<MouseEvent>() {
+	       	
+	       	public void handle(MouseEvent event) {
+	       		
+	       		System.out.println("HELLOOOOOOOO");
+			text.setGraphic(textBoxST); 
+		}
+		});
+        
+     /*   text.setOnAction(new EventHandler<ActionEvent>() {
+        
         	public void handle(ActionEvent event) {
+        		
+        		if (text. == true) 
         		System.out.println("HELLOOOOOOOO");
         		text.setGraphic(textBoxPR); 
         		
         	}
-        });
+        });*/
 
         
-       /* ImageView imImST = new ImageView(imImST);
-        ImageView imImHO = new ImageView(imImHO);
-        ImageView imImPR= new ImageView(imImPR);
-
-        ImageView vidImST = new ImageView(vidImST);
-        ImageView vidImHO = new ImageView(vidImHO);
-        ImageView vidImPR= new ImageView(vidImPR);
-        
-        ImageView audioImST = new ImageView(textImST);
-        ImageView audioImHO = new ImageView(audioImHO);
-        ImageView audioImPR= new ImageView(audioImPR);
-        
-        ImageView graphicImST = new ImageView(textImST);
-        ImageView graphicImHO = new ImageView(graphicImHO);
-        ImageView graphicImPR= new ImageView(graphicImPR);
-        
-        ImageView queImST = new ImageView(textImST);
-        ImageView queImPR = new ImageView(queImPR);
-        ImageView queImHO= new ImageView(queImHO);
-        
-        ImageView mulImST = new ImageView(mulImST);
-        ImageView mulImHO = new ImageView(mulImHO);
-        ImageView mulImPR= new ImageView(mulImPR);
-        */
+    
    
      
         
