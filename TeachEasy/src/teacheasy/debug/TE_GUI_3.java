@@ -13,6 +13,7 @@ import javafx.beans.InvalidationListener;
 import javafx.event.*;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
+import javafx.geometry.Side;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -50,7 +51,7 @@ import javafx.event.ActionEvent;
 
 public class TE_GUI_3 extends Application {
 
-Text text, botText, propText, titleText, page1, page2, page3;
+Text text, text1, botText, propText, titleText, page1, page2, page3;
 Image textIm;
 	
 	/**
@@ -66,7 +67,7 @@ Image textIm;
         
         /* Instantiate the scene and group */
         GridPane innerGrid = new GridPane();
-        Scene scene = new Scene(innerGrid, 500, 500);
+        Scene scene = new Scene(innerGrid, 700, 700);
 	
         /* Instantiate content of Group */
         GridPane topGrid = new GridPane();
@@ -76,15 +77,23 @@ Image textIm;
         HBox preview = new HBox();
         Group contentPanel = new Group();
         VBox propertiesPanel = new VBox();
-        HBox bottomBar = new HBox();      
-
+        HBox bottomBar = new HBox();   
+        GridPane botGrid = new GridPane();
+        VBox paddingBox = new VBox(5);
         
         /* Set layout colours */
-        topGrid.setStyle("-fx-background-color: Grey;");
-        propertiesPanel.setStyle("-fx-background-color:  rgb(177, 177, 177);");
-        contentPanel.setStyle("-fx-background-color: rgb(101, 4, 7);");
-        bottomBar.setStyle("-fx-background-color: Grey;");
-        innerGrid.setStyle("-fx-background-color: rgb(101, 4, 7);");
+        paddingBox.setStyle("-fx-background-color: rgb(215,215,215);");
+        titleBox.setStyle("-fx-background-color: rgb(22,169,254);-fx-border-color:black; fx-border-width: 8; -fx-border-style: solid;");
+        topGrid.setStyle("-fx-background-color: rgb(215,215,215);-fx-border-color:black; fx-border-width: 8; -fx-border-style: solid;");
+        propertiesPanel.setStyle("-fx-background-color:  rgb(215,215,215); -fx-border-color:black; fx-border-width: 8; -fx-border-style: solid;");
+        contentPanel.setStyle("-fx-background-color: rgb(101, 4, 7); -fx-border-color:black; fx-border-width: 8; -fx-border-style: solid;");
+        innerGrid.setStyle("-fx-background-color: rgb(241,241,241);");
+        bottomBar.setStyle("-fx-background-color:rgb(113,113,113);");
+        botGrid.setStyle("-fx-background-color: rgb(113,113,113); -fx-border-color:black; fx-border-width: 8; -fx-border-style: solid;");
+        
+    
+        titleBox.setEffect(new DropShadow());
+        
         
         /* Setup Menubar */
         Menu menuFile = new Menu("File");
@@ -97,9 +106,9 @@ Image textIm;
         /* DUMMY CONTENT */
         
         /* Text */
-        text = new Text(1, 1,"Top Bar");
-        text.setFont(Font.font("Verdana", 20));
-        text.setId("text");
+        text1 = new Text(1, 1,"Top Bar");
+        text1.setFont(Font.font("Verdana", 20));
+        text1.setId("text1");
         
         botText = new Text(1, 1,"bottemBar");
         botText.setFont(Font.font("Verdana", 20));
@@ -122,22 +131,34 @@ Image textIm;
         r.setFill(Color.WHITE);
         r.setEffect(new DropShadow());
         
-        /* Buttons */
-        
+        /* Create Buttons */     
         Button butt = new Button("Dummy");
-        
-        final Button text = new Button();
-        text.setStyle("-fx-background-color: transparent;");
-        final Button image = new Button();
-        image.setStyle("-fx-background-color: transparent;");
-        final Button video = new Button();
-        video.setStyle("-fx-background-color: transparent;");
+        final Button text = new Button();    
+        final Button image = new Button();  
+        final Button video = new Button();    
         final Button tick = new Button();
-        tick.setStyle("-fx-background-color: transparent;");
         final Button graphic = new Button();
-        graphic.setStyle("-fx-background-color: transparent;");
         final Button audio = new Button();
+        final Button question = new Button();
+        
+        /* Make buttons transparent */
+        text.setStyle("-fx-background-color: transparent;");
+        image.setStyle("-fx-background-color: transparent;");
+        video.setStyle("-fx-background-color: transparent;");
+        tick.setStyle("-fx-background-color: transparent;");
+        tick.setStyle("-fx-background-color: transparent;");
+        graphic.setStyle("-fx-background-color: transparent;");
         audio.setStyle("-fx-background-color: transparent;");
+        question.setStyle("-fx-background-color: transparent;");
+        
+        /* Pop up info for buttons */
+        text.setTooltip(new Tooltip("Insert text box"));
+        image.setTooltip(new Tooltip("Insert image"));
+        video.setTooltip(new Tooltip("Insert video"));
+        tick.setTooltip(new Tooltip("Insert multiple choice"));
+        graphic.setTooltip(new Tooltip("Insert graphics"));
+        audio.setTooltip(new Tooltip("Insert audio clip"));
+        question.setTooltip(new Tooltip("Insert question box"));
         
         /* Set the buttons to use a button event handler */
         
@@ -158,43 +179,9 @@ Image textIm;
         
         page1 = new Text(1, 1,"page1");
         page2 = new Text(1, 1,"page2");
-        page3 = new Text(1, 1,"page3");
+        page3 = new Text(1, 1,"page3"); 
         
-        
-        Text[] pages = new Text[3];
-        final Pagination pagination;
-        
-        
-        /* Create page tabs */
-        
-        for (int i = 0; i < 3; i++) {
-
-            //images[i] = new Image(PaginationSample.class.getResource("page" + (i + 1) + ".jpg").toExternalForm(), false);
-
-        	pages[i] = new Text(TE_GUI_3.class.getResource("page" + (i + 1)).toExternalForm());
-        	
-        }
-
-        pagination = PaginationBuilder.create().pageCount(3).pageFactory(new Callback<Integer, Node>() {           
-
-            @Override public Node call(Integer pageIndex) {
-
-                return pageCounter(pageIndex);
-
-            }
-
-			private Node pageCounter(Integer pageIndex) {
-				// TODO Auto-generated method stub
-				
-				HBox pageBox = new HBox();
-				Text iv = new Text(pages[pageIndex]);
-				pageBox.getChildren().addAll(iv);
-				
-				return null;
-			}
-
-        }).build();
-        
+        Pagination pages = new Pagination(5);
         
         
         /* Re-skin buttons */
@@ -217,9 +204,9 @@ Image textIm;
         Image vidImPR = new Image(getClass().getResourceAsStream("topIcons/Video_PRE_TOP_CIRC_Blue_T-01.png"));
         
         //Audio
-       /* Image audioImST = new Image(getClass().getResourceAsStream("topIcons/Audio_ST_TOP_CIRC_Blue_T-01.png"));
-        Image audioImHO = new Image(getClass().getResourceAsStream("topIcons/Textbox_ST_TOP_CIRC_Blue_T-01.png"));
-        Image audioImPR = new Image(getClass().getResourceAsStream("topIcons/Textbox_ST_TOP_CIRC_Blue_T-01.png"));*/
+        Image audioImST = new Image(getClass().getResourceAsStream("topIcons/Audio_ST_TOP_CIRC_Blue_T-01.png"));
+        Image audioImHO = new Image(getClass().getResourceAsStream("topIcons/Audio_HO_TOP_CIRC_Blue_T-01.png"));
+        Image audioImPR = new Image(getClass().getResourceAsStream("topIcons/Audio_PRE_TOP_CIRC_Blue_T-01.png"));
         
         //Graphics
         Image graphicImST = new Image(getClass().getResourceAsStream("topIcons/Shape_ST_TOP_CIRC_Blue_T-01.png"));
@@ -236,35 +223,41 @@ Image textIm;
         Image mulImHO = new Image(getClass().getResourceAsStream("topIcons/Choice_HO_TOP_CIRC_Blue_T-01.png"));
         Image mulImPR = new Image(getClass().getResourceAsStream("topIcons/Choice_PRE_TOP_CIRC_Blue_T-01.png"));
         
+        
+        //TE Logo
+        Image Logo = new Image(getClass().getResourceAsStream("TELogo/TE_4_0.png"));
+        ImageView TE = new ImageView(Logo);
+        TE.setFitWidth(80);
+        TE.setFitHeight(80);
+        
         /* Image Views */
         final ImageView textBoxST = new ImageView(textImST);   
         final ImageView textBoxHO = new ImageView(textImHO);
         final ImageView textBoxPR= new ImageView(textImPR);
         
-        final  ImageView imBoxST = new ImageView(imImST);
-        final  ImageView imBoxHO = new ImageView(imImHO);
-        final  ImageView imBoxPR= new ImageView(imImPR);
+        final ImageView imBoxST = new ImageView(imImST);
+        final ImageView imBoxHO = new ImageView(imImHO);
+        final ImageView imBoxPR= new ImageView(imImPR);
 
-        final  ImageView vidBoxST = new ImageView(vidImST);
-        final  ImageView vidBoxHO = new ImageView(vidImHO);
-        final  ImageView vidBoxPR= new ImageView(vidImPR);
+        final ImageView vidBoxST = new ImageView(vidImST);
+        final ImageView vidBoxHO = new ImageView(vidImHO);
+        final ImageView vidBoxPR= new ImageView(vidImPR);
         
-   /*     final  ImageView audioBoxST = new ImageView(audioImST);
-        final  ImageView audioBoxHO = new ImageView(audioImHO);
-        final  ImageView audioBoxPR= new ImageView(audioImPR);*/
+        final ImageView audioBoxST = new ImageView(audioImST);
+        final ImageView audioBoxHO = new ImageView(audioImHO);
+        final ImageView audioBoxPR= new ImageView(audioImPR);
         
-        final  ImageView graphicBoxST = new ImageView(graphicImST);
-        final  ImageView graphicBoxHO = new ImageView(graphicImHO);
-        final  ImageView graphicBoxPR= new ImageView(graphicImPR);
+        final ImageView graphicBoxST = new ImageView(graphicImST);
+        final ImageView graphicBoxHO = new ImageView(graphicImHO);
+        final ImageView graphicBoxPR= new ImageView(graphicImPR);
         
+        final ImageView queBoxST = new ImageView(queImST);
+        final ImageView queBoxPR = new ImageView(queImPR);
+        final ImageView queBoxHO= new ImageView(queImHO);
         
-        final  ImageView queBoxST = new ImageView(queImST);
-        final  ImageView queBoxPR = new ImageView(queImPR);
-        final  ImageView queBoxHO= new ImageView(queImHO);
-        
-        final  ImageView mulBoxST = new ImageView(mulImST);
-        final  ImageView mulBoxHO = new ImageView(mulImHO);
-        final  ImageView mulBoxPR= new ImageView(mulImPR);
+        final ImageView mulBoxST = new ImageView(mulImST);
+        final ImageView mulBoxHO = new ImageView(mulImHO);
+        final ImageView mulBoxPR= new ImageView(mulImPR);
         
         
         /* Skin buttons */
@@ -274,14 +267,14 @@ Image textIm;
         video.setGraphic(vidBoxST); 
         tick.setGraphic(mulBoxST); 
         graphic.setGraphic(graphicBoxST); 
-     /*   audio.setGraphic(audioBoxST); */
-        
+        audio.setGraphic(audioBoxST); 
+        question.setGraphic(queBoxST);
 
         
         /*Button dimensions*/
 
-        int x = 40;
-        int y = 40;
+        int x = 70;
+        int y = 70;
         
         textBoxST.setFitWidth(x);
         textBoxST.setFitHeight(y);
@@ -304,13 +297,13 @@ Image textIm;
         vidBoxPR.setFitWidth(x);
         vidBoxPR.setFitHeight(y);
         
- /*       audioBoxST.setFitWidth(x);
+        audioBoxST.setFitWidth(x);
         audioBoxST.setFitHeight(y);
         audioBoxHO.setFitWidth(x);
         audioBoxHO.setFitHeight(y);
         audioBoxPR.setFitWidth(x);
         audioBoxPR.setFitHeight(y);
-        */
+        
         graphicBoxST.setFitWidth(x);
         graphicBoxST.setFitHeight(y);
         graphicBoxHO.setFitWidth(x);
@@ -420,6 +413,18 @@ Image textIm;
         }
         });
         
+        audio.setOnMousePressed(new EventHandler<MouseEvent>() {
+        	public void handle(MouseEvent event) {	
+        		audio.setGraphic(audioBoxPR);
+        }
+        });
+        
+        question.setOnMousePressed(new EventHandler<MouseEvent>() {
+        	public void handle(MouseEvent event) {	
+        		question.setGraphic(queBoxPR);
+        }
+        });
+        
       
         
         //Mouse Released
@@ -453,9 +458,22 @@ Image textIm;
 		   
 		   graphic.setOnMouseReleased(new EventHandler<MouseEvent>() {
 			   	public void handle(MouseEvent event) {
-	
+			   		
 	            graphic.setGraphic(graphicBoxST);
-	            /*audio.setGraphic(audioBoxST);*/
+		}
+		});
+		   
+		   audio.setOnMouseReleased(new EventHandler<MouseEvent>() {
+			   	public void handle(MouseEvent event) {
+
+	            audio.setGraphic(audioBoxST);
+		}
+		});
+		   
+		   question.setOnMouseReleased(new EventHandler<MouseEvent>() {
+			   	public void handle(MouseEvent event) {
+
+	            question.setGraphic(queBoxST);
 		}
 		});
 	   
@@ -494,7 +512,20 @@ Image textIm;
 				   	public void handle(MouseEvent event) {
 		
 		            graphic.setGraphic(graphicBoxHO);
-		            /*audio.setGraphic(audioBoxST);*/
+		}
+		});
+			   
+			   audio.setOnMouseEntered(new EventHandler<MouseEvent>() {
+				   	public void handle(MouseEvent event) {
+  
+		            audio.setGraphic(audioBoxHO);
+		}
+		});
+			   
+			   question.setOnMouseEntered(new EventHandler<MouseEvent>() {
+				   	public void handle(MouseEvent event) {
+ 
+		            question.setGraphic(queBoxHO);
 		}
 		});
 	   
@@ -532,10 +563,22 @@ Image textIm;
 				   	public void handle(MouseEvent event) {
 		
 		            graphic.setGraphic(graphicBoxST);
-		            /*audio.setGraphic(audioBoxST);*/
 		}
 		});
+			   
+			   audio.setOnMouseExited(new EventHandler<MouseEvent>() {
+				   	public void handle(MouseEvent event) {
 
+		            audio.setGraphic(audioBoxST);
+		}
+		});
+			   
+			   question.setOnMouseExited(new EventHandler<MouseEvent>() {
+				   	public void handle(MouseEvent event) {
+
+		            question.setGraphic(queBoxST);
+		}
+		});
 	        
         
 
@@ -565,7 +608,7 @@ Image textIm;
         topGrid.getColumnConstraints().add(topFarRight);
         
         
-        /* Set row constraints */
+        /* innerGrid row constraints */
         RowConstraints topRow = new RowConstraints();
         topRow.setMaxHeight(900);
         innerGrid.getRowConstraints().add(topRow);
@@ -589,7 +632,7 @@ Image textIm;
         innerGrid.getRowConstraints().add(botBarRow);
         
         
-        /* Column constraints for innerGrid */
+        /* innerGrid Column constraints */
 
         ColumnConstraints farLeft = new ColumnConstraints();
         farLeft.setFillWidth(true);
@@ -611,32 +654,69 @@ Image textIm;
         propertiesCol.setMaxWidth(50);
         innerGrid.getColumnConstraints().add(propertiesCol);
         
+        /* botGrid Column Constraints */
+         
+        ColumnConstraints botStretchLeft = new ColumnConstraints();
+        botStretchLeft.setFillWidth(true);
+        botStretchLeft.setHgrow(Priority.SOMETIMES);
+        botGrid.getColumnConstraints().add(botStretchLeft);
+   
+        ColumnConstraints botcentreCol = new ColumnConstraints();
+        botcentreCol.setMaxWidth(1000);
+        botGrid.getColumnConstraints().add(botcentreCol);
+        
+        ColumnConstraints botStretchRight = new ColumnConstraints();
+        botStretchRight.setFillWidth(true);
+       // centerRow.setMaxWidth(100);
+        botStretchRight.setHgrow(Priority.SOMETIMES);
+        botGrid.getColumnConstraints().add(botStretchRight);
+        
+        ColumnConstraints botLogoCol = new ColumnConstraints();
+        botLogoCol.setMaxWidth(50);
+        botGrid.getColumnConstraints().add(botLogoCol);
+        
+        
+        
         /* Add content to panes */
         
         innerGrid.add(topGrid,0,0,4,1);
         innerGrid.add(contentPanel,1,1);
         innerGrid.add(propertiesPanel,3,1,1,3);
-        innerGrid.add(bottomBar,0,4,4,1);
-
+        /*innerGrid.add(bottomBar,0,4,4,1);*/
+        innerGrid.add(botGrid,0,4,4,1);
+        
         topGrid.add(menuBar,0,0,5,1);
-        topGrid.add(titleBox,0,1);
+        topGrid.add(paddingBox,0,1);
         topGrid.add(topBar,2,1);
         topGrid.add(preview,4,1);
         
+        paddingBox.getChildren().addAll(titleBox);
+        
+        /* Set alignment of content of topGrid */
         topBar.setAlignment(Pos.BASELINE_CENTER);
-        titleBox.setAlignment(Pos.BASELINE_LEFT);
+        titleBox.setAlignment(Pos.CENTER);
         preview.setAlignment(Pos.BASELINE_RIGHT);
+        
+        paddingBox.setAlignment(Pos.CENTER_LEFT);
         
         titleBox.getChildren().addAll(titleText);
         preview.getChildren().addAll(prev);
-        topBar.getChildren().addAll(text,image,video,tick,graphic,audio);
+        topBar.getChildren().addAll(text,image,video,tick,graphic,audio,question);
         
+        /* Add Dummy page to content panel */
         contentPanel.getChildren().addAll(r);
         
-        propertiesPanel.getChildren().addAll(propText, butt);
+        propertiesPanel.getChildren().addAll(propText, butt);     
         
-        //Add Pagination in here
-        bottomBar.getChildren().addAll(botText);
+        botGrid.add(bottomBar,1,0);
+        botGrid.add(TE, 3, 0);
+        
+
+        bottomBar.getChildren().addAll(pages);
+        
+        /* Set alignment of bottomBar content */
+        bottomBar.setAlignment(Pos.BASELINE_CENTER);
+        
         
         /* Setup the window */
         primaryStage.setTitle("TE_GUI_3");
