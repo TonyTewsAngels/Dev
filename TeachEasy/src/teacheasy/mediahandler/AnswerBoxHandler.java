@@ -28,27 +28,48 @@ public class AnswerBoxHandler {
 
 	/** Creates a new answer box */
 	public void createAnswerBox(double xStart, double yStart,
-			int characterLimit, boolean retry, String correctAnswers, int marks, boolean isNumerical) {
+			int characterLimit, boolean retry, String correctAnswers,
+			int marks, boolean isNumerical) {
 		answerBox.add(new AnswerBox(xStart, yStart, characterLimit, retry,
-				correctAnswers,marks,isNumerical, group));
+				correctAnswers, marks, isNumerical, group));
 	}
-	
+
 	/** Checks to see if all questions on the current page have been attempted */
 	public boolean AllAnswerBoxQuestionsAttempted() {
-		for (int i=0; i < answerBox.size(); i++) {
+		for (int i = 0; i < answerBox.size(); i++) {
 			if (!answerBox.get(i).buttonPressed) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
-	/**Greys out all of the answer boxes on a page */
+
+	/** Greys out all of the answer boxes on a page */
 	public void DisableAllAnswerBoxes() {
-		for (int i=0; i < answerBox.size(); i++) {
+		for (int i = 0; i < answerBox.size(); i++) {
 			answerBox.get(i).answerField.setDisable(true);
 			answerBox.get(i).checkAnswerButton.setDisable(true);
 		}
+	}
+	
+	public boolean allBoxesDisabled(){
+		boolean allDisabled = true;
+		for(int i = 0; i <answerBox.size(); i++){
+			if(!answerBox.get(i).answerField.isDisabled()){
+				allDisabled = false;
+			}
+		}
+		return allDisabled;
+	}
+
+	public int currentPageMarks() {
+		int totalPageMarks = 0;
+
+		for (int i = 0; i < answerBox.size(); i++) {
+			totalPageMarks += answerBox.get(i).awardedMarks;
+		}
+
+		return totalPageMarks;
 	}
 
 }

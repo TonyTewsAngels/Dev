@@ -35,8 +35,7 @@ import teacheasy.render.Renderer;
 import teacheasy.xml.*;
 import teacheasy.xml.util.XMLNotification;
 import teacheasy.xml.util.XMLNotification.Level;
-import teacheasy.mediahandler.AnswerBoxHandler;
-import teacheasy.mediahandler.answerbox.AnswerBox.ButtonEventHandler;
+
 
 /**
  * This class encapsulates the current state of the
@@ -116,13 +115,13 @@ public class RunTimeData {
     public void nextPage() {        
         if(currentPage < pageCount - 1) {
         	/* Check to see if user has attempted all questions */
-        	if ((attemptedAllAvailableMarks()) || (hideDialog))
+        	if ((attemptedAllAvailableMarks()) || (hideDialog) || renderer.answerBoxHandler.allBoxesDisabled())
         	{
                 currentPage++;
                 redraw(group, bounds);
         	}
         	/* Check to see if user has ticked check box */
-        	else if (!hideDialog) {
+        	if (!hideDialog && !renderer.answerBoxHandler.allBoxesDisabled()) {
         		displayWarning();
         	}
         }

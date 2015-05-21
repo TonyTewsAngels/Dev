@@ -3,6 +3,8 @@
  */
 package teacheasy.mediahandler.answerbox;
 
+import marksHandler.CollateMarks;
+
 import com.sun.javafx.scene.control.behavior.TextFieldBehavior;
 import com.sun.javafx.scene.control.skin.TextFieldSkin;
 
@@ -33,7 +35,7 @@ import javafx.scene.layout.HBox;
 public class AnswerBox {
 	/* Fields */
 	private int marks;
-	private int awardedMarks;
+	public int awardedMarks;
 	private boolean retry;
 	private String correctAnswers;
 	private boolean answerIsCorrect;
@@ -130,7 +132,7 @@ public class AnswerBox {
 	 */
 	public boolean checkAnswer(int nMarks) {
 		boolean isCorrect = false;
-
+		
 		if (!isNumerical) {
 			String[] listOfCorrectAnswers = correctAnswers.split("~");
 			for (int i = 0; i < listOfCorrectAnswers.length; i++) {
@@ -138,18 +140,17 @@ public class AnswerBox {
 				 * Checks if there is at least a character and compares user
 				 * submitted answers with the list of available answers
 				 */
-				if (answerField.getText().length() > 1
+				if (answerField.getText().length() >= 1
 						&& answerField.getText().equalsIgnoreCase(
 								listOfCorrectAnswers[i])) {
 					/* Award marks */
-					awardedMarks += nMarks;
-
+					awardedMarks += marks;
+					
 					/* Acknowledge that question is answered correctly */
 					isCorrect = true;
 
 					/* Disable retry if answered correctly */
 					retry = false;
-					System.out.println("getting here");
 					break;
 				}
 
@@ -259,6 +260,7 @@ public class AnswerBox {
 
 				/* Display the outcome */
 				displayFeedback();
+				buttonPressed = true;
 			}
 		}
 	}
