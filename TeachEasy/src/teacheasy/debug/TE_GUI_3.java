@@ -140,7 +140,8 @@ Image textIm;
         final Button graphic = new Button();
         final Button audio = new Button();
         final Button question = new Button();
-        
+        Button prev = new Button("");
+          
         /* Make buttons transparent */
         text.setStyle("-fx-background-color: transparent;");
         image.setStyle("-fx-background-color: transparent;");
@@ -150,6 +151,8 @@ Image textIm;
         graphic.setStyle("-fx-background-color: transparent;");
         audio.setStyle("-fx-background-color: transparent;");
         question.setStyle("-fx-background-color: transparent;");
+        prev.setStyle("-fx-background-color: transparent;");
+        
         
         /* Pop up info for buttons */
         text.setTooltip(new Tooltip("Insert text box"));
@@ -173,7 +176,8 @@ Image textIm;
         graphic.setId("graphBtn");
         audio.setId("audioBtn");*/
         
-        Button prev = new Button("Preview");
+      
+      
 
         /* Dummy Page Content */
         
@@ -223,9 +227,17 @@ Image textIm;
         Image mulImHO = new Image(getClass().getResourceAsStream("topIcons/Choice_HO_TOP_CIRC_Blue_T-01.png"));
         Image mulImPR = new Image(getClass().getResourceAsStream("topIcons/Choice_PRE_TOP_CIRC_Blue_T-01.png"));
         
+        //Preview Button
+        Image prevIm= new Image(getClass().getResourceAsStream("topIcons/Learneasy_v3.png"));
+        
+        ImageView Prev = new ImageView();
+        prev.setGraphic(Prev);
+        
+        Prev.setFitWidth(80);
+        Prev.setFitHeight(80);
         
         //TE Logo
-        Image Logo = new Image(getClass().getResourceAsStream("TELogo/TE_4_0.png"));
+        Image Logo = new Image(getClass().getResourceAsStream("topIcons/TE_4_0.png"));
         ImageView TE = new ImageView(Logo);
         TE.setFitWidth(80);
         TE.setFitHeight(80);
@@ -270,6 +282,7 @@ Image textIm;
         audio.setGraphic(audioBoxST); 
         question.setGraphic(queBoxST);
 
+        
         
         /*Button dimensions*/
 
