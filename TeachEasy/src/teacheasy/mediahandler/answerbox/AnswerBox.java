@@ -56,7 +56,11 @@ public class AnswerBox {
             boolean nIsNumerical, Group nGroup) {
 
         /* Setting local variables */
-        this.marks = nMarks;
+    	if(nMarks > 0){
+			this.marks = nMarks;
+		}else{
+			this.marks = 0;
+		}
         this.correctAnswers = nCorrectAnswers;
         
         /*To prevent negative or 0 character limit*/
