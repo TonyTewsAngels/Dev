@@ -31,247 +31,251 @@ import javafx.scene.layout.HBox;
  * 
  */
 public class AnswerBox {
-    /* Fields */
-    private int marks;
-    private int awardedMarks;
-    private boolean retry;
-    private String correctAnswers;
-    private boolean answerIsCorrect;
-    private int characterLimit;
-    private double xStart;
-    private double yStart;
-    private boolean isNumerical;
-    private boolean validInput;
-    public boolean buttonPressed;
+	/* Fields */
+	private int marks;
+	private int awardedMarks;
+	private boolean retry;
+	private String correctAnswers;
+	private boolean answerIsCorrect;
+	private int characterLimit;
+	private double xStart;
+	private double yStart;
+	private boolean isNumerical;
+	private boolean validInput;
+	public boolean buttonPressed;
 
-    /* UI Elements */
-    private Group group;
-    public TextField answerField;
-    private HBox box;
-    public Button checkAnswerButton;
-    private Label feedbackLabel;
+	/* UI Elements */
+	private Group group;
+	public TextField answerField;
+	private HBox box;
+	public Button checkAnswerButton;
+	private Label feedbackLabel;
 
-    /** Constructor method */
-    public AnswerBox(double nXStart, double nYStart, int nCharacterLimit,
-            boolean nRetry, String nCorrectAnswers, int nMarks,
-            boolean nIsNumerical, Group nGroup) {
+	/** Constructor method */
+	public AnswerBox(double nXStart, double nYStart, int nCharacterLimit,
+			boolean nRetry, String nCorrectAnswers, int nMarks,
+			boolean nIsNumerical, Group nGroup) {
 
-        /* Setting local variables */
-        this.marks = nMarks;
-        this.correctAnswers = nCorrectAnswers;
-        
-        /*To prevent negative or 0 character limit*/
-        if(nCharacterLimit >= 1){
-        	this.characterLimit = nCharacterLimit;
-        }
-        else if(nCharacterLimit <= 0){
-        	this.characterLimit = 2;
-        }
-        
-        this.xStart = nXStart;
-        this.yStart = nYStart;
-        this.group = nGroup;
-        this.retry = nRetry;
-        this.isNumerical = nIsNumerical;
+		/* Setting local variables */
+		this.marks = nMarks;
+		this.correctAnswers = nCorrectAnswers;
 
-        /* A text field where answers can be typed */
-        answerField = new TextField();
+		/* To prevent negative or 0 character limit */
+		if (nCharacterLimit >= 1) {
+			this.characterLimit = nCharacterLimit;
+		} else if (nCharacterLimit <= 0) {
+			this.characterLimit = 2;
+		}
 
-        /* Creates new button to check the typed answer */
-        checkAnswerButton = new Button("Check answer");
-        checkAnswerButton.setId("check answer");
-        checkAnswerButton.setOnAction(new ButtonEventHandler());
+		this.xStart = nXStart;
+		this.yStart = nYStart;
+		this.group = nGroup;
+		this.retry = nRetry;
+		this.isNumerical = nIsNumerical;
 
-        /* Creates feedback label to display correct/incorrect */
-        feedbackLabel = new Label();
+		/* A text field where answers can be typed */
+		answerField = new TextField();
 
-        /* HBox to hold the answerBox, Check answer button & the feedback label */
-        box = new HBox();
-        box.setSpacing(5);
-        box.setAlignment(Pos.CENTER);
+		/* Creates new button to check the typed answer */
+		checkAnswerButton = new Button("Check answer");
+		checkAnswerButton.setId("check answer");
+		checkAnswerButton.setOnAction(new ButtonEventHandler());
 
-        /* Submits and checks typed answer upon key press "enter" */
-        answerField.setOnKeyPressed(new KeyEventHandler());
-        
-        /* Uses a change listener to limit the character count */
-        answerField.textProperty().addListener(new MaxLengthListener());
-        
-        /* Set a custom skin for the text box to remove the context menu */
-        answerField.setSkin(new TextFieldSkin(answerField, new TextFieldBehavior(answerField) {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                if (e.getButton() == MouseButton.SECONDARY) {
-                    return; // don't allow context menu to show 
-                }
-                
-                super.mouseReleased(e);
-            }
-        }));
+		/* Creates feedback label to display correct/incorrect */
+		feedbackLabel = new Label();
 
-        /* Place the box at the specified location */
-        box.relocate(xStart, yStart);
+		/* HBox to hold the answerBox, Check answer button & the feedback label */
+		box = new HBox();
+		box.setSpacing(5);
+		box.setAlignment(Pos.CENTER);
 
-        /* Group the elements to be displayed on the screen in box */
-        box.getChildren().addAll(answerField, checkAnswerButton, feedbackLabel);
+		/* Submits and checks typed answer upon key press "enter" */
+		answerField.setOnKeyPressed(new KeyEventHandler());
 
-        /* Add box back to the main screen */
-        group.getChildren().add(box);
-        
-//        /*Initialise the buttonPressed variable as false*/
-//        this.buttonPressed = false;
-    }
+		/* Uses a change listener to limit the character count */
+		answerField.textProperty().addListener(new MaxLengthListener());
 
-    /**
-     * This method stores the potential answers in an array. When an answer is
-     * provided the loop compares the entered answer against the possible
-     * answers in the array. It also allows/disallows retry depending on the
-     * value of the variable retry.
-     * 
-     */
-    public boolean checkAnswer(int nMarks) {
-        boolean isCorrect = false;
+		/* Set a custom skin for the text box to remove the context menu */
+		answerField.setSkin(new TextFieldSkin(answerField,
+				new TextFieldBehavior(answerField) {
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if (e.getButton() == MouseButton.SECONDARY) {
+							return; // don't allow context menu to show
+						}
 
-        if (!isNumerical) {
-            String[] listOfCorrectAnswers = correctAnswers.split("~");
-            for (int i = 0; i < listOfCorrectAnswers.length; i++) {
-                /*
-                 * Compares user submitted answers with the list of available
-                 * answers
-                 */
-                if (answerField.getText().toUpperCase().equals(listOfCorrectAnswers[i].toUpperCase())) {
-                    /* Award marks */
-                    awardedMarks += nMarks;
+						super.mouseReleased(e);
+					}
+				}));
 
-                    /* Acknowledge that question is answered correctly */
-                    isCorrect = true;
+		/* Place the box at the specified location */
+		box.relocate(xStart, yStart);
 
-                    /* Disable retry if answered correctly */
-                    retry = false;
+		/* Group the elements to be displayed on the screen in box */
+		box.getChildren().addAll(answerField, checkAnswerButton, feedbackLabel);
 
-                    break;
-                }
-            }
-        }
-        /* Used when expecting numerical inputs in the TextField */
-        else {
-            float minRange;
-            float maxRange;
-            float answer;
+		/* Add box back to the main screen */
+		group.getChildren().add(box);
 
-            /* Splits the correctAnswers so that min & max ranges are identified */
-            String[] listOfCorrectAnswers = correctAnswers.split("~");
+		// /*Initialise the buttonPressed variable as false*/
+		// this.buttonPressed = false;
+	}
 
-            /* A variable that is set when input is invalid */
-            validInput = true;
+	/**
+	 * This method stores the potential answers in an array. When an answer is
+	 * provided the loop compares the entered answer against the possible
+	 * answers in the array. It also allows/disallows retry depending on the
+	 * value of the variable retry.
+	 * 
+	 */
+	public boolean checkAnswer(int nMarks) {
+		boolean isCorrect = false;
 
-            /*
-             * Converting range of acceptable answers and user submitted answers
-             * to float
-             */
-            try {
-            	/*If no minimum and maximum value is provided make the provided
-            	 * value minimum and maximum
-            	 * */
-            	if(listOfCorrectAnswers.length == 1){
-            		minRange = Float.parseFloat(listOfCorrectAnswers[0]);
-            		maxRange = Float.parseFloat(listOfCorrectAnswers[0]);
-            		answer = Float.parseFloat(answerField.getText());
-            	}
-            	else
-            	{
-            		minRange = Float.parseFloat(listOfCorrectAnswers[0]);
-            		maxRange = Float.parseFloat(listOfCorrectAnswers[1]);
-            		answer = Float.parseFloat(answerField.getText());
-            	}
-                
-            } catch (NumberFormatException nfe) {
-                minRange = 0.0f;
-                maxRange = 0.0f;
-                answer = 0.0f;
-                validInput = false;
-            }
-            /*
-             * Checks submitted numerical answer is within the specified region
-             */
-            if (validInput) {
-                if (answer >= minRange && answer <= maxRange) {
-                    awardedMarks += nMarks;
-                    isCorrect = true;
-                    retry = false;
-                }
-            }
-        }
+		if (!isNumerical) {
+			String[] listOfCorrectAnswers = correctAnswers.split("~");
+			for (int i = 0; i < listOfCorrectAnswers.length; i++) {
+				/*
+				 * Checks if there is at least a character and compares user
+				 * submitted answers with the list of available answers
+				 */
+				if (answerField.getText().length() > 1
+						&& answerField.getText().equalsIgnoreCase(
+								listOfCorrectAnswers[i])) {
+					/* Award marks */
+					awardedMarks += nMarks;
 
-        answerField.setEditable(retry);
-        answerField.setDisable(!retry);
-        checkAnswerButton.setDisable(!retry);
-        return isCorrect;
-    }
+					/* Acknowledge that question is answered correctly */
+					isCorrect = true;
 
-    /** A method to display feedback to the user */
-    public void displayFeedback() {
+					/* Disable retry if answered correctly */
+					retry = false;
+					System.out.println("getting here");
+					break;
+				}
 
-        if (validInput == false && isNumerical == true) {
-            feedbackLabel.setText("Invalid input");
-        } else {
-            if (answerIsCorrect) {
-                feedbackLabel.setText("Correct! " + awardedMarks + " marks");
-            } else {
-                feedbackLabel.setText("Incorrect");
-            }
-        }
-    }
+			}
+		}
+		/* Used when expecting numerical inputs in the TextField */
+		else {
+			float minRange;
+			float maxRange;
+			float answer;
 
-    /**
-     * Button Event Handler Class
-     */
-    public class ButtonEventHandler implements EventHandler<ActionEvent> {
-        @Override
-        public void handle(ActionEvent e) {
-            /* Get the button that was pressed */
-            Button button = (Button) e.getSource();
+			/* Splits the correctAnswers so that min & max ranges are identified */
+			String[] listOfCorrectAnswers = correctAnswers.split("~");
 
-            /* Get the id of the button pressed */
-            String id = button.getId();
+			/* A variable that is set when input is invalid */
+			validInput = true;
 
-            /* Act according to id */
-            if (id.equals("check answer") && answerField.isEditable() == true) {
-                answerIsCorrect = checkAnswer(marks);
-                displayFeedback();
-                buttonPressed = true;
-            }
-        }
-    }
+			/*
+			 * Converting range of acceptable answers and user submitted answers
+			 * to float
+			 */
+			try {
+				/*
+				 * If no minimum and maximum value is provided make the provided
+				 * value minimum and maximum
+				 */
+				if (listOfCorrectAnswers.length == 1) {
+					minRange = Float.parseFloat(listOfCorrectAnswers[0]);
+					maxRange = Float.parseFloat(listOfCorrectAnswers[0]);
+					answer = Float.parseFloat(answerField.getText());
+				} else {
+					minRange = Float.parseFloat(listOfCorrectAnswers[0]);
+					maxRange = Float.parseFloat(listOfCorrectAnswers[1]);
+					answer = Float.parseFloat(answerField.getText());
+				}
 
-    /**
-     * Key press event handler
-     */
-    public class KeyEventHandler implements EventHandler<KeyEvent> {
-        public void handle(KeyEvent key) {
-            if (key.getCode().equals(KeyCode.ENTER)
-                    && answerField.isEditable() == true) {
-                /* Check if answer is correct */
-                answerIsCorrect = checkAnswer(marks);
+			} catch (NumberFormatException nfe) {
+				minRange = 0.0f;
+				maxRange = 0.0f;
+				answer = 0.0f;
+				validInput = false;
+			}
+			/*
+			 * Checks submitted numerical answer is within the specified region
+			 */
+			if (validInput) {
+				if (answer >= minRange && answer <= maxRange) {
+					awardedMarks += nMarks;
+					isCorrect = true;
+					retry = false;
+				}
+			}
+		}
 
-                /* Display the outcome */
-                displayFeedback();
-            }
-        }
-    }
-    
-    /**
-     * This class limits the number of characters that can be typed in the
-     * textField to the the specified nCharacterLimit
-     * 
-     */
-    public class MaxLengthListener implements ChangeListener<String> {
-        @Override
-        public void changed(ObservableValue<? extends String> ov,
-                            String oldVal, String newVal) {
-            if(answerField.getText().length() > characterLimit) {
-                String s = answerField.getText().substring(0, characterLimit);
-                answerField.setText(s);
-            }
-        }
-    }
+		answerField.setEditable(retry);
+		answerField.setDisable(!retry);
+		checkAnswerButton.setDisable(!retry);
+		return isCorrect;
+	}
+
+	/** A method to display feedback to the user */
+	public void displayFeedback() {
+
+		if (validInput == false && isNumerical == true) {
+			feedbackLabel.setText("Invalid input");
+		} else {
+			if (answerIsCorrect && awardedMarks > 1) {
+				feedbackLabel.setText("Correct! " + awardedMarks + " marks");
+			} else if (answerIsCorrect && awardedMarks == 1) {
+				feedbackLabel.setText("Correct! " + awardedMarks + " mark");
+			} else {
+				feedbackLabel.setText("Incorrect");
+			}
+		}
+	}
+
+	/**
+	 * Button Event Handler Class
+	 */
+	public class ButtonEventHandler implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent e) {
+			/* Get the button that was pressed */
+			Button button = (Button) e.getSource();
+
+			/* Get the id of the button pressed */
+			String id = button.getId();
+
+			/* Act according to id */
+			if (id.equals("check answer") && answerField.isEditable() == true) {
+				answerIsCorrect = checkAnswer(marks);
+				displayFeedback();
+				buttonPressed = true;
+			}
+		}
+	}
+
+	/**
+	 * Key press event handler
+	 */
+	public class KeyEventHandler implements EventHandler<KeyEvent> {
+		public void handle(KeyEvent key) {
+			if (key.getCode().equals(KeyCode.ENTER)
+					&& answerField.isEditable() == true) {
+				/* Check if answer is correct */
+				answerIsCorrect = checkAnswer(marks);
+
+				/* Display the outcome */
+				displayFeedback();
+			}
+		}
+	}
+
+	/**
+	 * This class limits the number of characters that can be typed in the
+	 * textField to the the specified nCharacterLimit
+	 * 
+	 */
+	public class MaxLengthListener implements ChangeListener<String> {
+		@Override
+		public void changed(ObservableValue<? extends String> ov,
+				String oldVal, String newVal) {
+			if (answerField.getText().length() > characterLimit) {
+				String s = answerField.getText().substring(0, characterLimit);
+				answerField.setText(s);
+			}
+		}
+	}
 }
