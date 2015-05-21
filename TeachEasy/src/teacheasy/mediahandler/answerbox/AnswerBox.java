@@ -3,8 +3,6 @@
  */
 package teacheasy.mediahandler.answerbox;
 
-import marksHandler.CollateMarks;
-
 import com.sun.javafx.scene.control.behavior.TextFieldBehavior;
 import com.sun.javafx.scene.control.skin.TextFieldSkin;
 
@@ -132,7 +130,7 @@ public class AnswerBox {
 	 */
 	public boolean checkAnswer(int nMarks) {
 		boolean isCorrect = false;
-		
+
 		if (!isNumerical) {
 			String[] listOfCorrectAnswers = correctAnswers.split("~");
 			for (int i = 0; i < listOfCorrectAnswers.length; i++) {
@@ -145,7 +143,7 @@ public class AnswerBox {
 								listOfCorrectAnswers[i])) {
 					/* Award marks */
 					awardedMarks += marks;
-					
+
 					/* Acknowledge that question is answered correctly */
 					isCorrect = true;
 

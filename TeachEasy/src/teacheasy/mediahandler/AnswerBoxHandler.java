@@ -51,11 +51,12 @@ public class AnswerBoxHandler {
 			answerBox.get(i).checkAnswerButton.setDisable(true);
 		}
 	}
-	
-	public boolean allBoxesDisabled(){
+
+	/** Checks if all boxes are greyed out*/
+	public boolean allBoxesDisabled() {
 		boolean allDisabled = true;
-		for(int i = 0; i <answerBox.size(); i++){
-			if(!answerBox.get(i).answerField.isDisabled()){
+		for (int i = 0; i < answerBox.size(); i++) {
+			if (!answerBox.get(i).answerField.isDisabled()) {
 				allDisabled = false;
 			}
 		}

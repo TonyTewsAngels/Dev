@@ -16,65 +16,98 @@ import teacheasy.mediahandler.multichoice.MultipleChoice;
 
 import javafx.scene.Group;
 
-
 /**
- * A class to handle the multiple choice objects
- * on a page. 
+ * A class to handle the multiple choice objects on a page.
  * 
- * @author	Emmanuel Olutayo
- * @version	1.0 07 Mar 2015
+ * @author Emmanuel Olutayo
+ * @version 1.0 07 Mar 2015
  */
 public class MultipleChoiceHandler {
-    /* Group reference */
+	/* Group reference */
 	private Group group;
-	
+
 	/* List of multiple choice objects */
-	private List <MultipleChoice> multipleChoice;
+	private List<MultipleChoice> multipleChoice;
 
 	/** Constructor */
 	public MultipleChoiceHandler(Group nGroup) {
-	    /* Set the group reference */
+		/* Set the group reference */
 		this.group = nGroup;
 
 		/* initialise the Question list */
 		this.multipleChoice = new ArrayList<MultipleChoice>();
 	}
-	
+
 	/**
 	 * Method to add a multiple choice object to a page.
 	 * 
-	 * @param answers - Array list of Answer objects representing the possible
-	 *                  answers; correct or incorrect.        
+	 * @param answers
+	 *            - Array list of Answer objects representing the possible
+	 *            answers; correct or incorrect.
 	 * @param defaultPadding
 	 * @param spacing
-	 * @param type - The type of multiple choice object being created
-	 * @param orientation - Which orientation (vertical or horizontal) to draw the answers.
+	 * @param type
+	 *            - The type of multiple choice object being created
+	 * @param orientation
+	 *            - Which orientation (vertical or horizontal) to draw the
+	 *            answers.
 	 */
-	public void createMultipleChoice(float xStart, float yStart, ArrayList<Answer>answers, 
-	                                 MultiChoiceType type, Orientation orientation, boolean retry){
-		multipleChoice.add(new MultipleChoice(group,
-		                                      xStart,
-		                                      yStart,
-		                                      answers,
-		                                      type, 
-				                              orientation,
-				                              retry));
+	public void createMultipleChoice(float xStart, float yStart,
+			ArrayList<Answer> answers, MultiChoiceType type,
+			Orientation orientation, boolean retry) {
+		multipleChoice.add(new MultipleChoice(group, xStart, yStart, answers,
+				type, orientation, retry));
 	}
-	
+
 	/** Checks to see if all questions on the current page have been attempted */
 	public boolean AllMultipleChoiceQuestionsAttempted() {
-		for (int i=0; i < multipleChoice.size(); i++) {
+		for (int i = 0; i < multipleChoice.size(); i++) {
 			if (!multipleChoice.get(i).buttonPressed) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
+
 	/** Greys out all of the multiple choices currently on page */
 	public void DisableAllMultipleChoices() {
-		for (int i=0; i < multipleChoice.size(); i++) {
+		for (int i = 0; i < multipleChoice.size(); i++) {
 			multipleChoice.get(i).disable();
 		}
+	}
+
+	/** Checks if all multiple choices are greyed out */
+	public boolean allMultipleChoicesDisabled() {
+		boolean allDisabled = true;
+		for (int i = 0; i < multipleChoice.size(); i++) {
+
+			switch (multipleChoice.get(i).type) {
+			case CHECKBOX:
+				for (int j = 0; j < multipleChoice.get(i).cB.size(); j++) {
+					if (!multipleChoice.get(i).cB.get(j).getCheckBox()
+							.isDisabled()) {
+						allDisabled = false;
+					}
+				}
+				break;
+			case RADIO:
+				for (int j = 0; j < multipleChoice.get(i).rB.size(); j++) {
+					if (!multipleChoice.get(i).rB.get(j).getRadioButton()
+							.isDisabled()) {
+						allDisabled = false;
+					}
+				}
+				break;
+			case DROPDOWNLIST:
+				if (!multipleChoice.get(i).dropDownList.isDisabled()) {
+					allDisabled = false;
+				}
+				break;
+
+			default:
+				break;
+			}
+		}
+		return allDisabled;
 	}
 }

@@ -42,18 +42,18 @@ public class MultipleChoice{
 	private Label markLabel;
 	
 	/* Lists of the check boxes and radio buttons */
-	private List<MChoiceCheckBox> cB;
-	private List<MChoiceRadio> rB;
-	private List<Answer> dList;
+	public List<MChoiceCheckBox> cB;
+	public List<MChoiceRadio> rB;
+	public List<Answer> dList;
 	
 	/* Data */
-	private MultiChoiceType type;
+	public MultiChoiceType type;
 	private Orientation orientation;
 	private boolean retry;
 	 public boolean buttonPressed;
 	
 	/* Create Drop Down List  */
-	ComboBox dropDownList = new ComboBox();
+	public ComboBox dropDownList = new ComboBox();
 	
 	/** Constructor */
 	public MultipleChoice (Group nGroup, float xStart, float yStart, ArrayList<Answer>answers,
