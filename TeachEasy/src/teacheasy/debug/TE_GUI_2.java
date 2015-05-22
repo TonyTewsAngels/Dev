@@ -14,6 +14,7 @@ import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -124,6 +125,7 @@ Text text, botText, propText;
         botRow.setMaxHeight(100);
         masterGrid.getRowConstraints().add(botRow);
    
+        
         
       //  masterBorder.setPrefSize(1000, 1000);
         

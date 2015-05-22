@@ -160,19 +160,19 @@ public class DummyGUILayout extends Application {
         
         
         /* Add central LE icon */
-        Image image2 = new Image("file://userfs/lt669/w2k/Desktop/Workspace/Learneasy_v2_3.png");
+        Image image2 = new Image("/teacheasy/topIcons/Learneasy_v2_3.png");
         ImageView LE = new ImageView(image2);
         LE.setFitWidth(50);
         LE.setFitHeight(50);
         
         /* Add Arrow images */
-         Image arImST_L = new Image(getClass().getResourceAsStream("LE_Arrows/PNG/Arrow_ST_BOTTOM_RECT_DarkBlue_L-01.png"));
-         Image arImHO_L = new Image(getClass().getResourceAsStream("LE_Arrows/PNG/Arrow_HO_BOTTOM_RECT_DarkBlue_L-01.png"));
-         Image arImPRE_L = new Image(getClass().getResourceAsStream("LE_Arrows/PNG/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-01.png"));
+         Image arImST_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_ST_BOTTOM_RECT_DarkBlue_L-01.png"));
+         Image arImHO_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_HO_BOTTOM_RECT_DarkBlue_L-01.png"));
+         Image arImPRE_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-01.png"));
         
-         Image arImST_R = new Image(getClass().getResourceAsStream("LE_Arrows/PNG/Arrow_ST_BOTTOM_RECT_DarkBlue_L-02.png"));
-         Image arImHO_R = new Image(getClass().getResourceAsStream("LE_Arrows/PNG/Arrow_HO_BOTTOM_RECT_DarkBlue_L-02.png"));
-         Image arImPRE_R = new Image(getClass().getResourceAsStream("LE_Arrows/PNG/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-02.png"));
+         Image arImST_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_ST_BOTTOM_RECT_DarkBlue_L-02.png"));
+         Image arImHO_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_HO_BOTTOM_RECT_DarkBlue_L-02.png"));
+         Image arImPRE_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-02.png"));
         
         final ImageView arST_L = new ImageView(arImST_L);
         final ImageView arHO_L = new ImageView(arImHO_L);
