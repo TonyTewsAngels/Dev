@@ -37,6 +37,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 import teacheasy.data.Lesson;
 import teacheasy.debug.GeneralDummyGUI.buttonEventHandler;
@@ -136,9 +137,19 @@ public class DummyGUILayout extends Application {
         /* Create a buttons */
         Button fileBtn = new Button();
         Button editBtn = new Button();
-        Button prevBtn = new Button();
-        Button nextBtn = new Button();
+        final Button prevBtn = new Button();
+        final Button nextBtn = new Button();
+        
+        /* Make buttons transparent */
       
+        nextBtn.setStyle("-fx-background-color: transparent;");
+        prevBtn.setStyle("-fx-background-color: transparent;");
+        
+        /* Tool tips */
+        
+        nextBtn.setTooltip(new Tooltip("Next Page"));
+        prevBtn.setTooltip(new Tooltip("Previous Page"));
+        
         
         /* Add button images */
 //        Image image = new Image("file://userfs/lt669/w2k/Desktop/Workspace/Learneasy_v2_3.png");
@@ -149,23 +160,127 @@ public class DummyGUILayout extends Application {
         
         
         /* Add central LE icon */
-        Image image2 = new Image("file://userfs/lt669/w2k/Desktop/Workspace/Learneasy_v2_3.png");
+        Image image2 = new Image("/teacheasy/topIcons/Learneasy_v2_3.png");
         ImageView LE = new ImageView(image2);
         LE.setFitWidth(50);
         LE.setFitHeight(50);
         
+        /* Add Arrow images */
+        Image arImST_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_ST_BOTTOM_RECT_DarkBlue_L-01.png"));
+        Image arImHO_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_HO_BOTTOM_RECT_DarkBlue_L-01.png"));
+        Image arImPRE_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-01.png"));
+        
+        Image arImST_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_ST_BOTTOM_RECT_DarkBlue_L-02.png"));
+        Image arImHO_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_HO_BOTTOM_RECT_DarkBlue_L-02.png"));
+        Image arImPRE_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-02.png"));
+        
+        final ImageView arST_L = new ImageView(arImST_L);
+        final ImageView arHO_L = new ImageView(arImHO_L);
+        final ImageView arPRE_L = new ImageView(arImPRE_L);
+        
+        final ImageView arST_R = new ImageView(arImST_R);
+        final ImageView arHO_R = new ImageView(arImHO_R);
+        final ImageView arPRE_R = new ImageView(arImPRE_R);
+        
+        /* Arrow image sizes */
+        
+        int x = 40;
+        int y = 40;
+        
+        arST_L.setFitWidth(x);
+        arST_L.setFitHeight(y);
+        arHO_L.setFitWidth(x);
+        arHO_L.setFitHeight(y);
+        arPRE_L.setFitWidth(x);
+        arPRE_L.setFitHeight(y);
+        
+        arST_R.setFitWidth(x);
+        arST_R.setFitHeight(y);
+        arHO_R.setFitWidth(x);
+        arHO_R.setFitHeight(y);
+        arPRE_R.setFitWidth(x);
+        arPRE_R.setFitHeight(y);
+              
+        
+        /* Reskin buttons */
+        
+        nextBtn.setGraphic(arST_R);
+        prevBtn.setGraphic(arST_L);
+        
+        /* Action listeners */
+        
+        //PRESSED
+        nextBtn.setOnMousePressed(new EventHandler<MouseEvent>() {
+        	
+        	public void handle(MouseEvent event) {
+
+        		nextBtn.setGraphic(arPRE_R); 
+        }
+        });
+        
+        prevBtn.setOnMousePressed(new EventHandler<MouseEvent>() {
+        	public void handle(MouseEvent event) {	
+        		prevBtn.setGraphic(arPRE_L); 
+        }
+        });
+        
+        //RELEASED
+        nextBtn.setOnMouseReleased(new EventHandler<MouseEvent>() {
+        	
+        	public void handle(MouseEvent event) {
+
+        		nextBtn.setGraphic(arST_R); 
+        }
+        });
+        
+        prevBtn.setOnMouseReleased(new EventHandler<MouseEvent>() {
+        	public void handle(MouseEvent event) {	
+        		prevBtn.setGraphic(arST_L); 
+        }
+        });
+        
+        
+        //HOVERED
+        nextBtn.setOnMouseEntered(new EventHandler<MouseEvent>() {
+        	
+        	public void handle(MouseEvent event) {
+
+        		nextBtn.setGraphic(arHO_R); 
+        }
+        });
+        
+        prevBtn.setOnMouseEntered(new EventHandler<MouseEvent>() {
+        	public void handle(MouseEvent event) {	
+        		prevBtn.setGraphic(arHO_L); 
+        }
+        });
+        
+        
+      //EXITED
+        nextBtn.setOnMouseExited(new EventHandler<MouseEvent>() {
+        	
+        	public void handle(MouseEvent event) {
+
+        		nextBtn.setGraphic(arST_R); 
+        }
+        });
+        
+        prevBtn.setOnMouseExited(new EventHandler<MouseEvent>() {
+        	public void handle(MouseEvent event) {	
+        		prevBtn.setGraphic(arST_L); 
+        }
+        });
+        
+        
+        
+        
         
         /* Setup the buttons */
-        fileBtn.setText("File");
-        fileBtn.setId("fileBtn");
-          
-        editBtn.setText("Edit");
-        editBtn.setId("editBtn");
         
-        prevBtn.setText("Previous");
+        prevBtn.setText("");
         prevBtn.setId("prevBtn");
 
-        nextBtn.setText("Next");
+        nextBtn.setText("");
         nextBtn.setId("hBtn");
         
         /* Create Menubar */
