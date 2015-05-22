@@ -32,6 +32,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
+import learneasy.trackProgress.ProgressTracker;
 import teacheasy.data.*;
 import teacheasy.main.LearnEasyClient;
 import teacheasy.render.Renderer;
@@ -63,6 +64,8 @@ public class RunTimeData {
     private boolean hideDialog = false;
     /* Current Lesson */
     private Lesson lesson;
+
+    private ProgressTracker progressTracker;
 
     /* XML Handler */
     private XMLHandler xmlHandler;
@@ -119,22 +122,26 @@ public class RunTimeData {
     /** Move to the next page */
     public void nextPage() {
         if (currentPage < pageCount - 1) {
+            collatePageMarks();
+            progressTracker.setVisitedPages(currentPage);
             currentPage++;
             redraw(group, bounds);
+            if(progressTracker.pageStatus(currentPage)){
+                /* grey out the available marks */
+                renderer.answerBoxHandler.DisableAllAnswerBoxes();
+                renderer.multipleChoiceHandler.DisableAllMultipleChoices();
+            }
         }
     }
 
     public boolean checkPageCompleted() {
         /* Check to see if user has attempted all questions */
-        if ((attemptedAllAvailableMarks()) || (hideDialog)
-                /*|| renderer.multipleChoiceHandler.allMultipleChoicesDisabled()*/
-                || renderer.answerBoxHandler.allBoxesDisabled()) {
+        if ((attemptedAllAvailableMarks()) || (hideDialog)) {
             return true;
         } else {
 
             /* Display dialog box */
             displayWarning();
-            /* register callback */
 
             return false;
         }
@@ -144,9 +151,17 @@ public class RunTimeData {
 
     }
 
-    public void incrementPage() {
-        currentPage++;
-        redraw(group, bounds);
+    /**
+     * A method to count the marks on a page and pass them to progress tracking
+     * class
+     */
+    private void collatePageMarks() {
+        int pageMarks = 0;
+
+        pageMarks += renderer.answerBoxHandler.currentPageMarks();
+        pageMarks += renderer.multipleChoiceHandler.totalPageMarks();
+
+        progressTracker.collateMarks(pageMarks);
     }
 
     /**
@@ -228,8 +243,9 @@ public class RunTimeData {
     /** Checks if all marks available on the current page have been attempted */
     private boolean attemptedAllAvailableMarks() {
 
-        if ((!renderer.answerBoxHandler.AllAnswerBoxQuestionsAttempted()) || (!renderer.multipleChoiceHandler
-                .AllMultipleChoiceQuestionsAttempted())) {
+        if ((!renderer.answerBoxHandler.allBoxesDisabled())
+                || (!renderer.multipleChoiceHandler
+                        .allMultipleChoicesDisabled())) {
             return false;
         } else {
             return true;
@@ -241,10 +257,13 @@ public class RunTimeData {
         if (currentPage > 0) {
             currentPage--;
             redraw(group, bounds);
-            System.out.println("current page :" + currentPage);
-            /* grey out the available marks */
-            renderer.answerBoxHandler.DisableAllAnswerBoxes();
-            renderer.multipleChoiceHandler.DisableAllMultipleChoices();
+
+            if (progressTracker.pageStatus(currentPage)) {
+                /* grey out the available marks */
+                renderer.answerBoxHandler.DisableAllAnswerBoxes();
+                renderer.multipleChoiceHandler.DisableAllMultipleChoices();
+            }
+
         }
     }
 
@@ -340,6 +359,9 @@ public class RunTimeData {
         setPageCount(lesson.pages.size());
         setCurrentPage(0);
         setLessonOpen(true);
+        /*This needs moving somewhere more appropriate!*/
+        progressTracker = new ProgressTracker(pageCount);
+        
         redraw(group, bounds);
         return true;
     }

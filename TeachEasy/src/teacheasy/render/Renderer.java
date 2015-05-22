@@ -229,6 +229,7 @@ public class Renderer {
                                                    mChoice.getAnswers(),
                                                    mChoice.getMultiChoiceType(),
                                                    mChoice.getOrientation(),
-                                                   mChoice.isRetry());
+                                                   mChoice.isRetry(), 
+                                                   mChoice.getMarks());
     }
 }

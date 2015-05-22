@@ -18,59 +18,52 @@ import teacheasy.mediahandler.answerbox.AnswerBox;
  */
 public class AnswerBoxHandler {
 
-	private List<AnswerBox> answerBox;
-	private Group group;
+    private List<AnswerBox> answerBox;
+    private Group group;
 
-	public AnswerBoxHandler(Group nGroup) {
-		this.answerBox = new ArrayList<AnswerBox>();
-		this.group = nGroup;
-	}
+    public AnswerBoxHandler(Group nGroup) {
+        this.answerBox = new ArrayList<AnswerBox>();
+        this.group = nGroup;
+    }
 
-	/** Creates a new answer box */
-	public void createAnswerBox(double xStart, double yStart,
-			int characterLimit, boolean retry, String correctAnswers,
-			int marks, boolean isNumerical) {
-		answerBox.add(new AnswerBox(xStart, yStart, characterLimit, retry,
-				correctAnswers, marks, isNumerical, group));
-	}
+    /** Creates a new answer box */
+    public void createAnswerBox(double xStart, double yStart,
+            int characterLimit, boolean retry, String correctAnswers,
+            int marks, boolean isNumerical) {
+        answerBox.add(new AnswerBox(xStart, yStart, characterLimit, retry,
+                correctAnswers, marks, isNumerical, group));
+    }
 
-	/** Checks to see if all questions on the current page have been attempted */
-	public boolean AllAnswerBoxQuestionsAttempted() {
-		for (int i = 0; i < answerBox.size(); i++) {
-			if (!answerBox.get(i).buttonPressed) {
-				return false;
-			}
-		}
-		return true;
-	}
+    /** Grays out all of the answer boxes on a page */
+    public void DisableAllAnswerBoxes() {
+        for (int i = 0; i < answerBox.size(); i++) {
+            answerBox.get(i).answerField.setDisable(true);
+            answerBox.get(i).checkAnswerButton.setDisable(true);
+        }
+    }
 
-	/** Greys out all of the answer boxes on a page */
-	public void DisableAllAnswerBoxes() {
-		for (int i = 0; i < answerBox.size(); i++) {
-			answerBox.get(i).answerField.setDisable(true);
-			answerBox.get(i).checkAnswerButton.setDisable(true);
-		}
-	}
+    /** Checks if all boxes are grayed out */
+    public boolean allBoxesDisabled() {
+        boolean allDisabled = true;
+        for (int i = 0; i < answerBox.size(); i++) {
+            if (!answerBox.get(i).checkAnswerButton.isDisabled()) {
+                allDisabled = false;
+            }
+        }
+        return allDisabled;
+    }
 
-	/** Checks if all boxes are greyed out*/
-	public boolean allBoxesDisabled() {
-		boolean allDisabled = true;
-		for (int i = 0; i < answerBox.size(); i++) {
-			if (!answerBox.get(i).checkAnswerButton.isDisabled()) {
-				allDisabled = false;
-			}
-		}
-		return allDisabled;
-	}
-
-	public int currentPageMarks() {
-		int totalPageMarks = 0;
-
-		for (int i = 0; i < answerBox.size(); i++) {
-			totalPageMarks += answerBox.get(i).awardedMarks;
-		}
-
-		return totalPageMarks;
-	}
+    /** Method that adds the marks for answer boxes on a page */
+    public int currentPageMarks() {
+        int totalPageMarks = 0;
+        for (int i = 0; i < answerBox.size(); i++) {
+            if (answerBox.get(i).checkAnswerButton.isDisabled()
+                    && !answerBox.get(i).markCollated) {
+                totalPageMarks += answerBox.get(i).awardedMarks;
+                answerBox.get(i).markCollated = true;
+            }
+        }
+        return totalPageMarks;
+    }
 
 }

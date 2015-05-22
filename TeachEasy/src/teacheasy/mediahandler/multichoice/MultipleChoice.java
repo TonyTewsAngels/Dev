@@ -50,14 +50,17 @@ public class MultipleChoice{
 	public MultiChoiceType type;
 	private Orientation orientation;
 	private boolean retry;
-	 public boolean buttonPressed;
+	public boolean buttonPressed;
+	private int marks;
+	public int awardedMarks;
+	public boolean markCollated;
 	
 	/* Create Drop Down List  */
 	public ComboBox dropDownList = new ComboBox();
 	
 	/** Constructor */
 	public MultipleChoice (Group nGroup, float xStart, float yStart, ArrayList<Answer>answers,
-	                       MultiChoiceType nType, Orientation nOrientation, boolean nRetry) {
+	                       MultiChoiceType nType, Orientation nOrientation, boolean nRetry, int nMarks) {
 
 	    /* Set the group reference */
 		this.group = nGroup;
@@ -72,6 +75,16 @@ public class MultipleChoice{
 		this.type = nType;
 		this.orientation = nOrientation;
 		this.retry = nRetry;
+		
+		/*Simple statement to ensure negative marks are not awarded*/
+		if(nMarks > 0){
+		    this.marks = nMarks;
+		} else {
+		    this.marks = 0;
+		}
+		
+		awardedMarks = 0;
+		markCollated = false;
 
 		/* VBox to hold the answers if vertically oriented */
 		verticalPosition = new VBox(10);
@@ -84,9 +97,7 @@ public class MultipleChoice{
 		/* The button to mark the question */
 		markButton = new Button("Mark");
 		markLabel = new Label("");
-		
-//		/* Initialise button pressed as false*/
-//		this.buttonPressed = false;
+
 		
 		/* Toggle group used to allow only one radio button to be selected */
 		ToggleGroup tGroup = new ToggleGroup();
@@ -223,6 +234,7 @@ public class MultipleChoice{
             
             /* If this box is not ticked but the answer is correct return false */
             if(!cB.get(i).getCheckBox().isSelected() && cB.get(i).isCorrect()) {
+                awardedMarks += marks;
                 return false;
             }
         }
@@ -241,6 +253,7 @@ public class MultipleChoice{
 		for(int i = 0; i < rB.size(); i++){
 		    /* If this is a correct answer and its selected return true */
 			if(rB.get(i).isCorrect() && rB.get(i).getRadioButton().isSelected()){
+			    awardedMarks += marks;
 				return true;
 			}
 		}
@@ -256,8 +269,8 @@ public class MultipleChoice{
     	 /* If this is a correct answer and its selected return true */
     	for (int i = 0; i < dList.size(); i++ ){
     		if(dList.get(i).isCorrect() && dList.get(i).getText().equals(str)){
-    			return true;
-    			
+    		    awardedMarks += marks;
+    			return true;	
     		}
     	}
 		return false;
@@ -266,7 +279,12 @@ public class MultipleChoice{
 	 * Method to handle a correct result
 	 */
 	private void handleCorrect() {
-    	markLabel.setText("Correct!");
+	    if(marks == 1){
+	        markLabel.setText("Correct! " + awardedMarks + " mark");
+	    } else {
+	        markLabel.setText("Correct! " + awardedMarks + " marks");
+	    }
+    	
     	disable();
 	}
 	
