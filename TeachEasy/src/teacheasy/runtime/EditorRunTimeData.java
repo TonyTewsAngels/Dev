@@ -56,6 +56,9 @@ public class EditorRunTimeData {
     
     /* Properties Pane Controller */
     private PropertiesPane propertiesPane;
+    
+    /* Mouse controller */
+    MouseController mouseController;
 
     /** Constructor method */
     public EditorRunTimeData(Group nGroup, Rectangle2D nBounds, VBox propPaneBox) {
@@ -79,6 +82,8 @@ public class EditorRunTimeData {
         
         /* Instantiate the properties pane conroller */
         propertiesPane = new PropertiesPane(propPaneBox, this);
+        
+        mouseController = new MouseController();
         
         /* Draw the page */
         redraw(group, bounds);
@@ -119,6 +124,7 @@ public class EditorRunTimeData {
             currentPage++;
             
             propertiesPane.update(lesson.pages.get(currentPage), null);
+            propertiesPane.lateUpdate();
             
             redraw(group, bounds);
         }
@@ -130,6 +136,7 @@ public class EditorRunTimeData {
             currentPage--;
             
             propertiesPane.update(lesson.pages.get(currentPage), null);
+            propertiesPane.lateUpdate();
             
             redraw(group, bounds);
         }
@@ -406,7 +413,7 @@ public class EditorRunTimeData {
         
         System.out.println("Press: " + relativeX + ", " + relativeY);
         
-        MouseController.mousePressed(lesson.pages.get(currentPage), propertiesPane, relativeX, relativeY);
+        mouseController.mousePressed(lesson.pages.get(currentPage), propertiesPane, relativeX, relativeY);
     }
     
     /** Mouse released in the page area */
@@ -419,6 +426,10 @@ public class EditorRunTimeData {
         float relativeY = (float)y/(float)bounds.getMaxY();
         
         System.out.println("Release: " + relativeX + ", " + relativeY);
+        
+        propertiesPane.lateUpdate();
+        
+        //mouseController.mouseReleased(lesson.pages.get(currentPage), propertiesPane, relativeX, relativeY);
     }
     
     /** Redraw the content */

@@ -56,8 +56,7 @@ public class EditorRuntimeDataDummyUI extends Application {
         Scene scene = new Scene(grid, bounds.getMaxX(), bounds.getMaxY());
         primaryStage.setScene(scene);
         scene.setOnKeyPressed(new KeyHandler());
-        scene.addEventFilter(MouseEvent.MOUSE_PRESSED, new MousePressHandler());
-        scene.addEventFilter(MouseEvent.MOUSE_RELEASED, new MouseReleaseHandler());
+        scene.addEventFilter(MouseEvent.ANY, new MouseEventHandler());
         
         /* Construct the menu */
         MenuBar menuBar = new MenuBar();
@@ -383,17 +382,14 @@ public class EditorRuntimeDataDummyUI extends Application {
         }
     }
     
-    public class MousePressHandler implements EventHandler<MouseEvent> {
+    public class MouseEventHandler implements EventHandler<MouseEvent> {
         @Override
-        public void handle(MouseEvent me) {            
-            mousePressed(me.getSceneX(), me.getSceneY());
-        }
-    }
-    
-    public class MouseReleaseHandler implements EventHandler<MouseEvent> {
-        @Override
-        public void handle(MouseEvent me) {            
-            mouseReleased(me.getSceneX(), me.getSceneY());
+        public void handle(MouseEvent me) {
+            if(me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+                mousePressed(me.getSceneX(), me.getSceneY());
+            } else if(me.getEventType() == MouseEvent.MOUSE_RELEASED) {
+                mouseReleased(me.getSceneX(), me.getSceneY());
+            }
         }
     }
 }
