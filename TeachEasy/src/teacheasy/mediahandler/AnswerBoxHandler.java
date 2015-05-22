@@ -56,7 +56,7 @@ public class AnswerBoxHandler {
 	public boolean allBoxesDisabled() {
 		boolean allDisabled = true;
 		for (int i = 0; i < answerBox.size(); i++) {
-			if (!answerBox.get(i).answerField.isDisabled()) {
+			if (!answerBox.get(i).checkAnswerButton.isDisabled()) {
 				allDisabled = false;
 			}
 		}

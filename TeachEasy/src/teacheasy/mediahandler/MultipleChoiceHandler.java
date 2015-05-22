@@ -80,33 +80,9 @@ public class MultipleChoiceHandler {
 	public boolean allMultipleChoicesDisabled() {
 		boolean allDisabled = true;
 		for (int i = 0; i < multipleChoice.size(); i++) {
-
-			switch (multipleChoice.get(i).type) {
-			case CHECKBOX:
-				for (int j = 0; j < multipleChoice.get(i).cB.size(); j++) {
-					if (!multipleChoice.get(i).cB.get(j).getCheckBox()
-							.isDisabled()) {
-						allDisabled = false;
-					}
-				}
-				break;
-			case RADIO:
-				for (int j = 0; j < multipleChoice.get(i).rB.size(); j++) {
-					if (!multipleChoice.get(i).rB.get(j).getRadioButton()
-							.isDisabled()) {
-						allDisabled = false;
-					}
-				}
-				break;
-			case DROPDOWNLIST:
-				if (!multipleChoice.get(i).dropDownList.isDisabled()) {
-					allDisabled = false;
-				}
-				break;
-
-			default:
-				break;
-			}
+		    if (!multipleChoice.get(i).markButton.isDisabled()) {
+                allDisabled = false;
+            }
 		}
 		return allDisabled;
 	}

@@ -50,7 +50,7 @@ import teacheasy.xml.util.XMLNotification.Level;
 public class RunTimeData {
     /* Parent Reference */
     LearnEasyClient parent;
-    
+
     /* */
     private Group group;
     private Rectangle2D bounds;
@@ -71,7 +71,8 @@ public class RunTimeData {
     private Renderer renderer;
 
     /** Constructor method */
-    public RunTimeData(Group nGroup, Rectangle2D nBounds, LearnEasyClient nParent) {
+    public RunTimeData(Group nGroup, Rectangle2D nBounds,
+            LearnEasyClient nParent) {
         /* Set the class level variables */
         this.group = nGroup;
         this.bounds = nBounds;
@@ -122,18 +123,19 @@ public class RunTimeData {
             redraw(group, bounds);
         }
     }
-    
+
     public boolean checkPageCompleted() {
         /* Check to see if user has attempted all questions */
         if ((attemptedAllAvailableMarks()) || (hideDialog)
+                /*|| renderer.multipleChoiceHandler.allMultipleChoicesDisabled()*/
                 || renderer.answerBoxHandler.allBoxesDisabled()) {
             return true;
         } else {
-            
+
             /* Display dialog box */
             displayWarning();
             /* register callback */
-            
+
             return false;
         }
     }
@@ -226,8 +228,8 @@ public class RunTimeData {
     /** Checks if all marks available on the current page have been attempted */
     private boolean attemptedAllAvailableMarks() {
 
-        if ((!renderer.answerBoxHandler.AllAnswerBoxQuestionsAttempted() || (!renderer.multipleChoiceHandler
-                .AllMultipleChoiceQuestionsAttempted()))) {
+        if ((!renderer.answerBoxHandler.AllAnswerBoxQuestionsAttempted()) || (!renderer.multipleChoiceHandler
+                .AllMultipleChoiceQuestionsAttempted())) {
             return false;
         } else {
             return true;

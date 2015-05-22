@@ -38,13 +38,13 @@ public class MultipleChoice{
 	/* UI Objects */
 	private VBox verticalPosition;
 	private HBox horizontalPosition;
-	private Button markButton;
+	public Button markButton;
 	private Label markLabel;
 	
 	/* Lists of the check boxes and radio buttons */
-	public List<MChoiceCheckBox> cB;
-	public List<MChoiceRadio> rB;
-	public List<Answer> dList;
+	private List<MChoiceCheckBox> cB;
+	private List<MChoiceRadio> rB;
+	private List<Answer> dList;
 	
 	/* Data */
 	public MultiChoiceType type;
