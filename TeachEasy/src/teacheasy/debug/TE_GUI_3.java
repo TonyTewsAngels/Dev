@@ -50,9 +50,8 @@ import javafx.event.ActionEvent;
  */
 
 public class TE_GUI_3 extends Application {
-
-Text text, text1, botText, propText, titleText, page1, page2, page3;
-Image textIm;
+    Text text, text1, botText, propText, titleText, page1, page2, page3;
+    Image textIm;
 	
 	/**
      * Override the start method inside the JavaFX Application
@@ -691,11 +690,9 @@ Image textIm;
         
         
         /* Add content to panes */
-        
         innerGrid.add(topGrid,0,0,4,1);
         innerGrid.add(contentPanel,1,1);
         innerGrid.add(propertiesPanel,3,1,1,3);
-        /*innerGrid.add(bottomBar,0,4,4,1);*/
         innerGrid.add(botGrid,0,4,4,1);
         
         topGrid.add(menuBar,0,0,5,1);
@@ -722,14 +719,12 @@ Image textIm;
         propertiesPanel.getChildren().addAll(propText, butt);     
         
         botGrid.add(bottomBar,1,0);
-        botGrid.add(TE, 3, 0);
-        
+        botGrid.add(TE, 3, 0);        
 
         bottomBar.getChildren().addAll(pages);
         
         /* Set alignment of bottomBar content */
         bottomBar.setAlignment(Pos.BASELINE_CENTER);
-        
         
         /* Setup the window */
         primaryStage.setTitle("TE_GUI_3");
@@ -737,10 +732,9 @@ Image textIm;
         
         /* Show the window */
 		primaryStage.show();
-        
     }
+    
    	public static void main(String[] args) {
    		launch(args);
    	}
-   	
-   }
+}
