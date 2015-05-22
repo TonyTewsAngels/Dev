@@ -166,13 +166,13 @@ public class DummyGUILayout extends Application {
         LE.setFitHeight(50);
         
         /* Add Arrow images */
-        Image arImST_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_ST_BOTTOM_RECT_DarkBlue_L-01.png"));
-        Image arImHO_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_HO_BOTTOM_RECT_DarkBlue_L-01.png"));
-        Image arImPRE_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-01.png"));
+        Image arImST_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_ST_BOTTOM_RECT_DarkBlue_L-01.png"));
+        Image arImHO_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_HO_BOTTOM_RECT_DarkBlue_L-01.png"));
+        Image arImPRE_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-01.png"));
         
-        Image arImST_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_ST_BOTTOM_RECT_DarkBlue_L-02.png"));
-        Image arImHO_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_HO_BOTTOM_RECT_DarkBlue_L-02.png"));
-        Image arImPRE_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-02.png"));
+        Image arImST_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_ST_BOTTOM_RECT_DarkBlue_L-02.png"));
+        Image arImHO_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_HO_BOTTOM_RECT_DarkBlue_L-02.png"));
+        Image arImPRE_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-02.png"));
         
         final ImageView arST_L = new ImageView(arImST_L);
         final ImageView arHO_L = new ImageView(arImHO_L);
@@ -204,22 +204,23 @@ public class DummyGUILayout extends Application {
         
         /* Reskin buttons */
         
-        nextBtn.setGraphic(arST_L);
-        prevBtn.setGraphic(arST_R);
+        nextBtn.setGraphic(arST_R);
+        prevBtn.setGraphic(arST_L);
         
-   /* Action listeners */
+        /* Action listeners */
+        
         //PRESSED
         nextBtn.setOnMousePressed(new EventHandler<MouseEvent>() {
         	
         	public void handle(MouseEvent event) {
 
-        		nextBtn.setGraphic(arPRE_L); 
+        		nextBtn.setGraphic(arPRE_R); 
         }
         });
         
         prevBtn.setOnMousePressed(new EventHandler<MouseEvent>() {
         	public void handle(MouseEvent event) {	
-        		prevBtn.setGraphic(arPRE_R); 
+        		prevBtn.setGraphic(arPRE_L); 
         }
         });
         
@@ -228,13 +229,13 @@ public class DummyGUILayout extends Application {
         	
         	public void handle(MouseEvent event) {
 
-        		nextBtn.setGraphic(arST_L); 
+        		nextBtn.setGraphic(arST_R); 
         }
         });
         
         prevBtn.setOnMouseReleased(new EventHandler<MouseEvent>() {
         	public void handle(MouseEvent event) {	
-        		prevBtn.setGraphic(arST_R); 
+        		prevBtn.setGraphic(arST_L); 
         }
         });
         
@@ -244,13 +245,13 @@ public class DummyGUILayout extends Application {
         	
         	public void handle(MouseEvent event) {
 
-        		nextBtn.setGraphic(arHO_L); 
+        		nextBtn.setGraphic(arHO_R); 
         }
         });
         
         prevBtn.setOnMouseEntered(new EventHandler<MouseEvent>() {
         	public void handle(MouseEvent event) {	
-        		prevBtn.setGraphic(arHO_R); 
+        		prevBtn.setGraphic(arHO_L); 
         }
         });
         
@@ -260,13 +261,13 @@ public class DummyGUILayout extends Application {
         	
         	public void handle(MouseEvent event) {
 
-        		nextBtn.setGraphic(arST_L); 
+        		nextBtn.setGraphic(arST_R); 
         }
         });
         
         prevBtn.setOnMouseExited(new EventHandler<MouseEvent>() {
         	public void handle(MouseEvent event) {	
-        		prevBtn.setGraphic(arST_R); 
+        		prevBtn.setGraphic(arST_L); 
         }
         });
         
