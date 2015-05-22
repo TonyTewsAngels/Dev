@@ -185,7 +185,7 @@ public class LearnEasyClient extends Application {
         AnchorPane.setRightAnchor(nextBtn, 8.0);
         AnchorPane.setLeftAnchor(prevBtn, 8.0);
         
-        runtimeData = new RunTimeData(group, canvasBounds);
+        runtimeData = new RunTimeData(group, canvasBounds, this);
         
         /* Show the window */
         primaryStage.show(); 
@@ -212,7 +212,9 @@ public class LearnEasyClient extends Application {
     }
     
     public void nextPageButtonPressed() {
-        runtimeData.nextPage();
+        if(runtimeData.checkPageCompleted()) {
+            runtimeData.nextPage();
+        }
     }
     
     public void prevPageButtonPressed() {

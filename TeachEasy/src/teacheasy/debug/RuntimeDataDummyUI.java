@@ -20,6 +20,15 @@ import javafx.scene.text.*;
 import javafx.stage.*;
 import javafx.stage.FileChooser.ExtensionFilter;
 
+/** 
+ * WARNING - THIS CLASS IS NOW DEPRECATED, DO NOT USE
+ * USE LEARNEASYCLIENT INSTEAD
+ * 
+ * 22-05-2015
+ * 
+ * @author Daniel
+ *
+ */
 public class RuntimeDataDummyUI extends Application { 
     /* Runtime Data */
     private RunTimeData runTimeData;
@@ -110,7 +119,7 @@ public class RuntimeDataDummyUI extends Application {
         grid.add(buttonRow, 0, 2);
         
         /* Instantiate the runtime data */
-        runTimeData = new RunTimeData(group, new Rectangle2D(0, 0, bounds.getMaxX()/2, bounds.getMaxY()/2));
+        //runTimeData = new RunTimeData(group, new Rectangle2D(0, 0, bounds.getMaxX()/2, bounds.getMaxY()/2));
         
         /* Show the stage */
         primaryStage.show();
