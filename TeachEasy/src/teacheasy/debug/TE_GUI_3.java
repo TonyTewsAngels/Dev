@@ -228,10 +228,10 @@ Image textIm;
         Image mulImPR = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Choice_PRE_TOP_CIRC_Blue_T-01.png"));
         
         //Preview Button
-        Image prevIm= new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Learneasy_v3.png"));
+        Image prevIm= new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Choice_PRE_TOP_CIRC_Blue_T-01.png"));
         
         ImageView Prev = new ImageView(prevIm);
-        prev.setGraphic(Prev);
+        prev.setGraphic(Prev);   
         
         Prev.setFitWidth(80);
         Prev.setFitHeight(80);
