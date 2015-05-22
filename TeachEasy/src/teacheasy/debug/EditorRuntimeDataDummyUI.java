@@ -8,6 +8,9 @@ import javafx.event.EventHandler;
 import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 
@@ -52,6 +55,8 @@ public class EditorRuntimeDataDummyUI extends Application {
         /* Set the scene */
         Scene scene = new Scene(grid, bounds.getMaxX(), bounds.getMaxY());
         primaryStage.setScene(scene);
+        scene.setOnKeyPressed(new KeyHandler());
+        scene.addEventFilter(MouseEvent.ANY, new MouseEventHandler());
         
         /* Construct the menu */
         MenuBar menuBar = new MenuBar();
@@ -87,6 +92,16 @@ public class EditorRuntimeDataDummyUI extends Application {
         menuItemNewPage.setId("EditNewPage");
         menuItemNewPage.setOnAction(new MenuEventHandler());
         
+        /* Add a remove page button to the edit menu */
+        MenuItem menuItemRemovePage = new MenuItem("Remove Page");
+        menuItemRemovePage.setId("EditRemovePage");
+        menuItemRemovePage.setOnAction(new MenuEventHandler());
+        
+        /* Add a remove object button to the edit menu */
+        MenuItem menuItemRemoveObject = new MenuItem("Remove Object");
+        menuItemRemoveObject.setId("EditRemoveObject");
+        menuItemRemoveObject.setOnAction(new MenuEventHandler());
+        
         Menu menuItemNewObject = new Menu("Add...");
         
         MenuItem menuItemNewImage = new MenuItem("Add New Image");
@@ -94,13 +109,43 @@ public class EditorRuntimeDataDummyUI extends Application {
         menuItemNewImage.setOnAction(new MenuEventHandler());
         menuItemNewObject.getItems().add(menuItemNewImage);
         
+        MenuItem menuItemNewVideo = new MenuItem("Add New Video");
+        menuItemNewVideo.setId("EditNewVideo");
+        menuItemNewVideo.setOnAction(new MenuEventHandler());
+        menuItemNewObject.getItems().add(menuItemNewVideo);
+        
+        MenuItem menuItemNewAudio = new MenuItem("Add New Audio");
+        menuItemNewAudio.setId("EditNewAudio");
+        menuItemNewAudio.setOnAction(new MenuEventHandler());
+        menuItemNewObject.getItems().add(menuItemNewAudio);
+        
+        MenuItem menuItemNewText = new MenuItem("Add New Text Box");
+        menuItemNewText.setId("EditNewText");
+        menuItemNewText.setOnAction(new MenuEventHandler());
+        menuItemNewObject.getItems().add(menuItemNewText);
+        
+        MenuItem menuItemNewGraphic = new MenuItem("Add New Graphic");
+        menuItemNewGraphic.setId("EditNewGraphic");
+        menuItemNewGraphic.setOnAction(new MenuEventHandler());
+        menuItemNewObject.getItems().add(menuItemNewGraphic);
+        
+        MenuItem menuItemNewMultiChoice = new MenuItem("Add New Multiple Choice Question");
+        menuItemNewMultiChoice.setId("EditNewMultiChoice");
+        menuItemNewMultiChoice.setOnAction(new MenuEventHandler());
+        menuItemNewObject.getItems().add(menuItemNewMultiChoice);
+        
+        MenuItem menuItemNewAnswerBox = new MenuItem("Add New Answer Box");
+        menuItemNewAnswerBox.setId("EditNewAnswerBox");
+        menuItemNewAnswerBox.setOnAction(new MenuEventHandler());
+        menuItemNewObject.getItems().add(menuItemNewAnswerBox);
+        
         /* Add a next page object button to the debug menu */
         MenuItem menuItemNextObject = new MenuItem("Next Object");
         menuItemNextObject.setId("DebugNextObject");
         menuItemNextObject.setOnAction(new MenuEventHandler());
         
         menuFile.getItems().addAll(menuItemNew, menuItemOpen, menuItemSave, menuItemClose);
-        menuEdit.getItems().addAll(menuItemNewPage, menuItemNewObject);
+        menuEdit.getItems().addAll(menuItemNewPage, menuItemRemovePage, menuItemNewObject, menuItemRemoveObject);
         menuDebug.getItems().addAll(menuItemNextObject);
         menuBar.getMenus().addAll(menuFile, menuEdit, menuPreview, menuHelp, menuDebug);
         
@@ -216,6 +261,7 @@ public class EditorRuntimeDataDummyUI extends Application {
         /* Re-draw the window */
         updateUI();
     }
+    
     /** File->Save menu option functionality */
     public void fileSavePressed() {
         /* Close the current lesson */
@@ -223,6 +269,22 @@ public class EditorRuntimeDataDummyUI extends Application {
         
         /* Re-draw the window */
         updateUI();
+    }
+    
+    /** Mouse pressed */
+    public void mousePressed(double x, double y) {       
+        Bounds bounds = group.localToScene(group.getBoundsInLocal());
+        
+        if(!(x > bounds.getMaxX() || x < bounds.getMinX() || y > bounds.getMaxY() || y < bounds.getMinY())) {
+            editorRunTimeData.mousePressed(x, y);
+        } else {
+            /** Click is not in the group */
+        }
+    }
+    
+    /** Mouse released */
+    public void mouseReleased(double x, double y) {       
+        editorRunTimeData.mouseReleased(x, y);
     }
     
     public static void main(String args[]) {
@@ -270,14 +332,65 @@ public class EditorRuntimeDataDummyUI extends Application {
             } else if (menuItem.getId().equals("EditNewPage")) {
                 editorRunTimeData.newPage();
                 updateUI();
+            } else if (menuItem.getId().equals("EditRemovePage")) {
+                editorRunTimeData.removePage();
+                updateUI();
             } else if (menuItem.getId().equals("EditNewImage")) {
                 editorRunTimeData.newObject(PageObjectType.IMAGE);
                 updateUI();
-            }else if (menuItem.getId().equals("DebugNextObject")) {
+            } else if (menuItem.getId().equals("EditNewVideo")) {
+                editorRunTimeData.newObject(PageObjectType.VIDEO);
+                updateUI();
+            } else if (menuItem.getId().equals("EditNewAudio")) {
+                editorRunTimeData.newObject(PageObjectType.AUDIO);
+                updateUI();
+            } else if (menuItem.getId().equals("EditNewText")) {
+                editorRunTimeData.newObject(PageObjectType.TEXT);
+                updateUI();
+            } else if (menuItem.getId().equals("EditNewMultiChoice")) {
+                editorRunTimeData.newObject(PageObjectType.MULTIPLE_CHOICE);
+                updateUI();
+            } else if (menuItem.getId().equals("EditNewAnswerBox")) {
+                editorRunTimeData.newObject(PageObjectType.ANSWER_BOX);
+                updateUI();
+            } else if (menuItem.getId().equals("EditNewGraphic")) {
+                editorRunTimeData.newObject(PageObjectType.GRAPHIC);
+                updateUI();
+            } else if (menuItem.getId().equals("EditRemovePage")) {
+                editorRunTimeData.removePage();
+                updateUI();
+            } else if (menuItem.getId().equals("EditRemoveObject")) {
+                editorRunTimeData.removeObject();
+                updateUI();
+            } else if(menuItem.getId().equals("DebugNextObject")) {
                 editorRunTimeData.nextObject();
                 updateUI();
             }
         }
-    } 
+    }
+    
+    public class KeyHandler implements EventHandler<KeyEvent> {
+        @Override
+        public void handle(KeyEvent ke) {            
+            if(ke.getCode() == KeyCode.DELETE) {
+                editorRunTimeData.removeObject();
+            } else if(ke.getCode() == KeyCode.O && ke.isControlDown()) {
+                editorRunTimeData.openLesson();
+            } else if(ke.getCode() == KeyCode.N) {
+                editorRunTimeData.nextObject();
+            }
+        }
+    }
+    
+    public class MouseEventHandler implements EventHandler<MouseEvent> {
+        @Override
+        public void handle(MouseEvent me) {
+            if(me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+                mousePressed(me.getSceneX(), me.getSceneY());
+            } else if(me.getEventType() == MouseEvent.MOUSE_RELEASED) {
+                mouseReleased(me.getSceneX(), me.getSceneY());
+            }
+        }
+    }
 }
 

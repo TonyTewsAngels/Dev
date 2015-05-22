@@ -20,7 +20,20 @@ public class ImageObject extends PageObject {
 	private float startTime;
 	private float duration;
 	
-	/** Constructor Method */
+	/** 
+	 * Constructor Method
+	 * 
+	 * @param nXStart Relative X start position.
+	 * @param nYStart Relative Y start position.
+	 * @param nXEnd Relative X end position.
+	 * @param nYEnd Relative Y end position.
+	 * @param nSourcefile Image file path.
+	 * @param nXScaleFactor X Scale as a proportion of image size.
+	 * @param nYScaleFactor Y Scale as a proportion of image size.
+	 * @param nRotation Rotation in degrees.
+	 * @param nStartTime Start time of object.
+	 * @param nDuration End time of object.
+	 */
 	public ImageObject (float nXStart, float nYStart,
 	                    float nXEnd, float nYEnd,
 	                    String nSourcefile,

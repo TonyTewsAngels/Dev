@@ -56,6 +56,8 @@ public class PropertiesPane {
     
     private VBox currentController;
     
+    public boolean redrawBlock = false;
+    
     /**
      * Constructor.
      * 
@@ -169,20 +171,10 @@ public class PropertiesPane {
         if(selectedPage == null) {
             /* Update the page title */
             pageTitle.setText("No Page Selected \n");
-            
-            /* Update the background color component */
-            backgroundColorPicker.setDisable(true);
-            backgroundColorPicker.setValue(Util.colorFromString("#ffffffff"));
         } else {
             /* Update the page title */
             pageTitle.setText("Page " + (selectedPage.getNumber()+1) + "\n");
-            
-            /* Update the background color component */
-            backgroundColorPicker.setDisable(false);
-            backgroundColorPicker.setValue(Util.colorFromString(selectedPage.getPageColour()));
         }
-        
-        backgroundColorPicker.fireEvent(new ActionEvent(backgroundColorPicker, backgroundColorPicker));
         
         /* Update the object options */
         if(selectedObject == null) {
@@ -190,6 +182,21 @@ public class PropertiesPane {
         } else {
             selectionTitle.setText("" + selectedObject.getType().toString() + "\n");
         }
+    }
+    
+    public void lateUpdate() {
+        /* Update the background color picker */
+        if(selectedPage == null) {            
+            /* Update the background color component */
+            backgroundColorPicker.setDisable(true);
+            backgroundColorPicker.setValue(Util.colorFromString("#ffffffff"));
+        } else {            
+            /* Update the background color component */
+            backgroundColorPicker.setDisable(false);
+            backgroundColorPicker.setValue(Util.colorFromString(selectedPage.getPageColour()));
+        }
+        
+        backgroundColorPicker.fireEvent(new ActionEvent(backgroundColorPicker, backgroundColorPicker));
     }
     
     
@@ -212,7 +219,9 @@ public class PropertiesPane {
     }
     
     public void redraw() {
-        editorRuntime.redraw();
+        if(!redrawBlock) { 
+           editorRuntime.redraw(); 
+        }
     }
     
     /**
@@ -226,6 +235,5 @@ public class PropertiesPane {
                 editorRuntime.redraw();
             }
         }
-        
     }
 }

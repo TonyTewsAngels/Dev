@@ -33,6 +33,8 @@ public class VideoPropertiesController {
     /* The button for choosing a new file */
     private Button fileButton;
     
+    public boolean redrawBlock = false;
+    
     /**
      * Constructor. 
      * 
@@ -105,7 +107,9 @@ public class VideoPropertiesController {
             }
             
             update();
-            parent.redraw();
+            if(!redrawBlock) {
+                parent.redraw();
+            }
         }
     }
     
@@ -116,7 +120,9 @@ public class VideoPropertiesController {
             if(source.getId() == "file") {
                 selectedVideo.setSourcefile(PropertiesUtil.validateFile(selectedVideo.getSourcefile(), "Videos","*.mp4", "*.flv"));
                 update();
-                parent.redraw();
+                if(!redrawBlock) {
+                    parent.redraw();
+                }
             }
         }
     }
