@@ -9,6 +9,7 @@ package teacheasy.runtime;
 import java.io.File;
 import java.util.ArrayList;
 
+import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.layout.VBox;
@@ -403,33 +404,32 @@ public class EditorRunTimeData {
     }
     
     /** Mouse Pressed in the page area */
-    public void mousePressed(double x, double y) {
+    public void mousePressed(double x, double y, Bounds nBounds) {
         if(!isLessonOpen()) {
             return;
         }
         
-        float relativeX = (float)x/(float)bounds.getMaxX();
-        float relativeY = (float)y/(float)bounds.getMaxY();
+        float relativeX = ((float)(x - nBounds.getMinX())/(float)nBounds.getMaxX());
+        float relativeY = ((float)(y - nBounds.getMinY())/(float)nBounds.getMaxY());
         
+        //System.out.println("Press: " + x + ", " + y);
         System.out.println("Press: " + relativeX + ", " + relativeY);
         
         mouseController.mousePressed(lesson.pages.get(currentPage), propertiesPane, relativeX, relativeY);
     }
     
     /** Mouse released in the page area */
-    public void mouseReleased(double x, double y) {
+    public void mouseReleased(double x, double y, Bounds nBounds) {
         if(!isLessonOpen()) {
             return;
         }
         
-        float relativeX = (float)x/(float)bounds.getMaxX();
-        float relativeY = (float)y/(float)bounds.getMaxY();
+        float relativeX = ((float)(x - nBounds.getMinX())/(float)nBounds.getMaxX());
+        float relativeY = ((float)(y - nBounds.getMinY())/(float)nBounds.getMaxY());
         
         System.out.println("Release: " + relativeX + ", " + relativeY);
         
         propertiesPane.lateUpdate();
-        
-        //mouseController.mouseReleased(lesson.pages.get(currentPage), propertiesPane, relativeX, relativeY);
     }
     
     /** Redraw the content */

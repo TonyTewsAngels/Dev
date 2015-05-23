@@ -46,6 +46,15 @@ public class TeachEasyClient extends Application {
     
     Group contentPanel;
     
+    Button textBtn;  
+    Button imageBtn; 
+    Button videoBtn;    
+    Button tickBtn;
+    Button graphicBtn;
+    Button audioBtn;
+    Button questionBtn;
+    Button prevBtn;
+    
     /**
      * Override the start method inside the JavaFX Application
      * class. This is called to start the program.
@@ -219,35 +228,35 @@ public class TeachEasyClient extends Application {
         r.setEffect(new DropShadow());
         
         /* Create Buttons */     
-        final Button text = new Button();    
-        final Button image = new Button();  
-        final Button video = new Button();    
-        final Button tick = new Button();
-        final Button graphic = new Button();
-        final Button audio = new Button();
-        final Button question = new Button();
-        Button prev = new Button("");
+        textBtn = new Button();    
+        imageBtn = new Button();  
+        videoBtn = new Button();    
+        tickBtn = new Button();
+        graphicBtn = new Button();
+        audioBtn = new Button();
+        questionBtn = new Button();
+        prevBtn = new Button("");
           
         /* Make buttons transparent */
-        text.setStyle("-fx-background-color: transparent;");
-        image.setStyle("-fx-background-color: transparent;");
-        video.setStyle("-fx-background-color: transparent;");
-        tick.setStyle("-fx-background-color: transparent;");
-        tick.setStyle("-fx-background-color: transparent;");
-        graphic.setStyle("-fx-background-color: transparent;");
-        audio.setStyle("-fx-background-color: transparent;");
-        question.setStyle("-fx-background-color: transparent;");
-        prev.setStyle("-fx-background-color: transparent;");
+        textBtn.setStyle("-fx-background-color: transparent;");
+        imageBtn.setStyle("-fx-background-color: transparent;");
+        videoBtn.setStyle("-fx-background-color: transparent;");
+        tickBtn.setStyle("-fx-background-color: transparent;");
+        tickBtn.setStyle("-fx-background-color: transparent;");
+        graphicBtn.setStyle("-fx-background-color: transparent;");
+        audioBtn.setStyle("-fx-background-color: transparent;");
+        questionBtn.setStyle("-fx-background-color: transparent;");
+        prevBtn.setStyle("-fx-background-color: transparent;");
         
         
         /* Pop up info for buttons */
-        text.setTooltip(new Tooltip("Insert text box"));
-        image.setTooltip(new Tooltip("Insert image"));
-        video.setTooltip(new Tooltip("Insert video"));
-        tick.setTooltip(new Tooltip("Insert multiple choice"));
-        graphic.setTooltip(new Tooltip("Insert graphics"));
-        audio.setTooltip(new Tooltip("Insert audio clip"));
-        question.setTooltip(new Tooltip("Insert question box"));
+        textBtn.setTooltip(new Tooltip("Insert text box"));
+        imageBtn.setTooltip(new Tooltip("Insert image"));
+        videoBtn.setTooltip(new Tooltip("Insert video"));
+        tickBtn.setTooltip(new Tooltip("Insert multiple choice"));
+        graphicBtn.setTooltip(new Tooltip("Insert graphics"));
+        audioBtn.setTooltip(new Tooltip("Insert audio clip"));
+        questionBtn.setTooltip(new Tooltip("Insert question box"));
         
         /* Set the buttons to use a button event handler */
         
@@ -255,18 +264,15 @@ public class TeachEasyClient extends Application {
         
         /* Set button IDs NOTE: THESE CAUSE AS NULLPOINTER EXCEPTION!!!!!!!!!!!!    */
      
-        /*text.setId("textBtn");
-        image.setId("imgBtn");
-        video.setId("vidBtn");
-        tick.setId("tickBtn");
-        graphic.setId("graphBtn");
-        audio.setId("audioBtn");*/
+        textBtn.setId("textBtn");
+        imageBtn.setId("imgBtn");
+        videoBtn.setId("vidBtn");
+        tickBtn.setId("tickBtn");
+        graphicBtn.setId("graphBtn");
+        audioBtn.setId("audioBtn");
+        questionBtn.setId("questionBtn");
         
-      
-      
-
         /* Dummy Page Content */
-        
         page1 = new Text(1, 1,"page1");
         page2 = new Text(1, 1,"page2");
         page3 = new Text(1, 1,"page3"); 
@@ -317,7 +323,7 @@ public class TeachEasyClient extends Application {
         Image prevIm= new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Choice_PRE_TOP_CIRC_Blue_T-01.png"));
         
         ImageView Prev = new ImageView(prevIm);
-        prev.setGraphic(Prev);   
+        prevBtn.setGraphic(Prev);   
         
         Prev.setFitWidth(80);
         Prev.setFitHeight(80);
@@ -359,16 +365,13 @@ public class TeachEasyClient extends Application {
         
         
         /* Skin buttons */
-        
-        text.setGraphic(textBoxST); 
-        image.setGraphic(imBoxST); 
-        video.setGraphic(vidBoxST); 
-        tick.setGraphic(mulBoxST); 
-        graphic.setGraphic(graphicBoxST); 
-        audio.setGraphic(audioBoxST); 
-        question.setGraphic(queBoxST);
-
-        
+        textBtn.setGraphic(textBoxST); 
+        imageBtn.setGraphic(imBoxST); 
+        videoBtn.setGraphic(vidBoxST); 
+        tickBtn.setGraphic(mulBoxST); 
+        graphicBtn.setGraphic(graphicBoxST); 
+        audioBtn.setGraphic(audioBoxST); 
+        questionBtn.setGraphic(queBoxST);
         
         /*Button dimensions*/
 
@@ -422,265 +425,43 @@ public class TeachEasyClient extends Application {
         mulBoxHO.setFitWidth(x);
         mulBoxHO.setFitHeight(y);
         mulBoxPR.setFitWidth(x);
-        mulBoxPR.setFitHeight(y);
-        
-        
-        /* Event Handler */
-        
-        
-     /*  text.setOnAction(new buttonEventHandler());
-       image.setOnAction(new buttonEventHandler());
-        
-       
-        
-        class buttonEventHandler implements EventHandler<ActionEvent> {
-            
-            
-            
-            @Override
-            public void handle(ActionEvent e) {
-                
-                Button button = (Button)e.getSource();
-                
-                // Change image depending on the button ID 
-                
-                if(button.isPressed())  {
-                    if(button.getId().equals("textBtn"))  {
-                        text.setGraphic(textBoxPR);     
-                    }
-                    else if (button.getId().equals("imgBtn"))  {
-                        image.setGraphic(imBoxPR);  
-                    }
-                    
-                }
-                
-                
-                else if(button.isHover())   {
-                    if(button.getId().equals("textBtn"))  {
-                        text.setGraphic(textBoxHO);     
-                    }
-                    else if (button.getId().equals("imgBtn"))  {
-                        image.setGraphic(imBoxHO);  
-                    }
-                }
-                
-                else{
-                    if(button.getId().equals("textBtn"))  {
-                        text.setGraphic(textBoxST);     
-                    }
-                    else if (button.getId().equals("imgBtn"))  {
-                        image.setGraphic(imBoxST);  
-                    }
-                }
-                
-            }
-        }*/
-        
-        
-        
+        mulBoxPR.setFitHeight(y);    
+
         // Mouse Pressed
-        
-        text.setOnMousePressed(new EventHandler<MouseEvent>() {
-            
-            public void handle(MouseEvent event) {
+        textBtn.setOnMousePressed(new ButtonEventHandler(textBtn, textBoxPR));
+        imageBtn.setOnMousePressed(new ButtonEventHandler(imageBtn, imBoxPR));
+        videoBtn.setOnMousePressed(new ButtonEventHandler(videoBtn, vidBoxPR));
+        tickBtn.setOnMousePressed(new ButtonEventHandler(tickBtn, mulBoxPR));
+        graphicBtn.setOnMousePressed(new ButtonEventHandler(graphicBtn, graphicBoxPR));
+        audioBtn.setOnMousePressed(new ButtonEventHandler(audioBtn, audioBoxPR));
+        questionBtn.setOnMousePressed(new ButtonEventHandler(questionBtn, queBoxPR));
 
-                text.setGraphic(textBoxPR); 
-        }
-        });
+        //Mouse Released        
+        textBtn.setOnMouseReleased(new ButtonEventHandler(textBtn, textBoxHO)); 
+        imageBtn.setOnMouseReleased(new ButtonEventHandler(imageBtn, imBoxHO)); 
+        videoBtn.setOnMouseReleased(new ButtonEventHandler(videoBtn, vidBoxHO)); 
+        tickBtn.setOnMouseReleased(new ButtonEventHandler(tickBtn, mulBoxHO)); 
+        graphicBtn.setOnMouseReleased(new ButtonEventHandler(graphicBtn, graphicBoxHO)); 
+        audioBtn.setOnMouseReleased(new ButtonEventHandler(audioBtn, audioBoxHO)); 
+        questionBtn.setOnMouseReleased(new ButtonEventHandler(questionBtn, queBoxHO));
         
-        image.setOnMousePressed(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {  
-                image.setGraphic(imBoxPR); 
-        }
-        });
-        
-        video.setOnMousePressed(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {  
-                video.setGraphic(vidBoxPR); 
-        }
-        });
-        
-        tick.setOnMousePressed(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {  
-                tick.setGraphic(mulBoxPR); 
-        }
-        });
-        
-        graphic.setOnMousePressed(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {  
-                graphic.setGraphic(graphicBoxPR);
-        }
-        });
-        
-        audio.setOnMousePressed(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {  
-                audio.setGraphic(audioBoxPR);
-        }
-        });
-        
-        question.setOnMousePressed(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {  
-                question.setGraphic(queBoxPR);
-        }
-        });
-        
-      
-        
-        //Mouse Released
-        
-       text.setOnMouseReleased(new EventHandler<MouseEvent>() { 
-            public void handle(MouseEvent event) {
-                text.setGraphic(textBoxST); 
-        }
-        });
-       
-       image.setOnMouseReleased(new EventHandler<MouseEvent>() {
-            public void handle(MouseEvent event) {
-            
-               image.setGraphic(imBoxST); 
-        }
-        });
-           
-           video.setOnMouseReleased(new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent event) {
-    
-                  video.setGraphic(vidBoxST); 
-        }
-        });
-           
-           tick.setOnMouseReleased(new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent event) {
-    
-                 tick.setGraphic(mulBoxST); 
-        }
-        });
-           
-           graphic.setOnMouseReleased(new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent event) {
-                    
-                graphic.setGraphic(graphicBoxST);
-        }
-        });
-           
-           audio.setOnMouseReleased(new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent event) {
-
-                audio.setGraphic(audioBoxST);
-        }
-        });
-           
-           question.setOnMouseReleased(new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent event) {
-
-                question.setGraphic(queBoxST);
-        }
-        });
-       
-       
-           
         //Mouse Entered
-            
-           text.setOnMouseEntered(new EventHandler<MouseEvent>() {  
-                public void handle(MouseEvent event) {
-                    text.setGraphic(textBoxHO); 
-            }
-            });
-           
-           image.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent event) {
-                
-                   image.setGraphic(imBoxHO); 
-            }
-            });
-               
-               video.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    public void handle(MouseEvent event) {
-        
-                      video.setGraphic(vidBoxHO); 
-            }
-            });
-               
-               tick.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    public void handle(MouseEvent event) {
-        
-                     tick.setGraphic(mulBoxHO); 
-            }
-            });
-               
-               graphic.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    public void handle(MouseEvent event) {
-        
-                    graphic.setGraphic(graphicBoxHO);
-        }
-        });
-               
-               audio.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    public void handle(MouseEvent event) {
-  
-                    audio.setGraphic(audioBoxHO);
-        }
-        });
-               
-               question.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    public void handle(MouseEvent event) {
- 
-                    question.setGraphic(queBoxHO);
-        }
-        });
-       
+        textBtn.setOnMouseEntered(new ButtonEventHandler(textBtn, textBoxHO)); 
+        imageBtn.setOnMouseEntered(new ButtonEventHandler(imageBtn, imBoxHO)); 
+        videoBtn.setOnMouseEntered(new ButtonEventHandler(videoBtn, vidBoxHO)); 
+        tickBtn.setOnMouseEntered(new ButtonEventHandler(tickBtn, mulBoxHO)); 
+        graphicBtn.setOnMouseEntered(new ButtonEventHandler(graphicBtn, graphicBoxHO)); 
+        audioBtn.setOnMouseEntered(new ButtonEventHandler(audioBtn, audioBoxHO)); 
+        questionBtn.setOnMouseEntered(new ButtonEventHandler(questionBtn, queBoxHO));       
                
         //Mouse Exited
-            
-           text.setOnMouseExited(new EventHandler<MouseEvent>() {   
-                public void handle(MouseEvent event) {
-                    text.setGraphic(textBoxST); 
-            }
-            });
-           
-           image.setOnMouseExited(new EventHandler<MouseEvent>() {
-                public void handle(MouseEvent event) {
-                
-                   image.setGraphic(imBoxST); 
-            }
-            });
-               
-               video.setOnMouseExited(new EventHandler<MouseEvent>() {
-                    public void handle(MouseEvent event) {
-        
-                      video.setGraphic(vidBoxST); 
-            }
-            });
-               
-               tick.setOnMouseExited(new EventHandler<MouseEvent>() {
-                    public void handle(MouseEvent event) {
-        
-                     tick.setGraphic(mulBoxST); 
-            }
-            });
-               
-               graphic.setOnMouseExited(new EventHandler<MouseEvent>() {
-                    public void handle(MouseEvent event) {
-        
-                    graphic.setGraphic(graphicBoxST);
-        }
-        });
-               
-               audio.setOnMouseExited(new EventHandler<MouseEvent>() {
-                    public void handle(MouseEvent event) {
-
-                    audio.setGraphic(audioBoxST);
-        }
-        });
-               
-               question.setOnMouseExited(new EventHandler<MouseEvent>() {
-                    public void handle(MouseEvent event) {
-
-                    question.setGraphic(queBoxST);
-        }
-        });
-            
-        
-
+        textBtn.setOnMouseExited(new ButtonEventHandler(textBtn, textBoxST)); 
+        imageBtn.setOnMouseExited(new ButtonEventHandler(imageBtn, imBoxST)); 
+        videoBtn.setOnMouseExited(new ButtonEventHandler(videoBtn, vidBoxST)); 
+        tickBtn.setOnMouseExited(new ButtonEventHandler(tickBtn, mulBoxST)); 
+        graphicBtn.setOnMouseExited(new ButtonEventHandler(graphicBtn, graphicBoxST)); 
+        audioBtn.setOnMouseExited(new ButtonEventHandler(audioBtn, audioBoxST)); 
+        questionBtn.setOnMouseExited(new ButtonEventHandler(questionBtn, queBoxST)); 
         
         /* Top Bar Constraints */
         
@@ -797,8 +578,8 @@ public class TeachEasyClient extends Application {
         paddingBox.setAlignment(Pos.CENTER_LEFT);
         
         titleBox.getChildren().addAll(titleText);
-        preview.getChildren().addAll(prev);
-        topBar.getChildren().addAll(text,image,video,tick,graphic,audio,question);
+        preview.getChildren().addAll(prevBtn);
+        topBar.getChildren().addAll(textBtn,imageBtn,videoBtn,tickBtn,graphicBtn,audioBtn,questionBtn);
         
         /* Add Dummy page to content panel */
         contentPanel.getChildren().addAll(r);
@@ -911,15 +692,17 @@ public class TeachEasyClient extends Application {
         Bounds bounds = contentPanel.localToScene(contentPanel.getBoundsInLocal());
         
         if(!(x > bounds.getMaxX() || x < bounds.getMinX() || y > bounds.getMaxY() || y < bounds.getMinY())) {
-            editorRuntimeData.mousePressed(x, y);
+            editorRuntimeData.mousePressed(x, y, bounds);
         } else {
             /** Click is not in the group */
         }
     }
     
     /** Mouse released */
-    public void mouseReleased(double x, double y) {       
-        editorRuntimeData.mouseReleased(x, y);
+    public void mouseReleased(double x, double y) {      
+        Bounds bounds = contentPanel.localToScene(contentPanel.getBoundsInLocal());
+        
+        editorRuntimeData.mouseReleased(x, y, bounds);
     }
     
     /**
@@ -982,6 +765,51 @@ public class TeachEasyClient extends Application {
             } else if(menuItem.getId().equals("DebugPrevPage")) {
                 editorRuntimeData.prevPage();
                 updateUI();
+            }
+        }
+    }
+    
+    public class ButtonEventHandler implements EventHandler<MouseEvent> {
+        private Button button;
+        private ImageView image;
+        
+        ButtonEventHandler(Button nButton, ImageView nImage) {
+            this.button = nButton;
+            this.image = nImage;
+        }
+        
+        @Override
+        public void handle(MouseEvent me) {
+            button.setGraphic(image);
+            
+            if(me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+                System.out.println(button.getId());
+                
+                if(editorRuntimeData.isLessonOpen()) {
+                    switch(button.getId()) {
+                        case "textBtn":
+                            editorRuntimeData.newObject(PageObjectType.TEXT);
+                            break;
+                        case "imgBtn":
+                            editorRuntimeData.newObject(PageObjectType.IMAGE);
+                            break;
+                        case "vidBtn":
+                            editorRuntimeData.newObject(PageObjectType.VIDEO);
+                            break;
+                        case "tickBtn":
+                            editorRuntimeData.newObject(PageObjectType.MULTIPLE_CHOICE);
+                            break;
+                        case "graphicBtn":
+                            editorRuntimeData.newObject(PageObjectType.GRAPHIC);
+                            break;
+                        case "audioBtn":
+                            editorRuntimeData.newObject(PageObjectType.AUDIO);
+                            break;
+                        case "questionBtn":
+                            editorRuntimeData.newObject(PageObjectType.ANSWER_BOX);
+                            break;
+                    }
+                }
             }
         }
     }
