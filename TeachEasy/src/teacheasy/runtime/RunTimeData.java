@@ -255,7 +255,9 @@ public class RunTimeData {
 
     /** Move to the previous page */
     public void prevPage() {
+
         if (currentPage > 0) {
+        	progressTracker.setVisitedPages(currentPage);
             currentPage--;
             redraw(group, bounds);
 
