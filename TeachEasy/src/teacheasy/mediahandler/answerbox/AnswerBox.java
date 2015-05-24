@@ -56,17 +56,20 @@ public class AnswerBox {
             boolean nIsNumerical, Group nGroup) {
 
         /* Setting local variables */
-        this.marks = nMarks;
+        if (nMarks > 0) {
+            this.marks = nMarks;
+        } else {
+            this.marks = 0;
+        }
         this.correctAnswers = nCorrectAnswers;
-        
-        /*To prevent negative or 0 character limit*/
-        if(nCharacterLimit >= 1){
-        	this.characterLimit = nCharacterLimit;
+
+        /* To prevent negative or 0 character limit */
+        if (nCharacterLimit >= 1) {
+            this.characterLimit = nCharacterLimit;
+        } else if (nCharacterLimit <= 0) {
+            this.characterLimit = 2;
         }
-        else if(nCharacterLimit <= 0){
-        	this.characterLimit = 2;
-        }
-        
+
         this.xStart = nXStart;
         this.yStart = nYStart;
         this.group = nGroup;
@@ -91,21 +94,22 @@ public class AnswerBox {
 
         /* Submits and checks typed answer upon key press "enter" */
         answerField.setOnKeyPressed(new KeyEventHandler());
-        
+
         /* Uses a change listener to limit the character count */
         answerField.textProperty().addListener(new MaxLengthListener());
-        
+
         /* Set a custom skin for the text box to remove the context menu */
-        answerField.setSkin(new TextFieldSkin(answerField, new TextFieldBehavior(answerField) {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                if (e.getButton() == MouseButton.SECONDARY) {
-                    return; // don't allow context menu to show 
-                }
-                
-                super.mouseReleased(e);
-            }
-        }));
+        answerField.setSkin(new TextFieldSkin(answerField,
+                new TextFieldBehavior(answerField) {
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        if (e.getButton() == MouseButton.SECONDARY) {
+                            return; // don't allow context menu to show
+                        }
+
+                        super.mouseReleased(e);
+                    }
+                }));
 
         /* Place the box at the specified location */
         box.relocate(xStart, yStart);
@@ -134,7 +138,8 @@ public class AnswerBox {
                  * Compares user submitted answers with the list of available
                  * answers
                  */
-                if (answerField.getText().toUpperCase().equals(listOfCorrectAnswers[i].toUpperCase())) {
+                if (answerField.getText().toUpperCase()
+                        .equals(listOfCorrectAnswers[i].toUpperCase())) {
                     /* Award marks */
                     awardedMarks += nMarks;
 
@@ -165,21 +170,20 @@ public class AnswerBox {
              * to float
              */
             try {
-            	/*If no minimum and maximum value is provided make the provided
-            	 * value minimum and maximum
-            	 * */
-            	if(listOfCorrectAnswers.length == 1){
-            		minRange = Float.parseFloat(listOfCorrectAnswers[0]);
-            		maxRange = Float.parseFloat(listOfCorrectAnswers[0]);
-            		answer = Float.parseFloat(answerField.getText());
-            	}
-            	else
-            	{
-            		minRange = Float.parseFloat(listOfCorrectAnswers[0]);
-            		maxRange = Float.parseFloat(listOfCorrectAnswers[1]);
-            		answer = Float.parseFloat(answerField.getText());
-            	}
-                
+                /*
+                 * If no minimum and maximum value is provided make the provided
+                 * value minimum and maximum
+                 */
+                if (listOfCorrectAnswers.length == 1) {
+                    minRange = Float.parseFloat(listOfCorrectAnswers[0]);
+                    maxRange = Float.parseFloat(listOfCorrectAnswers[0]);
+                    answer = Float.parseFloat(answerField.getText());
+                } else {
+                    minRange = Float.parseFloat(listOfCorrectAnswers[0]);
+                    maxRange = Float.parseFloat(listOfCorrectAnswers[1]);
+                    answer = Float.parseFloat(answerField.getText());
+                }
+
             } catch (NumberFormatException nfe) {
                 minRange = 0.0f;
                 maxRange = 0.0f;
@@ -253,7 +257,7 @@ public class AnswerBox {
             }
         }
     }
-    
+
     /**
      * This class limits the number of characters that can be typed in the
      * textField to the the specified nCharacterLimit
@@ -262,8 +266,8 @@ public class AnswerBox {
     public class MaxLengthListener implements ChangeListener<String> {
         @Override
         public void changed(ObservableValue<? extends String> ov,
-                            String oldVal, String newVal) {
-            if(answerField.getText().length() > characterLimit) {
+                String oldVal, String newVal) {
+            if (answerField.getText().length() > characterLimit) {
                 String s = answerField.getText().substring(0, characterLimit);
                 answerField.setText(s);
             }
