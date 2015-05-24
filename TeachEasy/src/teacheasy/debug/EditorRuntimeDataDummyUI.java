@@ -286,7 +286,11 @@ public class EditorRuntimeDataDummyUI extends Application {
     public void mouseReleased(double x, double y) {     
         Bounds bounds = group.localToScene(group.getBoundsInLocal());
         
-        editorRunTimeData.mouseReleased(x, y, bounds);
+        if(!(x > bounds.getMaxX() || x < bounds.getMinX() || y > bounds.getMaxY() || y < bounds.getMinY())) {
+            editorRunTimeData.mouseReleased(x, y, bounds, true);
+        } else {
+            editorRunTimeData.mouseReleased(x, y, bounds, false);
+        }
     }
     
     public static void main(String args[]) {

@@ -419,7 +419,7 @@ public class EditorRunTimeData {
     }
     
     /** Mouse released in the page area */
-    public void mouseReleased(double x, double y, Bounds nBounds) {
+    public void mouseReleased(double x, double y, Bounds nBounds, boolean onGroup) {
         if(!isLessonOpen()) {
             return;
         }
@@ -429,7 +429,9 @@ public class EditorRunTimeData {
         
         System.out.println("Release: " + relativeX + ", " + relativeY);
         
-        propertiesPane.lateUpdate();
+        if(onGroup) {
+            propertiesPane.lateUpdate();
+        }
     }
     
     /** Redraw the content */

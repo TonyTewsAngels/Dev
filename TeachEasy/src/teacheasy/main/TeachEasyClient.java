@@ -610,28 +610,25 @@ public class TeachEasyClient extends Application {
     
     public void updateUI() {        
         /* 
-         * If there is a lesson open enable the relevant page 
-         * buttons, if not disable both.
+         * Enable or disable the relevant buttons based on whether
+         * a lesson is open.
          */
         if(editorRuntimeData.isLessonOpen()) {
-            //text.setText((editorRuntimeData.getCurrentPageNumber()+1) + " / " + editorRuntimeData.getPageCount());
-            
-            /*if(!editorRuntimeData.isNextPage()) {
-                nextPageButton.setDisable(true);
-            } else {
-                nextPageButton.setDisable(false);
-            }
-            
-            if(!editorRunTimeData.isPrevPage()) {
-                prevPageButton.setDisable(true);
-            } else {
-                prevPageButton.setDisable(false);
-            }*/
+            textBtn.setDisable(false);
+            imageBtn.setDisable(false);
+            videoBtn.setDisable(false);
+            audioBtn.setDisable(false);
+            graphicBtn.setDisable(false);
+            tickBtn.setDisable(false);
+            questionBtn.setDisable(false);
         } else {
-            //text.setText("No lesson open");
-            
-            /*nextPageButton.setDisable(true);
-            prevPageButton.setDisable(true);*/
+            textBtn.setDisable(true);
+            imageBtn.setDisable(true);
+            videoBtn.setDisable(true);
+            audioBtn.setDisable(true);
+            graphicBtn.setDisable(true);
+            tickBtn.setDisable(true);
+            questionBtn.setDisable(true);
         }
     }
     
@@ -702,7 +699,11 @@ public class TeachEasyClient extends Application {
     public void mouseReleased(double x, double y) {      
         Bounds bounds = contentPanel.localToScene(contentPanel.getBoundsInLocal());
         
-        editorRuntimeData.mouseReleased(x, y, bounds);
+        if(!(x > bounds.getMaxX() || x < bounds.getMinX() || y > bounds.getMaxY() || y < bounds.getMinY())) {
+            editorRuntimeData.mouseReleased(x, y, bounds, true);
+        } else {
+            editorRuntimeData.mouseReleased(x, y, bounds, false);
+        }
     }
     
     /**
