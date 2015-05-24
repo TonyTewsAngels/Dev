@@ -1,6 +1,5 @@
 package teacheasy.login;
 
-
 import java.io.File;
 
 import javafx.scene.control.PasswordField;
@@ -104,7 +103,6 @@ public void start(Stage primaryStage) {
 	//TextFileds
 	final TextField userText = new TextField();
 	final PasswordField passText = new PasswordField();
-	
 	userText.setPromptText("Username");
 	passText.setPromptText("Password");
 	
@@ -118,7 +116,6 @@ public void start(Stage primaryStage) {
 	Logo.setFitWidth(x);
 	Logo.setFitHeight(y);
 	Logo.setEffect(new DropShadow());	
-	
 	
 	/* Logo fade in */
 	FadeTransition ft = new FadeTransition(Duration.millis(7000),Logo);
@@ -142,16 +139,10 @@ public void start(Stage primaryStage) {
 	grid.add(userText,1,3);
 	grid.add(passText,1,4);
 
+	fileReader scan = new fileReader();
+	System.out.println("Output File:" + scan);
 
-fileReader scan = new fileReader();
-
-System.out.println("Output File:" + scan);
-
-//int a_val = scan.total();
-
-//System.out.println("Value=" + a_val);
-
-//Add to scene
+	//Add to scene
 	Scene appScene = new Scene(grid,600,400);
 
 	

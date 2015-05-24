@@ -111,9 +111,6 @@ public void start(Stage primaryStage) {
 	int x = 143;
 	int y = 143;
 	
-	// Dimensions: 143 x 162 (Too Pixelated)
-	/*Image LE = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/LE_V5.png"));*/
-	
 	// Dimensions: 1000 x 1000 (Use x,y to make appropriate size)
 	Image LE = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/LE_V4_1_1.png"));
 
@@ -121,7 +118,6 @@ public void start(Stage primaryStage) {
 	Logo.setFitWidth(x);
 	Logo.setFitHeight(y);
 	Logo.setEffect(new DropShadow());	
-	
 	
 	/* Logo fade in */
 	FadeTransition ft = new FadeTransition(Duration.millis(7000),Logo);
@@ -145,16 +141,10 @@ public void start(Stage primaryStage) {
 	grid.add(userText,1,3);
 	grid.add(passText,1,4);
 
+	fileReader scan = new fileReader();
+	System.out.println("Output File:" + scan);
 
-fileReader scan = new fileReader();
-
-System.out.println("Output File:" + scan);
-
-//int a_val = scan.total();
-
-//System.out.println("Value=" + a_val);
-
-//Add to scene
+	//Add to scene
 	Scene appScene = new Scene(grid,600,400);
 
 	
