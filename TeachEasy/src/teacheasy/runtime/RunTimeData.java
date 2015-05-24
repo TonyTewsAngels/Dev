@@ -161,7 +161,8 @@ public class RunTimeData {
         pageMarks += renderer.answerBoxHandler.currentPageMarks();
         pageMarks += renderer.multipleChoiceHandler.totalPageMarks();
 
-        progressTracker.collateMarks(pageMarks);
+       // progressTracker.collateMarks(pageMarks);
+        progressTracker.inidividualPageMarks(pageMarks, currentPage);
     }
 
     /**
