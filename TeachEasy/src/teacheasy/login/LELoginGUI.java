@@ -3,12 +3,15 @@ package teacheasy.login;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import teacheasy.main.LearnEasyClient;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.animation.FadeTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -33,11 +36,15 @@ import javafx.util.Duration;
 public class LELoginGUI  extends Application {
     TextField userText;
     PasswordField passText;
+    
+    Stage primaryStage;
 
     //Application starting point
     @Override
     public void start(Stage primaryStage) {
     
+        this.primaryStage = primaryStage;
+        
     	//Set title
     	primaryStage.setTitle("Login GUI");
     
@@ -160,7 +167,6 @@ public class LELoginGUI  extends Application {
     	primaryStage.setScene(appScene);
     	primaryStage.setResizable(false);
     	primaryStage.show();
-    
     }
     
     public static void main(String[] args)  {
@@ -171,9 +177,17 @@ public class LELoginGUI  extends Application {
         @Override
         public void handle(ActionEvent arg0) {
             if(LoginChecker.checkLELogin(userText.getText(), passText.getText())) {
-                System.out.println("You're In!");
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        new LearnEasyClient().start(new Stage());
+                    }
+                });
+                
+                primaryStage.close();
+
             } else {
-                System.out.println("Fuck off you joker.");
+                userText.clear();
+                passText.clear();
             }
         }
     }

@@ -3,6 +3,8 @@ package teacheasy.login;
 import java.io.File;
 
 import teacheasy.login.LELoginGUI.LoginButtonHandler;
+import teacheasy.main.LearnEasyClient;
+import teacheasy.main.TeachEasyClient;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -10,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.animation.FadeTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -31,15 +34,16 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-
-
 public class TELoginGUI  extends Application {
-    TextField userText;
-    PasswordField passText;
+    private TextField userText;
+    private PasswordField passText;
+    
+    private Stage primaryStage;
     
     //Application starting point
     @Override
     public void start(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     
     	//Set title
     	primaryStage.setTitle("Login GUI");
@@ -155,9 +159,6 @@ public class TELoginGUI  extends Application {
     	grid.add(passText,1,4);
     	grid.add(buttonBox, 1, 5);
     
-    	LoginChecker scan = new LoginChecker();
-    	System.out.println("Output File:" + scan);
-    
     	//Add to scene
     	Scene appScene = new Scene(grid,600,400);
 
@@ -174,10 +175,18 @@ public class TELoginGUI  extends Application {
     public class LoginButtonHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent arg0) {
-            if(LoginChecker.checkLELogin(userText.getText(), passText.getText())) {
-                System.out.println("You're In!");
+            if(LoginChecker.checkTELogin(userText.getText(), passText.getText())) {
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        new TeachEasyClient().start(new Stage());
+                    }
+                });
+                
+                primaryStage.close();
+
             } else {
-                System.out.println("Fuck off you joker.");
+                userText.clear();
+                passText.clear();
             }
         }
     }
