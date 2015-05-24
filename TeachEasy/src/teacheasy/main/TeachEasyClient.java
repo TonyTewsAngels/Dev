@@ -785,7 +785,7 @@ public class TeachEasyClient extends Application {
         float relX = (float)(x - contentPanel.getLayoutX())/(float)(r.getWidth());
         float relY = (float)(y - contentPanel.getLayoutY())/(float)(r.getHeight());
         
-        if(relX >= 0.0f || relX <= 1.0f || relY >= 0.0f || relY <= 1.0f) {
+        if(relX >= 0.0f && relX <= 1.0f && relY >= 0.0f && relY <= 1.0f) {
             editorRuntimeData.mousePressed(relX, relY);
         } else {
             /** Click is not in the group */
@@ -797,7 +797,7 @@ public class TeachEasyClient extends Application {
         float relX = (float)(x - contentPanel.getLayoutX())/(float)(r.getWidth());
         float relY = (float)(y - contentPanel.getLayoutY())/(float)(r.getHeight());
         
-        if(relX >= 0.0f || relX <= 1.0f || relY >= 0.0f || relY <= 1.0f) {
+        if(relX >= 0.0f && relX <= 1.0f && relY >= 0.0f && relY <= 1.0f) {
             editorRuntimeData.mouseReleased(relX, relY, true);
         } else {
             editorRuntimeData.mouseReleased(relX, relY, false);
