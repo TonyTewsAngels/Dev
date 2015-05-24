@@ -24,13 +24,12 @@ public class ProgressTracker {
 
     public ProgressTracker(int nTotalNumberOfPages) {
         this.totalNumberOfPages = nTotalNumberOfPages;
-        
+
         individualPageMarks = new int[totalNumberOfPages];
         visitedPages = new boolean[totalNumberOfPages];
 
         /* Initialise arrays */
-        initialiseArray(0);
-        initialiseArray(1);
+        initialiseArray();
     }
 
     /** A method that keeps track of all the marks in a lesson */
@@ -62,24 +61,12 @@ public class ProgressTracker {
 
     /**
      * A method to initialise the individualPageMarks array to 0 and
-     * visitedPages array to false type 0 = individual page marks type 1 =
-     * visited pages
-     * 
+     * visitedPages array to false.
      * */
-    private void initialiseArray(int type) {
-        switch (type) {
-        case 0:
-            for (int i = 0; i < individualPageMarks.length; i++) {
-                individualPageMarks[i] = 0;
-            }
-            break;
-        case 1:
-            for (int i = 0; i < visitedPages.length; i++) {
-                visitedPages[i] = false;
-            }
-            break;
-        default:
-            break;
+    private void initialiseArray() {
+        for (int i = 0; i < visitedPages.length; i++) {
+            individualPageMarks[i] = 0;
+            visitedPages[i] = false;
         }
     }
 }
