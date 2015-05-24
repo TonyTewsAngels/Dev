@@ -1,12 +1,16 @@
 package teacheasy.login;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.animation.FadeTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -26,133 +30,151 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-
-
 public class LELoginGUI  extends Application {
+    TextField userText;
+    PasswordField passText;
 
-
-	public static void main(String[] args)	{
-		launch(args);
-	}
-
-//Application starting point
-@Override
-public void start(Stage primaryStage) {
-
-	//Set title
-	primaryStage.setTitle("Login GUI");
-
-	//Set GUI Layout
-	GridPane grid = new GridPane();
-	VBox Vtext = new VBox();
-	VBox logoBox = new VBox();
-	
-	//Column constraints
-	ColumnConstraints farLeft = new ColumnConstraints();
-    farLeft.setFillWidth(true);
-    farLeft.setHgrow(Priority.SOMETIMES);
-    grid.getColumnConstraints().add(farLeft);
-
-    ColumnConstraints contentCol = new ColumnConstraints();
-    contentCol.setMaxWidth(1000);
-    grid.getColumnConstraints().add(contentCol);
+    //Application starting point
+    @Override
+    public void start(Stage primaryStage) {
     
-    ColumnConstraints centerRow = new ColumnConstraints();
-    centerRow.setFillWidth(true);
-    centerRow.setHgrow(Priority.SOMETIMES);
-    grid.getColumnConstraints().add(centerRow);
-	
-	//Row constraints
-    RowConstraints topRow = new RowConstraints();
-    topRow.setFillHeight(true);
-    topRow.setVgrow(Priority.ALWAYS);
-    grid.getRowConstraints().add(topRow);
+    	//Set title
+    	primaryStage.setTitle("Login GUI");
     
-    RowConstraints welRow = new RowConstraints();
-    welRow.setMinHeight(80);
-    grid.getRowConstraints().add(welRow);
+    	//Set GUI Layout
+    	GridPane grid = new GridPane();
+    	VBox Vtext = new VBox();
+    	VBox logoBox = new VBox();
+    	VBox buttonBox = new VBox();
+    	Button loginBtn = new Button("Login");
+
+    	loginBtn.setPrefWidth(300);
+    	loginBtn.setOnAction(new LoginButtonHandler());
+    	
+    	buttonBox.getChildren().add(loginBtn);
+    	buttonBox.setAlignment(Pos.CENTER);
+    	    	
+    	//Column constraints
+    	ColumnConstraints farLeft = new ColumnConstraints();
+        farLeft.setFillWidth(true);
+        farLeft.setHgrow(Priority.SOMETIMES);
+        grid.getColumnConstraints().add(farLeft);
     
-    RowConstraints pleaseRow = new RowConstraints();
-    pleaseRow.setMinHeight(30);
-    grid.getRowConstraints().add(pleaseRow);
+        ColumnConstraints contentCol = new ColumnConstraints();
+        contentCol.setMaxWidth(1000);
+        grid.getColumnConstraints().add(contentCol);
+        
+        ColumnConstraints centerRow = new ColumnConstraints();
+        centerRow.setFillWidth(true);
+        centerRow.setHgrow(Priority.SOMETIMES);
+        grid.getColumnConstraints().add(centerRow);
+    	
+    	//Row constraints
+        RowConstraints topRow = new RowConstraints();
+        topRow.setFillHeight(true);
+        topRow.setVgrow(Priority.ALWAYS);
+        grid.getRowConstraints().add(topRow);
+        
+        RowConstraints welRow = new RowConstraints();
+        welRow.setMinHeight(80);
+        grid.getRowConstraints().add(welRow);
+        
+        RowConstraints pleaseRow = new RowConstraints();
+        pleaseRow.setMinHeight(30);
+        grid.getRowConstraints().add(pleaseRow);
+        
+        RowConstraints userRow = new RowConstraints();
+        userRow.setMinHeight(20);
+        grid.getRowConstraints().add(userRow);
+        
+        RowConstraints passRow = new RowConstraints();
+        passRow.setMinHeight(20);
+        grid.getRowConstraints().add(passRow);
+        
+        RowConstraints buttonRow = new RowConstraints();
+        passRow.setMinHeight(30);
+        grid.getRowConstraints().add(buttonRow);
+        
+        RowConstraints botRow = new RowConstraints();
+        botRow.setFillHeight(true);
+        botRow.setVgrow(Priority.ALWAYS);
+        grid.getRowConstraints().add(botRow);
+        
+        //Set grid colour
+        grid.setStyle("-fx-background-color:  rgb(74, 104, 177);");
+        Vtext.setStyle("-fx-background-color: rgb(74, 104, 177);");
+        
+    	//Welcome Labels
+        Label wel = new Label("Welcome to LearnEasy");
+    	wel.setFont(new Font("Myriad", 30));
+    	
+    	Label wel_2 = new Label("Please Log In");
+    	wel_2.setFont(new Font("Myriad", 15));
     
-    RowConstraints userRow = new RowConstraints();
-    userRow.setMinHeight(20);
-    grid.getRowConstraints().add(userRow);
+    	//TextFileds
+    	userText = new TextField();
+    	passText = new PasswordField();
+    	
+    	userText.setPromptText("Username or Email");
+    	passText.setPromptText("Password");
+    	
+    	//Add LE Logo
+    	int x = 143;
+    	int y = 143;
+    	
+    	// Dimensions: 1000 x 1000 (Use x,y to make appropriate size)
+    	Image LE = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/LE_V4_1_1.png"));
     
-    RowConstraints passRow = new RowConstraints();
-    passRow.setMinHeight(20);
-    grid.getRowConstraints().add(passRow);
+    	ImageView Logo = new ImageView(LE);
+    	Logo.setFitWidth(x);
+    	Logo.setFitHeight(y);
+    	Logo.setEffect(new DropShadow());	
+    	
+    	/* Logo fade in */
+    	FadeTransition ft = new FadeTransition(Duration.millis(7000),Logo);
+    	ft.setFromValue(0);
+    	ft.setToValue(1.0);
+    	ft.setCycleCount(1);
+    	ft.play();
+    	
+    	//Add text to Vtext
+    	Vtext.getChildren().addAll(wel_2);
+    	Vtext.setAlignment(Pos.CENTER);
+    	
+    	//Add logo to logoBox
+    	logoBox.getChildren().addAll(Logo);
+    	logoBox.setAlignment(Pos.CENTER);
+    	
+    	//Add content to grid
+    	grid.add(logoBox,1,0);
+    	grid.add(wel,1,1);
+    	grid.add(Vtext, 1, 2);
+    	grid.add(userText,1,3);
+    	grid.add(passText,1,4);
+    	grid.add(buttonBox, 1, 5);
     
-    RowConstraints botRow = new RowConstraints();
-    botRow.setFillHeight(true);
-    botRow.setVgrow(Priority.ALWAYS);
-    grid.getRowConstraints().add(botRow);
+    	//Add to scene
+    	Scene appScene = new Scene(grid,600,400);
+
+    	//Add scene to stage
+    	primaryStage.setScene(appScene);
+    	primaryStage.setResizable(false);
+    	primaryStage.show();
     
-    //Set grid colour
-    grid.setStyle("-fx-background-color:  rgb(74, 104, 177);");
-    Vtext.setStyle("-fx-background-color: rgb(74, 104, 177);");
+    }
     
-	//Welcome Labels
-    Label wel = new Label("Welcome to LearnEasy");
-	wel.setFont(new Font("Myriad", 30));
-	
-	Label wel_2 = new Label("Please Log In");
-	wel_2.setFont(new Font("Myriad", 15));
-
-	//TextFileds
-	final TextField userText = new TextField();
-	final PasswordField passText = new PasswordField();
-	
-	userText.setPromptText("Username");
-	passText.setPromptText("Password");
-	
-	//Add LE Logo
-	int x = 143;
-	int y = 143;
-	
-	// Dimensions: 1000 x 1000 (Use x,y to make appropriate size)
-	Image LE = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/LE_V4_1_1.png"));
-
-	ImageView Logo = new ImageView(LE);
-	Logo.setFitWidth(x);
-	Logo.setFitHeight(y);
-	Logo.setEffect(new DropShadow());	
-	
-	/* Logo fade in */
-	FadeTransition ft = new FadeTransition(Duration.millis(7000),Logo);
-	ft.setFromValue(0);
-	ft.setToValue(1.0);
-	ft.setCycleCount(1);
-	ft.play();
-	
-	//Add text to Vtext
-	Vtext.getChildren().addAll(wel_2);
-	Vtext.setAlignment(Pos.CENTER);
-	
-	//Add logo to logoBox
-	logoBox.getChildren().addAll(Logo);
-	logoBox.setAlignment(Pos.CENTER);
-	
-	//Add content to grid
-	grid.add(logoBox,1,0);
-	grid.add(wel,1,1);
-	grid.add(Vtext, 1, 2);
-	grid.add(userText,1,3);
-	grid.add(passText,1,4);
-
-	fileReader scan = new fileReader();
-	System.out.println("Output File:" + scan);
-
-	//Add to scene
-	Scene appScene = new Scene(grid,600,400);
-
-	
-	//Add scene to stage
-	primaryStage.setScene(appScene);
-	primaryStage.setResizable(false);
-	primaryStage.show();
-
-}
-
+    public static void main(String[] args)  {
+        launch(args);
+    }
+    
+    public class LoginButtonHandler implements EventHandler<ActionEvent> {
+        @Override
+        public void handle(ActionEvent arg0) {
+            if(LoginChecker.checkLELogin(userText.getText(), passText.getText())) {
+                System.out.println("You're In!");
+            } else {
+                System.out.println("Fuck off you joker.");
+            }
+        }
+    }
 }
