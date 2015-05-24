@@ -207,4 +207,45 @@ public class AudioHandler {
         return audios.size();
     }
     
+    /** 
+     * Will return the end x co-ordinate for the audio player selected
+     * 
+     */
+    public double getAudioXEnd(int audioId) {
+       	double xStart = 0;
+    	double xEnd = 0;
+    	if(audioId < audios.size() && audioId >= 0) {
+    		xStart = audios.get(audioId).xStartPos;
+    		if(audios.get(audioId).buttonVisibilityLevel == 0){
+    			xEnd = xStart;
+    		} else if (audios.get(audioId).buttonVisibilityLevel == 1){
+    			xEnd = xStart + 30;
+    			System.out.println("xEnd with lvl 1: " +xEnd);
+    		} else if (audios.get(audioId).buttonVisibilityLevel == 2){
+    			xEnd = xStart + audios.get(audioId).widthValue;
+    		}
+    	}   	
+        return xEnd;
+    }
+    
+    /** 
+     * Will return the end y co-ordinate for the audio player selected
+     * 
+     */
+    public double getAudioYEnd(int audioId) {
+       	double yStart = 0;
+    	double yEnd = 0;
+    	if(audioId < audios.size() && audioId >= 0) {
+    		yStart = audios.get(audioId).yStartPos;
+    		if(audios.get(audioId).buttonVisibilityLevel == 0){
+    			yEnd = yStart;
+    		} else if (audios.get(audioId).buttonVisibilityLevel == 1){
+    			yEnd = yStart + 30;
+    		} else if (audios.get(audioId).buttonVisibilityLevel == 1){
+    			yEnd = yStart + 100;
+    		}
+    	}   	
+        return yEnd;
+    }
+    
 }
