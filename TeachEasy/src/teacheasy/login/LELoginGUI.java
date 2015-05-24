@@ -29,20 +29,21 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class LELoginGUI  extends Application {
-    TextField userText;
-    PasswordField passText;
+    private TextField userText;
+    private PasswordField passText;
+    private Label failLabel;    
     
-    Stage primaryStage;
+    private Stage primaryStage;
 
     //Application starting point
     @Override
     public void start(Stage primaryStage) {
-    
         this.primaryStage = primaryStage;
         
     	//Set title
@@ -54,6 +55,10 @@ public class LELoginGUI  extends Application {
     	VBox logoBox = new VBox();
     	VBox buttonBox = new VBox();
     	Button loginBtn = new Button("Login");
+    	
+    	failLabel = new Label("User name or password not recognised.");
+    	failLabel.setTextFill(Color.web("#BB0000"));
+    	failLabel.setVisible(false);
 
     	loginBtn.setPrefWidth(300);
     	loginBtn.setOnAction(new LoginButtonHandler());
@@ -159,6 +164,7 @@ public class LELoginGUI  extends Application {
     	grid.add(userText,1,3);
     	grid.add(passText,1,4);
     	grid.add(buttonBox, 1, 5);
+    	grid.add(failLabel, 1, 6);
     
     	//Add to scene
     	Scene appScene = new Scene(grid,600,400);
@@ -176,6 +182,8 @@ public class LELoginGUI  extends Application {
     public class LoginButtonHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent arg0) {
+            failLabel.setVisible(false);
+            
             if(LoginChecker.checkLELogin(userText.getText(), passText.getText())) {
                 Platform.runLater(new Runnable() {
                     public void run() {
@@ -188,6 +196,8 @@ public class LELoginGUI  extends Application {
             } else {
                 userText.clear();
                 passText.clear();
+                
+                failLabel.setVisible(true);
             }
         }
     }
