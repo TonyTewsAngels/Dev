@@ -9,6 +9,7 @@ package teacheasy.runtime;
 import java.io.File;
 import java.util.ArrayList;
 
+import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.layout.VBox;
@@ -354,10 +355,8 @@ public class EditorRunTimeData {
             return;
         }
         
-        propertiesPane.update(
-                lesson.pages.get(currentPage),
-                lesson.pages.get(currentPage).pageObjects.get(
-                        lesson.pages.get(currentPage).pageObjects.size() - 1));
+        propertiesPane.update(lesson.pages.get(currentPage),
+                              lesson.pages.get(currentPage).pageObjects.get(lesson.pages.get(currentPage).pageObjects.size() - 1));
         
         redraw();
     }
@@ -377,6 +376,8 @@ public class EditorRunTimeData {
         lesson.pages.get(currentPage).pageObjects.remove(index);
         
         propertiesPane.update(lesson.pages.get(currentPage), null);
+        
+        redraw();
     }
     
     /** Move selection to the next object */
@@ -403,33 +404,27 @@ public class EditorRunTimeData {
     }
     
     /** Mouse Pressed in the page area */
-    public void mousePressed(double x, double y) {
+    public void mousePressed(float relX, float relY) {
         if(!isLessonOpen()) {
             return;
         }
         
-        float relativeX = (float)x/(float)bounds.getMaxX();
-        float relativeY = (float)y/(float)bounds.getMaxY();
+        System.out.println("Press: " + relX + ", " + relY);
         
-        System.out.println("Press: " + relativeX + ", " + relativeY);
-        
-        mouseController.mousePressed(lesson.pages.get(currentPage), propertiesPane, relativeX, relativeY);
+        mouseController.mousePressed(lesson.pages.get(currentPage), propertiesPane, relX, relY);
     }
     
     /** Mouse released in the page area */
-    public void mouseReleased(double x, double y) {
+    public void mouseReleased(float relX, float relY, boolean onGroup) {
         if(!isLessonOpen()) {
             return;
         }
         
-        float relativeX = (float)x/(float)bounds.getMaxX();
-        float relativeY = (float)y/(float)bounds.getMaxY();
+        System.out.println("Release: " + relX + ", " + relY);
         
-        System.out.println("Release: " + relativeX + ", " + relativeY);
-        
-        propertiesPane.lateUpdate();
-        
-        //mouseController.mouseReleased(lesson.pages.get(currentPage), propertiesPane, relativeX, relativeY);
+        if(onGroup) {
+            propertiesPane.lateUpdate();
+        }
     }
     
     /** Redraw the content */

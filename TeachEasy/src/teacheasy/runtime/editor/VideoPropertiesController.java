@@ -94,13 +94,25 @@ public class VideoPropertiesController {
             
             switch(source.getId()) {
                 case "xStart":
-                    selectedVideo.setXStart(PropertiesUtil.validatePosition(source.getText(), selectedVideo.getXStart()));
+                    float oldXStart = selectedVideo.getXStart();
+                    float newXStart = PropertiesUtil.validatePosition(source.getText(), selectedVideo.getXStart());
+                    if(newXStart != oldXStart) {
+                        selectedVideo.setXStart(PropertiesUtil.validatePosition(source.getText(), selectedVideo.getXStart()));
+                    }
                     break;
                 case "yStart":
-                    selectedVideo.setYStart(PropertiesUtil.validatePosition(source.getText(), selectedVideo.getYStart()));
+                    float oldYStart = selectedVideo.getYStart();
+                    float newYStart = PropertiesUtil.validatePosition(source.getText(), selectedVideo.getYStart());
+                    if(newYStart != oldYStart) {
+                        selectedVideo.setYStart(PropertiesUtil.validatePosition(source.getText(), selectedVideo.getYStart()));
+                    }
                     break;
                 case "xEnd":
-                    selectedVideo.setXEnd(PropertiesUtil.validatePosition(source.getText(), selectedVideo.getXEnd()));
+                    float oldXEnd = selectedVideo.getXStart();
+                    float newXEnd = PropertiesUtil.validatePosition(source.getText(), selectedVideo.getXStart());
+                    if(newXEnd != oldXEnd) {
+                        selectedVideo.setXEnd(PropertiesUtil.validatePosition(source.getText(), selectedVideo.getXEnd()));
+                    }
                     break;
                 default:
                     break;

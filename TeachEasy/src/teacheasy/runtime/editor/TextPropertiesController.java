@@ -123,28 +123,51 @@ public class TextPropertiesController {
             
             TextField source = (TextField)e.getSource();
             
+            float oldVal = 0.0f;
+            float newVal = 0.0f;
+            
             switch(source.getId()) {
                 case "xStart":
-                    selectedText.setXStart(PropertiesUtil.validatePosition(source.getText(), selectedText.getXStart()));
+                    oldVal = selectedText.getXStart();
+                    newVal = PropertiesUtil.validatePosition(source.getText(), selectedText.getXStart());
+                    selectedText.setXStart(newVal);
                     break;
                 case "yStart":
-                    selectedText.setYStart(PropertiesUtil.validatePosition(source.getText(), selectedText.getYStart()));
+                    oldVal = selectedText.getYStart();
+                    newVal = PropertiesUtil.validatePosition(source.getText(), selectedText.getYStart());
+                    selectedText.setYStart(newVal);
                     break;
                 case "xEnd":
-                    selectedText.setXEnd(PropertiesUtil.validatePosition(source.getText(), selectedText.getXEnd()));
+                    oldVal = selectedText.getXEnd();
+                    newVal = PropertiesUtil.validatePosition(source.getText(), selectedText.getXEnd());
+                    selectedText.setXEnd(newVal);
                     break;
                 case "yEnd":
-                    selectedText.setYEnd(PropertiesUtil.validatePosition(source.getText(), selectedText.getYEnd()));
+                    oldVal = selectedText.getYEnd();
+                    newVal = PropertiesUtil.validatePosition(source.getText(), selectedText.getYEnd());
+                    selectedText.setYEnd(newVal);
                     break;
                 case "fontSize":
-                    selectedText.setFontSize(PropertiesUtil.validateInt(source.getText(), selectedText.getFontSize()));
-                    break;
+                    int oldIntVal = selectedText.getFontSize();
+                    int newIntVal = PropertiesUtil.validateInt(source.getText(), selectedText.getFontSize());
+                    selectedText.setFontSize(newIntVal);
+                    
+                    if(newIntVal != oldIntVal) {
+                        update();
+                        parent.redraw();
+                    }
+
+                    return;
                 default:
                     break;
             }
             
-            update();
-            parent.redraw();
+            if(newVal != oldVal) {
+                System.out.println("new: " + newVal + " old: " + oldVal);
+                
+                update();
+                parent.redraw();
+            }
         }
     }
     
