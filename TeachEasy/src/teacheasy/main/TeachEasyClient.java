@@ -921,9 +921,10 @@ public class TeachEasyClient extends Application {
             if(ke.getCode() == KeyCode.DELETE) {
                 editorRuntimeData.removeObject();
             } else if(ke.getCode() == KeyCode.O && ke.isControlDown()) {
-                editorRuntimeData.openLesson();
+                fileOpenPressed();
             } else if(ke.getCode() == KeyCode.N) {
-                editorRuntimeData.nextObject();
+                editorRuntimeData.newPage();
+                updateUI();
             }
         }
     }

@@ -355,10 +355,8 @@ public class EditorRunTimeData {
             return;
         }
         
-        propertiesPane.update(
-                lesson.pages.get(currentPage),
-                lesson.pages.get(currentPage).pageObjects.get(
-                        lesson.pages.get(currentPage).pageObjects.size() - 1));
+        propertiesPane.update(lesson.pages.get(currentPage),
+                              lesson.pages.get(currentPage).pageObjects.get(lesson.pages.get(currentPage).pageObjects.size() - 1));
         
         redraw();
     }
