@@ -378,6 +378,8 @@ public class EditorRunTimeData {
         lesson.pages.get(currentPage).pageObjects.remove(index);
         
         propertiesPane.update(lesson.pages.get(currentPage), null);
+        
+        redraw();
     }
     
     /** Move selection to the next object */
