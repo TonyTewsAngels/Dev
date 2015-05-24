@@ -39,12 +39,11 @@ public class ProgressTracker {
         visitedPages[pageNumber] = true;
     }
 
-    /** A method to keep track of inidividula page marks */
+    /** A method to keep track of individual page marks */
     public void inidividualPageMarks(int pageMarks, int pageNumber) {
         System.out.println("The page number is: " + pageNumber);
         individuaPageMarks[pageNumber] = pageMarks;
         collateMarks(pageNumber);
-
     }
 
     /** A method that specifies whether a page has been visited */

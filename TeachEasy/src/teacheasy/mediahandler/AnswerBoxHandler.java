@@ -58,9 +58,9 @@ public class AnswerBoxHandler {
         int totalPageMarks = 0;
         for (int i = 0; i < answerBox.size(); i++) {
             if (answerBox.get(i).checkAnswerButton.isDisabled()
-                    && !answerBox.get(i).markCollated) {
-                totalPageMarks += answerBox.get(i).awardedMarks;
-                answerBox.get(i).markCollated = true;
+                    && !answerBox.get(i).isMarkCollated()) {
+                totalPageMarks += answerBox.get(i).getAwardedMarks();
+                answerBox.get(i).setMarkCollated(true);
             }
         }
         return totalPageMarks;

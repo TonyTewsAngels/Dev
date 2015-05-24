@@ -33,7 +33,7 @@ import javafx.scene.layout.HBox;
 public class AnswerBox {
     /* Fields */
     private int marks;
-    public int awardedMarks;
+    private int awardedMarks;
     private boolean retry;
     private String correctAnswers;
     private boolean answerIsCorrect;
@@ -42,7 +42,6 @@ public class AnswerBox {
     private double yStart;
     private boolean isNumerical;
     private boolean validInput;
-    public boolean buttonPressed;
 
     /* UI Elements */
     private Group group;
@@ -52,7 +51,7 @@ public class AnswerBox {
     private Label feedbackLabel;
 
     /* For checking if marks have been collated */
-    public boolean markCollated;
+    private boolean markCollated;
 
     /** Constructor method */
     public AnswerBox(double nXStart, double nYStart, int nCharacterLimit,
@@ -76,8 +75,8 @@ public class AnswerBox {
         this.retry = nRetry;
         this.isNumerical = nIsNumerical;
 
-        awardedMarks = 0;
-        markCollated = false;
+        setAwardedMarks(0);
+        setMarkCollated(false);
 
         /* A text field where answers can be typed */
         answerField = new TextField();
@@ -148,7 +147,7 @@ public class AnswerBox {
                         && answerField.getText().equalsIgnoreCase(
                                 listOfCorrectAnswers[i])) {
                     /* Award marks */
-                    awardedMarks += marks;
+                    setAwardedMarks(getAwardedMarks() + marks);
 
                     /* Acknowledge that question is answered correctly */
                     isCorrect = true;
@@ -202,7 +201,7 @@ public class AnswerBox {
              */
             if (validInput) {
                 if (answer >= minRange && answer <= maxRange) {
-                    awardedMarks += marks;
+                    setAwardedMarks(getAwardedMarks() + marks);
                     isCorrect = true;
                     retry = false;
                 }
@@ -221,14 +220,34 @@ public class AnswerBox {
         if (validInput == false && isNumerical == true) {
             feedbackLabel.setText("Invalid input");
         } else {
-            if (answerIsCorrect && awardedMarks > 1) {
-                feedbackLabel.setText("Correct! " + awardedMarks + " marks");
-            } else if (answerIsCorrect && awardedMarks == 1) {
-                feedbackLabel.setText("Correct! " + awardedMarks + " mark");
+            if (answerIsCorrect && getAwardedMarks() > 1) {
+                feedbackLabel.setText("Correct! " + getAwardedMarks()
+                        + " marks");
+            } else if (answerIsCorrect && getAwardedMarks() == 1) {
+                feedbackLabel
+                        .setText("Correct! " + getAwardedMarks() + " mark");
             } else {
                 feedbackLabel.setText("Incorrect");
             }
         }
+    }
+
+    /** method for getting markCollated */
+    public boolean isMarkCollated() {
+        return markCollated;
+    }
+
+    /** method for setting markCollated */
+    public void setMarkCollated(boolean markCollated) {
+        this.markCollated = markCollated;
+    }
+
+    public int getAwardedMarks() {
+        return awardedMarks;
+    }
+
+    public void setAwardedMarks(int awardedMarks) {
+        this.awardedMarks = awardedMarks;
     }
 
     /**
@@ -247,7 +266,6 @@ public class AnswerBox {
             if (id.equals("check answer") && answerField.isEditable() == true) {
                 answerIsCorrect = checkAnswer(marks);
                 displayFeedback();
-                buttonPressed = true;
             }
         }
     }
@@ -264,7 +282,6 @@ public class AnswerBox {
 
                 /* Display the outcome */
                 displayFeedback();
-                buttonPressed = true;
             }
         }
     }

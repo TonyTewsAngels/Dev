@@ -59,17 +59,8 @@ public class MultipleChoiceHandler {
                 type, orientation, retry, marks));
     }
 
-    /** Checks to see if all questions on the current page have been attempted */
-    public boolean AllMultipleChoiceQuestionsAttempted() {
-        for (int i = 0; i < multipleChoice.size(); i++) {
-            if (!multipleChoice.get(i).buttonPressed) {
-                return false;
-            }
-        }
-        return true;
-    }
 
-    /** Greys out all of the multiple choices currently on page */
+    /** Grays out all of the multiple choices currently on page */
     public void DisableAllMultipleChoices() {
         for (int i = 0; i < multipleChoice.size(); i++) {
             multipleChoice.get(i).disable();
@@ -81,10 +72,10 @@ public class MultipleChoiceHandler {
         int totalPageMarks = 0;
 
         for (int i = 0; i < multipleChoice.size(); i++) {
-            if (multipleChoice.get(i).markButton.isDisabled()
-                    && !multipleChoice.get(i).markCollated) {
-                totalPageMarks += multipleChoice.get(i).awardedMarks;
-                multipleChoice.get(i).markCollated = true;
+            if (multipleChoice.get(i).getMarkButton().isDisabled()
+                    && !multipleChoice.get(i).isMarkCollated()) {
+                totalPageMarks += multipleChoice.get(i).getAwardedMarks();
+                multipleChoice.get(i).setMarkCollated(true);
             }
         }
 
@@ -95,7 +86,7 @@ public class MultipleChoiceHandler {
     public boolean allMultipleChoicesDisabled() {
         boolean allDisabled = true;
         for (int i = 0; i < multipleChoice.size(); i++) {
-            if (!multipleChoice.get(i).markButton.isDisabled()) {
+            if (!multipleChoice.get(i).getMarkButton().isDisabled()) {
                 allDisabled = false;
             }
         }
