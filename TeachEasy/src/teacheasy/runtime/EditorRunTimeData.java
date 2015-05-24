@@ -404,30 +404,23 @@ public class EditorRunTimeData {
     }
     
     /** Mouse Pressed in the page area */
-    public void mousePressed(double x, double y, Bounds nBounds) {
+    public void mousePressed(float relX, float relY) {
         if(!isLessonOpen()) {
             return;
         }
         
-        float relativeX = ((float)(x - nBounds.getMinX())/(float)nBounds.getMaxX());
-        float relativeY = ((float)(y - nBounds.getMinY())/(float)nBounds.getMaxY());
+        System.out.println("Press: " + relX + ", " + relY);
         
-        //System.out.println("Press: " + x + ", " + y);
-        System.out.println("Press: " + relativeX + ", " + relativeY);
-        
-        mouseController.mousePressed(lesson.pages.get(currentPage), propertiesPane, relativeX, relativeY);
+        mouseController.mousePressed(lesson.pages.get(currentPage), propertiesPane, relX, relY);
     }
     
     /** Mouse released in the page area */
-    public void mouseReleased(double x, double y, Bounds nBounds, boolean onGroup) {
+    public void mouseReleased(float relX, float relY, boolean onGroup) {
         if(!isLessonOpen()) {
             return;
         }
         
-        float relativeX = ((float)(x - nBounds.getMinX())/(float)nBounds.getMaxX());
-        float relativeY = ((float)(y - nBounds.getMinY())/(float)nBounds.getMaxY());
-        
-        System.out.println("Release: " + relativeX + ", " + relativeY);
+        System.out.println("Release: " + relX + ", " + relY);
         
         if(onGroup) {
             propertiesPane.lateUpdate();

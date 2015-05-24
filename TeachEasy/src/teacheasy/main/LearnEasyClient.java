@@ -248,7 +248,7 @@ public class LearnEasyClient extends Application {
             /* Get the source */
             Button sourceButton = (Button) e.getSource();
             
-            /* TODO Check the ID of the source button and call the relevant runtime method */
+            /* Check the ID of the source button and call the relevant runtime method */
             switch(sourceButton.getId()) {
                 case "nextBtn":
                     nextPageButtonPressed();
@@ -261,7 +261,7 @@ public class LearnEasyClient extends Application {
                     break;
             }
 
-            /* TODO Update the UI to reflect any changes to the application state */
+            /* Update the UI to reflect any changes to the application state */
             updateUI();
         }
     }

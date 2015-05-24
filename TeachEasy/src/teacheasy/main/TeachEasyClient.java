@@ -52,6 +52,8 @@ public class TeachEasyClient extends Application {
     
     Group contentPanel;
     
+    Rectangle r;
+    
     Button textBtn;  
     Button imageBtn; 
     Button videoBtn;    
@@ -231,7 +233,7 @@ public class TeachEasyClient extends Application {
         
         /* Page */
         
-        Rectangle r = new Rectangle();
+        r = new Rectangle();
         r.setWidth(937.5);
         r.setHeight(527.34);
         r.setFill(Color.WHITE);
@@ -285,7 +287,7 @@ public class TeachEasyClient extends Application {
         imageBtn.setId("imgBtn");
         videoBtn.setId("vidBtn");
         tickBtn.setId("tickBtn");
-        graphicBtn.setId("graphBtn");
+        graphicBtn.setId("graphicBtn");
         audioBtn.setId("audioBtn");
         questionBtn.setId("questionBtn");
         
@@ -779,24 +781,26 @@ public class TeachEasyClient extends Application {
     }
     
     /** Mouse pressed */
-    public void mousePressed(double x, double y) {       
-        Bounds bounds = contentPanel.localToScene(contentPanel.getBoundsInLocal());
+    public void mousePressed(double x, double y) {
+        float relX = (float)(x - contentPanel.getLayoutX())/(float)(r.getWidth());
+        float relY = (float)(y - contentPanel.getLayoutY())/(float)(r.getHeight());
         
-        if(!(x > bounds.getMaxX() || x < bounds.getMinX() || y > bounds.getMaxY() || y < bounds.getMinY())) {
-            editorRuntimeData.mousePressed(x, y, bounds);
+        if(relX >= 0.0f || relX <= 1.0f || relY >= 0.0f || relY <= 1.0f) {
+            editorRuntimeData.mousePressed(relX, relY);
         } else {
             /** Click is not in the group */
         }
     }
     
     /** Mouse released */
-    public void mouseReleased(double x, double y) {      
-        Bounds bounds = contentPanel.localToScene(contentPanel.getBoundsInLocal());
+    public void mouseReleased(double x, double y) {
+        float relX = (float)(x - contentPanel.getLayoutX())/(float)(r.getWidth());
+        float relY = (float)(y - contentPanel.getLayoutY())/(float)(r.getHeight());
         
-        if(!(x > bounds.getMaxX() || x < bounds.getMinX() || y > bounds.getMaxY() || y < bounds.getMinY())) {
-            editorRuntimeData.mouseReleased(x, y, bounds, true);
+        if(relX >= 0.0f || relX <= 1.0f || relY >= 0.0f || relY <= 1.0f) {
+            editorRuntimeData.mouseReleased(relX, relY, true);
         } else {
-            editorRuntimeData.mouseReleased(x, y, bounds, false);
+            editorRuntimeData.mouseReleased(relX, relY, false);
         }
     }
     
