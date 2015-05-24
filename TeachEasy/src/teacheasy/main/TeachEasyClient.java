@@ -12,8 +12,10 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -25,6 +27,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -37,6 +40,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class TeachEasyClient extends Application {
     Text text, text1, botText, propText, titleText, page1, page2, page3;
@@ -53,7 +57,13 @@ public class TeachEasyClient extends Application {
     Button graphicBtn;
     Button audioBtn;
     Button questionBtn;
-    Button prevBtn;
+    Button previewBtn;
+     
+    Button nextPageBtn;
+    Button prevPageBtn;
+    
+    ComboBox<String> pageList;
+   
     
     /**
      * Override the start method inside the JavaFX Application
@@ -94,11 +104,9 @@ public class TeachEasyClient extends Application {
         innerGrid.setStyle("-fx-background-color: rgb(241,241,241);");
         bottomBar.setStyle("-fx-background-color:rgb(113,113,113);");
         botGrid.setStyle("-fx-background-color: rgb(113,113,113); -fx-border-color:black; fx-border-width: 8; -fx-border-style: solid;");
-        
-    
+
         titleBox.setEffect(new DropShadow());
-        
-        
+
         /* Setup Menubar */
         Menu menuFile = new Menu("File");
         Menu menuEdit = new Menu("Edit");
@@ -235,7 +243,13 @@ public class TeachEasyClient extends Application {
         graphicBtn = new Button();
         audioBtn = new Button();
         questionBtn = new Button();
-        prevBtn = new Button("");
+        previewBtn = new Button();
+        
+        nextPageBtn = new Button();
+        prevPageBtn = new Button();
+        
+        pageList = new ComboBox<String>();
+        
           
         /* Make buttons transparent */
         textBtn.setStyle("-fx-background-color: transparent;");
@@ -246,8 +260,10 @@ public class TeachEasyClient extends Application {
         graphicBtn.setStyle("-fx-background-color: transparent;");
         audioBtn.setStyle("-fx-background-color: transparent;");
         questionBtn.setStyle("-fx-background-color: transparent;");
-        prevBtn.setStyle("-fx-background-color: transparent;");
+        previewBtn.setStyle("-fx-background-color: transparent;");
         
+        nextPageBtn.setStyle("-fx-background-color: transparent;");
+        prevPageBtn.setStyle("-fx-background-color: transparent;");
         
         /* Pop up info for buttons */
         textBtn.setTooltip(new Tooltip("Insert text box"));
@@ -258,12 +274,10 @@ public class TeachEasyClient extends Application {
         audioBtn.setTooltip(new Tooltip("Insert audio clip"));
         questionBtn.setTooltip(new Tooltip("Insert question box"));
         
-        /* Set the buttons to use a button event handler */
+        nextPageBtn.setTooltip(new Tooltip("Next Page"));
+        prevPageBtn.setTooltip(new Tooltip("Previous Page"));
         
-
-        
-        /* Set button IDs NOTE: THESE CAUSE AS NULLPOINTER EXCEPTION!!!!!!!!!!!!    */
-     
+        /* Set the button ids */     
         textBtn.setId("textBtn");
         imageBtn.setId("imgBtn");
         videoBtn.setId("vidBtn");
@@ -272,12 +286,13 @@ public class TeachEasyClient extends Application {
         audioBtn.setId("audioBtn");
         questionBtn.setId("questionBtn");
         
+        nextPageBtn.setId("nextPageBtn");
+        prevPageBtn.setId("prevPageBtn");
+        
         /* Dummy Page Content */
         page1 = new Text(1, 1,"page1");
         page2 = new Text(1, 1,"page2");
         page3 = new Text(1, 1,"page3"); 
-        
-        Pagination pages = new Pagination(5);
         
         
         /* Re-skin buttons */
@@ -319,11 +334,20 @@ public class TeachEasyClient extends Application {
         Image mulImHO = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Choice_HO_TOP_CIRC_Blue_T-01.png"));
         Image mulImPR = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Choice_PRE_TOP_CIRC_Blue_T-01.png"));
         
+        //Arrows
+        Image arImST_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_ST_BOTTOM_RECT_DarkBlue_L-01.png"));
+        Image arImHO_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_HO_BOTTOM_RECT_DarkBlue_L-01.png"));
+        Image arImPRE_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-01.png"));
+        
+        Image arImST_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_ST_BOTTOM_RECT_DarkBlue_L-02.png"));
+        Image arImHO_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_HO_BOTTOM_RECT_DarkBlue_L-02.png"));
+        Image arImPRE_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-02.png"));
+        
         //Preview Button
         Image prevIm= new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Choice_PRE_TOP_CIRC_Blue_T-01.png"));
         
         ImageView Prev = new ImageView(prevIm);
-        prevBtn.setGraphic(Prev);   
+        previewBtn.setGraphic(Prev);   
         
         Prev.setFitWidth(80);
         Prev.setFitHeight(80);
@@ -363,6 +387,14 @@ public class TeachEasyClient extends Application {
         final ImageView mulBoxHO = new ImageView(mulImHO);
         final ImageView mulBoxPR= new ImageView(mulImPR);
         
+        final ImageView arST_L = new ImageView(arImST_L);
+        final ImageView arHO_L = new ImageView(arImHO_L);
+        final ImageView arPRE_L = new ImageView(arImPRE_L);
+        
+        final ImageView arST_R = new ImageView(arImST_R);
+        final ImageView arHO_R = new ImageView(arImHO_R);
+        final ImageView arPRE_R = new ImageView(arImPRE_R);
+        
         
         /* Skin buttons */
         textBtn.setGraphic(textBoxST); 
@@ -372,6 +404,9 @@ public class TeachEasyClient extends Application {
         graphicBtn.setGraphic(graphicBoxST); 
         audioBtn.setGraphic(audioBoxST); 
         questionBtn.setGraphic(queBoxST);
+
+        nextPageBtn.setGraphic(arST_R);
+        prevPageBtn.setGraphic(arST_L);
         
         /*Button dimensions*/
 
@@ -425,9 +460,28 @@ public class TeachEasyClient extends Application {
         mulBoxHO.setFitWidth(x);
         mulBoxHO.setFitHeight(y);
         mulBoxPR.setFitWidth(x);
-        mulBoxPR.setFitHeight(y);    
+        mulBoxPR.setFitHeight(y);
+        
+        x = 40;
+        y = 40;
+        
+        arST_L.setFitWidth(x);
+        arST_L.setFitHeight(y);
+        arHO_L.setFitWidth(x);
+        arHO_L.setFitHeight(y);
+        arPRE_L.setFitWidth(x);
+        arPRE_L.setFitHeight(y);
+        
+        arST_R.setFitWidth(x);
+        arST_R.setFitHeight(y);
+        arHO_R.setFitWidth(x);
+        arHO_R.setFitHeight(y);
+        arPRE_R.setFitWidth(x);
+        arPRE_R.setFitHeight(y);
+        
+        /* Setup the button event handling */
 
-        // Mouse Pressed
+        /* Mouse Pressed */
         textBtn.setOnMousePressed(new ButtonEventHandler(textBtn, textBoxPR));
         imageBtn.setOnMousePressed(new ButtonEventHandler(imageBtn, imBoxPR));
         videoBtn.setOnMousePressed(new ButtonEventHandler(videoBtn, vidBoxPR));
@@ -435,8 +489,10 @@ public class TeachEasyClient extends Application {
         graphicBtn.setOnMousePressed(new ButtonEventHandler(graphicBtn, graphicBoxPR));
         audioBtn.setOnMousePressed(new ButtonEventHandler(audioBtn, audioBoxPR));
         questionBtn.setOnMousePressed(new ButtonEventHandler(questionBtn, queBoxPR));
+        nextPageBtn.setOnMousePressed(new ButtonEventHandler(nextPageBtn, arPRE_R));
+        prevPageBtn.setOnMousePressed(new ButtonEventHandler(prevPageBtn, arPRE_L));
 
-        //Mouse Released        
+        /* Mouse Released */      
         textBtn.setOnMouseReleased(new ButtonEventHandler(textBtn, textBoxHO)); 
         imageBtn.setOnMouseReleased(new ButtonEventHandler(imageBtn, imBoxHO)); 
         videoBtn.setOnMouseReleased(new ButtonEventHandler(videoBtn, vidBoxHO)); 
@@ -444,17 +500,21 @@ public class TeachEasyClient extends Application {
         graphicBtn.setOnMouseReleased(new ButtonEventHandler(graphicBtn, graphicBoxHO)); 
         audioBtn.setOnMouseReleased(new ButtonEventHandler(audioBtn, audioBoxHO)); 
         questionBtn.setOnMouseReleased(new ButtonEventHandler(questionBtn, queBoxHO));
+        nextPageBtn.setOnMouseReleased(new ButtonEventHandler(nextPageBtn, arHO_R));
+        prevPageBtn.setOnMouseReleased(new ButtonEventHandler(prevPageBtn, arHO_L));
         
-        //Mouse Entered
+        /* Mouse Entered */
         textBtn.setOnMouseEntered(new ButtonEventHandler(textBtn, textBoxHO)); 
         imageBtn.setOnMouseEntered(new ButtonEventHandler(imageBtn, imBoxHO)); 
         videoBtn.setOnMouseEntered(new ButtonEventHandler(videoBtn, vidBoxHO)); 
         tickBtn.setOnMouseEntered(new ButtonEventHandler(tickBtn, mulBoxHO)); 
         graphicBtn.setOnMouseEntered(new ButtonEventHandler(graphicBtn, graphicBoxHO)); 
         audioBtn.setOnMouseEntered(new ButtonEventHandler(audioBtn, audioBoxHO)); 
-        questionBtn.setOnMouseEntered(new ButtonEventHandler(questionBtn, queBoxHO));       
+        questionBtn.setOnMouseEntered(new ButtonEventHandler(questionBtn, queBoxHO));
+        nextPageBtn.setOnMouseEntered(new ButtonEventHandler(nextPageBtn, arHO_R));
+        prevPageBtn.setOnMouseEntered(new ButtonEventHandler(prevPageBtn, arHO_L));
                
-        //Mouse Exited
+        /* Mouse Exited */
         textBtn.setOnMouseExited(new ButtonEventHandler(textBtn, textBoxST)); 
         imageBtn.setOnMouseExited(new ButtonEventHandler(imageBtn, imBoxST)); 
         videoBtn.setOnMouseExited(new ButtonEventHandler(videoBtn, vidBoxST)); 
@@ -462,6 +522,8 @@ public class TeachEasyClient extends Application {
         graphicBtn.setOnMouseExited(new ButtonEventHandler(graphicBtn, graphicBoxST)); 
         audioBtn.setOnMouseExited(new ButtonEventHandler(audioBtn, audioBoxST)); 
         questionBtn.setOnMouseExited(new ButtonEventHandler(questionBtn, queBoxST)); 
+        nextPageBtn.setOnMouseExited(new ButtonEventHandler(nextPageBtn, arST_R));
+        prevPageBtn.setOnMouseExited(new ButtonEventHandler(prevPageBtn, arST_L));
         
         /* Top Bar Constraints */
         
@@ -578,19 +640,18 @@ public class TeachEasyClient extends Application {
         paddingBox.setAlignment(Pos.CENTER_LEFT);
         
         titleBox.getChildren().addAll(titleText);
-        preview.getChildren().addAll(prevBtn);
+        preview.getChildren().addAll(previewBtn);
         topBar.getChildren().addAll(textBtn,imageBtn,videoBtn,tickBtn,graphicBtn,audioBtn,questionBtn);
         
         /* Add Dummy page to content panel */
         contentPanel.getChildren().addAll(r);
         
         botGrid.add(bottomBar,1,0);
-        botGrid.add(TE, 3, 0);        
-
-        bottomBar.getChildren().addAll(pages);
+        botGrid.add(TE, 3, 0);
         
         /* Set alignment of bottomBar content */
         bottomBar.setAlignment(Pos.BASELINE_CENTER);
+        bottomBar.getChildren().addAll(prevPageBtn, pageList, nextPageBtn);
         
         /* Setup the window */
         primaryStage.setTitle("TE_GUI_3");
@@ -606,6 +667,8 @@ public class TeachEasyClient extends Application {
         
         /* Show the window */
         primaryStage.show();
+        
+        updateUI();
     }
     
     public void updateUI() {        
@@ -621,6 +684,20 @@ public class TeachEasyClient extends Application {
             graphicBtn.setDisable(false);
             tickBtn.setDisable(false);
             questionBtn.setDisable(false);
+            
+            if(!editorRuntimeData.isNextPage()) {
+                nextPageBtn.setDisable(true);
+            } else {
+                nextPageBtn.setDisable(false);
+            }
+            
+            if(!editorRuntimeData.isPrevPage()) {
+                prevPageBtn.setDisable(true);
+            } else {
+                prevPageBtn.setDisable(false);
+            }
+            
+            pageList.setDisable(false);
         } else {
             textBtn.setDisable(true);
             imageBtn.setDisable(true);
@@ -629,6 +706,11 @@ public class TeachEasyClient extends Application {
             graphicBtn.setDisable(true);
             tickBtn.setDisable(true);
             questionBtn.setDisable(true);
+            
+            nextPageBtn.setDisable(true);
+            prevPageBtn.setDisable(true);
+            
+            pageList.setDisable(true);
         }
     }
     
@@ -808,6 +890,12 @@ public class TeachEasyClient extends Application {
                             break;
                         case "questionBtn":
                             editorRuntimeData.newObject(PageObjectType.ANSWER_BOX);
+                            break;
+                        case "nextPageBtn":
+                            nextPageButtonPressed();
+                            break;
+                        case "prevPageBtn":
+                            prevPageButtonPressed();
                             break;
                     }
                 }
