@@ -19,18 +19,23 @@ public class ProgressTracker {
 
     private int marks = 0;
     private boolean visitedPages[];
-    private int individuaPageMarks[];
+    private int individualPageMarks[];
     private int totalNumberOfPages;
 
     public ProgressTracker(int nTotalNumberOfPages) {
         this.totalNumberOfPages = nTotalNumberOfPages;
+        
+        individualPageMarks = new int[totalNumberOfPages];
         visitedPages = new boolean[totalNumberOfPages];
-        individuaPageMarks = new int[totalNumberOfPages];
+
+        /* Initialise arrays */
+        initialiseArray(0);
+        initialiseArray(1);
     }
 
     /** A method that keeps track of all the marks in a lesson */
     private void collateMarks(int pageNumber) {
-        marks += individuaPageMarks[pageNumber];
+        marks += individualPageMarks[pageNumber];
         System.out.println(marks + " marks so far");
     }
 
@@ -42,7 +47,7 @@ public class ProgressTracker {
     /** A method to keep track of individual page marks */
     public void inidividualPageMarks(int pageMarks, int pageNumber) {
         System.out.println("The page number is: " + pageNumber);
-        individuaPageMarks[pageNumber] = pageMarks;
+        individualPageMarks[pageNumber] = pageMarks;
         collateMarks(pageNumber);
     }
 
@@ -52,6 +57,29 @@ public class ProgressTracker {
             return true;
         } else {
             return false;
+        }
+    }
+
+    /**
+     * A method to initialise the individualPageMarks array to 0 and
+     * visitedPages array to false type 0 = individual page marks type 1 =
+     * visited pages
+     * 
+     * */
+    private void initialiseArray(int type) {
+        switch (type) {
+        case 0:
+            for (int i = 0; i < individualPageMarks.length; i++) {
+                individualPageMarks[i] = 0;
+            }
+            break;
+        case 1:
+            for (int i = 0; i < visitedPages.length; i++) {
+                visitedPages[i] = false;
+            }
+            break;
+        default:
+            break;
         }
     }
 }
