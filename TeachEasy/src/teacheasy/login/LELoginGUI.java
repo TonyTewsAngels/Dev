@@ -108,11 +108,15 @@ public void start(Stage primaryStage) {
 	passText.setPromptText("Password");
 	
 	//Add LE Logo
-	int x = 150;
-	int y = 150;
+	int x = 143;
+	int y = 143;
 	
-	//Image LE = new Image("LE_V4_1_1.png");
+	// Dimensions: 143 x 162 (Too Pixelated)
+	/*Image LE = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/LE_V5.png"));*/
+	
+	// Dimensions: 1000 x 1000 (Use x,y to make appropriate size)
 	Image LE = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/LE_V4_1_1.png"));
+
 	ImageView Logo = new ImageView(LE);
 	Logo.setFitWidth(x);
 	Logo.setFitHeight(y);

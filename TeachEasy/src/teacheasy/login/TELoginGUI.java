@@ -99,7 +99,7 @@ public void start(Stage primaryStage) {
 	wel.setFont(new Font("Myriad", 30));
 	
 	Label wel_2 = new Label("Please Log In");
-	wel_2.setFont(new Font("Myriad", 15));
+	wel_2.setFont(new Font("", 15));
 
 	//TextFileds
 	final TextField userText = new TextField();
@@ -109,11 +109,11 @@ public void start(Stage primaryStage) {
 	passText.setPromptText("Password");
 	
 	//Add LE Logo
-	int x = 150;
-	int y = 150;
+	int x = 0;
+	int y = 0;
 	
 	//Image LE = new Image("LE_V4_1_1.png");
-	Image LE = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/TE_4_0.png"));
+	Image LE = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/TE_V5.png"));
 	ImageView Logo = new ImageView(LE);
 	Logo.setFitWidth(x);
 	Logo.setFitHeight(y);
