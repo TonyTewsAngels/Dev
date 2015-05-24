@@ -47,6 +47,9 @@ public class TextPropertiesController {
     /* The button for choosing a new file */
     private Button fileButton;
     
+    /* The button for changing the text */
+    private Button editTextButton;
+    
     /**
      * Constructor. 
      * 
@@ -63,6 +66,11 @@ public class TextPropertiesController {
         textProperties = new VBox();
         textProperties.setSpacing(5);
         textProperties.setPadding(new Insets(5));
+        
+        /* Set up the edit text button */
+        editTextButton = new Button("Edit Text");
+        
+        textProperties.getChildren().add(editTextButton);
         
         /* Set up the file select button */
         fileButton = PropertiesUtil.addFileField("file", "File: ", fileButton, textProperties, new ButtonPressedHandler());
