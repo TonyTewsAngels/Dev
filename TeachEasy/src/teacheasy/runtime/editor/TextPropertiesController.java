@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.web.HTMLEditor;
 import teacheasy.data.TextObject;
 import teacheasy.render.Util;
 import wavemedia.graphic.GraphicType;
@@ -69,7 +70,8 @@ public class TextPropertiesController {
         
         /* Set up the edit text button */
         editTextButton = new Button("Edit Text");
-        
+        editTextButton.setId("editText");
+        editTextButton.setOnAction(new ButtonPressedHandler());
         textProperties.getChildren().add(editTextButton);
         
         /* Set up the file select button */
@@ -187,6 +189,10 @@ public class TextPropertiesController {
                 selectedText.setSourceFile(PropertiesUtil.validateFile(selectedText.getSourceFile(), "Text: ", "*.txt"));
                 update();
                 parent.redraw();
+            } else if(source.getId() == "editText") {
+                System.out.println("Edit");
+                
+                //new HTMLEditor();
             }
         }
     }
