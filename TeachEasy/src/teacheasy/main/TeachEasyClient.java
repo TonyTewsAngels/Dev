@@ -6,6 +6,8 @@ import teacheasy.debug.EditorRuntimeDataDummyUI.MenuEventHandler;
 import teacheasy.debug.EditorRuntimeDataDummyUI.MouseEventHandler;
 import teacheasy.runtime.EditorRunTimeData;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
@@ -62,7 +64,7 @@ public class TeachEasyClient extends Application {
     Button nextPageBtn;
     Button prevPageBtn;
     
-    ComboBox<String> pageList;
+    ComboBox<Integer> pageList;
    
     
     /**
@@ -248,8 +250,8 @@ public class TeachEasyClient extends Application {
         nextPageBtn = new Button();
         prevPageBtn = new Button();
         
-        pageList = new ComboBox<String>();
-        
+        pageList = new ComboBox<Integer>();
+        pageList.valueProperty().addListener(new PageListListener());        
           
         /* Make buttons transparent */
         textBtn.setStyle("-fx-background-color: transparent;");
@@ -276,6 +278,7 @@ public class TeachEasyClient extends Application {
         
         nextPageBtn.setTooltip(new Tooltip("Next Page"));
         prevPageBtn.setTooltip(new Tooltip("Previous Page"));
+        pageList.setTooltip(new Tooltip("Select a Page"));
         
         /* Set the button ids */     
         textBtn.setId("textBtn");
@@ -698,6 +701,13 @@ public class TeachEasyClient extends Application {
             }
             
             pageList.setDisable(false);
+            pageList.getItems().clear();
+            
+            for(int i = 0; i < editorRuntimeData.getPageCount(); i++) {
+                pageList.getItems().add(new Integer(i+1));
+            }
+            
+            pageList.setValue(new Integer(editorRuntimeData.getCurrentPageNumber() + 1));
         } else {
             textBtn.setDisable(true);
             imageBtn.setDisable(true);
@@ -711,6 +721,8 @@ public class TeachEasyClient extends Application {
             prevPageBtn.setDisable(true);
             
             pageList.setDisable(true);
+            
+            pageList.getItems().clear();
         }
     }
     
@@ -923,6 +935,20 @@ public class TeachEasyClient extends Application {
                 mousePressed(me.getSceneX(), me.getSceneY());
             } else if(me.getEventType() == MouseEvent.MOUSE_RELEASED) {
                 mouseReleased(me.getSceneX(), me.getSceneY());
+            }
+        }
+    }
+    
+    public class PageListListener implements ChangeListener<Integer> {
+        @Override
+        public void changed(ObservableValue<? extends Integer> ov,
+                            Integer oldVal, Integer newVal) {
+            System.out.println("old: " + oldVal + " new: " + newVal);
+            if(newVal != null) {
+                if((newVal - 1) != editorRuntimeData.getCurrentPageNumber()) {
+                    editorRuntimeData.setCurrentPage(newVal - 1);
+                    updateUI();
+                }
             }
         }
     }
