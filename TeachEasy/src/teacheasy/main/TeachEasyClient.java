@@ -939,6 +939,10 @@ public class TeachEasyClient extends Application {
             } else if(ke.getCode() == KeyCode.N) {
                 editorRuntimeData.newPage();
                 updateUI();
+            } else if(ke.getCode() == KeyCode.C && ke.isControlDown()) {
+                editorRuntimeData.copyObject();
+            } else if(ke.getCode() == KeyCode.V && ke.isControlDown()) {
+                editorRuntimeData.pasteObject();
             }
         }
     }

@@ -409,8 +409,24 @@ public class EditorRunTimeData {
     }
     
     /** Copy an object to the clipboard */
+    public void copyObject() {
+        if(propertiesPane.getSelectedObject() == null) {
+            return;
+        }
+        
+        clipboard.pageObjects.clear();
+        
+        NewObjectController.copyObject(clipboard, propertiesPane.getSelectedObject());
+    }
     
-    
+    /** Paste an object from the clipboard */
+    public void pasteObject() {
+        if(clipboard.pageObjects.size() < 1) {
+            return;
+        }
+        
+        NewObjectController.copyObject(lesson.pages.get(currentPage), clipboard.pageObjects.get(0));
+    }
     
     /** Mouse Pressed in the page area */
     public void mousePressed(float relX, float relY) {
