@@ -21,6 +21,10 @@
     
 	<slide backgroundcolor="#ffffffff" number="1">
 	
+		<text font="arial" fontcolor="#" fontsize="20" sourcefile="null" xstart="0.15" ystart="0.05" xend="0.25" yend="0.1">
+            <richtext bold="true" italic="false" strikethrough="false" newline="false" superscipt="false" subscript="false" underline="true" font="arial" fontcolor="#" fontsize="70">Learn Piano</richtext>
+        </text>
+	
 	</slide>
 
 	

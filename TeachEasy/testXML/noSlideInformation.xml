@@ -19,9 +19,10 @@
         <passboundary failmessage="fail" passmessage="pass">2</passboundary>
     </gradesettings>
     
-	<slide backgroundcolor="#ffffffff" number="1">
-	
-	</slide>
+    <slide>
+		<text font="arial" fontcolor="#ffffffff" fontsize="20" sourcefile="null" xstart="0.15" ystart="0.05" xend="0.25" yend="0.1">
+            <richtext bold="true" italic="false" strikethrough="false" newline="false" Superscipt="false" subscript="false" underline="true" font="arial" fontcolor="#ffffffff" fontsize="70">Learn Piano</richtext>
+        </text>
+    </slide>
 
-	
 </slideshow>

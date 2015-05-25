@@ -19,9 +19,7 @@
         <passboundary failmessage="fail" passmessage="pass">2</passboundary>
     </gradesettings>
     
-	<slide backgroundcolor="#ffffffff" number="1">
-	
+    <slide backgroundcolor="#ffffffff" number="1">
+   		<answerbox xstart="0.5" ystart ="0.7" characterlimit="2" correctanswer="f#~gb" marks="1" numerical="false"/>
 	</slide>
-
-	
 </slideshow>

@@ -18,10 +18,5 @@
     <gradesettings>
         <passboundary failmessage="fail" passmessage="pass">2</passboundary>
     </gradesettings>
-    
-	<slide backgroundcolor="#ffffffff" number="1">
-	
-	</slide>
-
-	
+    <slide backgroundcolor="#ffffffff"/>
 </slideshow>
