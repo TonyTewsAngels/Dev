@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.prefs.Preferences;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -73,6 +74,11 @@ public class RunTimeData {
 
     /* Renderer */
     private Renderer renderer;
+    
+    /* home page*/
+    private Preferences preference;
+    
+  
 
     /** Constructor method */
     public RunTimeData(Group nGroup, Rectangle2D nBounds,
@@ -88,7 +94,10 @@ public class RunTimeData {
         this.lessonOpen = false;
         
         pageDirection = false;
-
+        
+        /* Load the preference */
+        setPreference();
+        
         /* Instantiate an empty lesson */
         this.lesson = new Lesson();
 
@@ -332,10 +341,16 @@ public class RunTimeData {
                 .getProperty("user.home")));
 
         /* Set the initial directory to the recent read path */
-        if (xmlHandler.getRecentReadPath() != null) {
+       /* if (xmlHandler.getRecentReadPath() != null) {
             fileChooser.setInitialDirectory(new File(new File(xmlHandler
                     .getRecentReadPath()).getParent()));
-        }
+        }*/
+        
+        
+        /* Set the initial directory to the recent read path */
+        fileChooser.setInitialDirectory(new File(preference.get("recentlyOpened", "hi")));
+        
+       
 
         /* Get the file to open */
         File file = fileChooser.showOpenDialog(new Stage());
@@ -371,6 +386,7 @@ public class RunTimeData {
         setPageCount(lesson.pages.size());
         setCurrentPage(0);
         setLessonOpen(true);
+        
         /*This needs moving somewhere more appropriate!*/
         progressTracker = new ProgressTracker(pageCount);
         
@@ -415,5 +431,16 @@ public class RunTimeData {
 
 	public void setPageDirection(boolean pageDirection) {
 		this.pageDirection = pageDirection;
+	}
+	
+	private void setPreference(){
+		 /* Instantiate preferences */
+        preference = Preferences.userRoot().node(this.getClass().getName());
+        
+        /* String to store the path of the recently opened lesson*/
+        String recentlyOpened = "recentlyOpened";
+        
+        /*Set actual path*/
+        preference.put(recentlyOpened, "//userfs/dbb503/w2k/workspace/Dev/TeachEasy");
 	}
 }
