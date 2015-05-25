@@ -33,6 +33,8 @@ public class VideoPropertiesController {
     /* The button for choosing a new file */
     private Button fileButton;
     
+    public boolean redrawBlock = false;
+    
     /**
      * Constructor. 
      * 
@@ -92,20 +94,34 @@ public class VideoPropertiesController {
             
             switch(source.getId()) {
                 case "xStart":
-                    selectedVideo.setXStart(PropertiesUtil.validatePosition(source.getText(), selectedVideo.getXStart()));
+                    float oldXStart = selectedVideo.getXStart();
+                    float newXStart = PropertiesUtil.validatePosition(source.getText(), selectedVideo.getXStart());
+                    if(newXStart != oldXStart) {
+                        selectedVideo.setXStart(PropertiesUtil.validatePosition(source.getText(), selectedVideo.getXStart()));
+                    }
                     break;
                 case "yStart":
-                    selectedVideo.setYStart(PropertiesUtil.validatePosition(source.getText(), selectedVideo.getYStart()));
+                    float oldYStart = selectedVideo.getYStart();
+                    float newYStart = PropertiesUtil.validatePosition(source.getText(), selectedVideo.getYStart());
+                    if(newYStart != oldYStart) {
+                        selectedVideo.setYStart(PropertiesUtil.validatePosition(source.getText(), selectedVideo.getYStart()));
+                    }
                     break;
                 case "xEnd":
-                    selectedVideo.setXEnd(PropertiesUtil.validatePosition(source.getText(), selectedVideo.getXEnd()));
+                    float oldXEnd = selectedVideo.getXStart();
+                    float newXEnd = PropertiesUtil.validatePosition(source.getText(), selectedVideo.getXStart());
+                    if(newXEnd != oldXEnd) {
+                        selectedVideo.setXEnd(PropertiesUtil.validatePosition(source.getText(), selectedVideo.getXEnd()));
+                    }
                     break;
                 default:
                     break;
             }
             
             update();
-            parent.redraw();
+            if(!redrawBlock) {
+                parent.redraw();
+            }
         }
     }
     
@@ -116,7 +132,9 @@ public class VideoPropertiesController {
             if(source.getId() == "file") {
                 selectedVideo.setSourcefile(PropertiesUtil.validateFile(selectedVideo.getSourcefile(), "Videos","*.mp4", "*.flv"));
                 update();
-                parent.redraw();
+                if(!redrawBlock) {
+                    parent.redraw();
+                }
             }
         }
     }

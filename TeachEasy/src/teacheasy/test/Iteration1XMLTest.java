@@ -204,14 +204,6 @@ public class Iteration1XMLTest {
 				assertTrue(answerbox.isRetry() == false);
 				assertTrue(answerbox.getMarks() == 5);
 				break;
-			case BUTTON:
-				ButtonObject button = (ButtonObject)pageObject;
-				//Check positions
-				assertTrue(button.getXStart() == 0.1f);
-				assertTrue(button.getYStart() == 0.1f);
-				assertTrue(button.isVisible() == true);
-				assertTrue(button.getFunction() == 1);
-				break;
 			case MULTIPLE_CHOICE:
 				MultipleChoiceObject multipleChoice = (MultipleChoiceObject)pageObject;
 				//Check positions

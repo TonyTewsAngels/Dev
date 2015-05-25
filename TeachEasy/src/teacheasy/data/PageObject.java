@@ -26,7 +26,6 @@ public abstract class PageObject {
 		VIDEO,
 		ANSWER_BOX,
 		MULTIPLE_CHOICE,
-		BUTTON
 	}
 	
 	/** The type of this page object */

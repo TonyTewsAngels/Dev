@@ -9,6 +9,7 @@ package teacheasy.runtime;
 import java.io.File;
 import java.util.ArrayList;
 
+import javafx.geometry.Bounds;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.layout.VBox;
@@ -19,6 +20,8 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import teacheasy.data.*;
 import teacheasy.data.PageObject.PageObjectType;
 import teacheasy.render.Renderer;
+import teacheasy.runtime.editor.MouseController;
+import teacheasy.runtime.editor.NewObjectController;
 import teacheasy.runtime.editor.PropertiesPane;
 import teacheasy.xml.*;
 import teacheasy.xml.util.XMLNotification;
@@ -54,6 +57,9 @@ public class EditorRunTimeData {
     
     /* Properties Pane Controller */
     private PropertiesPane propertiesPane;
+    
+    /* Mouse controller */
+    MouseController mouseController;
 
     /** Constructor method */
     public EditorRunTimeData(Group nGroup, Rectangle2D nBounds, VBox propPaneBox) {
@@ -77,6 +83,8 @@ public class EditorRunTimeData {
         
         /* Instantiate the properties pane conroller */
         propertiesPane = new PropertiesPane(propPaneBox, this);
+        
+        mouseController = new MouseController();
         
         /* Draw the page */
         redraw(group, bounds);
@@ -117,6 +125,7 @@ public class EditorRunTimeData {
             currentPage++;
             
             propertiesPane.update(lesson.pages.get(currentPage), null);
+            propertiesPane.lateUpdate();
             
             redraw(group, bounds);
         }
@@ -128,6 +137,7 @@ public class EditorRunTimeData {
             currentPage--;
             
             propertiesPane.update(lesson.pages.get(currentPage), null);
+            propertiesPane.lateUpdate();
             
             redraw(group, bounds);
         }
@@ -271,6 +281,10 @@ public class EditorRunTimeData {
         /* Get the file to save */
         File file = fileChooser.showSaveDialog(new Stage());
         
+        if(file == null) {
+            return;
+        }
+        
         String filePath = file.getAbsolutePath();
         
         if(!filePath.endsWith(".xml")) {
@@ -312,11 +326,61 @@ public class EditorRunTimeData {
         setCurrentPage(lesson.pages.size() - 1);
     }
     
-    /** Add a new object to the current page */
-    public void newObject(PageObjectType type) {
-        System.out.println("Adding new " + type.toString());
+    /** Remove the current page */
+    public void removePage() {
+        if(!isLessonOpen()) {
+            return;
+        }
+        
+        if(lesson.pages.size() <= 1) {
+            lesson.pages.get(currentPage).pageObjects.clear();
+            return;
+        }
+        
+        lesson.pages.remove(currentPage);
+        
+        setPageCount(lesson.pages.size());
+        setCurrentPage(0);
     }
     
+    /** Add a new object to the current page */
+    public void newObject(PageObjectType type) {
+        if(!isLessonOpen()) {
+            return;
+        }
+        
+        NewObjectController.addObject(lesson.pages.get(currentPage), type);
+        
+        if(lesson.pages.get(currentPage).pageObjects.size() == 0) {
+            return;
+        }
+        
+        propertiesPane.update(lesson.pages.get(currentPage),
+                              lesson.pages.get(currentPage).pageObjects.get(lesson.pages.get(currentPage).pageObjects.size() - 1));
+        
+        redraw();
+    }
+    
+    /** Remove the current object from the page */
+    public void removeObject() {
+        if(!isLessonOpen() || propertiesPane.getSelectedObject() == null) {
+            return;
+        }
+        
+        int index = lesson.pages.get(currentPage).pageObjects.indexOf(propertiesPane.getSelectedObject());
+        
+        if(index == -1 || index == lesson.pages.get(currentPage).pageObjects.size()) {
+            return;
+        }
+        
+        lesson.pages.get(currentPage).pageObjects.remove(index);
+        
+        propertiesPane.update(lesson.pages.get(currentPage), null);
+        
+        redraw();
+    }
+    
+    /** Move selection to the next object */
     public void nextObject() {
         int index;
         
@@ -339,6 +403,29 @@ public class EditorRunTimeData {
         propertiesPane.update(lesson.pages.get(currentPage), lesson.pages.get(currentPage).pageObjects.get(index));
     }
     
+    /** Mouse Pressed in the page area */
+    public void mousePressed(float relX, float relY) {
+        if(!isLessonOpen()) {
+            return;
+        }
+        
+        System.out.println("Press: " + relX + ", " + relY);
+        
+        mouseController.mousePressed(lesson.pages.get(currentPage), propertiesPane, relX, relY);
+    }
+    
+    /** Mouse released in the page area */
+    public void mouseReleased(float relX, float relY, boolean onGroup) {
+        if(!isLessonOpen()) {
+            return;
+        }
+        
+        System.out.println("Release: " + relX + ", " + relY);
+        
+        if(onGroup) {
+            propertiesPane.lateUpdate();
+        }
+    }
     
     /** Redraw the content */
     public void redraw(Group group, Rectangle2D bounds) {        
