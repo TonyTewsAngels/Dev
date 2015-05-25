@@ -45,10 +45,13 @@ public class AnswerBox {
 
     /* UI Elements */
     private Group group;
-    private TextField answerField;
+    public TextField answerField;
     private HBox box;
-    private Button checkAnswerButton;
+    public Button checkAnswerButton;
     private Label feedbackLabel;
+
+    /* For checking if marks have been collated */
+    private boolean markCollated;
 
     /** Constructor method */
     public AnswerBox(double nXStart, double nYStart, int nCharacterLimit,
@@ -56,11 +59,12 @@ public class AnswerBox {
             boolean nIsNumerical, Group nGroup) {
 
         /* Setting local variables */
-        if (nMarks > 0) {
+        if (nMarks > 0){
             this.marks = nMarks;
         } else {
             this.marks = 0;
         }
+        
         this.correctAnswers = nCorrectAnswers;
 
         /* To prevent negative or 0 character limit */
@@ -75,6 +79,9 @@ public class AnswerBox {
         this.group = nGroup;
         this.retry = nRetry;
         this.isNumerical = nIsNumerical;
+
+        setAwardedMarks(0);
+        setMarkCollated(false);
 
         /* A text field where answers can be typed */
         answerField = new TextField();
@@ -119,6 +126,9 @@ public class AnswerBox {
 
         /* Add box back to the main screen */
         group.getChildren().add(box);
+
+        // /*Initialise the buttonPressed variable as false*/
+        // this.buttonPressed = false;
     }
 
     /**
@@ -135,22 +145,23 @@ public class AnswerBox {
             String[] listOfCorrectAnswers = correctAnswers.split("~");
             for (int i = 0; i < listOfCorrectAnswers.length; i++) {
                 /*
-                 * Compares user submitted answers with the list of available
-                 * answers
+                 * Checks if there is at least a character and compares user
+                 * submitted answers with the list of available answers
                  */
-                if (answerField.getText().toUpperCase()
-                        .equals(listOfCorrectAnswers[i].toUpperCase())) {
+                if (answerField.getText().length() >= 1
+                        && answerField.getText().equalsIgnoreCase(
+                                listOfCorrectAnswers[i])) {
                     /* Award marks */
-                    awardedMarks += nMarks;
+                    setAwardedMarks(getAwardedMarks() + marks);
 
                     /* Acknowledge that question is answered correctly */
                     isCorrect = true;
 
                     /* Disable retry if answered correctly */
                     retry = false;
-
                     break;
                 }
+
             }
         }
         /* Used when expecting numerical inputs in the TextField */
@@ -195,7 +206,7 @@ public class AnswerBox {
              */
             if (validInput) {
                 if (answer >= minRange && answer <= maxRange) {
-                    awardedMarks += nMarks;
+                    setAwardedMarks(getAwardedMarks() + marks);
                     isCorrect = true;
                     retry = false;
                 }
@@ -214,12 +225,34 @@ public class AnswerBox {
         if (validInput == false && isNumerical == true) {
             feedbackLabel.setText("Invalid input");
         } else {
-            if (answerIsCorrect) {
-                feedbackLabel.setText("Correct! " + awardedMarks + " marks");
+            if (answerIsCorrect && getAwardedMarks() > 1) {
+                feedbackLabel.setText("Correct! " + getAwardedMarks()
+                        + " marks");
+            } else if (answerIsCorrect && getAwardedMarks() == 1) {
+                feedbackLabel
+                        .setText("Correct! " + getAwardedMarks() + " mark");
             } else {
                 feedbackLabel.setText("Incorrect");
             }
         }
+    }
+
+    /** method for getting markCollated */
+    public boolean isMarkCollated() {
+        return markCollated;
+    }
+
+    /** method for setting markCollated */
+    public void setMarkCollated(boolean markCollated) {
+        this.markCollated = markCollated;
+    }
+
+    public int getAwardedMarks() {
+        return awardedMarks;
+    }
+
+    public void setAwardedMarks(int awardedMarks) {
+        this.awardedMarks = awardedMarks;
     }
 
     /**
