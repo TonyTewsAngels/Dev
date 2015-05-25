@@ -13,6 +13,7 @@ import teacheasy.data.MultipleChoiceObject;
 import teacheasy.data.MultipleChoiceObject.MultiChoiceType;
 import teacheasy.data.Page;
 import teacheasy.data.MultipleChoiceObject.Orientation;
+import teacheasy.data.PageObject;
 import teacheasy.data.PageObject.PageObjectType;
 import teacheasy.data.RichText;
 import teacheasy.data.TextObject;
@@ -177,5 +178,178 @@ public class NewObjectController {
         GraphicObject graphic = new GraphicObject(GraphicType.OVAL, 0.0f, 0.0f, 0.1f, 0.1f, 0.0f, "#ff000000", true, "#ff000000", 2, false, 0.0f, 0.0f);
         
         page.pageObjects.add(graphic);
+    }
+    
+    /**
+     * 'Paste' a copy of an object on a page.
+     * 
+     * @param page The page to paste the object on.
+     * @param object The object to copy
+     */
+    public static void copyObject(Page page, PageObject object) {
+        switch(object.getType()) {
+            case ANSWER_BOX:
+                break;
+            case AUDIO:
+                break;
+            case GRAPHIC:
+                break;
+            case IMAGE:
+                break;
+            case MULTIPLE_CHOICE:
+                break;
+            case TEXT:
+                break;
+            case VIDEO:
+                break;
+            default:
+                break;
+        }
+    }
+    
+    /**
+     * Copy an image object.
+     * 
+     * @param page The page to copy the image onto.
+     * @param image The image object
+     */
+    public static void copyImageObject(Page page, ImageObject image) {        
+        ImageObject newImage = new ImageObject(image.getXStart(),
+                                               image.getYStart(),
+                                               image.getXEnd(),
+                                               image.getYEnd(),
+                                               image.getSourcefile(),
+                                               image.getxScaleFactor(),
+                                               image.getyScaleFactor(),
+                                               image.getRotation(),
+                                               image.getStartTime(),
+                                               image.getDuration());
+        
+        page.pageObjects.add(newImage);
+    }
+    
+    /**
+     * Copy a video object.
+     * 
+     * @param page The page to copy the video onto.
+     * @param video The video to copy.
+     */
+    public static void copyVideoObject(Page page, VideoObject video) {        
+        VideoObject newVideo = new VideoObject(video.getXStart(),
+                                               video.getYStart(),
+                                               video.getXEnd(),
+                                               video.getSourcefile());
+        
+        page.pageObjects.add(newVideo);
+    }
+    
+    /**
+     * Copy an audio clip object.
+     * 
+     * @param page The page to copy the audio onto.
+     * @param audio The audio object to copy.
+     */
+    public static void copyAudioObject(Page page, AudioObject audio) {
+        AudioObject newAudio = new AudioObject(audio.getXStart(),
+                                               audio.getXEnd(), 
+                                               audio.isViewProgress(), 
+                                               audio.getSourcefile());
+        
+        page.pageObjects.add(newAudio);
+    }
+    
+    /**
+     * Copy a text box.
+     * 
+     * @param page The page to add copy text box onto.
+     * @text The text box object to copy.
+     */
+    public static void copyTextObject(Page page, TextObject text) {
+        TextObject newText = new TextObject(text.getXStart(),
+                                            text.getYStart(),
+                                            text.getXEnd(),
+                                            text.getYEnd(),
+                                            text.getFont(),
+                                            text.getFontSize(),
+                                            text.getColor(),
+                                            text.getSourceFile(),
+                                            text.getStartTime(),
+                                            text.getDuration());
+        
+        for(int i = 0; i < text.textFragments.size(); i++) {
+            RichText frag = text.textFragments.get(i);
+            
+            newText.textFragments.add(new RichText(frag.getText(),
+                                                   frag.getFont(),
+                                                   frag.getFontSize(),
+                                                   frag.getColor(),
+                                                   (String[]) frag.getSettings().toArray()));
+        }
+        
+        page.pageObjects.add(newText);
+    }
+    
+    /**
+     * Copy a multiple choice question.
+     * 
+     * @param page The page to copy the multiple choice object onto.
+     * @param mchoice The multiple choice object to copy.
+     */
+    public static void copyMultipleChoiceObject(Page page, MultipleChoiceObject mChoice) {
+        MultipleChoiceObject newMChoice = new MultipleChoiceObject(mChoice.getXStart(),
+                                                                   mChoice.getYStart(),
+                                                                   mChoice.getOrientation(),
+                                                                   mChoice.getMultiChoiceType(),
+                                                                   mChoice.getMarks(),
+                                                                   mChoice.isRetry());
+        
+        for(int i = 0; i < mChoice.getAnswers().size(); i++) {
+            Answer answer = mChoice.getAnswers().get(i);
+            newMChoice.addAnswer(new Answer(answer.getText(), answer.isCorrect()));
+        }
+        
+        page.pageObjects.add(newMChoice);
+    }
+    
+    /**
+     * Copy an answer box onto a page.
+     * 
+     * @param page The page to copy the answer box onto.
+     * @param answerBox The answerbox to copy.
+     */
+    public static void copyAnswerBoxObject(Page page, AnswerBoxObject answerBox) {
+        AnswerBoxObject newAnswerBox = new AnswerBoxObject(answerBox.getXStart(),
+                                                           answerBox.getYStart(),
+                                                           answerBox.getCharacterLimit(),
+                                                           answerBox.getMarks(),
+                                                           answerBox.getCorrectAnswers(),
+                                                           answerBox.isRetry(),
+                                                           answerBox.isNumerical());
+        
+        page.pageObjects.add(newAnswerBox);
+    }
+    
+    /**
+     * Copy a graphic onto a page.
+     * 
+     * @param page The page to copy the graphic onto.
+     * @param graphic The grpahic to copy.
+     */
+    public static void copyGraphicObject(Page page, GraphicObject graphic) {
+        GraphicObject newGraphic = new GraphicObject(graphic.getGraphicType(),
+                                                     graphic.getXStart(),
+                                                     graphic.getYStart(),
+                                                     graphic.getXEnd(),
+                                                     graphic.getYEnd(),
+                                                     graphic.getRotation(),
+                                                     graphic.getGraphicColour(),
+                                                     graphic.isSolid(),
+                                                     graphic.getLineColor(),
+                                                     graphic.getOutlineThickness(),
+                                                     graphic.isShadow(),
+                                                     graphic.getStartTime(),
+                                                     graphic.getDuration());
+        
+        page.pageObjects.add(newGraphic);
     }
 }
