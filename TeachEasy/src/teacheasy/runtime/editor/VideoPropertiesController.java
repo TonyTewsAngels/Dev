@@ -62,6 +62,12 @@ public class VideoPropertiesController {
     }
 
     public void update(VideoObject nVideo) {
+        if(selectedVideo != null) {
+            if(selectedVideo.equals(nVideo)) {
+                return;
+            }
+        }
+        
         selectedVideo = nVideo;
         
         update();

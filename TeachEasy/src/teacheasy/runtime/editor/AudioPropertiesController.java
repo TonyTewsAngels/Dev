@@ -67,6 +67,12 @@ public class AudioPropertiesController {
     }
 
     public void update(AudioObject nAudio) {
+        if(selectedAudio != null) {
+            if(selectedAudio.equals(nAudio)) {
+                return;
+            }
+        }
+        
         selectedAudio = nAudio;
         
         update();

@@ -3,12 +3,17 @@ package teacheasy.runtime.editor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.web.HTMLEditor;
+import javafx.stage.Stage;
+import teacheasy.data.RichText;
 import teacheasy.data.TextObject;
 import teacheasy.render.Util;
+import teacheasy.runtime.editor.text.TextEditorWindow;
 import wavemedia.graphic.GraphicType;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -47,6 +52,9 @@ public class TextPropertiesController {
     /* The button for choosing a new file */
     private Button fileButton;
     
+    /* The button for changing the text */
+    private Button editTextButton;
+    
     /**
      * Constructor. 
      * 
@@ -64,8 +72,14 @@ public class TextPropertiesController {
         textProperties.setSpacing(5);
         textProperties.setPadding(new Insets(5));
         
+        /* Set up the edit text button */
+        editTextButton = new Button("Edit Text");
+        editTextButton.setId("editText");
+        editTextButton.setOnAction(new ButtonPressedHandler());
+        textProperties.getChildren().add(editTextButton);
+        
         /* Set up the file select button */
-        fileButton = PropertiesUtil.addFileField("file", "File: ", fileButton, textProperties, new ButtonPressedHandler());
+        //fileButton = PropertiesUtil.addFileField("file", "File: ", fileButton, textProperties, new ButtonPressedHandler());
         
         /* Set up the property fields */
         xStartProperty = PropertiesUtil.addPropertyField("xStart", "X Start: ", xStartProperty, textProperties, new PropertyChangedHandler());
@@ -80,9 +94,16 @@ public class TextPropertiesController {
         /* Set up the font property */
         fontProperty = PropertiesUtil.addSelectionField("font", "Font: ", fontProperty, textProperties, new SelectionPropertyChangedHandler());
         fontProperty.getItems().addAll(Font.getFontNames());
+        fontProperty.setMaxWidth(100);
     }
 
     public void update(TextObject nText) {
+        if(selectedText != null) {
+            if(selectedText.equals(nText)) {
+                return;
+            }
+        }
+
         selectedText = nText;
         
         update();
@@ -179,6 +200,9 @@ public class TextPropertiesController {
                 selectedText.setSourceFile(PropertiesUtil.validateFile(selectedText.getSourceFile(), "Text: ", "*.txt"));
                 update();
                 parent.redraw();
+            } else if(source.getId() == "editText") {                
+                TextEditorHandler handler = new TextEditorHandler();
+                new TextEditorWindow(handler, selectedText);
             }
         }
     }
@@ -220,6 +244,34 @@ public class TextPropertiesController {
                 default:
                     break;
             }
+            
+            update();
+            parent.redraw();
+        }
+    }
+    
+    public class TextEditorHandler implements EventHandler<ActionEvent> {
+        private TextArea textArea;
+        private Stage stage;
+        
+        public TextEditorHandler(){
+            textArea = new TextArea();
+            stage = new Stage();
+        }
+        
+        public void setup(TextArea nTextArea, Stage nStage) {
+            this.textArea = nTextArea;
+            this.stage = nStage;
+        }
+        
+        @Override
+        public void handle(ActionEvent e) {
+            stage.close();
+            
+            RichText text = new RichText(textArea.getText(), selectedText.getFont(), selectedText.getFontSize(), selectedText.getColor());
+            
+            selectedText.textFragments.clear();
+            selectedText.textFragments.add(text);
             
             update();
             parent.redraw();

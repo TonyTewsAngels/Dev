@@ -144,6 +144,12 @@ public class MultipleChoicePropertiesController {
     }
 
     public void update(MultipleChoiceObject nMChoice) {
+        if(selectedMultipleChoice != null) {
+            if(selectedMultipleChoice.equals(nMChoice)) {
+                return;
+            }
+        }
+        
         selectedMultipleChoice = nMChoice;
         
         update();
