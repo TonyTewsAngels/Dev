@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<slideshow>
+    <documentinfo>
+        <author>Mr Armstrong</author>
+        <version>1.0</version>
+        <comment>Easy starting steps to learning piano</comment>
+        <groupid>4</groupid>
+        <datecreated>06/03/2015</datecreated>
+        <totalmarks>3</totalmarks>
+        <lessonname>Piano 1</lessonname>
+    </documentinfo>
+    <defaultsettings>
+        <backgroundcolor>#ffffffff</backgroundcolor>
+        <font>arial</font>
+        <fontsize>20</fontsize>
+        <fontcolor>#ff000000</fontcolor>
+    </defaultsettings>
+    <gradesettings>
+        <passboundary failmessage="fail" passmessage="pass">2</passboundary>
+    </gradesettings>
+
+    <slide number="3" backgroundcolor="#ffccccff">
+        <multiplechoice xstart="0.6" ystart="0.55" type="checkbox" orientation="vertical" marks="1" retry="true">
+		</multiplechoice>
+    </slide>
+</slideshow>

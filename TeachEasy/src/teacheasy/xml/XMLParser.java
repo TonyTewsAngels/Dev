@@ -29,7 +29,6 @@ public class XMLParser extends DefaultHandler {
     }
     
     public ArrayList<XMLNotification> parse(String file) {
-    	errorList.clear();
         lesson = new Lesson();
         
         try {
