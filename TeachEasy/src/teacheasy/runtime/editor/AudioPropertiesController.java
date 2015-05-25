@@ -66,13 +66,7 @@ public class AudioPropertiesController {
         viewProgressProperty = PropertiesUtil.addBooleanField("viewProgress", "View Progress: ", viewProgressProperty, audioProperties, new BooleanPropertyChangedHandler());
     }
 
-    public void update(AudioObject nAudio) {
-        if(selectedAudio != null) {
-            if(selectedAudio.equals(nAudio)) {
-                return;
-            }
-        }
-        
+    public void update(AudioObject nAudio) {        
         selectedAudio = nAudio;
         
         update();

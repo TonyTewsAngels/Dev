@@ -130,13 +130,7 @@ public class AnswerBoxPropertiesController {
         answerBoxProperties.getChildren().add(answerTable);
     }
 
-    public void update(AnswerBoxObject nAnswerBox) {
-        if(selectedAnswerBox != null) {
-            if(selectedAnswerBox.equals(nAnswerBox)) {
-                return;
-            }
-        }
-        
+    public void update(AnswerBoxObject nAnswerBox) {       
         selectedAnswerBox = nAnswerBox;
         
         update();

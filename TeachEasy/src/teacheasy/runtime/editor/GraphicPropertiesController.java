@@ -93,16 +93,17 @@ public class GraphicPropertiesController {
     public void update(GraphicObject nGraphic) {
         if(selectedGraphic != null) {
             if(selectedGraphic.equals(nGraphic)) {
+                update(true);
                 return;
             }
         }
         
         selectedGraphic = nGraphic;
         
-        update();
+        update(false);
     }
     
-    public void update() {
+    public void update(boolean soft) {
         if(selectedGraphic == null) {
             xStartProperty.setText("");
             yStartProperty.setText("");
@@ -128,8 +129,10 @@ public class GraphicPropertiesController {
             typeProperty.setValue(selectedGraphic.getGraphicType().toString());
         }
         
-        graphicColorProperty.fireEvent(new ActionEvent(graphicColorProperty, graphicColorProperty));
-        lineColorProperty.fireEvent(new ActionEvent(lineColorProperty, lineColorProperty));
+        if(!soft) {
+            graphicColorProperty.fireEvent(new ActionEvent(graphicColorProperty, graphicColorProperty));
+            lineColorProperty.fireEvent(new ActionEvent(lineColorProperty, lineColorProperty));
+        }
     }
     
     public VBox getGraphicProperties() {
@@ -168,7 +171,7 @@ public class GraphicPropertiesController {
                     break;
             }
             
-            update();
+            update(false);
             parent.redraw();
         }
     }
@@ -193,7 +196,7 @@ public class GraphicPropertiesController {
                     break;
             }
             
-            update();
+            update(false);
             parent.redraw();
         }
     }
@@ -239,7 +242,7 @@ public class GraphicPropertiesController {
                     break;
             }
             
-            update();
+            update(false);
             parent.redraw();
         }
     }

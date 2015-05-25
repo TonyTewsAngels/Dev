@@ -143,13 +143,7 @@ public class MultipleChoicePropertiesController {
         multipleChoiceProperties.getChildren().add(answerTable);
     }
 
-    public void update(MultipleChoiceObject nMChoice) {
-        if(selectedMultipleChoice != null) {
-            if(selectedMultipleChoice.equals(nMChoice)) {
-                return;
-            }
-        }
-        
+    public void update(MultipleChoiceObject nMChoice) {        
         selectedMultipleChoice = nMChoice;
         
         update();
