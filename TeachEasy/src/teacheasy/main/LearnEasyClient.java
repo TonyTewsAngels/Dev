@@ -212,13 +212,19 @@ public class LearnEasyClient extends Application {
     }
     
     public void nextPageButtonPressed() {
+    	runtimeData.setPageDirection(true);
+    	
         if(runtimeData.checkPageCompleted()) {
-            runtimeData.nextPage();
+             runtimeData.nextPage();
         }
     }
     
     public void prevPageButtonPressed() {
-        runtimeData.prevPage();
+    	runtimeData.setPageDirection(false);
+    	
+    	if(runtimeData.checkPageCompleted()) {
+            runtimeData.prevPage();  
+        }    
     }
     
     public void updateUI() {

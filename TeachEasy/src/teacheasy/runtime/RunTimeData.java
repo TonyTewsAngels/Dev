@@ -62,6 +62,7 @@ public class RunTimeData {
     private int currentPage;
     private boolean lessonOpen;
     private boolean hideDialog = false;
+    private boolean pageDirection;
     /* Current Lesson */
     private Lesson lesson;
 
@@ -85,6 +86,8 @@ public class RunTimeData {
         this.pageCount = 0;
         this.currentPage = 0;
         this.lessonOpen = false;
+        
+        pageDirection = false;
 
         /* Instantiate an empty lesson */
         this.lesson = new Lesson();
@@ -147,9 +150,7 @@ public class RunTimeData {
         }
     }
 
-    public synchronized void waitForButton() {
-
-    }
+ 
 
     /**
      * A method to count the marks on a page and pass them to progress tracking
@@ -230,8 +231,16 @@ public class RunTimeData {
             /* Act according to id */
             /* If user wants to continue, go to next page */
             if (id.equals("yes")) {
+            	System.out.println("yes");
+            	
                 dialogStage.close();
-                nextPage();
+                
+                if (isPageDirection()) {
+                	nextPage();
+                } else {
+                	prevPage();
+                }
+                
                 parent.updateUI();
             }
             /* If user wants to attempt questions close the dialog */
@@ -399,4 +408,12 @@ public class RunTimeData {
             renderer.renderUnLoaded();
         }
     }
+
+	public boolean isPageDirection() {
+		return pageDirection;
+	}
+
+	public void setPageDirection(boolean pageDirection) {
+		this.pageDirection = pageDirection;
+	}
 }
