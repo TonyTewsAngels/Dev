@@ -411,21 +411,34 @@ public class EditorRunTimeData {
     /** Copy an object to the clipboard */
     public void copyObject() {
         if(propertiesPane.getSelectedObject() == null) {
+            System.out.println("No Copy");
             return;
         }
+        
+        System.out.println("Copy");
         
         clipboard.pageObjects.clear();
         
         NewObjectController.copyObject(clipboard, propertiesPane.getSelectedObject());
+        
+        System.out.println(clipboard.pageObjects.size());
     }
     
     /** Paste an object from the clipboard */
     public void pasteObject() {
         if(clipboard.pageObjects.size() < 1) {
+            System.out.println("No paste");
             return;
         }
         
+        System.out.println("Paste");
+        
         NewObjectController.copyObject(lesson.pages.get(currentPage), clipboard.pageObjects.get(0));
+        
+        int index = lesson.pages.get(currentPage).pageObjects.size() - 1;
+        propertiesPane.update(lesson.pages.get(currentPage), lesson.pages.get(currentPage).pageObjects.get(index));
+        
+        redraw();
     }
     
     /** Mouse Pressed in the page area */

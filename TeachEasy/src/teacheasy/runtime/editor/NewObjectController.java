@@ -189,18 +189,25 @@ public class NewObjectController {
     public static void copyObject(Page page, PageObject object) {
         switch(object.getType()) {
             case ANSWER_BOX:
+                copyAnswerBoxObject(page, (AnswerBoxObject)object);
                 break;
             case AUDIO:
+                copyAudioObject(page, (AudioObject)object);
                 break;
             case GRAPHIC:
+                copyGraphicObject(page, (GraphicObject)object);
                 break;
             case IMAGE:
+                copyImageObject(page, (ImageObject)object);
                 break;
             case MULTIPLE_CHOICE:
+                copyMultipleChoiceObject(page, (MultipleChoiceObject)object);
                 break;
             case TEXT:
+                copyTextObject(page, (TextObject)object);
                 break;
             case VIDEO:
+                copyVideoObject(page, (VideoObject)object);
                 break;
             default:
                 break;
@@ -283,7 +290,7 @@ public class NewObjectController {
                                                    frag.getFont(),
                                                    frag.getFontSize(),
                                                    frag.getColor(),
-                                                   (String[]) frag.getSettings().toArray()));
+                                                   frag.getSettings().toArray(new String[frag.getSettings().size()])));
         }
         
         page.pageObjects.add(newText);
