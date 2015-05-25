@@ -1,4 +1,4 @@
-package teacheasy.xml.contenthandlers.text;
+package teacheasy.runtime.editor.text;
 
 import teacheasy.runtime.editor.TextPropertiesController.TextEditorHandler;
 import javafx.event.ActionEvent;

@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import teacheasy.data.RichText;
 import teacheasy.data.TextObject;
 import teacheasy.render.Util;
-import teacheasy.xml.contenthandlers.text.TextEditorWindow;
+import teacheasy.runtime.editor.text.TextEditorWindow;
 import wavemedia.graphic.GraphicType;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
