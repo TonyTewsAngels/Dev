@@ -460,7 +460,10 @@ public class EditorRunTimeData {
         
         System.out.println("Release: " + relX + ", " + relY);
         
-        if(onGroup) {
+        if(mouseController.mouseReleased(lesson.pages.get(currentPage), propertiesPane, relX, relY, onGroup)) {
+            propertiesPane.update(lesson.pages.get(currentPage), propertiesPane.getSelectedObject());
+            redraw();
+        } else if(onGroup) {
             propertiesPane.lateUpdate();
         }
     }
