@@ -3,13 +3,17 @@ package teacheasy.runtime.editor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.web.HTMLEditor;
+import javafx.stage.Stage;
+import teacheasy.data.RichText;
 import teacheasy.data.TextObject;
 import teacheasy.render.Util;
+import teacheasy.xml.contenthandlers.text.TextEditorWindow;
 import wavemedia.graphic.GraphicType;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -192,7 +196,8 @@ public class TextPropertiesController {
             } else if(source.getId() == "editText") {
                 System.out.println("Edit");
                 
-                //new HTMLEditor();
+                TextEditorHandler handler = new TextEditorHandler();
+                new TextEditorWindow(handler, selectedText.textFragments.get(0).getText());
             }
         }
     }
@@ -234,6 +239,35 @@ public class TextPropertiesController {
                 default:
                     break;
             }
+            
+            update();
+            parent.redraw();
+        }
+    }
+    
+    public class TextEditorHandler implements EventHandler<ActionEvent> {
+        private TextArea textArea;
+        private Stage stage;
+        
+        public TextEditorHandler(){
+            textArea = new TextArea();
+            stage = new Stage();
+        }
+        
+        public void setup(TextArea nTextArea, Stage nStage) {
+            this.textArea = nTextArea;
+            this.stage = nStage;
+        }
+        
+        @Override
+        public void handle(ActionEvent e) {
+            System.out.println(textArea.getText());
+            stage.close();
+            
+            RichText text = new RichText(textArea.getText(), selectedText.getFont(), selectedText.getFontSize(), selectedText.getColor());
+            
+            selectedText.textFragments.clear();
+            selectedText.textFragments.add(text);
             
             update();
             parent.redraw();
