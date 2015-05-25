@@ -79,7 +79,7 @@ public class TextPropertiesController {
         textProperties.getChildren().add(editTextButton);
         
         /* Set up the file select button */
-        fileButton = PropertiesUtil.addFileField("file", "File: ", fileButton, textProperties, new ButtonPressedHandler());
+        //fileButton = PropertiesUtil.addFileField("file", "File: ", fileButton, textProperties, new ButtonPressedHandler());
         
         /* Set up the property fields */
         xStartProperty = PropertiesUtil.addPropertyField("xStart", "X Start: ", xStartProperty, textProperties, new PropertyChangedHandler());

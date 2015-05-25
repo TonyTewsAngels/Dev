@@ -41,11 +41,12 @@ public class TextEditorWindow {
         buttonBox.setAlignment(Pos.CENTER);
         
         /* Set up the content */
-        box.getChildren().addAll(new Label("Enter Text Here:"), textArea, buttonBox);
+        box.getChildren().addAll(textArea, buttonBox);
         box.setAlignment(Pos.CENTER);
         
         /* Fill the text area */
         textArea.setText(text);
+        textArea.setWrapText(true);
         
         /* Set the handlers references  */
         handler.setup(textArea, stage);
