@@ -1,5 +1,6 @@
 package teacheasy.runtime.editor.text;
 
+import teacheasy.data.TextObject;
 import teacheasy.runtime.editor.TextPropertiesController.TextEditorHandler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,7 +23,7 @@ public class TextEditorWindow {
     private Button cancelBtn;
     private HBox buttonBox;
     
-    public TextEditorWindow(TextEditorHandler handler, String text) {
+    public TextEditorWindow(TextEditorHandler handler, TextObject text) {
         /* Initialise the stage */
         stage = new Stage();
         stage.setWidth(400);
@@ -34,7 +35,9 @@ public class TextEditorWindow {
         textArea = new TextArea();
         buttonBox = new HBox();
         doneBtn = new Button("Done");
+        doneBtn.setId("done");
         cancelBtn = new Button("Cancel");
+        cancelBtn.setId("cancel");
         
         /* Set up the button row */
         buttonBox.getChildren().addAll(doneBtn, cancelBtn);
@@ -45,7 +48,13 @@ public class TextEditorWindow {
         box.setAlignment(Pos.CENTER);
         
         /* Fill the text area */
-        textArea.setText(text);
+        StringBuilder sb = new StringBuilder();
+        
+        for(int i = 0; i < text.textFragments.size(); i++) {
+            sb.append(text.textFragments.get(i).getText());
+        }
+        
+        textArea.setText(sb.toString());
         textArea.setWrapText(true);
         
         /* Set the handlers references  */
@@ -53,7 +62,7 @@ public class TextEditorWindow {
         
         /* Set the buton actions */
         doneBtn.setOnAction(handler);
-        cancelBtn.setOnAction(new CancelButtonHandler());
+        cancelBtn.setOnAction(new ButtonHandler());
         
         /* Create the scene and window */
         scene = new Scene(box);
@@ -61,10 +70,16 @@ public class TextEditorWindow {
         stage.show();
     }
     
-    public class CancelButtonHandler implements EventHandler<ActionEvent> {
+    public class ButtonHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent e) {
-            stage.close();
+            Button source = (Button)e.getSource();
+            
+            switch(source.getId()) {
+                case "cancel":
+                    stage.close();
+                    break;
+            }
         }
     }
 }

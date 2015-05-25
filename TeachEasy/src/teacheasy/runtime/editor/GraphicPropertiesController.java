@@ -91,6 +91,12 @@ public class GraphicPropertiesController {
     }
 
     public void update(GraphicObject nGraphic) {
+        if(selectedGraphic != null) {
+            if(selectedGraphic.equals(nGraphic)) {
+                return;
+            }
+        }
+        
         selectedGraphic = nGraphic;
         
         update();

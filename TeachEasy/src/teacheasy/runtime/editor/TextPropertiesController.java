@@ -94,9 +94,16 @@ public class TextPropertiesController {
         /* Set up the font property */
         fontProperty = PropertiesUtil.addSelectionField("font", "Font: ", fontProperty, textProperties, new SelectionPropertyChangedHandler());
         fontProperty.getItems().addAll(Font.getFontNames());
+        fontProperty.setMaxWidth(100);
     }
 
     public void update(TextObject nText) {
+        if(selectedText != null) {
+            if(selectedText.equals(nText)) {
+                return;
+            }
+        }
+
         selectedText = nText;
         
         update();
@@ -193,11 +200,9 @@ public class TextPropertiesController {
                 selectedText.setSourceFile(PropertiesUtil.validateFile(selectedText.getSourceFile(), "Text: ", "*.txt"));
                 update();
                 parent.redraw();
-            } else if(source.getId() == "editText") {
-                System.out.println("Edit");
-                
+            } else if(source.getId() == "editText") {                
                 TextEditorHandler handler = new TextEditorHandler();
-                new TextEditorWindow(handler, selectedText.textFragments.get(0).getText());
+                new TextEditorWindow(handler, selectedText);
             }
         }
     }
@@ -261,7 +266,6 @@ public class TextPropertiesController {
         
         @Override
         public void handle(ActionEvent e) {
-            System.out.println(textArea.getText());
             stage.close();
             
             RichText text = new RichText(textArea.getText(), selectedText.getFont(), selectedText.getFontSize(), selectedText.getColor());

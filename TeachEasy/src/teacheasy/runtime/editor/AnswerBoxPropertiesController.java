@@ -131,6 +131,12 @@ public class AnswerBoxPropertiesController {
     }
 
     public void update(AnswerBoxObject nAnswerBox) {
+        if(selectedAnswerBox != null) {
+            if(selectedAnswerBox.equals(nAnswerBox)) {
+                return;
+            }
+        }
+        
         selectedAnswerBox = nAnswerBox;
         
         update();
