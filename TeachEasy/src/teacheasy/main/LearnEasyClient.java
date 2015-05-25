@@ -185,7 +185,7 @@ public class LearnEasyClient extends Application {
         AnchorPane.setRightAnchor(nextBtn, 8.0);
         AnchorPane.setLeftAnchor(prevBtn, 8.0);
         
-        runtimeData = new RunTimeData(group, canvasBounds);
+        runtimeData = new RunTimeData(group, canvasBounds, this);
         
         /* Show the window */
         primaryStage.show(); 
@@ -212,11 +212,19 @@ public class LearnEasyClient extends Application {
     }
     
     public void nextPageButtonPressed() {
-        runtimeData.nextPage();
+        runtimeData.setPageDirection(true);
+        
+        if(runtimeData.checkPageCompleted()) {
+             runtimeData.nextPage();
+        }
     }
     
     public void prevPageButtonPressed() {
-        runtimeData.prevPage();
+        runtimeData.setPageDirection(false);
+        
+        if(runtimeData.checkPageCompleted()) {
+            runtimeData.prevPage();  
+        }    
     }
     
     public void updateUI() {
@@ -248,7 +256,7 @@ public class LearnEasyClient extends Application {
             /* Get the source */
             Button sourceButton = (Button) e.getSource();
             
-            /* Check the ID of the source button and call the relevant runtime method */
+            /* TODO Check the ID of the source button and call the relevant runtime method */
             switch(sourceButton.getId()) {
                 case "nextBtn":
                     nextPageButtonPressed();
@@ -261,7 +269,7 @@ public class LearnEasyClient extends Application {
                     break;
             }
 
-            /* Update the UI to reflect any changes to the application state */
+            /* TODO Update the UI to reflect any changes to the application state */
             updateUI();
         }
     }
