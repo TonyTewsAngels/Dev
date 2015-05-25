@@ -19,9 +19,8 @@
         <passboundary failmessage="fail" passmessage="pass">2</passboundary>
     </gradesettings>
     
-	<slide backgroundcolor="#ffffffff" number="1">
-	
-	</slide>
-
-	
+    <slide backgroundcolor="#ffffffff" number="1">
+        <image rotation="0.0" scale="1.8" sourcefile="nope.png" xstart="0.15" ystart="0.2"/>
+    </slide>
+    
 </slideshow>
