@@ -81,7 +81,7 @@ public class TeachEasyClient extends Application {
         
         /* Instantiate the scene and group */
         GridPane innerGrid = new GridPane();
-        Scene scene = new Scene(innerGrid, 700, 700);
+        Scene scene = new Scene(innerGrid, bounds.getMaxX(), bounds.getMaxY());
         
         /* Mouse and Key event listeners */
         scene.setOnKeyPressed(new KeyHandler());
