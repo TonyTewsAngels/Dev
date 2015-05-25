@@ -31,8 +31,8 @@ public class Renderer {
     private ImageHandler imageHandler;
     private TextHandler textHandler;
     private GraphicsHandler graphicsHandler;
-    private AnswerBoxHandler answerBoxHandler;
-    private MultipleChoiceHandler multipleChoiceHandler;
+    public AnswerBoxHandler answerBoxHandler;
+    public MultipleChoiceHandler multipleChoiceHandler;
     private AudioHandler audioHandler;
    
     /** Constructor */
@@ -229,6 +229,7 @@ public class Renderer {
                                                    mChoice.getAnswers(),
                                                    mChoice.getMultiChoiceType(),
                                                    mChoice.getOrientation(),
-                                                   mChoice.isRetry());
+                                                   mChoice.isRetry(), 
+                                                   mChoice.getMarks());
     }
 }

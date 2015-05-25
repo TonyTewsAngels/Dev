@@ -47,16 +47,20 @@ public class MultipleChoice{
 	private List<Answer> dList;
 	
 	/* Data */
-	private MultiChoiceType type;
+	public MultiChoiceType type;
 	private Orientation orientation;
 	private boolean retry;
+	private boolean buttonPressed;
+	private int marks;
+	private int awardedMarks;
+	private boolean markCollated;
 	
 	/* Create Drop Down List  */
-	ComboBox dropDownList = new ComboBox();
+	public ComboBox dropDownList = new ComboBox();
 	
 	/** Constructor */
 	public MultipleChoice (Group nGroup, float xStart, float yStart, ArrayList<Answer>answers,
-	                       MultiChoiceType nType, Orientation nOrientation, boolean nRetry) {
+	                       MultiChoiceType nType, Orientation nOrientation, boolean nRetry, int nMarks) {
 
 	    /* Set the group reference */
 		this.group = nGroup;
@@ -71,6 +75,16 @@ public class MultipleChoice{
 		this.type = nType;
 		this.orientation = nOrientation;
 		this.retry = nRetry;
+		
+		/*Simple statement to ensure negative marks are not awarded*/
+		if(nMarks > 0){
+		    this.marks = nMarks;
+		} else {
+		    this.marks = 0;
+		}
+		
+		setAwardedMarks(0);
+		setMarkCollated(false);
 
 		/* VBox to hold the answers if vertically oriented */
 		verticalPosition = new VBox(10);
@@ -81,11 +95,10 @@ public class MultipleChoice{
 		horizontalPosition.setPadding(new Insets (10));
 
 		/* The button to mark the question */
-		markButton = new Button("Mark");
+		setMarkButton(new Button("Mark"));
 		markLabel = new Label("");
-		
-		
 
+		
 		/* Toggle group used to allow only one radio button to be selected */
 		ToggleGroup tGroup = new ToggleGroup();
 
@@ -103,7 +116,7 @@ public class MultipleChoice{
     					verticalPosition.getChildren().add(cB.get(i).getCheckBox());					
     				}
     				
-    				verticalPosition.getChildren().add(markButton);
+    				verticalPosition.getChildren().add(getMarkButton());
     				verticalPosition.getChildren().add(markLabel);
     				verticalPosition.relocate(xStart, yStart);
     				group.getChildren().add(verticalPosition);
@@ -112,14 +125,14 @@ public class MultipleChoice{
     					horizontalPosition.getChildren().add(cB.get(i).getCheckBox());
     				}
     				
-    				horizontalPosition.getChildren().add(markButton);
+    				horizontalPosition.getChildren().add(getMarkButton());
     				horizontalPosition.getChildren().add(markLabel);
     				horizontalPosition.relocate(xStart, yStart);
     				group.getChildren().add(horizontalPosition);
     			}
     			
     			/* Set the mark buttons action */
-    			markButton.setOnAction(new MultipleChoiceCheckHandler());
+    			getMarkButton().setOnAction(new MultipleChoiceCheckHandler());
     			
     			break;
     			
@@ -137,7 +150,7 @@ public class MultipleChoice{
     					verticalPosition.getChildren().add(rB.get(i).getRadioButton());
     				}
     
-    				verticalPosition.getChildren().add(markButton);
+    				verticalPosition.getChildren().add(getMarkButton());
     				verticalPosition.getChildren().add(markLabel);
     				verticalPosition.relocate(xStart, yStart);
     				group.getChildren().add(verticalPosition);
@@ -146,14 +159,14 @@ public class MultipleChoice{
     					horizontalPosition.getChildren().add(rB.get(i).getRadioButton());
     				}
     
-    				horizontalPosition.getChildren().add(markButton);
+    				horizontalPosition.getChildren().add(getMarkButton());
     				horizontalPosition.getChildren().add(markLabel);
     				horizontalPosition.relocate(xStart, yStart);
     				group.getChildren().add(horizontalPosition);
     			}
     			
     			/* Set the mark buttons action */
-    			markButton.setOnAction(new MultipleChoiceCheckHandler());
+    			getMarkButton().setOnAction(new MultipleChoiceCheckHandler());
     			
     			break;
     
@@ -166,20 +179,20 @@ public class MultipleChoice{
     			/* Check the orientation and add the drop down appropriately */
     			if( nOrientation == Orientation.VERTICAL){
     			    verticalPosition.getChildren().add(dropDownList);
-    				verticalPosition.getChildren().add(markButton);
+    				verticalPosition.getChildren().add(getMarkButton());
     				verticalPosition.getChildren().add(markLabel);
     				verticalPosition.relocate(xStart, yStart);
     				group.getChildren().add(verticalPosition);
     			} else { 
     				horizontalPosition.getChildren().add(dropDownList);
-    				horizontalPosition.getChildren().add(markButton);
+    				horizontalPosition.getChildren().add(getMarkButton());
     				horizontalPosition.getChildren().add(markLabel);
     				horizontalPosition.relocate(xStart, yStart);
     				group.getChildren().add(horizontalPosition);
     			}
     			
     			/* Set the mark buttons action */
-    			markButton.setOnAction(new MultipleChoiceCheckHandler());
+    			getMarkButton().setOnAction(new MultipleChoiceCheckHandler());
     			break;
 		}
 	}
@@ -221,6 +234,7 @@ public class MultipleChoice{
             
             /* If this box is not ticked but the answer is correct return false */
             if(!cB.get(i).getCheckBox().isSelected() && cB.get(i).isCorrect()) {
+                setAwardedMarks(getAwardedMarks() + marks);
                 return false;
             }
         }
@@ -239,6 +253,7 @@ public class MultipleChoice{
 		for(int i = 0; i < rB.size(); i++){
 		    /* If this is a correct answer and its selected return true */
 			if(rB.get(i).isCorrect() && rB.get(i).getRadioButton().isSelected()){
+			    setAwardedMarks(getAwardedMarks() + marks);
 				return true;
 			}
 		}
@@ -254,8 +269,8 @@ public class MultipleChoice{
     	 /* If this is a correct answer and its selected return true */
     	for (int i = 0; i < dList.size(); i++ ){
     		if(dList.get(i).isCorrect() && dList.get(i).getText().equals(str)){
-    			return true;
-    			
+    		    setAwardedMarks(getAwardedMarks() + marks);
+    			return true;	
     		}
     	}
 		return false;
@@ -264,7 +279,12 @@ public class MultipleChoice{
 	 * Method to handle a correct result
 	 */
 	private void handleCorrect() {
-    	markLabel.setText("Correct!");
+	    if(marks == 1){
+	        markLabel.setText("Correct! " + getAwardedMarks() + " mark");
+	    } else {
+	        markLabel.setText("Correct! " + getAwardedMarks() + " marks");
+	    }
+    	
     	disable();
 	}
 	
@@ -282,7 +302,7 @@ public class MultipleChoice{
 	/**
 	 * Method to disable the set of answer options
 	 */
-	private void disable() {
+	public void disable() {
 	    /* Disable the appropriate answer objects */
 	    switch(type) {
 	        case CHECKBOX:
@@ -304,10 +324,42 @@ public class MultipleChoice{
 	    }
 	    
 	    /* Disable the mark button */
-	    markButton.setDisable(true);
+	    getMarkButton().setDisable(true);
 	}
 	
-	/**
+	public Button getMarkButton() {
+        return markButton;
+    }
+
+    public void setMarkButton(Button markButton) {
+        this.markButton = markButton;
+    }
+
+    public boolean isMarkCollated() {
+        return markCollated;
+    }
+
+    public void setMarkCollated(boolean markCollated) {
+        this.markCollated = markCollated;
+    }
+
+    public boolean isButtonPressed() {
+        return buttonPressed;
+    }
+
+    public void setButtonPressed(boolean buttonPressed) {
+        this.buttonPressed = buttonPressed;
+    }
+
+    public int getAwardedMarks() {
+        return awardedMarks;
+    }
+
+    public void setAwardedMarks(int awardedMarks) {
+        this.awardedMarks = awardedMarks;
+    }
+
+    /**
 	 * This class handles the mark button's action
 	 */
 	public class MultipleChoiceCheckHandler implements EventHandler<ActionEvent> {
@@ -318,6 +370,7 @@ public class MultipleChoice{
             } else {
                 handleIncorrect();
             }
+            setButtonPressed(true);
         }
 	}
 
