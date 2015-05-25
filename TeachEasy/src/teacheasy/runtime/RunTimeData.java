@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.prefs.Preferences;
+
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -33,6 +33,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
+import learneasy.homePage.HomePage;
 import learneasy.trackProgress.ProgressTracker;
 import teacheasy.data.*;
 import teacheasy.main.LearnEasyClient;
@@ -75,11 +76,10 @@ public class RunTimeData {
     /* Renderer */
     private Renderer renderer;
     
-    /* home page*/
-    private Preferences preference;
+    /*Initialise HomePage class*/
+    HomePage homePage;
     
-  
-
+   
     /** Constructor method */
     public RunTimeData(Group nGroup, Rectangle2D nBounds,
             LearnEasyClient nParent) {
@@ -95,8 +95,9 @@ public class RunTimeData {
         
         pageDirection = false;
         
-        /* Load the preference */
-        setPreference();
+        homePage = new HomePage();
+      
+        homePage.setPreference();
         
         /* Instantiate an empty lesson */
         this.lesson = new Lesson();
@@ -341,14 +342,15 @@ public class RunTimeData {
                 .getProperty("user.home")));
 
         /* Set the initial directory to the recent read path */
-       /* if (xmlHandler.getRecentReadPath() != null) {
+        /*if (xmlHandler.getRecentReadPath() != null) {
             fileChooser.setInitialDirectory(new File(new File(xmlHandler
                     .getRecentReadPath()).getParent()));
         }*/
         
         
         /* Set the initial directory to the recent read path */
-        fileChooser.setInitialDirectory(new File(preference.get("recentlyOpened", "hi")));
+        fileChooser.setInitialDirectory(new File(homePage.getPreference().get("recentlyOpened", xmlHandler
+                .getRecentReadPath())));
         
        
 
@@ -431,16 +433,5 @@ public class RunTimeData {
 
 	public void setPageDirection(boolean pageDirection) {
 		this.pageDirection = pageDirection;
-	}
-	
-	private void setPreference(){
-		 /* Instantiate preferences */
-        preference = Preferences.userRoot().node(this.getClass().getName());
-        
-        /* String to store the path of the recently opened lesson*/
-        String recentlyOpened = "recentlyOpened";
-        
-        /*Set actual path*/
-        preference.put(recentlyOpened, "//userfs/dbb503/w2k/workspace/Dev/TeachEasy");
 	}
 }
