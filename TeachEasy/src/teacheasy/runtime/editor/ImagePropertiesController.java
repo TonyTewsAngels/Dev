@@ -65,9 +65,9 @@ public class ImagePropertiesController {
 
     public void update(ImageObject nImage) {
         if(selectedImage != null) {
-            if(selectedImage.equals(nImage)) {
+            /*if(selectedImage.equals(nImage)) {
                 return;
-            }
+            }*/
         }
         
         selectedImage = nImage;
