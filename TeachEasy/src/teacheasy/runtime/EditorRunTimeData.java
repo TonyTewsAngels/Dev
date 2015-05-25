@@ -59,7 +59,10 @@ public class EditorRunTimeData {
     private PropertiesPane propertiesPane;
     
     /* Mouse controller */
-    MouseController mouseController;
+    private MouseController mouseController;
+    
+    /* Clip board */
+    private Page clipboard;
 
     /** Constructor method */
     public EditorRunTimeData(Group nGroup, Rectangle2D nBounds, VBox propPaneBox) {
@@ -85,6 +88,8 @@ public class EditorRunTimeData {
         propertiesPane = new PropertiesPane(propPaneBox, this);
         
         mouseController = new MouseController();
+        
+        clipboard = new Page(0, "#00000000");
         
         /* Draw the page */
         redraw(group, bounds);
@@ -402,6 +407,10 @@ public class EditorRunTimeData {
         
         propertiesPane.update(lesson.pages.get(currentPage), lesson.pages.get(currentPage).pageObjects.get(index));
     }
+    
+    /** Copy an object to the clipboard */
+    
+    
     
     /** Mouse Pressed in the page area */
     public void mousePressed(float relX, float relY) {
