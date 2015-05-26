@@ -981,7 +981,7 @@ public class TeachEasyClient extends Application {
         @Override
         public void handle(MouseEvent me) {
             if(editorRuntimeData.isLessonOpen()) {
-                new LessonInfoWindow(editorRuntimeData.getLesson().lessonInfo, clientRef);
+                new LessonInfoWindow(editorRuntimeData.getLesson(), clientRef);
             }
         }
     }

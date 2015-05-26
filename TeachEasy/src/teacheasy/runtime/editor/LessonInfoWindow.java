@@ -1,5 +1,7 @@
 package teacheasy.runtime.editor;
 
+import teacheasy.data.Lesson;
+import teacheasy.data.lessondata.LessonGradeSettings;
 import teacheasy.data.lessondata.LessonInfo;
 import teacheasy.main.TeachEasyClient;
 import javafx.event.ActionEvent;
@@ -27,10 +29,17 @@ public class LessonInfoWindow {
     private Label titleLabel;
     private Label authorLabel;
     private Label versionLabel;
+    private Label passMarkLabel;
+    private Label totalMarkLabel;
+    private Label passMessageLabel;
+    private Label failMessageLabel;
     
     private TextField titleField;
     private TextField authorField;
     private TextField versionField;
+    private TextField passMarkField;
+    private TextField passMessageField;
+    private TextField failMessageField;
     
     private GridPane grid;
 
@@ -39,18 +48,20 @@ public class LessonInfoWindow {
     private HBox buttonBox;
     
     private LessonInfo info;
+    private LessonGradeSettings gradeSettings;
     
     private TeachEasyClient parent;
     
-    public LessonInfoWindow(LessonInfo nInfo, TeachEasyClient nParent) {
+    public LessonInfoWindow(Lesson lesson, TeachEasyClient nParent) {
         /* Initialise the info reference */
-        info = nInfo;
+        info = lesson.lessonInfo;
+        gradeSettings = lesson.gradeSettings;
         parent = nParent;
         
         /* Initialise the stage */
         stage = new Stage();
         stage.setWidth(420);
-        stage.setHeight(320);
+        stage.setHeight(440);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
         
@@ -71,13 +82,22 @@ public class LessonInfoWindow {
         titleLabel = new Label("Title: ");
         authorLabel = new Label("Author: ");
         versionLabel = new Label("Version: ");
+        passMarkLabel = new Label("Pass Mark: ");
+        totalMarkLabel = new Label(" / " + info.getTotalMarks());
+        passMessageLabel = new Label("Pass Message: ");
+        failMessageLabel = new Label("Fail Message: ");
         
         titleField = new TextField(info.getLessonName());
         authorField = new TextField(info.getAuthor());
         versionField = new TextField(info.getVersion());
+        passMarkField = new TextField("" + gradeSettings.getPassBoundary());
+        passMessageField = new TextField(gradeSettings.getPassMessage());
+        failMessageField = new TextField(gradeSettings.getFailMessage());
         
         description = new TextArea();
         description.setText(info.getComment());
+        
+        passMarkField.setMaxWidth(65);
         
         grid.add(titleLabel, 0, 0);
         grid.add(titleField, 1, 0);
@@ -87,6 +107,16 @@ public class LessonInfoWindow {
         
         grid.add(versionLabel, 0, 2);
         grid.add(versionField, 1, 2);
+        
+        grid.add(passMarkLabel, 0, 3);
+        grid.add(passMarkField, 1, 3);
+        grid.add(totalMarkLabel, 2, 3);
+        
+        grid.add(passMessageLabel, 0, 4);
+        grid.add(passMessageField, 1, 4);
+        
+        grid.add(failMessageLabel, 0, 5);
+        grid.add(failMessageField, 1, 5);
         
         /* Set up the button row */
         buttonBox.getChildren().addAll(doneBtn, cancelBtn);
@@ -111,6 +141,10 @@ public class LessonInfoWindow {
         String author = authorField.getText();
         String version = versionField.getText();
         String comment = description.getText();
+        String passMarkStr = passMarkField.getText();
+        int passMark = 0;
+        String passMessage = passMessageField.getText();
+        String failMessage = failMessageField.getText();
 
         if(title.length() > 20) {
             title = new String(title.substring(0, 20));
@@ -128,10 +162,31 @@ public class LessonInfoWindow {
             comment = new String(comment.substring(0, 150));
         }
         
+        if(passMessage.length() > 50) {
+            passMessage = new String(passMessage.substring(0, 20));
+        }
+        
+        if(failMessage.length() > 50) {
+            failMessage = new String(failMessage.substring(0, 20));
+        }
+        
+        try{
+            passMark = Integer.parseInt(passMarkStr);
+        } catch(NumberFormatException nfe) {
+            passMark = info.getTotalMarks();
+        }
+        
+        if(passMark > info.getTotalMarks()) {
+            passMark = info.getTotalMarks();
+        }
+        
         info.setLessonName(title);
         info.setAuthor(author);
         info.setVersion(version);
         info.setComment(comment);
+        gradeSettings.setPassBoundary(passMark);
+        gradeSettings.setPassMessage(passMessage);
+        gradeSettings.setFailMessage(failMessage);
     }
     
     public class ButtonHandler implements EventHandler<ActionEvent> {

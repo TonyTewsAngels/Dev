@@ -9,6 +9,7 @@ package teacheasy.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import teacheasy.data.PageObject.PageObjectType;
 import teacheasy.data.lessondata.*;
 
 /**
@@ -66,6 +67,42 @@ public class Lesson {
         
         /* Instantiate the grade settings */
         gradeSettings = new LessonGradeSettings(1, "pass", "fail");
+    }
+    
+    /**
+     * Method to count the total marks in a lesson.
+     * 
+     * @return The total number of marks available in this lesson.
+     */
+    public int getTotalMarks() {
+        /* Running total */
+        int total = 0;
+        
+        /* Loop through every page */
+        for(int i = 0; i < pages.size(); i++) {
+            Page page = pages.get(i);
+            
+            /* Loop through every page object */
+            for(int j = 0; j < page.pageObjects.size(); j++) {
+                PageObject object = page.getObject(j);
+                
+                /* Check for the two mark awarding object types */
+                if(object.getType() == PageObjectType.MULTIPLE_CHOICE) {
+                    MultipleChoiceObject mchoice = (MultipleChoiceObject)object;
+                    
+                    /* Add to the running total */
+                    total += mchoice.getMarks();
+                } else if(object.getType() == PageObjectType.ANSWER_BOX) {
+                    AnswerBoxObject answerbox = (AnswerBoxObject)object;
+                    
+                    /* Add to the running total */
+                    total += answerbox.getMarks();
+                }
+            }
+        }
+        
+        /* Return the running total */
+        return total;
     }
     
     /** Prints the Lesson object data to console */

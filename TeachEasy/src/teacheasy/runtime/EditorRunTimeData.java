@@ -475,6 +475,9 @@ public class EditorRunTimeData {
     /** Redraw the content */
     public void redraw(Group group, Rectangle2D bounds) {        
         if(isLessonOpen()) {
+            /* Update the total marks */
+            lesson.lessonInfo.setTotalMarks(lesson.getTotalMarks());
+            
             /* Render the current page */
             renderer.renderPage(lesson.pages.get(currentPage));
         } else {
