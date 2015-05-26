@@ -297,8 +297,9 @@ public class XMLWriter {
 	    audioElement.setAttribute("sourcefile", audio.getSourcefile());
 	    audioElement.setAttribute("xstart", String.valueOf(audio.getXStart()));
 	    audioElement.setAttribute("ystart", String.valueOf(audio.getYStart()));
-	    audioElement.setAttribute("end", String.valueOf(audio.getXEnd()));
+	    audioElement.setAttribute("xend", String.valueOf(audio.getXEnd()));
         audioElement.setAttribute("viewprogress", String.valueOf(audio.isViewProgress()));
+        audioElement.setAttribute("starttime", String.valueOf(audio.getStartTime()));
 	}
 	
 	/** Add a graphics element */
@@ -319,6 +320,8 @@ public class XMLWriter {
         graphicElement.setAttribute("outlinethickness", String.valueOf(graphic.getOutlineThickness()));
         graphicElement.setAttribute("linecolor", graphic.getLineColor());
         graphicElement.setAttribute("shadow", String.valueOf(graphic.isShadow()));
+        graphicElement.setAttribute("starttime", String.valueOf(graphic.getStartTime()));
+        graphicElement.setAttribute("duration", String.valueOf(graphic.getDuration()));
         
         /* Declare an element for the shading */
         Element shadingElement = doc.createElement(graphic.getShading().toString().toLowerCase());
@@ -341,6 +344,8 @@ public class XMLWriter {
 	    videoElement.setAttribute("xstart", String.valueOf(video.getXStart()));
         videoElement.setAttribute("ystart", String.valueOf(video.getYStart()));
         videoElement.setAttribute("xend", String.valueOf(video.getXEnd()));
+        videoElement.setAttribute("autoplay", String.valueOf(video.isAutoPlay()));
+        videoElement.setAttribute("loop", String.valueOf(video.isLoop()));
 	}
 	
 	/** Add an answer box */
@@ -351,11 +356,12 @@ public class XMLWriter {
 	    
 	    /* Set attributes */
 	    answerBoxElement.setAttribute("xstart", String.valueOf(answerBox.getXStart()));
-        answerBoxElement.setAttribute("ystart", String.valueOf(answerBox.getXStart()));
+        answerBoxElement.setAttribute("ystart", String.valueOf(answerBox.getYStart()));
         answerBoxElement.setAttribute("characterlimit", String.valueOf(answerBox.getCharacterLimit()));
         answerBoxElement.setAttribute("correctanswer", answerBox.getCorrectAnswers());
         answerBoxElement.setAttribute("marks", String.valueOf(answerBox.getMarks()));
         answerBoxElement.setAttribute("retry", String.valueOf(answerBox.isRetry()));
+        answerBoxElement.setAttribute("numerical", String.valueOf(answerBox.isNumerical()));
 	}
 	
 	/** Add a multiple choice question */
