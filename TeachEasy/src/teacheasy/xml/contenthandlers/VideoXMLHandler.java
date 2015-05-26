@@ -56,6 +56,8 @@ public class VideoXMLHandler extends DefaultHandler{
         String yStartStr = attrs.getValue("ystart");
         String xEndStr = attrs.getValue("xend");
         String sourceFileStr = attrs.getValue("sourcefile");
+        String autoPlayStr = attrs.getValue("autoplay");
+        String loopStr = attrs.getValue("loop");
         
         float xStart = XMLUtil.checkFloat(xStartStr, 0.0f, Level.ERROR, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Video) X Start ");
@@ -68,10 +70,16 @@ public class VideoXMLHandler extends DefaultHandler{
         
         if(sourceFileStr == null) {
             errorList.add(new XMLNotification(Level.ERROR,
-                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Video) Sourcefile "));
+                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Video) Sourcefile missing."));
             sourceFileStr = new String("null");
         }
         
-        video = new VideoObject(xStart, yStart, xEnd, sourceFileStr);
+        boolean autoPlay = XMLUtil.checkBool(autoPlayStr, false, Level.WARNING, errorList,
+                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Video) AutoPlay ");
+        
+        boolean loop = XMLUtil.checkBool(loopStr, false, Level.WARNING, errorList,
+                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Video) Loop ");
+        
+        video = new VideoObject(xStart, yStart, xEnd, sourceFileStr, autoPlay, loop);
     }
 }

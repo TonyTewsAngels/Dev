@@ -104,7 +104,7 @@ public class NewObjectController {
         
         String filePath = videoFile.getAbsolutePath();
         
-        VideoObject video = new VideoObject(0.0f, 0.0f, 1.0f, filePath);
+        VideoObject video = new VideoObject(0.0f, 0.0f, 1.0f, filePath, false, false);
         
         page.pageObjects.add(video);
     }
@@ -245,7 +245,9 @@ public class NewObjectController {
         VideoObject newVideo = new VideoObject(video.getXStart(),
                                                video.getYStart(),
                                                video.getXEnd(),
-                                               video.getSourcefile());
+                                               video.getSourcefile(),
+                                               video.isAutoPlay(),
+                                               video.isLoop());
         
         page.pageObjects.add(newVideo);
     }

@@ -1,6 +1,7 @@
 package teacheasy.runtime.editor;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import teacheasy.data.VideoObject;
@@ -33,6 +34,10 @@ public class VideoPropertiesController {
     /* The button for choosing a new file */
     private Button fileButton;
     
+    /* The check boxes for the autoplay and loop settings */
+    private CheckBox autoPlayProperty;
+    private CheckBox loopProperty;
+    
     public boolean redrawBlock = false;
     
     /**
@@ -59,6 +64,9 @@ public class VideoPropertiesController {
         xStartProperty = PropertiesUtil.addPropertyField("xStart", "X Start: ", xStartProperty, videoProperties, new PropertyChangedHandler());
         yStartProperty = PropertiesUtil.addPropertyField("yStart", "Y Start: ", yStartProperty, videoProperties, new PropertyChangedHandler());
         xEndProperty = PropertiesUtil.addPropertyField("xEnd", "X End: ", xEndProperty, videoProperties, new PropertyChangedHandler());
+        
+        autoPlayProperty = PropertiesUtil.addBooleanField("autoPlay", "Auto Play: ", autoPlayProperty, videoProperties, new BooleanPropertyChangedHandler());
+        loopProperty = PropertiesUtil.addBooleanField("loop", "Loop: ", loopProperty, videoProperties, new BooleanPropertyChangedHandler());
     }
 
     public void update(VideoObject nVideo) {        
@@ -72,10 +80,14 @@ public class VideoPropertiesController {
             xStartProperty.setText("");
             yStartProperty.setText("");
             xEndProperty.setText("");
+            autoPlayProperty.setSelected(false);
+            loopProperty.setSelected(false);
         } else {
             xStartProperty.setText(String.valueOf(selectedVideo.getXStart()));
             yStartProperty.setText(String.valueOf(selectedVideo.getYStart()));
             xEndProperty.setText(String.valueOf(selectedVideo.getXEnd()));
+            autoPlayProperty.setSelected(selectedVideo.isAutoPlay());
+            loopProperty.setSelected(selectedVideo.isLoop());
         }
     }
     
@@ -136,6 +148,31 @@ public class VideoPropertiesController {
                     parent.redraw();
                 }
             }
+        }
+    }
+    
+    public class BooleanPropertyChangedHandler implements EventHandler<ActionEvent> {
+        @Override
+        public void handle(ActionEvent e) {
+            if(selectedVideo == null) {
+                return;
+            }
+            
+            CheckBox source = (CheckBox)e.getSource();
+            
+            switch(source.getId()) {
+                case "autoPlay":
+                    selectedVideo.setAutoPlay(source.isSelected());
+                    break;
+                case "loop":
+                    selectedVideo.setLoop(source.isSelected());
+                    break;
+                default:
+                    break;
+            }
+            
+            update();
+            parent.redraw();
         }
     }
 }

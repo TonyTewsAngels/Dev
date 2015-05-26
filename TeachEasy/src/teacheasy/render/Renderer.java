@@ -158,8 +158,8 @@ public class Renderer {
     							(float)bounds.getMaxY() * video.getYStart(),
 							    (float)bounds.getMaxX()*(video.getXEnd() - video.getXStart()),
 							    video.getSourcefile(),
-							    false,
-							    false);
+							    video.isAutoPlay(),
+							    video.isLoop());
     }
     
     /** Render an audio object on a page */
