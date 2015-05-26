@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -24,7 +22,9 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.layout.VBoxBuilder;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -95,10 +95,7 @@ public class RunTimeData {
         
         pageDirection = false;
         
-        homePage = new HomePage();
       
-        homePage.setPreference();
-        
         /* Instantiate an empty lesson */
         this.lesson = new Lesson();
 
@@ -107,7 +104,11 @@ public class RunTimeData {
 
         /* Instantiate the renderer */
         renderer = new Renderer(group, bounds);
-
+        
+        homePage = new HomePage();
+        homePage.setPreference();
+        
+       
         redraw(group, bounds);
     }
 
@@ -352,6 +353,9 @@ public class RunTimeData {
         fileChooser.setInitialDirectory(new File(homePage.getPreference().get("recentlyOpened", xmlHandler
                 .getRecentReadPath())));
         
+        /* Set the initial directory to the recent read path */
+        fileChooser.setInitialDirectory(new File(homePage.getPreference().get("recentlyOpened", xmlHandler
+                .getRecentReadPath())));
        
 
         /* Get the file to open */
@@ -361,6 +365,8 @@ public class RunTimeData {
         if (file == null) {
             return false;
         }
+        
+        homePage.setRecentlyOpened(file.toString());
 
         /* Set the recent read Path */
         xmlHandler.setRecentReadPath(file.getAbsolutePath());
@@ -424,6 +430,7 @@ public class RunTimeData {
         } else {
             /* Render the no lesson loaded screen */
             renderer.renderUnLoaded();
+            displayRecentlyOpenedLessons();
         }
     }
 
@@ -434,4 +441,91 @@ public class RunTimeData {
 	public void setPageDirection(boolean pageDirection) {
 		this.pageDirection = pageDirection;
 	}
+	
+	/** Open a lesson file */
+    public boolean openLessonFromHyplink(String filePath) {
+       
+        File file = new File(filePath);
+        
+        homePage.setRecentlyOpened(file.toString());
+         
+        /* Parse the file */
+        ArrayList<XMLNotification> errorList = xmlHandler.parseXML2(file
+                .getAbsolutePath());
+
+        /* If any errors were found during parsing, do not load the lesson */
+        if (errorList.size() > 0) {
+            for (int i = 0; i < errorList.size(); i++) {
+                System.out.println(errorList.get(i));
+            }
+        }
+
+        if (XMLNotification.countLevel(errorList, Level.ERROR) > 0) {
+            return false;
+        }
+
+        /* Get the lesson data */
+        lesson = xmlHandler.getLesson();
+        lesson.debugPrint();
+
+        /* Open the lesson */
+        setPageCount(lesson.pages.size());
+        setCurrentPage(0);
+        setLessonOpen(true);
+        
+        /*This needs moving somewhere more appropriate!*/
+        progressTracker = new ProgressTracker(pageCount);
+        
+        redraw(group, bounds);
+        return true;
+    }
+    
+    private void displayRecentlyOpenedLessons(){
+        
+        VBox vbox = new VBox();
+        vbox.setSpacing(5);
+        
+        if(!homePage.getPreference().get("firstRecentlyOpened", "doesn't exist!").equals("doesn't exist!")){
+            final Hyperlink firstRecent = new Hyperlink(homePage.getPreference().get("firstRecentlyOpened", "doesn't exist!"));
+            firstRecent.setOnAction(new HyperlinkHandler(firstRecent));
+            vbox.getChildren().add(firstRecent);
+        } if (!homePage.getPreference().get("secondRecentlyOpened", "doesn't exist!").equals("doesn't exist!")){
+            final Hyperlink secondRecent = new Hyperlink(homePage.getPreference().get("secondRecentlyOpened", "doesn't exist!"));
+            secondRecent.setOnAction(new HyperlinkHandler(secondRecent));
+            vbox.getChildren().add(secondRecent);
+        } if (!homePage.getPreference().get("secondRecentlyOpened", "doesn't exist!").equals("doesn't exist!")){
+            final Hyperlink thirdRecent = new Hyperlink(homePage.getPreference().get("thirdRecentlyOpened", "doesn't exist!"));
+            thirdRecent.setOnAction(new HyperlinkHandler(thirdRecent));
+            vbox.getChildren().add(thirdRecent);
+        } if (!homePage.getPreference().get("secondRecentlyOpened", "doesn't exist!").equals("doesn't exist!")){
+            final Hyperlink fourthRecent = new Hyperlink(homePage.getPreference().get("fourthRecentlyOpened", "doesn't exist!"));
+            fourthRecent.setOnAction(new HyperlinkHandler(fourthRecent));
+            vbox.getChildren().add(fourthRecent);
+        } if (!homePage.getPreference().get("secondRecentlyOpened", "doesn't exist!").equals("doesn't exist!")){
+            final Hyperlink fifthRecent = new Hyperlink(homePage.getPreference().get("fifthRecentlyOpened", "doesn't exist!"));
+            fifthRecent.setOnAction(new HyperlinkHandler(fifthRecent));
+            vbox.getChildren().add(fifthRecent);
+        }
+        
+        group.getChildren().add(vbox);
+    }
+    
+    public class HyperlinkHandler implements EventHandler<ActionEvent> {
+        private Hyperlink hl;
+        
+        public HyperlinkHandler(Hyperlink nHl) {
+            this.hl = nHl;
+        }
+        
+        public void setFirstHyperlink(Hyperlink nHl) {
+            this.hl = nHl;
+        }
+        
+        @Override
+        public void handle(ActionEvent e) {
+            if(!hl.equals("doesn't exist!")){
+                openLessonFromHyplink(homePage.getPreference().get("firstRecentlyOpened", "doesn't exist!")); 
+             }
+        }
+    }
 }
