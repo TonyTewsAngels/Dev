@@ -9,6 +9,7 @@ package learneasy.homePage;
 import java.io.File;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -56,8 +57,8 @@ public class HomePage {
     private String firstRecentlyOpened;
 
     public HomePage() {
-
-        defaultFolder = "C:/Users/Daniel/git/Dev/TeachEasy";
+        
+        defaultFolder = new File(System.getProperty("user.home")).toString();
         defaultFolderChooser = new DirectoryChooser();
         fifthRecentlyOpened = "fifthRecentlyOpened";
         fourthRecentlyOpened = "fourthRecentlyOpened";
