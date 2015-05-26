@@ -5,6 +5,7 @@ import teacheasy.debug.EditorRuntimeDataDummyUI.KeyHandler;
 import teacheasy.debug.EditorRuntimeDataDummyUI.MenuEventHandler;
 import teacheasy.debug.EditorRuntimeDataDummyUI.MouseEventHandler;
 import teacheasy.runtime.EditorRunTimeData;
+import teacheasy.runtime.editor.LessonInfoWindow;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -81,7 +82,7 @@ public class TeachEasyClient extends Application {
         
         /* Instantiate the scene and group */
         GridPane innerGrid = new GridPane();
-        Scene scene = new Scene(innerGrid, 700, 700);
+        Scene scene = new Scene(innerGrid, bounds.getMaxX(), bounds.getMaxY());
         
         /* Mouse and Key event listeners */
         scene.setOnKeyPressed(new KeyHandler());
@@ -92,12 +93,17 @@ public class TeachEasyClient extends Application {
         MenuBar menuBar = new MenuBar();
         HBox topBar = new HBox(5);
         HBox titleBox = new HBox();
+        
         HBox preview = new HBox();
         contentPanel = new Group();
         VBox propertiesPanel = new VBox();
         HBox bottomBar = new HBox();   
         GridPane botGrid = new GridPane();
         VBox paddingBox = new VBox(5);
+        
+        titleBox.setMinWidth(400);
+        titleBox.setMaxWidth(400);
+        titleBox.setOnMouseClicked(new TitleBoxClickHandler(this));
         
         /* Set layout colours */
         paddingBox.setStyle("-fx-background-color: rgb(215,215,215);");
@@ -710,6 +716,8 @@ public class TeachEasyClient extends Application {
             }
             
             pageList.setValue(new Integer(editorRuntimeData.getCurrentPageNumber() + 1));
+            
+            titleText.setText(editorRuntimeData.getLesson().lessonInfo.getLessonName());
         } else {
             textBtn.setDisable(true);
             imageBtn.setDisable(true);
@@ -725,6 +733,8 @@ public class TeachEasyClient extends Application {
             pageList.setDisable(true);
             
             pageList.getItems().clear();
+            
+            titleText.setText("No Lesson Open");
         }
     }
     
@@ -929,6 +939,10 @@ public class TeachEasyClient extends Application {
             } else if(ke.getCode() == KeyCode.N) {
                 editorRuntimeData.newPage();
                 updateUI();
+            } else if(ke.getCode() == KeyCode.C && ke.isControlDown()) {
+                editorRuntimeData.copyObject();
+            } else if(ke.getCode() == KeyCode.V && ke.isControlDown()) {
+                editorRuntimeData.pasteObject();
             }
         }
     }
@@ -948,12 +962,26 @@ public class TeachEasyClient extends Application {
         @Override
         public void changed(ObservableValue<? extends Integer> ov,
                             Integer oldVal, Integer newVal) {
-            System.out.println("old: " + oldVal + " new: " + newVal);
             if(newVal != null) {
                 if((newVal - 1) != editorRuntimeData.getCurrentPageNumber()) {
                     editorRuntimeData.setCurrentPage(newVal - 1);
                     updateUI();
                 }
+            }
+        }
+    }
+    
+    public class TitleBoxClickHandler implements EventHandler<MouseEvent> {
+        private TeachEasyClient clientRef;
+        
+        public TitleBoxClickHandler(TeachEasyClient nClientRef) {
+            this.clientRef = nClientRef;
+        }
+        
+        @Override
+        public void handle(MouseEvent me) {
+            if(editorRuntimeData.isLessonOpen()) {
+                new LessonInfoWindow(editorRuntimeData.getLesson().lessonInfo, clientRef);
             }
         }
     }

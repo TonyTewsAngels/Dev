@@ -61,13 +61,7 @@ public class VideoPropertiesController {
         xEndProperty = PropertiesUtil.addPropertyField("xEnd", "X End: ", xEndProperty, videoProperties, new PropertyChangedHandler());
     }
 
-    public void update(VideoObject nVideo) {
-        if(selectedVideo != null) {
-            if(selectedVideo.equals(nVideo)) {
-                return;
-            }
-        }
-        
+    public void update(VideoObject nVideo) {        
         selectedVideo = nVideo;
         
         update();

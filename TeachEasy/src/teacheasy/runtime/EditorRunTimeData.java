@@ -59,7 +59,10 @@ public class EditorRunTimeData {
     private PropertiesPane propertiesPane;
     
     /* Mouse controller */
-    MouseController mouseController;
+    private MouseController mouseController;
+    
+    /* Clip board */
+    private Page clipboard;
 
     /** Constructor method */
     public EditorRunTimeData(Group nGroup, Rectangle2D nBounds, VBox propPaneBox) {
@@ -85,6 +88,8 @@ public class EditorRunTimeData {
         propertiesPane = new PropertiesPane(propPaneBox, this);
         
         mouseController = new MouseController();
+        
+        clipboard = new Page(0, "#00000000");
         
         /* Draw the page */
         redraw(group, bounds);
@@ -403,6 +408,39 @@ public class EditorRunTimeData {
         propertiesPane.update(lesson.pages.get(currentPage), lesson.pages.get(currentPage).pageObjects.get(index));
     }
     
+    /** Copy an object to the clipboard */
+    public void copyObject() {
+        if(propertiesPane.getSelectedObject() == null) {
+            System.out.println("No Copy");
+            return;
+        }
+        
+        System.out.println("Copy");
+        
+        clipboard.pageObjects.clear();
+        
+        NewObjectController.copyObject(clipboard, propertiesPane.getSelectedObject());
+        
+        System.out.println(clipboard.pageObjects.size());
+    }
+    
+    /** Paste an object from the clipboard */
+    public void pasteObject() {
+        if(clipboard.pageObjects.size() < 1) {
+            System.out.println("No paste");
+            return;
+        }
+        
+        System.out.println("Paste");
+        
+        NewObjectController.copyObject(lesson.pages.get(currentPage), clipboard.pageObjects.get(0));
+        
+        int index = lesson.pages.get(currentPage).pageObjects.size() - 1;
+        propertiesPane.update(lesson.pages.get(currentPage), lesson.pages.get(currentPage).pageObjects.get(index));
+        
+        redraw();
+    }
+    
     /** Mouse Pressed in the page area */
     public void mousePressed(float relX, float relY) {
         if(!isLessonOpen()) {
@@ -422,7 +460,10 @@ public class EditorRunTimeData {
         
         System.out.println("Release: " + relX + ", " + relY);
         
-        if(onGroup) {
+        if(mouseController.mouseReleased(lesson.pages.get(currentPage), propertiesPane, relX, relY, onGroup)) {
+            propertiesPane.update(lesson.pages.get(currentPage), propertiesPane.getSelectedObject());
+            redraw();
+        } else if(onGroup) {
             propertiesPane.lateUpdate();
         }
     }

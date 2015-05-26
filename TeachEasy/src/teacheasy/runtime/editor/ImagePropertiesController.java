@@ -63,13 +63,7 @@ public class ImagePropertiesController {
         rotationProperty = PropertiesUtil.addPropertyField("rotation", "Rotation: ", rotationProperty, imageProperties, new PropertyChangedHandler());
     }
 
-    public void update(ImageObject nImage) {
-        if(selectedImage != null) {
-            if(selectedImage.equals(nImage)) {
-                return;
-            }
-        }
-        
+    public void update(ImageObject nImage) {        
         selectedImage = nImage;
         
         update();

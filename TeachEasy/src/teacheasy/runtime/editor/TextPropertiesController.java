@@ -100,16 +100,17 @@ public class TextPropertiesController {
     public void update(TextObject nText) {
         if(selectedText != null) {
             if(selectedText.equals(nText)) {
+                update(true);
                 return;
             }
         }
 
         selectedText = nText;
         
-        update();
+        update(false);
     }
     
-    public void update() {
+    public void update(boolean soft) {
         if(selectedText == null) {
             xStartProperty.setText("");
             yStartProperty.setText("");
@@ -128,7 +129,9 @@ public class TextPropertiesController {
             fontProperty.setValue(selectedText.getFont());
         }
         
-        fontColorProperty.fireEvent(new ActionEvent(fontColorProperty, fontColorProperty));
+        if(!soft) {
+            fontColorProperty.fireEvent(new ActionEvent(fontColorProperty, fontColorProperty));
+        }
     }
     
     public VBox getTextProperties() {
@@ -174,7 +177,7 @@ public class TextPropertiesController {
                     selectedText.setFontSize(newIntVal);
                     
                     if(newIntVal != oldIntVal) {
-                        update();
+                        update(false);
                         parent.redraw();
                     }
 
@@ -186,7 +189,7 @@ public class TextPropertiesController {
             if(newVal != oldVal) {
                 System.out.println("new: " + newVal + " old: " + oldVal);
                 
-                update();
+                update(false);
                 parent.redraw();
             }
         }
@@ -198,7 +201,7 @@ public class TextPropertiesController {
             
             if(source.getId() == "file") {
                 selectedText.setSourceFile(PropertiesUtil.validateFile(selectedText.getSourceFile(), "Text: ", "*.txt"));
-                update();
+                update(false);
                 parent.redraw();
             } else if(source.getId() == "editText") {                
                 TextEditorHandler handler = new TextEditorHandler();
@@ -245,7 +248,7 @@ public class TextPropertiesController {
                     break;
             }
             
-            update();
+            update(false);
             parent.redraw();
         }
     }
@@ -273,7 +276,7 @@ public class TextPropertiesController {
             selectedText.textFragments.clear();
             selectedText.textFragments.add(text);
             
-            update();
+            update(false);
             parent.redraw();
         }
     }

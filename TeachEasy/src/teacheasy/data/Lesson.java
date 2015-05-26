@@ -56,7 +56,7 @@ public class Lesson {
         pages = new ArrayList<Page>();
         
         /* Instantiate the metadata object */
-        lessonInfo = new LessonInfo("Lesson", "Author", "1.0",
+        lessonInfo = new LessonInfo("New Lesson", "Author", "1.0",
                                     "Comment", "01/01/2001", 1);
         
         /* Instantiate the default settings */

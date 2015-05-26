@@ -6,6 +6,8 @@
  */
 package teacheasy.data;
 
+import java.util.ArrayList;
+
 /**
  * This class encapsulates a fragment of text and it's
  * various settings.
@@ -47,7 +49,15 @@ public class RichText {
     private boolean subscript = false;
     private boolean newLine = false;
     
-    /** Constructor method */
+    /** 
+     * Constructor method
+     * 
+     * @param nText The text string.
+     * @param nFont The font.
+     * @param nFontSize The font size as an integer pt size.
+     * @oaram nColor The color as a hex string.
+     * @param settings A vararg collection of the various emphasis settings, e.g. bold and italic.
+     */
     public RichText(String nText, String nFont, int nFontSize, String nColor, String... settings) {
         /* Instantiate class level variables */
         this.text = nText;
@@ -173,5 +183,39 @@ public class RichText {
 
     public void setNewLine(boolean nNewLine) {
         this.newLine = nNewLine;
+    }
+    
+    public ArrayList<String> getSettings() {
+        ArrayList<String> list = new ArrayList<String>();
+        
+        if(bold) {
+            list.add("BOLD");
+        }
+        
+        if(italic) {
+            list.add("ITALIC");
+        }
+        
+        if(underline) {
+            list.add("UNDERLINE");
+        }
+        
+        if(strikethrough) {
+            list.add("STRIKETHROUGH");
+        }
+        
+        if(superscript) {
+            list.add("SUPERSCRIPT");
+        }
+        
+        if(subscript) {
+            list.add("SUBSCRIPT");
+        }
+        
+        if(newLine) {
+            list.add("NEWLINE");
+        }
+        
+        return list;
     }
 }
