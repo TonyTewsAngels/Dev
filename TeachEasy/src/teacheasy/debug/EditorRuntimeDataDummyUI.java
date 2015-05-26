@@ -1,6 +1,7 @@
 package teacheasy.debug;
 
 import teacheasy.data.PageObject.PageObjectType;
+import teacheasy.main.TeachEasyClient;
 import teacheasy.runtime.EditorRunTimeData;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -183,7 +184,7 @@ public class EditorRuntimeDataDummyUI extends Application {
         grid.add(text, 0, 3);
         
         /* Instantiate the runtime data */
-        editorRunTimeData = new EditorRunTimeData(group, new Rectangle2D(0, 0, bounds.getMaxX()/2, bounds.getMaxY()/2), propertiesPane);
+        editorRunTimeData = new EditorRunTimeData(group, new Rectangle2D(0, 0, bounds.getMaxX()/2, bounds.getMaxY()/2), propertiesPane, new TeachEasyClient());
         
         /* Show the stage */
         primaryStage.show();

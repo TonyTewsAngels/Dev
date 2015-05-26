@@ -58,7 +58,7 @@ public class Lesson {
         
         /* Instantiate the metadata object */
         lessonInfo = new LessonInfo("New Lesson", "Author", "1.0",
-                                    "Comment", "01/01/2001", 1);
+                                    "Comment", "01/01/2001", 0);
         
         /* Instantiate the default settings */
         defaultSettings = new LessonDefaultSettings(12, "Arial",
@@ -66,7 +66,7 @@ public class Lesson {
                                     "#00000000", "#00000000");
         
         /* Instantiate the grade settings */
-        gradeSettings = new LessonGradeSettings(1, "pass", "fail");
+        gradeSettings = new LessonGradeSettings(0, "pass", "fail");
     }
     
     /**

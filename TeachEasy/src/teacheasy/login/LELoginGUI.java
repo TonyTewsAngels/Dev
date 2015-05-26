@@ -3,6 +3,7 @@ package teacheasy.login;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import teacheasy.data.Lesson;
 import teacheasy.main.LearnEasyClient;
 
 import javafx.scene.control.Button;

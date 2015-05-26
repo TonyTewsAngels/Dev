@@ -55,6 +55,7 @@ public class LessonInfoWindow {
     public LessonInfoWindow(Lesson lesson, TeachEasyClient nParent) {
         /* Initialise the info reference */
         info = lesson.lessonInfo;
+        info.setTotalMarks(lesson.getTotalMarks());
         gradeSettings = lesson.gradeSettings;
         parent = nParent;
         
@@ -64,6 +65,7 @@ public class LessonInfoWindow {
         stage.setHeight(440);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setResizable(false);
+        stage.setTitle("Lesson Properties");
         
         /* Initialise the components */
         box = new VBox(10);
