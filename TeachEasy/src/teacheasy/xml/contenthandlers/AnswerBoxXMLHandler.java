@@ -74,7 +74,7 @@ public class AnswerBoxXMLHandler extends DefaultHandler{
         
         if(correctAnswerStr == null) {
             errorList.add(new XMLNotification(Level.ERROR,
-                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (AnswerBox) Sourcefile "));
+                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (AnswerBox) No answer(s) given."));
             correctAnswerStr = new String("null");
         }
         

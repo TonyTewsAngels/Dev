@@ -271,6 +271,10 @@ public class EditorRunTimeData {
     
     /** Save a lesson file */
     public void saveLesson() {
+        if(!isLessonOpen()) {
+            return;
+        }
+        
         /* Create a file chooser */
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Files", "*.xml"));
