@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import teacheasy.data.GraphicObject;
 import teacheasy.render.Util;
 import wavemedia.graphic.GraphicType;
+import wavemedia.graphic.Shading;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -30,8 +31,9 @@ public class GraphicPropertiesController {
     /* The UI element to contain the editable properties */
     private VBox graphicProperties;
     
-    /* The combo box to hold the graphic type */
+    /* The combo boxes to hold the graphic and shading types */
     private ComboBox<String> typeProperty;
+    private ComboBox<String> shadingProperty;
     
     /* The text fields for the different properties */
     private TextField xStartProperty;
@@ -48,6 +50,7 @@ public class GraphicPropertiesController {
     /* The color properties */
     private ColorPicker graphicColorProperty;
     private ColorPicker lineColorProperty;
+    private ColorPicker shadingColorProperty;
     
     /**
      * Constructor. 
@@ -73,6 +76,12 @@ public class GraphicPropertiesController {
                                        GraphicType.LINE.toString(),
                                        GraphicType.ARROW.toString());
         
+        shadingProperty = PropertiesUtil.addSelectionField("shading", "Shading: ", shadingProperty, graphicProperties, new SelectionPropertyChangedHandler());
+        shadingProperty.getItems().addAll(Shading.NONE.toString(),
+                                          Shading.HORIZONTAL.toString(),
+                                          Shading.VERTICAL.toString(),
+                                          Shading.CYCLIC.toString());
+        
         /* Set up the position property fields */
         xStartProperty = PropertiesUtil.addPropertyField("xStart", "X Start: ", xStartProperty, graphicProperties, new PropertyChangedHandler());
         yStartProperty = PropertiesUtil.addPropertyField("yStart", "Y Start: ", yStartProperty, graphicProperties, new PropertyChangedHandler());
@@ -88,6 +97,7 @@ public class GraphicPropertiesController {
         /* Set up the color property fields */
         graphicColorProperty = PropertiesUtil.addColorField("graphicColor", "Graphic Color: ", graphicColorProperty, graphicProperties, new ColorPropertyChangedHandler());
         lineColorProperty = PropertiesUtil.addColorField("lineColor", "Outline Color: ", lineColorProperty, graphicProperties, new ColorPropertyChangedHandler());
+        shadingColorProperty = PropertiesUtil.addColorField("shadingColor", "Shading Color: ", shadingColorProperty, graphicProperties, new ColorPropertyChangedHandler());
     }
 
     public void update(GraphicObject nGraphic) {
@@ -115,6 +125,8 @@ public class GraphicPropertiesController {
             shadowProperty.setSelected(false);
             graphicColorProperty.setValue(Color.WHITE);
             lineColorProperty.setValue(Color.WHITE);
+            typeProperty.setValue("");
+            shadingProperty.setValue("");
         } else {
             xStartProperty.setText(String.valueOf(selectedGraphic.getXStart()));
             yStartProperty.setText(String.valueOf(selectedGraphic.getYStart()));
@@ -127,11 +139,13 @@ public class GraphicPropertiesController {
             graphicColorProperty.setValue(Util.colorFromString(selectedGraphic.getGraphicColour()));
             lineColorProperty.setValue(Util.colorFromString(selectedGraphic.getLineColor()));
             typeProperty.setValue(selectedGraphic.getGraphicType().toString());
+            shadingProperty.setValue(selectedGraphic.getShading().toString());
         }
         
         if(!soft) {
             graphicColorProperty.fireEvent(new ActionEvent(graphicColorProperty, graphicColorProperty));
             lineColorProperty.fireEvent(new ActionEvent(lineColorProperty, lineColorProperty));
+            shadingColorProperty.fireEvent(new ActionEvent(shadingColorProperty, shadingColorProperty));
         }
     }
     
@@ -217,6 +231,9 @@ public class GraphicPropertiesController {
                 case "lineColor":
                     selectedGraphic.setLineColor(Util.stringFromColor(source.getValue()));
                     break;
+                case "shadingColor":
+                    selectedGraphic.setShadingColor(Util.stringFromColor(source.getValue()));
+                    break;
                 default:
                     break;
             }
@@ -237,6 +254,9 @@ public class GraphicPropertiesController {
             switch(source.getId()) {
                 case "type":
                     selectedGraphic.setType(GraphicType.valueOf(source.getValue()));
+                    break;
+                case "shading":
+                    selectedGraphic.setShading(Shading.valueOf(source.getValue()));
                     break;
                 default:
                     break;
