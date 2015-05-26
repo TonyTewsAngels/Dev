@@ -487,23 +487,37 @@ public class RunTimeData {
         vbox.setSpacing(5);
         
         if(!homePage.getPreference().get("firstRecentlyOpened", "doesn't exist!").equals("doesn't exist!")){
+            
             final Hyperlink firstRecent = new Hyperlink(homePage.getPreference().get("firstRecentlyOpened", "doesn't exist!"));
+            firstRecent.setId("first recent");
             firstRecent.setOnAction(new HyperlinkHandler(firstRecent));
             vbox.getChildren().add(firstRecent);
+            
         } if (!homePage.getPreference().get("secondRecentlyOpened", "doesn't exist!").equals("doesn't exist!")){
+            
             final Hyperlink secondRecent = new Hyperlink(homePage.getPreference().get("secondRecentlyOpened", "doesn't exist!"));
+            secondRecent.setId("second recent");
             secondRecent.setOnAction(new HyperlinkHandler(secondRecent));
             vbox.getChildren().add(secondRecent);
+            
         } if (!homePage.getPreference().get("thirdRecentlyOpened", "doesn't exist!").equals("doesn't exist!")){
+            
             final Hyperlink thirdRecent = new Hyperlink(homePage.getPreference().get("thirdRecentlyOpened", "doesn't exist!"));
+            thirdRecent.setId("third recent");
             thirdRecent.setOnAction(new HyperlinkHandler(thirdRecent));
             vbox.getChildren().add(thirdRecent);
+            
         } if (!homePage.getPreference().get("fourthRecentlyOpened", "doesn't exist!").equals("doesn't exist!")){
+            
             final Hyperlink fourthRecent = new Hyperlink(homePage.getPreference().get("fourthRecentlyOpened", "doesn't exist!"));
+            fourthRecent.setId("fourth recent");
             fourthRecent.setOnAction(new HyperlinkHandler(fourthRecent));
             vbox.getChildren().add(fourthRecent);
+            
         } if (!homePage.getPreference().get("RecentlyOpened", "doesn't exist!").equals("doesn't exist!")){
+            
             final Hyperlink fifthRecent = new Hyperlink(homePage.getPreference().get("fifthRecentlyOpened", "doesn't exist!"));
+            fifthRecent.setId("fifth recent");
             fifthRecent.setOnAction(new HyperlinkHandler(fifthRecent));
             vbox.getChildren().add(fifthRecent);
         }
@@ -524,11 +538,21 @@ public class RunTimeData {
         
         @Override
         public void handle(ActionEvent e) {
+            /* get the ID of the hyperlink */
+            String id = hl.getId();
+
             if(!hl.equals("doesn't exist!")){
-                /*This line makes it open only the recently opened lesson
-                 * regardless of chosen lesson
-                 */
-                openLessonFromHyplink(homePage.getPreference().get("firstRecentlyOpened", "doesn't exist!")); 
+                if(id.equals("first recent")){
+                openLessonFromHyplink(homePage.getPreference().get("firstRecentlyOpened", "doesn't exist!"));
+                } else if (id.equals("second recent")){
+                    openLessonFromHyplink(homePage.getPreference().get("secondRecentlyOpened", "doesn't exist!"));
+                } else if (id.equals("third recent")){
+                    openLessonFromHyplink(homePage.getPreference().get("thirdRecentlyOpened", "doesn't exist!"));
+                } else if (id.equals("fourth recent")){
+                    openLessonFromHyplink(homePage.getPreference().get("fourthRecentlyOpened", "doesn't exist!"));
+                } else if (id.equals("fifth recent")){
+                    openLessonFromHyplink(homePage.getPreference().get("fifthRecentlyOpened", "doesn't exist!"));
+                }
              }
         }
     }
