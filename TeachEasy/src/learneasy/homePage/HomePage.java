@@ -74,15 +74,12 @@ public class HomePage {
         /* Instantiate preferences */
         preference = Preferences.userRoot().node(this.getClass().getName());
 
-        /*
-         * try { preference.clear(); } catch (BackingStoreException e1) { //
-         * TODO Auto-generated catch block e1.printStackTrace(); }
-         */
-
-        /*
-         * try { preference.clear(); } catch (BackingStoreException e1) { //
-         * TODO Auto-generated catch block e1.printStackTrace(); }
-         */
+        try {
+            preference.clear();
+        } catch (BackingStoreException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
 
         try {
             String[] storedKeys = new String[preference.keys().length];
@@ -164,6 +161,8 @@ public class HomePage {
                     Boolean old_val, Boolean new_val) {
                 if (checkBox.isSelected()) {
                     preference.putBoolean("showPrompt", false);
+                } else {
+                    preference.putBoolean("showPrompt", true);
                 }
             }
         });
@@ -223,22 +222,79 @@ public class HomePage {
     public void setRecentlyOpened(String pathToLesson) {
 
         String[] storedKeys;
-
+        boolean recentlyOpenedListExists = false;
+        boolean pathAlreadyStored = false;
+        int existingPathIndex = -1;
         try {
             storedKeys = new String[preference.keys().length];
             storedKeys = preference.keys();
-            for (int i = 0; i < preference.keys().length; i++) {
+            for (int i = 0; i < storedKeys.length; i++) {
+                System.out.println("The keys are: "+ storedKeys[i] + "@ " + storedKeys.length);
                 if (storedKeys[i].equals(firstRecentlyOpened)) {
-                    preference.put(fifthRecentlyOpened, preference.get(
-                            fourthRecentlyOpened, "doesn't exist!"));
-                    preference.put(fourthRecentlyOpened, preference.get(
-                            thirdRecentlyOpened, "doesn't exist!"));
-                    preference.put(thirdRecentlyOpened, preference.get(
-                            secondRecentlyOpened, "doesn't exist!"));
-                    preference.put(secondRecentlyOpened, preference.get(
-                            firstRecentlyOpened, "doesn't exist!"));
-                    preference.put(firstRecentlyOpened, pathToLesson);
+                    recentlyOpenedListExists = true;
+                    System.out.println("The length is: " + i);
                 }
+ 
+                if (pathToLesson.equals(preference.get(storedKeys[i], "doesn't exist!"))) {
+                    pathAlreadyStored = true;
+                    existingPathIndex = i;
+                }
+            }
+            if (recentlyOpenedListExists) {
+                if (pathAlreadyStored) {
+                    System.out.println("Getting here!!!");
+                    if (existingPathIndex == 2){
+                        preference.put(storedKeys[existingPathIndex], pathToLesson);
+                    } else if (existingPathIndex == 3){
+                        preference.put(storedKeys[existingPathIndex], preference.get(storedKeys[existingPathIndex-1], "doesn't exist!"));
+                        preference.put(storedKeys[existingPathIndex-1], pathToLesson);
+                    } else if (existingPathIndex == 4) {
+                        preference.put(storedKeys[existingPathIndex], preference.get(storedKeys[existingPathIndex-1], "doesn't exist!"));
+                        preference.put(storedKeys[existingPathIndex-1], preference.get(storedKeys[existingPathIndex-2], "doesn't exist!"));
+                        preference.put(storedKeys[existingPathIndex-2], pathToLesson);
+                    } else if (existingPathIndex == 5) {
+                        preference.put(storedKeys[existingPathIndex], preference.get(storedKeys[existingPathIndex-1], "doesn't exist!"));
+                        preference.put(storedKeys[existingPathIndex-1], preference.get(storedKeys[existingPathIndex-2], "doesn't exist!"));
+                        preference.put(storedKeys[existingPathIndex-2], preference.get(storedKeys[existingPathIndex-3], "doesn't exist!"));
+                        preference.put(storedKeys[existingPathIndex-3], pathToLesson);
+                    } else if (existingPathIndex == 6) {
+                        preference.put(storedKeys[existingPathIndex], preference.get(storedKeys[existingPathIndex-1], "doesn't exist!"));
+                        preference.put(storedKeys[existingPathIndex-1], preference.get(storedKeys[existingPathIndex-2], "doesn't exist!"));
+                        preference.put(storedKeys[existingPathIndex-2], preference.get(storedKeys[existingPathIndex-3], "doesn't exist!"));
+                        preference.put(storedKeys[existingPathIndex-3], preference.get(storedKeys[existingPathIndex-4], "doesn't exist!"));
+                        preference.put(storedKeys[existingPathIndex-4], pathToLesson);
+                    }
+                
+                } else {
+                    if(!preference.get(fourthRecentlyOpened,"doesn't exist!").equals("doesn't exist!")){
+                        preference.put(fifthRecentlyOpened, preference.get(
+                            fourthRecentlyOpened, "doesn't exist!"));
+                        preference.put(fourthRecentlyOpened, preference.get(
+                                thirdRecentlyOpened, "doesn't exist!"));
+                        preference.put(thirdRecentlyOpened, preference.get(
+                                secondRecentlyOpened, "doesn't exist!"));
+                        preference.put(secondRecentlyOpened, preference.get(
+                                firstRecentlyOpened, "doesn't exist!"));
+                        preference.put(firstRecentlyOpened, pathToLesson);
+                    } else if(!preference.get(thirdRecentlyOpened,"doesn't exist!").equals("doesn't exist!")){
+                        preference.put(fourthRecentlyOpened, preference.get(
+                                    thirdRecentlyOpened, "doesn't exist!"));
+                        preference.put(thirdRecentlyOpened, preference.get(
+                                    secondRecentlyOpened, "doesn't exist!"));
+                        preference.put(secondRecentlyOpened, preference.get(
+                                    firstRecentlyOpened, "doesn't exist!"));
+                        preference.put(firstRecentlyOpened, pathToLesson);
+                    } else {
+                        preference.put(thirdRecentlyOpened, preference.get(
+                                secondRecentlyOpened, "doesn't exist!"));
+                        preference.put(secondRecentlyOpened, preference.get(
+                                firstRecentlyOpened, "doesn't exist!"));
+                        preference.put(firstRecentlyOpened, pathToLesson);
+                    }
+                    
+                }
+            } else {
+                preference.put(firstRecentlyOpened, pathToLesson);
             }
         } catch (BackingStoreException e1) {
             // TODO Auto-generated catch block

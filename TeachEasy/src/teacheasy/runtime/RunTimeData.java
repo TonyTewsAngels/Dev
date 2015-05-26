@@ -448,6 +448,7 @@ public class RunTimeData {
         File file = new File(filePath);
         
         homePage.setRecentlyOpened(file.toString());
+        System.out.println("being called from openLessonFromHyplink");
          
         /* Parse the file */
         ArrayList<XMLNotification> errorList = xmlHandler.parseXML2(file
@@ -493,15 +494,15 @@ public class RunTimeData {
             final Hyperlink secondRecent = new Hyperlink(homePage.getPreference().get("secondRecentlyOpened", "doesn't exist!"));
             secondRecent.setOnAction(new HyperlinkHandler(secondRecent));
             vbox.getChildren().add(secondRecent);
-        } if (!homePage.getPreference().get("secondRecentlyOpened", "doesn't exist!").equals("doesn't exist!")){
+        } if (!homePage.getPreference().get("thirdRecentlyOpened", "doesn't exist!").equals("doesn't exist!")){
             final Hyperlink thirdRecent = new Hyperlink(homePage.getPreference().get("thirdRecentlyOpened", "doesn't exist!"));
             thirdRecent.setOnAction(new HyperlinkHandler(thirdRecent));
             vbox.getChildren().add(thirdRecent);
-        } if (!homePage.getPreference().get("secondRecentlyOpened", "doesn't exist!").equals("doesn't exist!")){
+        } if (!homePage.getPreference().get("fourthRecentlyOpened", "doesn't exist!").equals("doesn't exist!")){
             final Hyperlink fourthRecent = new Hyperlink(homePage.getPreference().get("fourthRecentlyOpened", "doesn't exist!"));
             fourthRecent.setOnAction(new HyperlinkHandler(fourthRecent));
             vbox.getChildren().add(fourthRecent);
-        } if (!homePage.getPreference().get("secondRecentlyOpened", "doesn't exist!").equals("doesn't exist!")){
+        } if (!homePage.getPreference().get("RecentlyOpened", "doesn't exist!").equals("doesn't exist!")){
             final Hyperlink fifthRecent = new Hyperlink(homePage.getPreference().get("fifthRecentlyOpened", "doesn't exist!"));
             fifthRecent.setOnAction(new HyperlinkHandler(fifthRecent));
             vbox.getChildren().add(fifthRecent);
@@ -524,6 +525,9 @@ public class RunTimeData {
         @Override
         public void handle(ActionEvent e) {
             if(!hl.equals("doesn't exist!")){
+                /*This line makes it open only the recently opened lesson
+                 * regardless of chosen lesson
+                 */
                 openLessonFromHyplink(homePage.getPreference().get("firstRecentlyOpened", "doesn't exist!")); 
              }
         }
