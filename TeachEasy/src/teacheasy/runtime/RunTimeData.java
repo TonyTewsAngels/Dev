@@ -7,10 +7,13 @@
 package teacheasy.runtime;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -431,6 +434,7 @@ public class RunTimeData {
             /* Render the no lesson loaded screen */
             renderer.renderUnLoaded();
             displayRecentlyOpenedLessons();
+            listAvailableLesson();
         }
     }
 
@@ -523,6 +527,30 @@ public class RunTimeData {
         }
         
         group.getChildren().add(vbox);
+    }
+    
+    private void listAvailableLesson(){
+        File file = new File(homePage.getDefaultFolder());
+        File[] listOfLessons = file.listFiles(new FilenameFilter() {
+            public boolean accept(File dir, String name) {
+                return name.toLowerCase().endsWith(".xml");
+            }
+        });
+        
+        List<Hyperlink> availableLessonLinks = new ArrayList<Hyperlink>();
+        
+        VBox vbox = new VBox();
+        vbox.setSpacing(5);
+        
+        for(int i = 0; i < listOfLessons.length; i++){
+            availableLessonLinks.add(new Hyperlink(listOfLessons[i].toString()));
+            availableLessonLinks.get(i).setId("lesson"+i);
+            availableLessonLinks.get(i).setOnAction(new HyperlinkHandler(availableLessonLinks.get(i)));
+            vbox.getChildren().add(availableLessonLinks.get(i));
+        }
+        
+        group.getChildren().add(vbox);
+        
     }
     
     public class HyperlinkHandler implements EventHandler<ActionEvent> {

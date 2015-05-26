@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 
 /**
  * This class displays a dialog box prompting the user to choose a default
- * LearnEasy folder.
+ * LearnEasy folder and stores the file path of recently opened lessons.
  * 
  * @author Daniel Berhe
  * @version 1.0 25/05/15
@@ -58,7 +58,7 @@ public class HomePage {
 
     public HomePage() {
         
-        defaultFolder = new File(System.getProperty("user.home")).toString();
+        setDefaultFolder(new File(System.getProperty("user.home")).toString());
         defaultFolderChooser = new DirectoryChooser();
         fifthRecentlyOpened = "fifthRecentlyOpened";
         fourthRecentlyOpened = "fourthRecentlyOpened";
@@ -88,7 +88,7 @@ public class HomePage {
             System.out.println("length is: " + storedKeys.length);
             if (storedKeys.length == 0) {
                 /* Store default folder with key recentlyOpened */
-                preference.put("recentlyOpened", defaultFolder);
+                preference.put("recentlyOpened", getDefaultFolder());
 
                 /*
                  * Store user choice for prompt window at the start of LearnEasy
@@ -113,9 +113,9 @@ public class HomePage {
 
         if (!recentlyOpenedKeyExists) {
             /* Store default folder with key recentlyOpened */
-            preference.put("recentlyOpened", defaultFolder);
+            preference.put("recentlyOpened", getDefaultFolder());
         } else {
-            defaultFolder = preference.get("recentlyOpened", "user.home");
+            setDefaultFolder(preference.get("recentlyOpened", "user.home"));
         }
 
         if (!userPromptKeyExists) {
@@ -145,7 +145,7 @@ public class HomePage {
 
         fileAddress = new TextField();
         fileAddress.setPrefWidth(290);
-        fileAddress.setText(defaultFolder);
+        fileAddress.setText(getDefaultFolder());
 
         /* Set up the "Browse" button */
         browseButton = new Button("Browse");
@@ -304,6 +304,14 @@ public class HomePage {
 
     }
 
+    public String getDefaultFolder() {
+        return defaultFolder;
+    }
+
+    public void setDefaultFolder(String defaultFolder) {
+        this.defaultFolder = defaultFolder;
+    }
+
     /**
      * Button Event Handler Class
      */
@@ -319,9 +327,9 @@ public class HomePage {
 
             /* Act according to id */
             if (id.equals("OK")) {
-                defaultFolder = fileAddress.getText();
+                setDefaultFolder(fileAddress.getText());
                 dialogStage.close();
-                preference.put("recentlyOpened", defaultFolder);
+                preference.put("recentlyOpened", getDefaultFolder());
             } else if (id.equals("Browse")) {
                 configureDirectoryChooser(defaultFolderChooser);
                 File file = defaultFolderChooser.showDialog(dialogStage);
