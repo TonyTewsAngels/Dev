@@ -138,7 +138,7 @@ public class GraphicXMLHandler extends DefaultHandler{
         lineColorStr = XMLUtil.checkColor(lineColorStr, graphicColorStr, Level.WARNING, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Graphic) Line Color ");
         
-        float outlineThickness = XMLUtil.checkFloat(outlineThicknessStr, 1.0f, Level.WARNING, errorList,
+        float outlineThickness = XMLUtil.checkFloat(outlineThicknessStr, 0.5f, Level.WARNING, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Graphic) Line thickness ");
         
         float startTime = XMLUtil.checkFloat(startTimeStr, 0.0f, Level.WARNING, errorList,

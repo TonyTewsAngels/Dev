@@ -175,7 +175,7 @@ public class NewObjectController {
      * @param page The page to add the graphic to.
      */
     public static void addGraphicObject(Page page) {
-        GraphicObject graphic = new GraphicObject(GraphicType.OVAL, 0.0f, 0.0f, 0.1f, 0.1f, 0.0f, "#ff000000", true, "#ff000000", 2, false, 0.0f, 0.0f);
+        GraphicObject graphic = new GraphicObject(GraphicType.OVAL, 0.0f, 0.0f, 0.1f, 0.1f, 0.0f, "#ff000000", true, "#ff000000", 0.5f, false, 0.0f, 0.0f);
         
         page.pageObjects.add(graphic);
     }
