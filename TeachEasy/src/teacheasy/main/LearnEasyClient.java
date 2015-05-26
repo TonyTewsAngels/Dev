@@ -1,5 +1,6 @@
 package teacheasy.main;
 
+import teacheasy.data.Lesson;
 import teacheasy.runtime.RunTimeData;
 import javafx.application.*;
 import javafx.event.ActionEvent;

@@ -127,6 +127,8 @@ public class AnswerBoxPropertiesController {
         answerTable.getColumns().add(answerColumn);
         answerTable.getColumns().add(deleteColumn);
         
+        answerTable.setMaxHeight(160);
+        
         answerBoxProperties.getChildren().add(answerTable);
     }
 

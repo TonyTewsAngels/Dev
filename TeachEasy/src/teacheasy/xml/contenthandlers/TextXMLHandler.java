@@ -117,10 +117,15 @@ public class TextXMLHandler extends DefaultHandler{
             sourceFileStr = new String("null");
         }
         
-        if(fontStr == null) {
+        if(fontStr == null || fontStr.equals("")) {
             errorList.add(new XMLNotification(Level.WARNING, 
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Text) Font missing."));
-            fontStr = new String("null");
+            
+            if(lesson.defaultSettings.getFont() != null) {
+                fontStr = new String(lesson.defaultSettings.getFont());
+            } else {
+                fontStr = new String("system");
+            }
         }
         
         int fontSize = XMLUtil.checkInt(fontSizeStr, lesson.defaultSettings.getFontSize(), Level.WARNING, errorList,

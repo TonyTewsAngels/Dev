@@ -138,9 +138,9 @@ public class Renderer {
                                                   .superscript(rt.isSuperscript())
                                                   .subscript(rt.isSubscript())
                                                   .strikethrough(rt.isStrikethrough())
-                                                  .fontName(text.getFont())
-                                                  .fontColor(text.getColor())
-                                                  .fontSize(text.getFontSize())
+                                                  .fontName(rt.getFont())
+                                                  .fontColor(rt.getColor())
+                                                  .fontSize(rt.getFontSize())
                                                   .newline(rt.isNewLine())
                                                   .build());
         }
@@ -158,8 +158,8 @@ public class Renderer {
     							(float)bounds.getMaxY() * video.getYStart(),
 							    (float)bounds.getMaxX()*(video.getXEnd() - video.getXStart()),
 							    video.getSourcefile(),
-							    false,
-							    false);
+							    video.isAutoPlay(),
+							    video.isLoop());
     }
     
     /** Render an audio object on a page */

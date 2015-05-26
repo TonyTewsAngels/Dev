@@ -20,7 +20,7 @@ public class SlideshowXMLHandler extends DefaultHandler {
     
     private String readBuffer;
     
-    private boolean docInfoFound = false, defaultSettingsFound = false, slideFound = false;
+    private boolean docInfoFound = false, defaultSettingsFound = false, gradeSettingsFound = false, slideFound = false;
     
     public SlideshowXMLHandler(XMLReader nXMLReader, DefaultHandler nParent, Lesson nLesson, ArrayList<XMLNotification> nErrorList) {
         this.xmlReader = nXMLReader;
@@ -43,6 +43,7 @@ public class SlideshowXMLHandler extends DefaultHandler {
                 xmlReader.setContentHandler(new DefaultSettingsXMLHandler(xmlReader, this, lesson, errorList));
                 break;
             case GRADESETTINGS:
+                gradeSettingsFound = true;
                 xmlReader.setContentHandler(new GradeSettingsXMLHandler(xmlReader, this, lesson, errorList));
                 break;
             case SLIDE:
@@ -80,6 +81,9 @@ public class SlideshowXMLHandler extends DefaultHandler {
         
         if(!defaultSettingsFound) {
             errorList.add(new XMLNotification(Level.ERROR, "No Default Settings found."));
+        }
+        if(!gradeSettingsFound) {
+            errorList.add(new XMLNotification(Level.WARNING, "No Grade Settings found. Default Inserted."));
         }
         
         if(!slideFound) {

@@ -300,6 +300,8 @@ public class TeachEasyClient extends Application {
         nextPageBtn.setId("nextPageBtn");
         prevPageBtn.setId("prevPageBtn");
         
+        previewBtn.setId("previewBtn");
+        
         /* Dummy Page Content */
         page1 = new Text(1, 1,"page1");
         page2 = new Text(1, 1,"page2");
@@ -502,6 +504,7 @@ public class TeachEasyClient extends Application {
         questionBtn.setOnMousePressed(new ButtonEventHandler(questionBtn, queBoxPR));
         nextPageBtn.setOnMousePressed(new ButtonEventHandler(nextPageBtn, arPRE_R));
         prevPageBtn.setOnMousePressed(new ButtonEventHandler(prevPageBtn, arPRE_L));
+        previewBtn.setOnMousePressed(new ButtonEventHandler(previewBtn, textBoxPR));
 
         /* Mouse Released */      
         textBtn.setOnMouseReleased(new ButtonEventHandler(textBtn, textBoxHO)); 
@@ -674,7 +677,7 @@ public class TeachEasyClient extends Application {
                                                   contentPanelBounds.getMaxX(),
                                                   contentPanelBounds.getMaxY());
         
-        editorRuntimeData = new EditorRunTimeData(contentPanel, contentRect, propertiesPanel);
+        editorRuntimeData = new EditorRunTimeData(contentPanel, contentRect, propertiesPanel, this);
         
         /* Show the window */
         primaryStage.show();
@@ -923,6 +926,8 @@ public class TeachEasyClient extends Application {
                         case "prevPageBtn":
                             prevPageButtonPressed();
                             break;
+                        case "previewBtn":
+                            break;
                     }
                 }
             }
@@ -981,7 +986,7 @@ public class TeachEasyClient extends Application {
         @Override
         public void handle(MouseEvent me) {
             if(editorRuntimeData.isLessonOpen()) {
-                new LessonInfoWindow(editorRuntimeData.getLesson().lessonInfo, clientRef);
+                new LessonInfoWindow(editorRuntimeData.getLesson(), clientRef);
             }
         }
     }

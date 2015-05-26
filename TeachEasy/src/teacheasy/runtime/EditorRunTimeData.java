@@ -19,7 +19,9 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 import teacheasy.data.*;
 import teacheasy.data.PageObject.PageObjectType;
+import teacheasy.main.TeachEasyClient;
 import teacheasy.render.Renderer;
+import teacheasy.runtime.editor.LessonInfoWindow;
 import teacheasy.runtime.editor.MouseController;
 import teacheasy.runtime.editor.NewObjectController;
 import teacheasy.runtime.editor.PropertiesPane;
@@ -63,12 +65,16 @@ public class EditorRunTimeData {
     
     /* Clip board */
     private Page clipboard;
+    
+    /* Reference to UI */
+    private TeachEasyClient parent;
 
     /** Constructor method */
-    public EditorRunTimeData(Group nGroup, Rectangle2D nBounds, VBox propPaneBox) {
+    public EditorRunTimeData(Group nGroup, Rectangle2D nBounds, VBox propPaneBox, TeachEasyClient nParent) {
         /* Set the class level variables */
         this.group = nGroup;
         this.bounds = nBounds;
+        this.parent = nParent;
         
         /* Instantiate class level variables */
         this.pageCount = 0;
@@ -214,6 +220,8 @@ public class EditorRunTimeData {
         
         /* */
         redraw(group, bounds);
+        
+        new LessonInfoWindow(lesson, parent);
     }
     
     /** Open a lesson file */
@@ -271,6 +279,10 @@ public class EditorRunTimeData {
     
     /** Save a lesson file */
     public void saveLesson() {
+        if(!isLessonOpen()) {
+            return;
+        }
+        
         /* Create a file chooser */
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Files", "*.xml"));
@@ -471,6 +483,9 @@ public class EditorRunTimeData {
     /** Redraw the content */
     public void redraw(Group group, Rectangle2D bounds) {        
         if(isLessonOpen()) {
+            /* Update the total marks */
+            lesson.lessonInfo.setTotalMarks(lesson.getTotalMarks());
+            
             /* Render the current page */
             renderer.renderPage(lesson.pages.get(currentPage));
         } else {

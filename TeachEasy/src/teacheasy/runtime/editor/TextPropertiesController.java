@@ -176,6 +176,10 @@ public class TextPropertiesController {
                     int newIntVal = PropertiesUtil.validateInt(source.getText(), selectedText.getFontSize());
                     selectedText.setFontSize(newIntVal);
                     
+                    for(int i = 0; i < selectedText.textFragments.size(); i++) {
+                        selectedText.textFragments.get(i).setFontSize(newIntVal);
+                    }
+                    
                     if(newIntVal != oldIntVal) {
                         update(false);
                         parent.redraw();
@@ -222,6 +226,11 @@ public class TextPropertiesController {
             switch(source.getId()) {
                 case "fontColor":
                     selectedText.setColor(Util.stringFromColor(source.getValue()));
+                    
+                    for(int i = 0; i < selectedText.textFragments.size(); i++) {
+                        selectedText.textFragments.get(i).setColor(Util.stringFromColor(source.getValue()));
+                    }
+                    
                     break;
                 default:
                     break;
@@ -243,6 +252,11 @@ public class TextPropertiesController {
             switch(source.getId()) {
                 case "font":
                     selectedText.setFont(source.getValue());
+                    
+                    for(int i = 0; i < selectedText.textFragments.size(); i++) {
+                        selectedText.textFragments.get(i).setFont(source.getValue());
+                    }
+                    
                     break;
                 default:
                     break;
