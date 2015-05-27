@@ -197,7 +197,7 @@ public class RunTimeData {
      * A method to count the marks on a page and pass them to progress tracking
      * class
      */
-    private void collatePageMarks() {
+    public void collatePageMarks() {
         int pageMarks = 0;
 
         pageMarks += renderer.answerBoxHandler.currentPageMarks();
@@ -590,6 +590,9 @@ public class RunTimeData {
         }
     }
     
+    public ProgressTracker getProgress() {
+        return progressTracker;
+    }
     
     /** A handler for the hyperlinks */
     public class HyperlinkHandler implements EventHandler<ActionEvent> {
