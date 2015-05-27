@@ -67,8 +67,9 @@ public class HomePage {
     }
 
     public void setPreference() {
-
-        boolean recentlyOpenedKeyExists = false;
+        
+        /* variables for checking the existence of keys */
+        boolean defaultFolderChosen = false;
         boolean userPromptKeyExists = false;
 
         /* Instantiate preferences */
@@ -94,9 +95,10 @@ public class HomePage {
                 preference.putBoolean("showPrompt", true);
 
             } else {
+                /* check the existence of keys */
                 for (int i = 0; i < storedKeys.length; i++) {
                     if (storedKeys[i].equals("recentlyOpened")) {
-                        recentlyOpenedKeyExists = true;
+                        defaultFolderChosen = true;
 
                     } else if (storedKeys[i].equals("showPrompt")) {
                         userPromptKeyExists = true;
@@ -109,10 +111,11 @@ public class HomePage {
             e.printStackTrace();
         }
 
-        if (!recentlyOpenedKeyExists) {
+        if (!defaultFolderChosen) {
             /* Store default folder with key recentlyOpened */
             preference.put("recentlyOpened", getDefaultFolder());
         } else {
+            /* if default folder not chosen assign set it to the user home */
             setDefaultFolder(preference.get("recentlyOpened", "user.home"));
         }
 
@@ -123,15 +126,20 @@ public class HomePage {
             preference.putBoolean("showPrompt", true);
         }
 
+        /* Display the prompt window */
         defaultDirectoryPrompt();
     }
 
+    /** A method to displays a dialog box for choosing 
+     * a default folder
+     */
     private void defaultDirectoryPrompt() {
         if (preference.getBoolean("showPrompt", false)) {
             createPromptWindow();
         }
     }
 
+    /** A method that makes the prompt window */
     final void createPromptWindow() {
 
         infoLabel = new Label();
@@ -218,6 +226,7 @@ public class HomePage {
                 .getProperty("user.home")));
     }
 
+    /** A method that stores and organises the recently opened lessons */
     public void setRecentlyOpened(String pathToLesson) {
 
         String[] storedKeys;
@@ -225,6 +234,7 @@ public class HomePage {
         boolean pathAlreadyStored = false;
         int existingPathIndex = -1;
         try {
+            /* Checking if there are already stored lessons */
             storedKeys = new String[preference.keys().length];
             storedKeys = preference.keys();
             for (int i = 0; i < storedKeys.length; i++) {
@@ -237,6 +247,10 @@ public class HomePage {
                     existingPathIndex = i;
                 }
             }
+            /*This statement reorganises the list of stored lessons depending on how many recently
+             * opened lessons are currently in the list. This is necessary to ensure that if a
+             * lesson already in the list is opened, it it moved to the top of the list
+             *  */
             if (recentlyOpenedListExists) {
                 if (pathAlreadyStored) {
                     if (existingPathIndex == 2){
@@ -262,6 +276,10 @@ public class HomePage {
                     }
                 
                 } else {
+                    /* This statement is executed if the recently opened lesson is not already
+                     * in the list. The statement first checks the number of already stored
+                     * lessons and pushes the new one on top of the list
+                     *  */
                     if(!preference.get(RecentlyOpened4,"doesn't exist!").equals("doesn't exist!")){
                         preference.put(RecentlyOpened5, preference.get(
                             RecentlyOpened4, "doesn't exist!"));

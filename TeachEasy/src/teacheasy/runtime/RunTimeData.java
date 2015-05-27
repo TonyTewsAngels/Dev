@@ -448,7 +448,7 @@ public class RunTimeData {
 		this.pageDirection = pageDirection;
 	}
 	
-	/** Open a lesson file */
+	/** Open a lesson file from hyperlinks */
     public boolean openLessonFromHyplink(String filePath) {
        
         File file = new File(filePath);
@@ -490,6 +490,8 @@ public class RunTimeData {
         return true;
     }
     
+    /** This method checks the storage of recently opened lessons
+     * and lists them on the screen in the form of hyperlinks */
     private void displayRecentlyOpenedLessons(){
         
         VBox vbox = new VBox();
@@ -518,6 +520,8 @@ public class RunTimeData {
         group.getChildren().add(vbox);
     }
     
+    /** Checks the default folder for files ending with .xml and lists them on 
+     * the screen in the form of hyperlinks */
     private void listAvailableLessons(){
         File file = new File(homePage.getDefaultFolder());
         File[] listOfLessons = file.listFiles(new FilenameFilter() {
@@ -526,15 +530,20 @@ public class RunTimeData {
             }
         });
         
+        /* Arraylist of hyperlinks */
         List<Hyperlink> availableLessonLinks = new ArrayList<Hyperlink>();
         
+        /* A box to hold the list and the title of the list */
         VBox vbox = new VBox();
         vbox.setSpacing(5);
         
+        /* Setting up the title of the list */
         Label availableLessonsLabel = new Label("Available lessons: ");
         availableLessonsLabel.setFont(new Font("Arial", 25));
         vbox.getChildren().add(availableLessonsLabel);
         
+        /* Converts all the .xml files in default folder to hyperlinks and
+         * adds them the vbox */
         for(int i = 0; i < listOfLessons.length; i++){
             availableLessonLinks.add(new Hyperlink(listOfLessons[i].getAbsolutePath()));
             availableLessonLinks.get(i).setId("Available lesson");
@@ -543,11 +552,14 @@ public class RunTimeData {
             vbox.getChildren().add(availableLessonLinks.get(i));
         }
         
+        /* Place the list on the top left corner of the learnEasy screen */
         vbox.relocate(0, 0);
         group.getChildren().add(vbox);
         
     }
     
+    
+    /** A handler for the hyperlinks */
     public class HyperlinkHandler implements EventHandler<ActionEvent> {
         private Hyperlink hl;
         
