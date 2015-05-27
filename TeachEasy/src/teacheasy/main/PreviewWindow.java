@@ -244,7 +244,7 @@ public class PreviewWindow {
             /* Get the source */
             Button sourceButton = (Button) e.getSource();
             
-            /* TODO Check the ID of the source button and call the relevant runtime method */
+            /* Check the ID of the source button and call the relevant runtime method */
             switch(sourceButton.getId()) {
                 case "nextBtn":
                     nextPageButtonPressed();
@@ -257,30 +257,7 @@ public class PreviewWindow {
                     break;
             }
 
-            /* TODO Update the UI to reflect any changes to the application state */
-            updateUI();
-        }
-    }
-    
-    public class UIMenuEventHandler implements EventHandler<ActionEvent> {
-        @Override
-        public void handle(ActionEvent e) {
-            /* Get the source */
-            MenuItem source = (MenuItem) e.getSource();
-            
-            /* TODO Check the ID of the source and call the relevant runtime method */
-            switch(source.getId()) {
-                case "openFile":
-                    openFilePressed();
-                    break;
-                case "closeFile":
-                    closeFilePressed();
-                default:
-                    /* Do Nothing */
-                    break;
-            }
-            
-            /* TODO Update UI to reflect changes to application state */
+            /* Update the UI to reflect any changes to the application state */
             updateUI();
         }
     }
