@@ -72,7 +72,6 @@ public class RichTextXMLHandler extends DefaultHandler{
     
     public void characters(char[] ch, int start, int length) {
         String str = new String(ch, start, length);
-        str = str.trim();
         if(!str.isEmpty()) {
             readBuffer = str;
         }
