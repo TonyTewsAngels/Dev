@@ -234,10 +234,11 @@ public class MultipleChoice{
             
             /* If this box is not ticked but the answer is correct return false */
             if(!cB.get(i).getCheckBox().isSelected() && cB.get(i).isCorrect()) {
-                setAwardedMarks(getAwardedMarks() + marks);
                 return false;
             }
         }
+	    
+	    setAwardedMarks(getAwardedMarks() + marks);
 	    
 	    /* If all boxes are correct return true */
 	    return true;
