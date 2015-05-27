@@ -26,8 +26,8 @@ public class AudioObject extends PageObject {
 	                   String nSourcefile,
 	                   float nStartTime,
 	                   boolean nViewProgress, 
-	                   boolean autoPlay, 
-	                   boolean loop) {
+	                   boolean nAutoPlay, 
+	                   boolean nLoop) {
     
         super(PageObjectType.AUDIO, nXStart, nYStart);
         
@@ -35,6 +35,8 @@ public class AudioObject extends PageObject {
         this.viewProgress = nViewProgress;
         this.sourcefile = nSourcefile;
         this.startTime = nStartTime;
+        this.autoPlay = nAutoPlay;
+        this.loop = nLoop;
     }
 	
 	/** Old compatability Constructor Method. Deprecated */
@@ -65,14 +67,6 @@ public class AudioObject extends PageObject {
 	public void setSourcefile(String nSourcefile) {
 		this.sourcefile = nSourcefile;
 	}
-	
-	/** Prints information about the object to the screen */
-	public void debugPrint() {
-        super.debugPrint();
-        
-        System.out.println(", Sourcefile " + sourcefile + 
-                           ", View Progress " + viewProgress + ".\n");
-    }
 
     public float getXEnd() {
         return xEnd;
@@ -104,6 +98,16 @@ public class AudioObject extends PageObject {
 
     public void setLoop(boolean nLoop) {
         this.loop = nLoop;
+    }
+    
+	/** Prints information about the object to the screen */
+	public void debugPrint() {
+        super.debugPrint();
+        
+        System.out.println(", Sourcefile " + sourcefile + 
+                           ", View Progress " + viewProgress +
+                           ", Loop " + loop +
+                           ", Autoplay " + autoPlay + ".\n");
     }
 }
 
