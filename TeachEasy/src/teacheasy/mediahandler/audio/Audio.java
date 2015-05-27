@@ -58,7 +58,7 @@ public class Audio {
 	private VolumeListener volumeListener;
 	private SeekListener seekListener;
 	private Label elapsedLabel;
-	private Label remainingLabel;
+	private Label durationLabel;
 	
     /* ImageViews for various GUI Elements */
     private ImageView playImage;
@@ -246,8 +246,8 @@ public class Audio {
 		/* Labels for tracking elapsed and remaining time */
 		elapsedLabel = new Label("00:00");
 		elapsedLabel.setTextFill(Color.BLACK);
-		remainingLabel = new Label("00:00");
-		remainingLabel.setTextFill(Color.BLACK);
+		durationLabel = new Label("00:00");
+		durationLabel.setTextFill(Color.BLACK);
 
 
 		
@@ -358,7 +358,7 @@ public class Audio {
 		/* Add relevant parts to the group depending on boolean switches in call */		
 		if (visibleControls == true && playButtonOnly == false){	//Add all visible controls				
 			elapsedLabelVBox.getChildren().addAll(elapsedLabel);
-			remainingLabelVBox.getChildren().addAll(remainingLabel);	
+			remainingLabelVBox.getChildren().addAll(durationLabel);	
 			timeLabelsHBox.getChildren().addAll(elapsedLabelVBox, remainingLabelVBox);
 			timeProgressVbox.getChildren().addAll(timeLabelsHBox, progressSlider);
 			playSeekHbox.getChildren().addAll(playPauseButton, timeProgressVbox);
@@ -474,17 +474,17 @@ public class Audio {
 		double currentTime = player.getCurrentTime().toSeconds();
 		int elapsedTimeSecs = (int) Math.round(currentTime);
 		int elapsedTimeMins = elapsedTimeSecs / 60;
-		int remainingSeconds = ((int) Math.round(duration.toSeconds()) - elapsedTimeSecs);
-		int remainingMins = remainingSeconds / 60;
+		int totalSeconds = ((int) Math.round(duration.toSeconds()));
+		int totalMins = totalSeconds / 60;
 
 		/* If the audio is longer than 99 minutes, increase to 3 digits to accomodate */
 		if (duration.toMinutes() > 99){
 			elapsedLabel.setText(String.format("%03d:%02d",elapsedTimeMins, elapsedTimeSecs - elapsedTimeMins*60));
-			remainingLabel.setText(String.format("-%03d:%02d",remainingMins, remainingSeconds - remainingMins*60));
+			durationLabel.setText(String.format("%03d:%02d",totalMins, totalSeconds - totalMins*60));
 		/* Otherwise, sod it. Use 2. */
 		} else {
 			elapsedLabel.setText(String.format("%02d:%02d",elapsedTimeMins, elapsedTimeSecs - elapsedTimeMins*60));
-			remainingLabel.setText(String.format("-%02d:%02d",remainingMins, remainingSeconds - remainingMins*60));
+			durationLabel.setText(String.format("%02d:%02d",totalMins, totalSeconds - totalMins*60));
 		}
 	}
 		
@@ -561,10 +561,10 @@ public class Audio {
 				volumeMuteHBox.getChildren().remove(volumeSlider);
 				volumeMuteHBox.getChildren().remove(muteButton);
 				elapsedLabelVBox.getChildren().remove(elapsedLabel);
-				remainingLabelVBox.getChildren().remove(remainingLabel);
+				remainingLabelVBox.getChildren().remove(durationLabel);
 			} else {			
 				elapsedLabelVBox.getChildren().add(elapsedLabel);
-				remainingLabelVBox.getChildren().add(remainingLabel);
+				remainingLabelVBox.getChildren().add(durationLabel);
 				timeProgressVbox.getChildren().add(progressSlider);
 				volumeMuteHBox.getChildren().add(volumeSlider);
 				volumeMuteHBox.getChildren().add(muteButton);
