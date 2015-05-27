@@ -799,9 +799,9 @@ public class TeachEasyClient extends Application {
         float relY = (float)(y - contentPanel.getLayoutY())/(float)(r.getHeight());
         
         if(relX >= 0.0f && relX <= 1.0f && relY >= 0.0f && relY <= 1.0f) {
-            editorRuntimeData.mousePressed(relX, relY);
+            editorRuntimeData.mousePressed(relX, relY, true);
         } else {
-            /** Click is not in the group */
+            editorRuntimeData.mousePressed(relX, relY, false);
         }
     }
     
