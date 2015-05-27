@@ -174,10 +174,8 @@ public class AnswerBoxPropertiesController {
                 upperLimitProperty.setDisable(false);
                 lowerLimitProperty.setDisable(false);
                 
-                if(selectedAnswerBox.getAnswers().size() >= 2) {
-                    lowerLimitProperty.setText(selectedAnswerBox.getAnswers().get(0).getText());
-                    upperLimitProperty.setText(selectedAnswerBox.getAnswers().get(1).getText());
-                }
+                lowerLimitProperty.setText("" + selectedAnswerBox.getLowerBound());
+                upperLimitProperty.setText("" + selectedAnswerBox.getUpperBound());
             }
         }
     }
@@ -207,6 +205,12 @@ public class AnswerBoxPropertiesController {
                     break;
                 case "characterLimit":
                     selectedAnswerBox.setCharacterLimit(PropertiesUtil.validateInt(source.getText(), selectedAnswerBox.getCharacterLimit()));
+                    break;
+                case "upperLimit":
+                    selectedAnswerBox.setUpperBound(PropertiesUtil.validateFloat(source.getText(), selectedAnswerBox.getUpperBound()));
+                    break;
+                case "lowerLimit":
+                    selectedAnswerBox.setLowerBound(PropertiesUtil.validateFloat(source.getText(), selectedAnswerBox.getLowerBound()));
                     break;
                 default:
                     break;

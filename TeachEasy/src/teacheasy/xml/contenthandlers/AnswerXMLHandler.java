@@ -6,6 +6,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
+import teacheasy.data.AnswerBoxObject;
 import teacheasy.data.Lesson;
 import teacheasy.data.MultipleChoiceObject;
 import teacheasy.data.Page;
@@ -25,10 +26,12 @@ public class AnswerXMLHandler extends DefaultHandler{
     private Lesson lesson;
     private Page page;
     private MultipleChoiceObject multipleChoice;
+    private AnswerBoxObject answerBox;
+    private boolean isAnswerBox;
     
     String readBuffer;
     
-    public AnswerXMLHandler(XMLReader nXMLReader, DefaultHandler nParent, Lesson nLesson, Page nPage,MultipleChoiceObject nMultipleChoice, ArrayList<XMLNotification> nErrorList, Attributes answerAttrs) {
+    public AnswerXMLHandler(XMLReader nXMLReader, DefaultHandler nParent, Lesson nLesson, Page nPage, MultipleChoiceObject nMultipleChoice, ArrayList<XMLNotification> nErrorList, Attributes answerAttrs) {
         this.xmlReader = nXMLReader;
         this.parent = nParent;
 
@@ -38,12 +41,29 @@ public class AnswerXMLHandler extends DefaultHandler{
         this.page = nPage;
         this.multipleChoice = nMultipleChoice;
         
+        isAnswerBox = false;
+        
+        answerStart(answerAttrs);
+    }
+    
+    public AnswerXMLHandler(XMLReader nXMLReader, DefaultHandler nParent, Lesson nLesson, Page nPage, AnswerBoxObject nAnswerBox, ArrayList<XMLNotification> nErrorList, Attributes answerAttrs) {
+        this.xmlReader = nXMLReader;
+        this.parent = nParent;
+
+        this.errorList = nErrorList;
+        
+        this.lesson = nLesson;
+        this.page = nPage;
+        this.answerBox = nAnswerBox;
+        
+        isAnswerBox = true;
+        
         answerStart(answerAttrs);
     }
     
     public void endElement(String uri, String localName, String qName) {
         switch(XMLElement.check(qName.toUpperCase())) {
-            /* If the image element has finished, return to the parent */
+            /* If the answer element has finished, return to the parent */
             case ANSWER:
                 endHandler();
                 break;            
@@ -57,11 +77,16 @@ public class AnswerXMLHandler extends DefaultHandler{
             errorList.add(new XMLNotification(Level.ERROR,
                     "Page " + lesson.pages.size() +
                     ", Object " + page.getObjectCount() +
-                    " (Multiple Choice) Answer " + multipleChoice.getAnswers().size() +
+                    " (Answer) Answer " + multipleChoice.getAnswers().size() +
                     " missing text."));
         } else {
             answer.setText(readBuffer);
-            multipleChoice.addAnswer(answer);
+            
+            if(isAnswerBox && answerBox != null) {
+                answerBox.addAnswer(answer);
+            } else if(!isAnswerBox && multipleChoice != null) {
+                multipleChoice.addAnswer(answer); 
+            }
         }
         
         xmlReader.setContentHandler(parent);
@@ -76,12 +101,21 @@ public class AnswerXMLHandler extends DefaultHandler{
     }
     
     public void answerStart(Attributes attrs) {
-        boolean correct = XMLUtil.checkBool(attrs.getValue("correct"), false, Level.ERROR, errorList, 
+        if(isAnswerBox && answerBox != null) {
+            boolean correct = XMLUtil.checkBool(attrs.getValue("correct"), false, Level.ERROR, errorList, 
                     "Page " + lesson.pages.size() +
                     ", Object " + page.getObjectCount() +
-                    " (Multiple Choice) Answer " + multipleChoice.getAnswers().size());
-        
-        answer = new Answer(null, correct);
+                    " (Answer) Answer " + answerBox.getAnswers().size());
+            
+           answer = new Answer(null, correct); 
+        } else if(!isAnswerBox && multipleChoice != null) {
+             boolean correct = XMLUtil.checkBool(attrs.getValue("correct"), false, Level.ERROR, errorList, 
+                    "Page " + lesson.pages.size() +
+                    ", Object " + page.getObjectCount() +
+                    " (Answer) Answer " + multipleChoice.getAnswers().size());
+             
+             answer = new Answer(null, correct);
+        }
     } 
 }
 

@@ -34,6 +34,16 @@ public class AnswerBoxXMLHandler extends DefaultHandler{
         answerboxStart(answerboxAttrs);
     }
     
+    public void startElement(String uri, String localName, String qName, Attributes attrs) {
+        switch(XMLElement.check(qName.toUpperCase())) {
+            case ANSWER:
+                xmlReader.setContentHandler(new AnswerXMLHandler(xmlReader, this, lesson, page, answerBox, errorList, attrs));
+                break;
+            default:
+                break;
+        }
+    }
+    
     public void endElement(String uri, String localName, String qName) {
         switch(XMLElement.check(qName.toUpperCase())) {
             /* If the image element has finished, return to the parent */
@@ -55,10 +65,11 @@ public class AnswerBoxXMLHandler extends DefaultHandler{
         String xStartStr = attrs.getValue("xstart");
         String yStartStr = attrs.getValue("ystart");
         String characterLimitStr = attrs.getValue("characterlimit");
-        String correctAnswerStr = attrs.getValue("correctanswer");
         String marksStr = attrs.getValue("marks");
         String retryStr = attrs.getValue("retry");
         String numericalStr = attrs.getValue("numerical");
+        String upperBoundStr = attrs.getValue("upperbound");
+        String lowerBoundStr = attrs.getValue("lowerbound");
         
         float xStart = XMLUtil.checkFloat(xStartStr, 0.0f, Level.ERROR, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (AnswerBox) X Start ");
@@ -72,18 +83,18 @@ public class AnswerBoxXMLHandler extends DefaultHandler{
         int marks = XMLUtil.checkInt(marksStr, 0, Level.ERROR, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (AnswerBox) Marks ");
         
-        if(correctAnswerStr == null) {
-            errorList.add(new XMLNotification(Level.ERROR,
-                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (AnswerBox) No answer(s) given."));
-            correctAnswerStr = new String("null");
-        }
-        
         boolean numerical = XMLUtil.checkBool(numericalStr, false, Level.ERROR, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (AnswerBox) Numerical setting ");
         
         boolean retry = XMLUtil.checkBool(retryStr, true, Level.ERROR, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (AnswerBox) Retry setting ");
         
-        answerBox = new AnswerBoxObject(xStart, yStart, characterLimit, marks, correctAnswerStr, retry, numerical);
+        float upperBound = XMLUtil.checkFloat(upperBoundStr, 0.0f, Level.WARNING, errorList,
+                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (AnswerBox) Upper bound ");
+        
+        float lowerBound = XMLUtil.checkFloat(lowerBoundStr, 0.0f, Level.WARNING, errorList,
+                "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (AnswerBox) Lower bound ");
+        
+        answerBox = new AnswerBoxObject(xStart, yStart, characterLimit, marks, retry, numerical, upperBound, lowerBound);
     }
 }

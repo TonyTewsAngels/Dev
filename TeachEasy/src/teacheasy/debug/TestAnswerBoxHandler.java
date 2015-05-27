@@ -3,6 +3,9 @@
  */
 package teacheasy.debug;
 
+import java.util.ArrayList;
+
+import teacheasy.data.multichoice.Answer;
 import teacheasy.mediahandler.AnswerBoxHandler;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -27,17 +30,13 @@ public class TestAnswerBoxHandler extends Application {
 		Scene scene = new Scene(group);
 		scene.setFill(Color.LIGHTBLUE);
 		
+		ArrayList<Answer> answers = new ArrayList<Answer>();
+		answers.add(new Answer("One", true));
+		answers.add(new Answer("Two", true));
+		answers.add(new Answer("Three", true));
+		
 		answerBoxHandler = new AnswerBoxHandler(group);
-		answerBoxHandler.createAnswerBox(0, 130, -1, true,
-				"monday~tuesday~wednesday", 5, false);
-		answerBoxHandler.createAnswerBox(0, 160, 10, false,
-				"leeds~york~london", 5,false);
-		answerBoxHandler.createAnswerBox(0, 190, 10, true, "yellow",
-				15,false);
-		answerBoxHandler.createAnswerBox(0, 220, 10, true, "left~right~middle",
-				5,false);
-		answerBoxHandler.createAnswerBox(0, 250, 10, true, "4.55",
-				5,true);
+		answerBoxHandler.createAnswerBox(0, 130, 5, true, 5, false, 0.0f, 0.0f, answers);
 
 		stage.setTitle("Answer Box Test");
 		stage.setScene(scene);

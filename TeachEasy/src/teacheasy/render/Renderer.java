@@ -217,9 +217,11 @@ public class Renderer {
                                          (float)(bounds.getMaxY() * aBox.getYStart()),
                                          aBox.getCharacterLimit(),
                                          aBox.isRetry(),
-                                         aBox.getCorrectAnswers(),
                                          aBox.getMarks(),
-                                         aBox.isNumerical());
+                                         aBox.isNumerical(),
+                                         aBox.getUpperBound(),
+                                         aBox.getLowerBound(),
+                                         aBox.getAnswers());
     }
     
     /** Add a multiple choice object to the screen */

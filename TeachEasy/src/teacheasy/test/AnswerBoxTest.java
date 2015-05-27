@@ -30,8 +30,8 @@ public class AnswerBoxTest extends Application {
 		
 		/* Create answer box*/
 		answerBoxHandler = new AnswerBoxHandler(group);
-		answerBoxHandler.createAnswerBox(0, 0, 10, true,
-				"cat", 5, true);
+		//answerBoxHandler.createAnswerBox(0, 0, 10, true,
+		//		"cat", 5, true);
 
 		stage.setTitle("Answer Box Test");
 		stage.setScene(scene);

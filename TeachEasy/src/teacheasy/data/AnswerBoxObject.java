@@ -21,12 +21,15 @@ public class AnswerBoxObject extends PageObject {
 	private int marks;
 	private boolean retry;
 	private boolean numerical;
+	private float upperBound;
+	private float lowerBound;
 	
 	private ArrayList<Answer> answers;
 	
 	/** Constructor Method */
 	public AnswerBoxObject(float nXStart, float nYStart, int nCharacterLimit,
-						   int nMarks, String nCorrectAnswers, boolean nRetry, boolean nNumerical) {
+						   int nMarks, boolean nRetry, boolean nNumerical,
+						   float nUpperBound, float nLowerBound, String... nAnswers) {
 		
 		/* Call Superconstructor */
 		super(PageObjectType.ANSWER_BOX, nXStart, nYStart);
@@ -36,12 +39,13 @@ public class AnswerBoxObject extends PageObject {
 		this.marks = nMarks;
 		this.retry = nRetry;
 		this.numerical = nNumerical;
+		this.upperBound = nUpperBound;
+		this.lowerBound = nLowerBound;
 		
 		answers = new ArrayList<Answer>();
 		
-		String split[] = nCorrectAnswers.split("~");
-		for(int i = 0; i < split.length; i++) {
-		    answers.add(new Answer(split[i], true));
+		for(String a : nAnswers) {
+		    answers.add(new Answer(a, true));
 		}
 	}
 	
@@ -63,25 +67,6 @@ public class AnswerBoxObject extends PageObject {
 	/** Set the available marks */
 	public void setMarks(int marks) {
 		this.marks = marks;
-	}
-	
-	/** Get the correct answers string */
-	public String getCorrectAnswers() {
-	    String correctAnswers = "";
-	    
-	    for(Answer a : answers){
-	        correctAnswers = new String(correctAnswers + "~" + a.getText());
-	    }
-	    
-		return correctAnswers;
-	}
-
-	/** Set the correct answers string */
-	public void setCorrectAnswers(String correctAnswers) {
-	    String split[] = correctAnswers.split("~");
-        for(int i = 0; i < split.length; i++) {
-            answers.add(new Answer(split[i], true));
-        }
 	}
 	
 	/** Add an answer */
@@ -120,7 +105,23 @@ public class AnswerBoxObject extends PageObject {
     public void setNumerical(boolean retry) {
         this.numerical = retry;
     }
-	
+    
+	public float getUpperBound() {
+        return upperBound;
+    }
+
+    public void setUpperBound(float nUpperBound) {
+        this.upperBound = nUpperBound;
+    }
+
+    public float getLowerBound() {
+        return lowerBound;
+    }
+
+    public void setLowerBound(float nLowerBound) {
+        this.lowerBound = nLowerBound;
+    }
+    
 	/** Prints information about the object to the screen */
     public void debugPrint() {
         super.debugPrint();
