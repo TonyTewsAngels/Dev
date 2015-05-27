@@ -164,7 +164,7 @@ public class NewObjectController {
      * @param page The page to add the answer box to.
      */
     public static void addAnswerBoxObject(Page page) {
-        AnswerBoxObject answerBox = new AnswerBoxObject(0.0f, 0.0f, 12, 1, "answer1~answer2", true, false);
+        AnswerBoxObject answerBox = new AnswerBoxObject(0.0f, 0.0f, 12, 1, true, false, 0.0f, 0.0f, "Answer 1", "Answer 2");
         
         page.pageObjects.add(answerBox);
     }
@@ -331,9 +331,10 @@ public class NewObjectController {
                                                            answerBox.getYStart(),
                                                            answerBox.getCharacterLimit(),
                                                            answerBox.getMarks(),
-                                                           answerBox.getCorrectAnswers(),
                                                            answerBox.isRetry(),
-                                                           answerBox.isNumerical());
+                                                           answerBox.isNumerical(),
+                                                           answerBox.getUpperBound(),
+                                                           answerBox.getLowerBound());
         
         page.pageObjects.add(newAnswerBox);
     }

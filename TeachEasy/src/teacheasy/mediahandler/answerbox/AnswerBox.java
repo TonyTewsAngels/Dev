@@ -3,6 +3,10 @@
  */
 package teacheasy.mediahandler.answerbox;
 
+import java.util.ArrayList;
+
+import teacheasy.data.multichoice.Answer;
+
 import com.sun.javafx.scene.control.behavior.TextFieldBehavior;
 import com.sun.javafx.scene.control.skin.TextFieldSkin;
 
@@ -35,13 +39,15 @@ public class AnswerBox {
     private int marks;
     private int awardedMarks;
     private boolean retry;
-    private String correctAnswers;
     private boolean answerIsCorrect;
     private int characterLimit;
     private double xStart;
     private double yStart;
     private boolean isNumerical;
     private boolean validInput;
+    private float upperBound;
+    private float lowerBound;
+    private ArrayList<Answer> answers;
 
     /* UI Elements */
     private Group group;
@@ -55,8 +61,8 @@ public class AnswerBox {
 
     /** Constructor method */
     public AnswerBox(double nXStart, double nYStart, int nCharacterLimit,
-            boolean nRetry, String nCorrectAnswers, int nMarks,
-            boolean nIsNumerical, Group nGroup) {
+            boolean nRetry, int nMarks, boolean nIsNumerical, Group nGroup,
+            float nUpperBound, float nLowerBound, ArrayList<Answer> nAnswers) {
 
         /* Setting local variables */
         if (nMarks > 0){
@@ -64,8 +70,6 @@ public class AnswerBox {
         } else {
             this.marks = 0;
         }
-        
-        this.correctAnswers = nCorrectAnswers;
 
         /* To prevent negative or 0 character limit */
         if (nCharacterLimit >= 1) {
@@ -79,6 +83,9 @@ public class AnswerBox {
         this.group = nGroup;
         this.retry = nRetry;
         this.isNumerical = nIsNumerical;
+        this.upperBound = nUpperBound;
+        this.lowerBound = nLowerBound;
+        this.answers = nAnswers;
 
         setAwardedMarks(0);
         setMarkCollated(false);
@@ -142,15 +149,13 @@ public class AnswerBox {
         boolean isCorrect = false;
 
         if (!isNumerical) {
-            String[] listOfCorrectAnswers = correctAnswers.split("~");
-            for (int i = 0; i < listOfCorrectAnswers.length; i++) {
+            for (Answer a : answers) {
                 /*
                  * Checks if there is at least a character and compares user
                  * submitted answers with the list of available answers
                  */
-                if (answerField.getText().length() >= 1
-                        && answerField.getText().equalsIgnoreCase(
-                                listOfCorrectAnswers[i])) {
+                if (answerField.getText().length() >= 1 && 
+                    answerField.getText().equalsIgnoreCase(a.getText())) {
                     /* Award marks */
                     setAwardedMarks(getAwardedMarks() + marks);
 
@@ -166,12 +171,7 @@ public class AnswerBox {
         }
         /* Used when expecting numerical inputs in the TextField */
         else {
-            float minRange;
-            float maxRange;
             float answer;
-
-            /* Splits the correctAnswers so that min & max ranges are identified */
-            String[] listOfCorrectAnswers = correctAnswers.split("~");
 
             /* A variable that is set when input is invalid */
             validInput = true;
@@ -181,23 +181,8 @@ public class AnswerBox {
              * to float
              */
             try {
-                /*
-                 * If no minimum and maximum value is provided make the provided
-                 * value minimum and maximum
-                 */
-                if (listOfCorrectAnswers.length == 1) {
-                    minRange = Float.parseFloat(listOfCorrectAnswers[0]);
-                    maxRange = Float.parseFloat(listOfCorrectAnswers[0]);
-                    answer = Float.parseFloat(answerField.getText());
-                } else {
-                    minRange = Float.parseFloat(listOfCorrectAnswers[0]);
-                    maxRange = Float.parseFloat(listOfCorrectAnswers[1]);
-                    answer = Float.parseFloat(answerField.getText());
-                }
-
+                answer = Float.parseFloat(answerField.getText());
             } catch (NumberFormatException nfe) {
-                minRange = 0.0f;
-                maxRange = 0.0f;
                 answer = 0.0f;
                 validInput = false;
             }
@@ -205,7 +190,7 @@ public class AnswerBox {
              * Checks submitted numerical answer is within the specified region
              */
             if (validInput) {
-                if (answer >= minRange && answer <= maxRange) {
+                if (answer >= lowerBound && answer <= upperBound) {
                     setAwardedMarks(getAwardedMarks() + marks);
                     isCorrect = true;
                     retry = false;

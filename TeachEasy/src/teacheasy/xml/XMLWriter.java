@@ -363,10 +363,27 @@ public class XMLWriter {
 	    answerBoxElement.setAttribute("xstart", String.valueOf(answerBox.getXStart()));
         answerBoxElement.setAttribute("ystart", String.valueOf(answerBox.getYStart()));
         answerBoxElement.setAttribute("characterlimit", String.valueOf(answerBox.getCharacterLimit()));
-        answerBoxElement.setAttribute("correctanswer", answerBox.getCorrectAnswers());
         answerBoxElement.setAttribute("marks", String.valueOf(answerBox.getMarks()));
         answerBoxElement.setAttribute("retry", String.valueOf(answerBox.isRetry()));
         answerBoxElement.setAttribute("numerical", String.valueOf(answerBox.isNumerical()));
+        answerBoxElement.setAttribute("upperbound", String.valueOf(answerBox.getUpperBound()));
+        answerBoxElement.setAttribute("lowerbound", String.valueOf(answerBox.getLowerBound()));
+        
+        /* Add the answers */
+        for(int i = 0; i < answerBox.getAnswers().size(); i++) {
+            /* Get the answer object */
+            Answer answer = answerBox.getAnswers().get(i);
+            
+            /* Create the answer element and add it to the multiple choice element */
+            Element answerElement = doc.createElement("answer");
+            answerBoxElement.appendChild(answerElement);
+            
+            /* Set the correct attribute */
+            answerElement.setAttribute("correct", String.valueOf(answer.isCorrect()));
+            
+            /* Set the text */
+            answerElement.appendChild(doc.createTextNode(answer.getText()));
+        }
 	}
 	
 	/** Add a multiple choice question */

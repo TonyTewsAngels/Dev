@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.Group;
+import teacheasy.data.multichoice.Answer;
 import teacheasy.mediahandler.answerbox.AnswerBox;
 
 /**
@@ -28,10 +29,12 @@ public class AnswerBoxHandler {
 
     /** Creates a new answer box */
     public void createAnswerBox(double xStart, double yStart,
-            int characterLimit, boolean retry, String correctAnswers,
-            int marks, boolean isNumerical) {
+                                int characterLimit, boolean retry, int marks, boolean isNumerical,
+                                float upperBound, float lowerBound, ArrayList<Answer> answers) {
+        
         answerBox.add(new AnswerBox(xStart, yStart, characterLimit, retry,
-                correctAnswers, marks, isNumerical, group));
+                                    marks, isNumerical, group, upperBound, 
+                                    lowerBound, answers));
     }
 
     /** Grays out all of the answer boxes on a page */
