@@ -7,11 +7,12 @@
 package teacheasy.runtime;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.prefs.Preferences;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -24,15 +25,20 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.layout.VBoxBuilder;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
+import learneasy.homePage.HomePage;
 import learneasy.trackProgress.ProgressTracker;
 import teacheasy.data.*;
 import teacheasy.main.LearnEasyClient;
@@ -51,7 +57,7 @@ import teacheasy.xml.util.XMLNotification.Level;
  */
 public class RunTimeData {
     /* Parent Reference */
-    LearnEasyClient parent;
+    private LearnEasyClient parent;
 
     /* */
     private Group group;
@@ -75,11 +81,10 @@ public class RunTimeData {
     /* Renderer */
     private Renderer renderer;
     
-    /* home page*/
-    private Preferences preference;
+    /*Initialise HomePage class*/
+    HomePage homePage;
     
-  
-
+   
     /** Constructor method */
     public RunTimeData(Group nGroup, Rectangle2D nBounds,
             LearnEasyClient nParent) {
@@ -95,9 +100,7 @@ public class RunTimeData {
         
         pageDirection = false;
         
-        /* Load the preference */
-        setPreference();
-        
+      
         /* Instantiate an empty lesson */
         this.lesson = new Lesson();
 
@@ -106,7 +109,11 @@ public class RunTimeData {
 
         /* Instantiate the renderer */
         renderer = new Renderer(group, bounds);
-
+        
+        homePage = new HomePage();
+        homePage.setPreference();
+        
+       
         redraw(group, bounds);
     }
 
@@ -240,7 +247,6 @@ public class RunTimeData {
             /* Act according to id */
             /* If user wants to continue, go to next page */
             if (id.equals("yes")) {
-            	System.out.println("yes");
             	
                 dialogStage.close();
                 
@@ -341,15 +347,19 @@ public class RunTimeData {
                 .getProperty("user.home")));
 
         /* Set the initial directory to the recent read path */
-       /* if (xmlHandler.getRecentReadPath() != null) {
+        /*if (xmlHandler.getRecentReadPath() != null) {
             fileChooser.setInitialDirectory(new File(new File(xmlHandler
                     .getRecentReadPath()).getParent()));
         }*/
         
         
         /* Set the initial directory to the recent read path */
-        fileChooser.setInitialDirectory(new File(preference.get("recentlyOpened", "hi")));
+        fileChooser.setInitialDirectory(new File(homePage.getPreference().get("recentlyOpened", xmlHandler
+                .getRecentReadPath())));
         
+        /* Set the initial directory to the recent read path */
+        fileChooser.setInitialDirectory(new File(homePage.getPreference().get("recentlyOpened", xmlHandler
+                .getRecentReadPath())));
        
 
         /* Get the file to open */
@@ -359,6 +369,8 @@ public class RunTimeData {
         if (file == null) {
             return false;
         }
+        
+        homePage.setRecentlyOpened(file.toString());
 
         /* Set the recent read Path */
         xmlHandler.setRecentReadPath(file.getAbsolutePath());
@@ -422,6 +434,8 @@ public class RunTimeData {
         } else {
             /* Render the no lesson loaded screen */
             renderer.renderUnLoaded();
+            displayRecentlyOpenedLessons();
+            listAvailableLessons();
         }
     }
 
@@ -433,14 +447,149 @@ public class RunTimeData {
 		this.pageDirection = pageDirection;
 	}
 	
-	private void setPreference(){
-		 /* Instantiate preferences */
-        preference = Preferences.userRoot().node(this.getClass().getName());
+	/** Open a lesson file from hyperlinks */
+    public boolean openLessonFromHyplink(String filePath) {
+       
+        File file = new File(filePath);
         
-        /* String to store the path of the recently opened lesson*/
-        String recentlyOpened = "recentlyOpened";
+        /* Add it to the list of recently opened */
+        homePage.setRecentlyOpened(file.toString());
+         
+        /* Parse the file */
+        ArrayList<XMLNotification> errorList = xmlHandler.parseXML2(file
+                .getAbsolutePath());
+
+        /* If any errors were found during parsing, do not load the lesson */
+        if (errorList.size() > 0) {
+            for (int i = 0; i < errorList.size(); i++) {
+                System.out.println(errorList.get(i));
+            }
+        }
+
+        if (XMLNotification.countLevel(errorList, Level.ERROR) > 0) {
+            return false;
+        }
+
+        /* Get the lesson data */
+        lesson = xmlHandler.getLesson();
+        lesson.debugPrint();
+
+        /* Open the lesson */
+        setPageCount(lesson.pages.size());
+        setCurrentPage(0);
+        setLessonOpen(true);
         
-        /*Set actual path*/
-        preference.put(recentlyOpened, "//userfs/dbb503/w2k/workspace/Dev/TeachEasy");
-	}
+        /* Initialise the progress tracker */
+        progressTracker = new ProgressTracker(pageCount);
+        
+        redraw(group, bounds);
+        
+        parent.updateUI();
+        
+        return true;
+    }
+    
+    /** This method checks the storage of recently opened lessons
+     * and lists them on the screen in the form of hyperlinks */
+    private void displayRecentlyOpenedLessons(){
+        
+        VBox vbox = new VBox();
+        vbox.setSpacing(5);
+        
+        StringBuilder stringBuilder = new StringBuilder();
+        List<Hyperlink> recentlyOpenedList = new ArrayList<Hyperlink>();
+        
+        Label recentLessonsLabel = new Label("Recently opened: ");
+        recentLessonsLabel.setFont(new Font("Calibri", 25));
+        vbox.getChildren().add(recentLessonsLabel);
+        
+        for (int i = 0; i < 4; i++){
+            stringBuilder.append("RecentlyOpened"+ (i+1));
+            if(!homePage.getPreference().get(stringBuilder.toString(), "doesn't exist!").equals("doesn't exist!")){
+                recentlyOpenedList.add(new Hyperlink(homePage.getPreference().get(stringBuilder.toString(), "doesn't exist!")));
+                recentlyOpenedList.get(i).setFont(new Font("Calibri", 14));
+                recentlyOpenedList.get(i).setId(stringBuilder.toString());
+                recentlyOpenedList.get(i).setOnAction(new HyperlinkHandler(recentlyOpenedList.get(i)));
+                vbox.getChildren().add(recentlyOpenedList.get(i));
+                stringBuilder.setLength(0);
+            }
+        }
+        
+        vbox.relocate(500, 0);
+        group.getChildren().add(vbox);
+    }
+    
+    /** Checks the default folder for files ending with .xml and lists them on 
+     * the screen in the form of hyperlinks */
+    private void listAvailableLessons(){
+        File file = new File(homePage.getDefaultFolder());
+        File[] listOfLessons = file.listFiles(new FilenameFilter() {
+            public boolean accept(File dir, String name) {
+                return name.toLowerCase().endsWith(".xml");
+            }
+        });
+        
+        /* Arraylist of hyperlinks */
+        List<Hyperlink> availableLessonLinks = new ArrayList<Hyperlink>();
+        
+        /* A box to hold the list and the title of the list */
+        VBox vbox = new VBox();
+        vbox.setSpacing(5);
+        
+        /* Setting up the title of the list */
+        Label availableLessonsLabel = new Label("Available lessons: ");
+        availableLessonsLabel.setFont(new Font("Calibri", 25));
+        vbox.getChildren().add(availableLessonsLabel);
+        
+        /* Converts all the .xml files in default folder to hyperlinks and
+         * adds them the vbox */
+        for(int i = 0; i < listOfLessons.length; i++){
+            availableLessonLinks.add(new Hyperlink(listOfLessons[i].getAbsolutePath()));
+            availableLessonLinks.get(i).setId("Available lesson");
+            availableLessonLinks.get(i).setOnAction(new HyperlinkHandler(availableLessonLinks.get(i)));
+            availableLessonLinks.get(i).setFont(new Font("Calibri", 14));
+            vbox.getChildren().add(availableLessonLinks.get(i));
+        }
+        
+        /* Place the list on the top left corner of the learnEasy screen */
+        vbox.relocate(0, 0);
+        group.getChildren().add(vbox);
+        
+    }
+    
+    
+    /** A handler for the hyperlinks */
+    public class HyperlinkHandler implements EventHandler<ActionEvent> {
+        private Hyperlink hl;
+        
+        public HyperlinkHandler(Hyperlink nHl) {
+            this.hl = nHl;
+        }
+        
+        public void setFirstHyperlink(Hyperlink nHl) {
+            this.hl = nHl;
+        }
+        
+        @Override
+        public void handle(ActionEvent e) {
+            /* get the ID of the hyperlink */
+            String id = hl.getId();
+
+            if(!hl.equals("doesn't exist!")){
+                if(id.equals("RecentlyOpened1")){
+                openLessonFromHyplink(homePage.getPreference().get("RecentlyOpened1", "doesn't exist!"));
+                } else if (id.equals("RecentlyOpened2")){
+                    openLessonFromHyplink(homePage.getPreference().get("RecentlyOpened2", "doesn't exist!"));
+                } else if (id.equals("RecentlyOpened3")){
+                    openLessonFromHyplink(homePage.getPreference().get("RecentlyOpened3", "doesn't exist!"));
+                } else if (id.equals("RecentlyOpened4")){
+                    openLessonFromHyplink(homePage.getPreference().get("RecentlyOpened4", "doesn't exist!"));
+                } else if (id.equals("RecentlyOpened5")){
+                    openLessonFromHyplink(homePage.getPreference().get("RecentlyOpened5", "doesn't exist!"));
+                } 
+             } if (id.equals("Available lesson")){
+                 openLessonFromHyplink(hl.getText());
+             }
+        }
+    }
 }
