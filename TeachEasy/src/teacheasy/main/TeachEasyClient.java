@@ -927,6 +927,7 @@ public class TeachEasyClient extends Application {
                             prevPageButtonPressed();
                             break;
                         case "previewBtn":
+                            new PreviewWindow(editorRuntimeData.getLesson());
                             break;
                     }
                 }
