@@ -21,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
@@ -144,10 +145,13 @@ public class HomePage {
 
         infoLabel = new Label();
         infoLabel
-                .setText("Having default folder simplifies lesson loading.\nPlease choose a default folder\n\n\n");
+                .setText("Having default folder simplifies lesson loading.\nPlease choose a default folder\n\n");
+        infoLabel.setFont(new Font("Calibri", 16));
+        
 
         defaultLabel = new Label();
         defaultLabel.setText("Default: ");
+        defaultLabel.setFont(new Font("Calibri", 14));
 
         fileAddress = new TextField();
         fileAddress.setPrefWidth(290);

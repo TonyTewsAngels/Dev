@@ -501,14 +501,14 @@ public class RunTimeData {
         List<Hyperlink> recentlyOpenedList = new ArrayList<Hyperlink>();
         
         Label recentLessonsLabel = new Label("Recently opened: ");
-        recentLessonsLabel.setFont(new Font("Arial", 25));
+        recentLessonsLabel.setFont(new Font("Calibri", 25));
         vbox.getChildren().add(recentLessonsLabel);
         
         for (int i = 0; i < 4; i++){
             stringBuilder.append("RecentlyOpened"+ (i+1));
             if(!homePage.getPreference().get(stringBuilder.toString(), "doesn't exist!").equals("doesn't exist!")){
                 recentlyOpenedList.add(new Hyperlink(homePage.getPreference().get(stringBuilder.toString(), "doesn't exist!")));
-                recentlyOpenedList.get(i).setFont(new Font("Ariel", 14));
+                recentlyOpenedList.get(i).setFont(new Font("Calibri", 14));
                 recentlyOpenedList.get(i).setId(stringBuilder.toString());
                 recentlyOpenedList.get(i).setOnAction(new HyperlinkHandler(recentlyOpenedList.get(i)));
                 vbox.getChildren().add(recentlyOpenedList.get(i));
@@ -539,7 +539,7 @@ public class RunTimeData {
         
         /* Setting up the title of the list */
         Label availableLessonsLabel = new Label("Available lessons: ");
-        availableLessonsLabel.setFont(new Font("Arial", 25));
+        availableLessonsLabel.setFont(new Font("Calibri", 25));
         vbox.getChildren().add(availableLessonsLabel);
         
         /* Converts all the .xml files in default folder to hyperlinks and
@@ -548,7 +548,7 @@ public class RunTimeData {
             availableLessonLinks.add(new Hyperlink(listOfLessons[i].getAbsolutePath()));
             availableLessonLinks.get(i).setId("Available lesson");
             availableLessonLinks.get(i).setOnAction(new HyperlinkHandler(availableLessonLinks.get(i)));
-            availableLessonLinks.get(i).setFont(new Font("Ariel", 14));
+            availableLessonLinks.get(i).setFont(new Font("Calibri", 14));
             vbox.getChildren().add(availableLessonLinks.get(i));
         }
         
