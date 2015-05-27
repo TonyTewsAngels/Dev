@@ -238,6 +238,7 @@ public class MultipleChoice{
             }
         }
 	    
+	    /* Award appropriate marks */
 	    setAwardedMarks(getAwardedMarks() + marks);
 	    
 	    /* If all boxes are correct return true */
