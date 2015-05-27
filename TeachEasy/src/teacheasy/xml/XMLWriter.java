@@ -325,8 +325,11 @@ public class XMLWriter {
         graphicElement.setAttribute("starttime", String.valueOf(graphic.getStartTime()));
         graphicElement.setAttribute("duration", String.valueOf(graphic.getDuration()));
         
+        /* Add word 'shading' to element */
+        String graphicShading = graphic.getShading().toString().toLowerCase()+"shading";
+        
         /* Declare an element for the shading */
-        Element shadingElement = doc.createElement(graphic.getShading().toString().toLowerCase());
+        Element shadingElement = doc.createElement(graphicShading);
         
         /* Add the shading element to the graphic element */
         graphicElement.appendChild(shadingElement);
