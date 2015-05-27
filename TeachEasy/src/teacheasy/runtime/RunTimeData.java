@@ -55,7 +55,7 @@ import teacheasy.xml.util.XMLNotification.Level;
  */
 public class RunTimeData {
     /* Parent Reference */
-    LearnEasyClient parent;
+    private LearnEasyClient parent;
 
     /* */
     private Group group;
@@ -482,6 +482,9 @@ public class RunTimeData {
         progressTracker = new ProgressTracker(pageCount);
         
         redraw(group, bounds);
+        
+        parent.updateUI();
+        
         return true;
     }
     
@@ -503,6 +506,8 @@ public class RunTimeData {
                 stringBuilder.setLength(0);
             }
         }
+        
+        vbox.relocate(500, 0);
         group.getChildren().add(vbox);
     }
     
@@ -520,12 +525,13 @@ public class RunTimeData {
         vbox.setSpacing(5);
         
         for(int i = 0; i < listOfLessons.length; i++){
-            availableLessonLinks.add(new Hyperlink(listOfLessons[i].toString()));
+            availableLessonLinks.add(new Hyperlink(listOfLessons[i].getAbsolutePath()));
             availableLessonLinks.get(i).setId("Available lesson");
             availableLessonLinks.get(i).setOnAction(new HyperlinkHandler(availableLessonLinks.get(i)));
             vbox.getChildren().add(availableLessonLinks.get(i));
         }
         
+        vbox.relocate(0, 0);
         group.getChildren().add(vbox);
         
     }
@@ -560,7 +566,7 @@ public class RunTimeData {
                     openLessonFromHyplink(homePage.getPreference().get("RecentlyOpened5", "doesn't exist!"));
                 } 
              } if (id.equals("Available lesson")){
-                 openLessonFromHyplink(hl.toString());
+                 openLessonFromHyplink(hl.getText());
              }
         }
     }
