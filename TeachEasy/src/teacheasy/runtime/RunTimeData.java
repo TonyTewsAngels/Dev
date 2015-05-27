@@ -26,11 +26,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.VBoxBuilder;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -496,10 +498,15 @@ public class RunTimeData {
         StringBuilder stringBuilder = new StringBuilder();
         List<Hyperlink> recentlyOpenedList = new ArrayList<Hyperlink>();
         
+        Label recentLessonsLabel = new Label("Recently opened: ");
+        recentLessonsLabel.setFont(new Font("Arial", 25));
+        vbox.getChildren().add(recentLessonsLabel);
+        
         for (int i = 0; i < 4; i++){
             stringBuilder.append("RecentlyOpened"+ (i+1));
             if(!homePage.getPreference().get(stringBuilder.toString(), "doesn't exist!").equals("doesn't exist!")){
                 recentlyOpenedList.add(new Hyperlink(homePage.getPreference().get(stringBuilder.toString(), "doesn't exist!")));
+                recentlyOpenedList.get(i).setFont(new Font("Ariel", 14));
                 recentlyOpenedList.get(i).setId(stringBuilder.toString());
                 recentlyOpenedList.get(i).setOnAction(new HyperlinkHandler(recentlyOpenedList.get(i)));
                 vbox.getChildren().add(recentlyOpenedList.get(i));
@@ -524,10 +531,15 @@ public class RunTimeData {
         VBox vbox = new VBox();
         vbox.setSpacing(5);
         
+        Label availableLessonsLabel = new Label("Available lessons: ");
+        availableLessonsLabel.setFont(new Font("Arial", 25));
+        vbox.getChildren().add(availableLessonsLabel);
+        
         for(int i = 0; i < listOfLessons.length; i++){
             availableLessonLinks.add(new Hyperlink(listOfLessons[i].getAbsolutePath()));
             availableLessonLinks.get(i).setId("Available lesson");
             availableLessonLinks.get(i).setOnAction(new HyperlinkHandler(availableLessonLinks.get(i)));
+            availableLessonLinks.get(i).setFont(new Font("Ariel", 14));
             vbox.getChildren().add(availableLessonLinks.get(i));
         }
         
