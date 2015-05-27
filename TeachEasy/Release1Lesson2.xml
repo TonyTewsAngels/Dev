@@ -33,21 +33,21 @@
             <noneshading shadingcolor="#ff000000"/>
         </graphic>
         <text duration="0.0" font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" starttime="0.0" xend="1.0" xstart="0.2" yend="1.0" ystart="0.7">
-            <richtext bold="false" font="arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Name the '</richtext>
+            <richtext bold="false" font="arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Name the </richtext>
             <richtext bold="false" font="arial" fontcolor="#ff0000ff" fontsize="20" italic="true" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">BLUE</richtext>
-            <richtext bold="false" font="arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">' note.</richtext>
+            <richtext bold="false" font="arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false"> note.</richtext>
         </text>
         <answerbox characterlimit="2" correctanswer="~~f#~gb" marks="1" numerical="false" retry="true" xstart="0.5" ystart="0.7"/>
         <text duration="0.0" font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" starttime="0.0" xend="1.0" xstart="0.2" yend="1.0" ystart="0.8">
-            <richtext bold="false" font="arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Name the '</richtext>
+            <richtext bold="false" font="arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Name the </richtext>
             <richtext bold="false" font="arial" fontcolor="#ff00ff00" fontsize="20" italic="true" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">GREEN</richtext>
-            <richtext bold="false" font="arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">' note.</richtext>
+            <richtext bold="false" font="arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false"> note.</richtext>
         </text>
         <answerbox characterlimit="2" correctanswer="~~b" marks="1" numerical="false" retry="true" xstart="0.5" ystart="0.8"/>
         <text duration="0.0" font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" starttime="0.0" xend="1.0" xstart="0.2" yend="1.0" ystart="0.9">
-            <richtext bold="false" font="arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Name the '</richtext>
+            <richtext bold="false" font="arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Name the </richtext>
             <richtext bold="false" font="arial" fontcolor="#ffff0000" fontsize="20" italic="true" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">RED</richtext>
-            <richtext bold="false" font="arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">' note.</richtext>
+            <richtext bold="false" font="arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false"> note.</richtext>
         </text>
         <answerbox characterlimit="2" correctanswer="~~a" marks="1" numerical="false" retry="true" xstart="0.5" ystart="0.9"/>
     </slide>
