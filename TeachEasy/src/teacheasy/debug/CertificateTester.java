@@ -11,7 +11,15 @@ import javafx.stage.Stage;
 public class CertificateTester extends Application {
     @Override
     public void start(Stage stage) {
-        new CertificateWindow(this, new Lesson(), 10);
+        Lesson lesson = new Lesson();
+        
+        lesson.lessonInfo.setLessonName("A Really Dull Maths Lesson");
+        lesson.lessonInfo.setAuthor("Some Dick Head");
+        lesson.gradeSettings.setPassBoundary(1);
+        lesson.gradeSettings.setPassMessage("Nice one m8");
+        lesson.gradeSettings.setFailMessage("U suk");
+        
+        new CertificateWindow(this, lesson, 1);
     }
     
     public static void main(String args[]) {

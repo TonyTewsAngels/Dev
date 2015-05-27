@@ -12,6 +12,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import teacheasy.data.Lesson;
 
@@ -67,9 +69,10 @@ public class CertificateWindow  {
         root = new VBox();
         
         File html = buildHtml();
-        System.out.println(html.getAbsolutePath());
-        
-        webEngine.load(CertificateWindow.class.getResource("Certificate_Template.html").toExternalForm());
+        String path = new String("file:" + html.getAbsolutePath().replaceAll("\\\\", "/"));
+        System.out.println(path);
+
+        webEngine.load(path);
         
         scene = new Scene(root);
 
@@ -93,7 +96,7 @@ public class CertificateWindow  {
     
     public File buildHtml() {
         File templateFile = new File("Certificate_Template.html");
-        File outputHtml = new File("Output_Html");
+        File outputHtml = new File("Output_Html.html");
         
         BufferedReader input;
         BufferedWriter output;
@@ -108,32 +111,33 @@ public class CertificateWindow  {
                 
                 if(line.contains("LESSONTITLE")) {
                     int index = line.indexOf("LESSONTITLE");
-                    outputLine = new String(line.substring(0, index) + 
+                    outputLine = new String(line.substring(0, index) + " " +
                                             lesson.lessonInfo.getLessonName() + 
                                             line.substring(index + 11));
                 } else if(line.contains("TEACHERNAME")) {
                     int index = line.indexOf("TEACHERNAME");
-                    outputLine = new String(line.substring(0, index) + 
+                    outputLine = new String(line.substring(0, index) + " " +
                                             lesson.lessonInfo.getAuthor() + 
                                             line.substring(index + 11));
                 } else if(line.contains("DATE")) {
+                    String date = new SimpleDateFormat("dd-MM-yyy").format(new Date());
                     int index = line.indexOf("DATE");
-                    outputLine = new String(line.substring(0, index) + 
-                                            "date" + 
+                    outputLine = new String(line.substring(0, index) + " " +
+                                            date + 
                                             line.substring(index + 4));
                 } else if(line.contains("STUDENTNAME")) {
                     int index = line.indexOf("STUDENTNAME");
-                    outputLine = new String(line.substring(0, index) + 
+                    outputLine = new String(line.substring(0, index) + " " +
                                             "Student Name" + 
                                             line.substring(index + 11));
                 } else if(line.contains("MARK")) {
                     int index = line.indexOf("MARK");
-                    outputLine = new String(line.substring(0, index) + 
+                    outputLine = new String(line.substring(0, index) + " " +
                                             marks + 
                                             line.substring(index + 4));
                 } else if(line.contains("TOTAL")) {
                     int index = line.indexOf("TOTAL");
-                    outputLine = new String(line.substring(0, index) + 
+                    outputLine = new String(line.substring(0, index) + " " + 
                                             lesson.lessonInfo.getTotalMarks() + 
                                             line.substring(index + 5));
                 } else if(line.contains("PASSFAILMESSAGE")) {
@@ -146,7 +150,7 @@ public class CertificateWindow  {
                     }
                     
                     int index = line.indexOf("PASSFAILMESSAGE");
-                    outputLine = new String(line.substring(0, index) + 
+                    outputLine = new String(line.substring(0, index) + " " + 
                                             messageStr + 
                                             line.substring(index + 15));
                 } else {
@@ -154,7 +158,10 @@ public class CertificateWindow  {
                 }
                 
                 output.write(outputLine);
-            }     
+            }
+            
+            input.close();
+            output.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
