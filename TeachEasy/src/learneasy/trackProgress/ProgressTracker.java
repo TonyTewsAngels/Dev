@@ -69,4 +69,8 @@ public class ProgressTracker {
             visitedPages[i] = false;
         }
     }
+    
+    public int getTotalMarks() {
+        return marks;
+    }
 }

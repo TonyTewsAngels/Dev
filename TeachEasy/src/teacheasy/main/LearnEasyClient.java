@@ -1,5 +1,6 @@
 package teacheasy.main;
 
+import teacheasy.certificate.CertificateWindow;
 import teacheasy.data.Lesson;
 import teacheasy.runtime.RunTimeData;
 import javafx.application.*;
@@ -234,6 +235,8 @@ public class LearnEasyClient extends Application {
          * buttons, if not disable both.
          */
         if(runtimeData.isLessonOpen()) {
+            nextBtn.setDisable(false);
+            
             if(!runtimeData.isNextPage()) {
                 nextBtn.setText("Finish");
                 nextBtn.setId("finishBtn");
@@ -268,6 +271,8 @@ public class LearnEasyClient extends Application {
                     prevPageButtonPressed();
                     break;
                 case "finishBtn":
+                    runtimeData.collatePageMarks();
+                    new CertificateWindow(runtimeData.getLesson(), runtimeData.getProgress().getTotalMarks());
                     break;
                 default:
                     /* Do Nothing */
