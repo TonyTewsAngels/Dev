@@ -62,12 +62,11 @@ public class ImageHandlerDummyGUI extends Application {
         imageHandler = new ImageHandler(group);
         
         /*Use the image handler to create an image stored on disk*/
-        imageHandler.insertImage("rabbit.jpg", 0, 100, 1, 1, 0);
+        imageHandler.insertImage("rabbit.jpg", 0, 100, 1, 1, 0, true);
         
         /*Use the image handler to create an image stored online*/
         imageHandler.insertImage("http://www.county-vets.co.uk/media/resources/rabbit.jpg",
-        		600, 100, 1, 1, 0);
-        
+        		600, 100, 1, 1, 0, true);
         
         /* Show the window */
         primaryStage.show(); 

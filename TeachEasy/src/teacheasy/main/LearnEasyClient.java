@@ -2,6 +2,7 @@ package teacheasy.main;
 
 import teacheasy.certificate.CertificateWindow;
 import teacheasy.data.Lesson;
+import teacheasy.render.RenderUtil;
 import teacheasy.runtime.RunTimeData;
 import javafx.application.*;
 import javafx.event.ActionEvent;
@@ -33,7 +34,7 @@ public class LearnEasyClient extends Application {
         /* Get screen size */
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
-        Rectangle2D canvasBounds = new Rectangle2D(0, 0, 1250.0, 703.125);
+        Rectangle2D canvasBounds = new Rectangle2D(0, 0, RenderUtil.LE_WIDTH, RenderUtil.LE_HEIGHT);
         
         /* Instantiate the scene and main Grid layout*/
         GridPane grid = new GridPane();

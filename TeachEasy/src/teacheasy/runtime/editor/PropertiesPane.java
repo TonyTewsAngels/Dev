@@ -14,7 +14,7 @@ import teacheasy.data.Page;
 import teacheasy.data.PageObject;
 import teacheasy.data.TextObject;
 import teacheasy.data.VideoObject;
-import teacheasy.render.Util;
+import teacheasy.render.RenderUtil;
 import teacheasy.runtime.EditorRunTimeData;
 
 /**
@@ -189,11 +189,11 @@ public class PropertiesPane {
         if(selectedPage == null) {            
             /* Update the background color component */
             backgroundColorPicker.setDisable(true);
-            backgroundColorPicker.setValue(Util.colorFromString("#ffffffff"));
+            backgroundColorPicker.setValue(RenderUtil.colorFromString("#ffffffff"));
         } else {            
             /* Update the background color component */
             backgroundColorPicker.setDisable(false);
-            backgroundColorPicker.setValue(Util.colorFromString(selectedPage.getPageColour()));
+            backgroundColorPicker.setValue(RenderUtil.colorFromString(selectedPage.getPageColour()));
         }
         
         backgroundColorPicker.fireEvent(new ActionEvent(backgroundColorPicker, backgroundColorPicker));
@@ -233,7 +233,7 @@ public class PropertiesPane {
             if(selectedPage != null) {
                 /* Compare the new colour to the old colour */
                 String oldCol = selectedPage.getPageColour();
-                String newCol = Util.stringFromColor(backgroundColorPicker.getValue());
+                String newCol = RenderUtil.stringFromColor(backgroundColorPicker.getValue());
                 
                 /* Only trigger a refresh if a change has occurred */
                 if(!newCol.equals(oldCol)) {

@@ -59,7 +59,7 @@ public class Renderer {
         clearPage();
         
         /* Add the background */
-        Rectangle bg = new Rectangle(bounds.getMaxX(), bounds.getMaxY(), Util.colorFromString(page.getPageColour()));
+        Rectangle bg = new Rectangle(bounds.getMaxX(), bounds.getMaxY(), RenderUtil.colorFromString(page.getPageColour()));
         group.getChildren().add(bg);
         
         /* Loop through all the objects on the page */
@@ -176,12 +176,50 @@ public class Renderer {
     
     /** Render an image on a page */
     private void renderImage(ImageObject image) {
-        imageHandler.insertImage(image.getSourcefile(),
+        if(image.getXEnd() == -1.0f && image.getYEnd() == -1.0f) {
+            int index = imageHandler.getImages().size();
+            
+            imageHandler.insertImage(image.getSourcefile(),
                                  bounds.getMaxX() * image.getXStart(), 
                                  bounds.getMaxY() * image.getYStart(),
                                  image.getxScaleFactor(), 
                                  image.getyScaleFactor(),
-                                 image.getRotation());
+                                 image.getRotation(),
+                                 true);
+            
+            /* The image couldn't be added for some reason */
+            if(imageHandler.getImages().size() == index) {
+                return;
+            }
+            
+            float width = (float)imageHandler.getImage(index).getWidth() * image.getxScaleFactor();
+            float height = (float)imageHandler.getImage(index).getHeight() * image.getyScaleFactor();
+            
+            float xEnd = (float)(((image.getXStart() * RenderUtil.LE_WIDTH) + width) / RenderUtil.LE_WIDTH);
+            float yEnd = (float)(((image.getYStart() * RenderUtil.LE_HEIGHT) + height) / RenderUtil.LE_HEIGHT);
+            
+            if(xEnd > 1.0f) {
+                xEnd = 1.0f;
+            }
+            
+            if(yEnd > 1.0f) {
+                yEnd = 1.0f;
+            }
+            
+            image.setXEnd(xEnd);
+            image.setYEnd(yEnd);
+            
+            imageHandler.removeImage(index);
+        }
+        
+        imageHandler.insertImage(image.getSourcefile(),
+                                 bounds.getMaxX() * image.getXStart(), 
+                                 bounds.getMaxY() * image.getYStart(),
+                                 bounds.getMaxX() * (image.getXEnd() - image.getXStart()), 
+                                 bounds.getMaxY() * (image.getYEnd() - image.getYStart()),
+                                 image.getRotation(),
+                                 false);        
+        
     }
     
     /** Render a graphic object on a page */

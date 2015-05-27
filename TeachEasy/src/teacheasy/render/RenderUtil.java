@@ -8,7 +8,13 @@ import javafx.scene.paint.Color;
  * @author Alistair Jewers
  * @version 1.0 03 Mar 2015
  */
-public class Util {
+public class RenderUtil {
+    public static final double LE_WIDTH = 1250.0;
+    public static final double LE_HEIGHT = 703.125;
+    
+    public static final double TE_WIDTH = 937.5;
+    public static final double TE_HEIGHT = 527.34;
+    
     
     /** Convert an ARGB hex color string into a java fx color */
     public static Color colorFromString(String hexCol) {

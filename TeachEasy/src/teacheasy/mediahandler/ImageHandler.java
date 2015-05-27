@@ -6,6 +6,7 @@ package teacheasy.mediahandler;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -19,12 +20,12 @@ import javafx.scene.image.ImageView;
  * 
  * */
 public class ImageHandler {
-
-
 	private Group group;
+	private ArrayList<ImageView> images;
 
 	public ImageHandler(Group nGroup){
 		group = nGroup;
+		images = new ArrayList<ImageView>();
 	}
 
 	/**
@@ -45,7 +46,9 @@ public class ImageHandler {
 	 *            : group layout
 	 */
 	public void insertImage(String imageName, double locationX,
-			double locationY, double widthSize, double heightSize, double rotationDegree) {
+			                double locationY, double widthSize,
+			                double heightSize, double rotationDegree,
+			                boolean scaleBased) {
 		double imageWidth;
 		double imageHeight;
 		
@@ -74,14 +77,47 @@ public class ImageHandler {
 		
 		imageWidth = image.getWidth();
 		imageHeight = image.getHeight();
+		
 		ImageView imageView = new ImageView(image);
 		imageView = new ImageView();
 		imageView.setImage(image);
-		imageView.setFitWidth(imageWidth * widthSize);
-        imageView.setFitHeight(imageHeight *heightSize);
+		
+		if(scaleBased) {
+		    imageView.setFitWidth(imageWidth * widthSize);
+            imageView.setFitHeight(imageHeight *heightSize);
+		} else {
+		    imageView.setFitWidth(widthSize);
+		    imageView.setFitHeight(heightSize);
+		}
 		imageView.setRotate(rotationDegree);
 		imageView.relocate(locationX, locationY);
+		
+		images.add(imageView);
+		
 		group.getChildren().add(imageView);
+	}
+	
+	public Image getImage(int imageID) {
+	    if(imageID >= 0 && imageID < images.size()) {
+	        return images.get(imageID).getImage();
+	    }
+	    
+	    return null;
+	}
+	
+	public ArrayList<ImageView> getImages() {
+	    return images;
+	}
+	
+	public void removeImage(int imageID) {
+	    if(imageID >= 0 && imageID < images.size()) {
+	        group.getChildren().remove(images.get(imageID));
+	        images.remove(imageID);
+	    }
+	}
+	
+	public void clearImages() {
+	    images.clear();
 	}
 	
     /** 
@@ -106,7 +142,5 @@ public class ImageHandler {
         catch (Exception e) {
            return false;
         }
-      }
-	
-	
+    }
 }
