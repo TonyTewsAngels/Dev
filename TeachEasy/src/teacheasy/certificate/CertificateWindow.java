@@ -47,6 +47,8 @@ public class CertificateWindow  {
     private Lesson lesson;
     private int marks;
     
+    private Button printBtn;
+    
     public CertificateWindow(Application nAppRef, Lesson nLesson, int nMarks) {
         this.appRef = nAppRef;
         this.lesson = nLesson;
@@ -71,7 +73,7 @@ public class CertificateWindow  {
         
         scene = new Scene(root);
 
-        Button printBtn = new Button("Print");
+        printBtn = new Button("Print");
         printBtn.setId("print");
         printBtn.setOnAction(new PrintButtonHandler());
         
@@ -162,11 +164,15 @@ public class CertificateWindow  {
     
     public class PrintButtonHandler implements EventHandler<ActionEvent> {
         @Override
-        public void handle(ActionEvent e) {            
+        public void handle(ActionEvent e) {
+            printBtn.setVisible(false);
+            
             WritableImage snapshot = scene.snapshot(null);
             
             BufferedImage bimage = new BufferedImage((int)screen.getBounds().getWidth(), (int)screen.getBounds().getHeight(), BufferedImage.TYPE_3BYTE_BGR);
             bimage = SwingFXUtils.fromFXImage(snapshot, bimage);
+            
+            printBtn.setVisible(true);
             
             new Thread(new PrintRunnable(bimage)).start();
         }
