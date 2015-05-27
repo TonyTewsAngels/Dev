@@ -247,7 +247,6 @@ public class RunTimeData {
             /* Act according to id */
             /* If user wants to continue, go to next page */
             if (id.equals("yes")) {
-            	System.out.println("yes");
             	
                 dialogStage.close();
                 
@@ -453,8 +452,8 @@ public class RunTimeData {
        
         File file = new File(filePath);
         
+        /* Add it to the list of recently opened */
         homePage.setRecentlyOpened(file.toString());
-        System.out.println("being called from openLessonFromHyplink");
          
         /* Parse the file */
         ArrayList<XMLNotification> errorList = xmlHandler.parseXML2(file
@@ -480,7 +479,7 @@ public class RunTimeData {
         setCurrentPage(0);
         setLessonOpen(true);
         
-        /*This needs moving somewhere more appropriate!*/
+        /* Initialise the progress tracker */
         progressTracker = new ProgressTracker(pageCount);
         
         redraw(group, bounds);
@@ -575,7 +574,6 @@ public class RunTimeData {
         public void handle(ActionEvent e) {
             /* get the ID of the hyperlink */
             String id = hl.getId();
-            System.out.println("the id is: " + id);
 
             if(!hl.equals("doesn't exist!")){
                 if(id.equals("RecentlyOpened1")){
