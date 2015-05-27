@@ -60,6 +60,8 @@ public class AudioXMLHandler extends DefaultHandler{
         String xEndStr = attrs.getValue("xend");
         String startTimeStr = attrs.getValue("starttime");
         String viewProgressStr = attrs.getValue("viewprogress");
+        String autoPlayStr = attrs.getValue("autoplay");
+        String loopStr = attrs.getValue("loop");
         
         float xStart = XMLUtil.checkFloat(xStartStr, 0.0f, Level.ERROR, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Audio) X Start ");
@@ -82,6 +84,12 @@ public class AudioXMLHandler extends DefaultHandler{
         boolean viewProgress = XMLUtil.checkBool(viewProgressStr, true, Level.WARNING, errorList,
                 "Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Audio) View progress ");
         
-        audio = new AudioObject(xStart, yStart, xEnd, sourceFileStr, startTime, viewProgress);
+        boolean autoPlay = XMLUtil.checkBool(autoPlayStr, false, Level.WARNING, errorList,
+        		"Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Audio) Auto Play ");
+        
+        boolean loop = XMLUtil.checkBool(loopStr, false, Level.WARNING, errorList, 
+        		"Page " + lesson.pages.size() + ", Object " + page.getObjectCount() +" (Audio) Loop");
+        
+        audio = new AudioObject(xStart, yStart, xEnd, sourceFileStr, startTime, viewProgress, autoPlay, loop);
     }
 }

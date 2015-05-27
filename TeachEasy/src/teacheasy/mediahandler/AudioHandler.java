@@ -68,6 +68,8 @@ public class AudioHandler {
 	  *  
 	  *  @param playButtonOnly If true, the only button that will appear will be a play
 	  *  						and pause button. If false, all controls will be visible.
+	 * @param b 
+	 * @param c 
 	  *  
 	  */
     public void createAudio(float x, float y, float width, String sourceFile, boolean autoPlay, boolean loop, boolean visibleControls, boolean playButtonOnly) {

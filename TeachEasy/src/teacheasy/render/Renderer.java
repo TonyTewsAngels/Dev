@@ -168,8 +168,8 @@ public class Renderer {
                                  (float)(bounds.getMaxY() * audio.getYStart()),
                                  (float)bounds.getMaxX()*(audio.getXEnd() - audio.getXStart()),
                                  audio.getSourcefile(),
-                                 false,
-                                 false,
+                                 audio.isAutoPlay(),
+                                 audio.isLoop(),
                                  true,
                                  !audio.isViewProgress());
     }
