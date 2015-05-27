@@ -300,6 +300,8 @@ public class XMLWriter {
 	    audioElement.setAttribute("xend", String.valueOf(audio.getXEnd()));
         audioElement.setAttribute("viewprogress", String.valueOf(audio.isViewProgress()));
         audioElement.setAttribute("starttime", String.valueOf(audio.getStartTime()));
+        audioElement.setAttribute("autoplay", String.valueOf(audio.isAutoPlay()));
+        audioElement.setAttribute("loop", String.valueOf(audio.isLoop()));
 	}
 	
 	/** Add a graphics element */
