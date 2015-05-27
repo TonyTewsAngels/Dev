@@ -1,11 +1,6 @@
 package teacheasy.certificate;
 
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,82 +13,105 @@ import java.util.Date;
 import teacheasy.data.Lesson;
 
 import javafx.application.Application;
-import javafx.application.HostServices;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Circle;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+/**
+ * This class creates a certificate for a completed lesson. Information is
+ * pulled from the document info and inserted into an HTML certificate template
+ * which is then made visible. A button is provided to print the certificate.
+ * 
+ * @author Alistair Jewers
+ * @version 1.0 27 May 2015
+ */
 public class CertificateWindow  {
-    private WebView webView;
-    private WebEngine webEngine;
-    private VBox root;
-    private Scene scene;
-    
-    private Application appRef;
-    
-    private Screen screen;
-    
+    /* Class level variables */
+    private WebView htmlView;
+    private WebEngine htmlEngine;
     private Lesson lesson;
     private int marks;
-    
+    private Screen screen;
+    private Scene scene;
+    private VBox root;
     private Button printBtn;
     
-    public CertificateWindow(Application nAppRef, Lesson nLesson, int nMarks) {
-        this.appRef = nAppRef;
+    /**
+     * Constructor method. Creates the certificate window.
+     * 
+     * @param nLesson The lesson the certificate is for.
+     * @param nMarks The number of marks the student gained during the lesson.
+     */
+    public CertificateWindow(Lesson nLesson, int nMarks) {
+        /* Set references */
         this.lesson = nLesson;
         this.marks = nMarks;
         
+        /* Instantiate a stage */
         Stage stage = new Stage();
         
+        /* Get screen info */
         screen = Screen.getPrimary();
         
-        /* Initialise the stage */
-        webView = new WebView();
-        webView.setMinWidth(screen.getBounds().getWidth());
-        webView.setMinHeight(screen.getBounds().getHeight() - 150);
-        webEngine = webView.getEngine();
+        /* Initialise the HTML viewer */
+        htmlView = new WebView();
+        htmlView.setMinWidth(screen.getBounds().getWidth());
+        htmlView.setMinHeight(screen.getBounds().getHeight() - 150);
+        htmlEngine = htmlView.getEngine();
         
+        /* Instantiate the root element */
         root = new VBox();
         
+        /* Call the method to construct the html file */
         File html = buildHtml();
-        String path = new String("file:" + html.getAbsolutePath().replaceAll("\\\\", "/"));
-        System.out.println(path);
-
-        webEngine.load(path);
         
-        scene = new Scene(root);
+        /* Get the file path of the constructed HTML */
+        String path = new String("file:" + html.getAbsolutePath().replaceAll("\\\\", "/"));
 
+        /* Load the certificate into the viewer */
+        htmlEngine.load(path);
+        
+        /* Instantiate the scene */
+        scene = new Scene(root);
+        
+        /* Set up the print button */
         printBtn = new Button("Print");
         printBtn.setId("print");
         printBtn.setOnAction(new PrintButtonHandler());
-        
         HBox buttonBox = new HBox();
         buttonBox.getChildren().add(printBtn);
         buttonBox.setAlignment(Pos.CENTER);
         
-        root.getChildren().addAll(webView, buttonBox);
+        /* Add the view and button to the scene */
+        root.getChildren().addAll(htmlView, buttonBox);
 
+        /* Set up the stage */
         stage.setTitle("Certificate");
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setWidth(screen.getBounds().getWidth());
         stage.setHeight(screen.getBounds().getHeight());
         stage.setScene(scene);
+        
+        /* Display the window */
         stage.show();
     }
     
+    /**
+     * Builds an html file based on the template and the given lesson.
+     * 
+     * @return A new HTML file object of the certificate.
+     */
     public File buildHtml() {
         File templateFile = new File("Certificate_Template.html");
         File outputHtml = new File("Output_Html.html");
@@ -169,18 +187,29 @@ public class CertificateWindow  {
         return outputHtml;
     }
     
+    /**
+     * Handles pressing the print button by taking a snapshot of
+     * the screen and printing it.
+     * 
+     * @author Alistair Jewers
+     */
     public class PrintButtonHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent e) {
+            /* Hide the print button */
             printBtn.setVisible(false);
             
+            /* Take a snapshot of the screen */
             WritableImage snapshot = scene.snapshot(null);
             
+            /* Convert the snapshot to a Swing Buffered Image */
             BufferedImage bimage = new BufferedImage((int)screen.getBounds().getWidth(), (int)screen.getBounds().getHeight(), BufferedImage.TYPE_3BYTE_BGR);
             bimage = SwingFXUtils.fromFXImage(snapshot, bimage);
             
+            /* Show the print button again */
             printBtn.setVisible(true);
             
+            /* Print the buffered image */
             new Thread(new PrintRunnable(bimage)).start();
         }
     }
