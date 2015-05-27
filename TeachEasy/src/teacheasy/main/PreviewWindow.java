@@ -16,7 +16,7 @@ import javafx.scene.shape.*;
 import javafx.scene.text.*;
 import javafx.stage.*;
 
-public class LearnEasyClient extends Application {
+public class PreviewWindow {
     /* Text */
     Text text;
     
@@ -27,8 +27,10 @@ public class LearnEasyClient extends Application {
     /* Application state */
     RunTimeData runtimeData;
     
-    @Override
-    public void start (Stage primaryStage) {
+    public PreviewWindow(Lesson lesson) {
+        /* Create a stage */
+        Stage primaryStage = new Stage();
+        
         /* Get screen size */
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
@@ -137,21 +139,10 @@ public class LearnEasyClient extends Application {
         
         /* Create Menubar */
         MenuBar menuBar = new MenuBar();
-        Menu menuFile = new Menu("File");
-        MenuItem open = new MenuItem("Open");
-        open.setId("openFile");
-        open.setOnAction(new UIMenuEventHandler());
         
-        MenuItem close = new MenuItem("Close");
-        close.setId("closeFile");
-        close.setOnAction(new UIMenuEventHandler());
-        
-        menuFile.getItems().addAll(open, close);
-        
-        Menu menuEdit = new Menu("Edit");
         Menu menuHelp = new Menu("Help");
         menuBar.setPrefWidth(10000);
-        menuBar.getMenus().addAll(menuFile, menuEdit, menuHelp);
+        menuBar.getMenus().addAll(menuHelp);
 
         /* Create some text and set it up*/
         text = new Text(200, 200,"Content Pane");
@@ -186,17 +177,13 @@ public class LearnEasyClient extends Application {
         AnchorPane.setRightAnchor(nextBtn, 8.0);
         AnchorPane.setLeftAnchor(prevBtn, 8.0);
         
-        runtimeData = new RunTimeData(group, canvasBounds, this);
+        runtimeData = new RunTimeData(group, canvasBounds, this, lesson);
         
         /* Show the window */
         primaryStage.show(); 
         
         /* Update the UI */
         updateUI();
-    }
-    
-    public static void main(String[] args) {
-        launch(args);
     }
     
     public void openFilePressed() {
@@ -235,11 +222,9 @@ public class LearnEasyClient extends Application {
          */
         if(runtimeData.isLessonOpen()) {
             if(!runtimeData.isNextPage()) {
-                nextBtn.setText("Finish");
-                nextBtn.setId("finishBtn");
+                nextBtn.setDisable(true);
             } else {
-                nextBtn.setText("Next");
-                nextBtn.setId("nextBtn");
+                nextBtn.setDisable(false);
             }
             
             if(!runtimeData.isPrevPage()) {
@@ -259,7 +244,7 @@ public class LearnEasyClient extends Application {
             /* Get the source */
             Button sourceButton = (Button) e.getSource();
             
-            /* TODO Check the ID of the source button and call the relevant runtime method */
+            /* Check the ID of the source button and call the relevant runtime method */
             switch(sourceButton.getId()) {
                 case "nextBtn":
                     nextPageButtonPressed();
@@ -267,38 +252,14 @@ public class LearnEasyClient extends Application {
                 case "prevBtn":
                     prevPageButtonPressed();
                     break;
-                case "finishBtn":
-                    break;
                 default:
                     /* Do Nothing */
                     break;
             }
 
-            /* TODO Update the UI to reflect any changes to the application state */
-            updateUI();
-        }
-    }
-    
-    public class UIMenuEventHandler implements EventHandler<ActionEvent> {
-        @Override
-        public void handle(ActionEvent e) {
-            /* Get the source */
-            MenuItem source = (MenuItem) e.getSource();
-            
-            /* TODO Check the ID of the source and call the relevant runtime method */
-            switch(source.getId()) {
-                case "openFile":
-                    openFilePressed();
-                    break;
-                case "closeFile":
-                    closeFilePressed();
-                default:
-                    /* Do Nothing */
-                    break;
-            }
-            
-            /* TODO Update UI to reflect changes to application state */
+            /* Update the UI to reflect any changes to the application state */
             updateUI();
         }
     }
 }
+

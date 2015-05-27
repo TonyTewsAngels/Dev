@@ -6,7 +6,7 @@
         <comment>Easy starting steps to learning piano</comment>
         <groupid>4</groupid>
         <datecreated>06/03/2015</datecreated>
-        <totalmarks>3</totalmarks>
+        <totalmarks>9</totalmarks>
         <lessonname>Piano 1</lessonname>
     </documentinfo>
     <defaultsettings>
@@ -24,32 +24,32 @@
         </text>
         <image duration="0.0" rotation="0.0" scale="1.8" sourcefile="Release1LessonPianoKeys.gif" starttime="0.0" xend="-1.0" xstart="0.15" yend="-1.0" yscale="1.8" ystart="0.2"/>
         <graphic duration="0.0" graphiccolor="#ffff0000" linecolor="#ffff0000" outlinethickness="4.0" rotation="0.0" shadow="false" solid="true" starttime="0.0" type="oval" xend="0.727" xstart="0.7" yend="0.568" ystart="0.52">
-            <none shadingcolor="#ff000000"/>
+            <noneshading shadingcolor="#ff000000"/>
         </graphic>
         <graphic duration="0.0" graphiccolor="#ff00ff00" linecolor="#ff00ff00" outlinethickness="4.0" rotation="0.0" shadow="false" solid="true" starttime="0.0" type="oval" xend="0.464" xstart="0.435" yend="0.568" ystart="0.52">
-            <none shadingcolor="#ff000000"/>
+            <noneshading shadingcolor="#ff000000"/>
         </graphic>
         <graphic duration="0.0" graphiccolor="#ff0000ff" linecolor="#ff0000ff" outlinethickness="4.0" rotation="0.0" shadow="false" solid="true" starttime="0.0" type="oval" xend="0.349" xstart="0.32" yend="0.468" ystart="0.42">
-            <none shadingcolor="#ff000000"/>
+            <noneshading shadingcolor="#ff000000"/>
         </graphic>
         <text duration="0.0" font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" starttime="0.0" xend="1.0" xstart="0.2" yend="1.0" ystart="0.7">
             <richtext bold="false" font="arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Name the '</richtext>
             <richtext bold="false" font="arial" fontcolor="#ff0000ff" fontsize="20" italic="true" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">BLUE</richtext>
             <richtext bold="false" font="arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">' note.</richtext>
         </text>
-        <answerbox characterlimit="2" correctanswer="~f#~gb" marks="1" numerical="false" retry="true" xstart="0.5" ystart="0.7"/>
+        <answerbox characterlimit="2" correctanswer="~~f#~gb" marks="1" numerical="false" retry="true" xstart="0.5" ystart="0.7"/>
         <text duration="0.0" font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" starttime="0.0" xend="1.0" xstart="0.2" yend="1.0" ystart="0.8">
             <richtext bold="false" font="arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Name the '</richtext>
             <richtext bold="false" font="arial" fontcolor="#ff00ff00" fontsize="20" italic="true" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">GREEN</richtext>
             <richtext bold="false" font="arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">' note.</richtext>
         </text>
-        <answerbox characterlimit="2" correctanswer="~b" marks="1" numerical="false" retry="true" xstart="0.5" ystart="0.8"/>
+        <answerbox characterlimit="2" correctanswer="~~b" marks="1" numerical="false" retry="true" xstart="0.5" ystart="0.8"/>
         <text duration="0.0" font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" starttime="0.0" xend="1.0" xstart="0.2" yend="1.0" ystart="0.9">
             <richtext bold="false" font="arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Name the '</richtext>
             <richtext bold="false" font="arial" fontcolor="#ffff0000" fontsize="20" italic="true" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">RED</richtext>
             <richtext bold="false" font="arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">' note.</richtext>
         </text>
-        <answerbox characterlimit="2" correctanswer="~a" marks="1" numerical="false" retry="true" xstart="0.5" ystart="0.9"/>
+        <answerbox characterlimit="2" correctanswer="~~a" marks="1" numerical="false" retry="true" xstart="0.5" ystart="0.9"/>
     </slide>
     <slide backgroundcolor="#ffccffcc">
         <text duration="0.0" font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" starttime="0.0" xend="1.0" xstart="0.1" yend="1.0" ystart="0.05">
@@ -93,7 +93,7 @@
         <text duration="0.0" font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" starttime="0.0" xend="1.0" xstart="0.2" yend="1.0" ystart="0.1">
             <richtext bold="false" font="arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Listen to this short audio clip...</richtext>
         </text>
-        <audio sourcefile="M:/Year 3/SWENG/RELEASE 1 DEMO LESSON/blues-guitar.wav" starttime="0.0" viewprogress="true" xend="-1.0" xstart="0.2" ystart="0.2"/>
+        <audio autoplay="false" loop="false" sourcefile="M:/Year 3/SWENG/RELEASE 1 DEMO LESSON/blues-guitar.wav" starttime="0.0" viewprogress="true" xend="-1.0" xstart="0.2" ystart="0.2"/>
         <text duration="0.0" font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" starttime="0.0" xend="1.0" xstart="0.6" yend="1.0" ystart="0.1">
             <richtext bold="false" font="arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">What style was the clip in?</richtext>
         </text>
@@ -106,7 +106,7 @@
         <text duration="0.0" font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" starttime="0.0" xend="1.0" xstart="0.2" yend="1.0" ystart="0.5">
             <richtext bold="false" font="arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Listen to this scale...</richtext>
         </text>
-        <audio sourcefile="M:/Year 3/SWENG/RELEASE 1 DEMO LESSON/piano-scale.wav" starttime="0.0" viewprogress="true" xend="-1.0" xstart="0.2" ystart="0.6"/>
+        <audio autoplay="false" loop="false" sourcefile="M:/Year 3/SWENG/RELEASE 1 DEMO LESSON/piano-scale.wav" starttime="0.0" viewprogress="true" xend="-1.0" xstart="0.2" ystart="0.6"/>
         <text duration="0.0" font="arial" fontcolor="#ff000000" fontsize="20" sourcefile="null" starttime="0.0" xend="1.0" xstart="0.6" yend="1.0" ystart="0.5">
             <richtext bold="false" font="arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Select the true statements:</richtext>
         </text>

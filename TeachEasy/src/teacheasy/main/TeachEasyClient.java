@@ -894,9 +894,7 @@ public class TeachEasyClient extends Application {
         public void handle(MouseEvent me) {
             button.setGraphic(image);
             
-            if(me.getEventType() == MouseEvent.MOUSE_PRESSED) {
-                System.out.println(button.getId());
-                
+            if(me.getEventType() == MouseEvent.MOUSE_PRESSED) {                
                 if(editorRuntimeData.isLessonOpen()) {
                     switch(button.getId()) {
                         case "textBtn":
@@ -927,6 +925,7 @@ public class TeachEasyClient extends Application {
                             prevPageButtonPressed();
                             break;
                         case "previewBtn":
+                            new PreviewWindow(editorRuntimeData.getLesson());
                             break;
                     }
                 }
