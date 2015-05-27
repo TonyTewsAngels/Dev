@@ -18,13 +18,16 @@ public class AudioObject extends PageObject {
 	private String sourcefile;
 	private float xEnd;
 	private float startTime;
+    private boolean autoPlay;
+    private boolean loop;
 	
-	/** Constructor method */
 	public AudioObject(float nXStart, float nYStart,
 	                   float nXEnd,
 	                   String nSourcefile,
 	                   float nStartTime,
-	                   boolean nViewProgress) {
+	                   boolean nViewProgress, 
+	                   boolean autoPlay, 
+	                   boolean loop) {
     
         super(PageObjectType.AUDIO, nXStart, nYStart);
         
@@ -85,6 +88,22 @@ public class AudioObject extends PageObject {
 
     public void setStartTime(float nStartTime) {
         this.startTime = nStartTime;
+    }
+    
+    public boolean isAutoPlay() {
+        return autoPlay;
+    }
+
+    public void setAutoPlay(boolean nAutoPlay) {
+        this.autoPlay = nAutoPlay;
+    }
+
+    public boolean isLoop() {
+        return loop;
+    }
+
+    public void setLoop(boolean nLoop) {
+        this.loop = nLoop;
     }
 }
 
