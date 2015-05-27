@@ -4,6 +4,8 @@ import teacheasy.data.GraphicObject;
 import teacheasy.data.Page;
 import teacheasy.data.PageObject;
 import teacheasy.data.PageObject.PageObjectType;
+import teacheasy.data.TextObject;
+import teacheasy.data.VideoObject;
 
 public class MouseController {
     private boolean objectGrab;
@@ -69,12 +71,47 @@ public class MouseController {
                 
                 graphic.setXEnd(graphic.getXEnd() - graphic.getXStart() + relX - xOffSet);
                 graphic.setYEnd(graphic.getYEnd() - graphic.getYStart() + relY - yOffSet);
+                
+                if(graphic.getXEnd() > 1.0f) {
+                    graphic.setXEnd(1.0f);
+                }
+                
+                if(graphic.getYEnd() > 1.0f) {
+                    graphic.setYEnd(1.0f);
+                }
+            } else if(propertiesPane.getSelectedObject().getType() == PageObjectType.VIDEO) {
+                VideoObject video = (VideoObject)propertiesPane.getSelectedObject();
+                
+                video.setXEnd(video.getXEnd() - video.getXStart() + relX - xOffSet);
+                
+                if(video.getXEnd() > 1.0f) {
+                    video.setXEnd(1.0f);
+                }
+            } else if(propertiesPane.getSelectedObject().getType() == PageObjectType.TEXT) {
+                TextObject text = (TextObject)propertiesPane.getSelectedObject();
+                
+                text.setXEnd(text.getXEnd() - text.getXStart() + relX - xOffSet);
+                text.setYEnd(text.getYEnd() - text.getYStart() + relY - yOffSet);
+                
+                if(text.getXEnd() > 1.0f) {
+                    text.setXEnd(1.0f);
+                }
+                
+                if(text.getYEnd() > 1.0f) {
+                    text.setYEnd(1.0f);
+                }
             }
             
             propertiesPane.getSelectedObject().setXStart(relX - xOffSet);
             propertiesPane.getSelectedObject().setYStart(relY - yOffSet);
             
+            if(propertiesPane.getSelectedObject().getXStart() < 0.0f) {
+                propertiesPane.getSelectedObject().setXStart(0.0f);
+            }
             
+            if(propertiesPane.getSelectedObject().getYStart() < 0.0f) {
+                propertiesPane.getSelectedObject().setYStart(0.0f);
+            }
             
             propertiesPane.update(page, propertiesPane.getSelectedObject());
             
