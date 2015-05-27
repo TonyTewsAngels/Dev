@@ -76,12 +76,14 @@ public class HomePage {
         /* Instantiate preferences */
         preference = Preferences.userRoot().node(this.getClass().getName());
 
+        /* This code clears user preference. Please only uncomment during testing */
+        /******************************************
         try {
             preference.clear();
         } catch (BackingStoreException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
-        }
+        }*****************************************/
 
         try {
             String[] storedKeys = new String[preference.keys().length];
