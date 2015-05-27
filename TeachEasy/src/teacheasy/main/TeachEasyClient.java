@@ -4,6 +4,7 @@ import teacheasy.data.PageObject.PageObjectType;
 import teacheasy.debug.EditorRuntimeDataDummyUI.KeyHandler;
 import teacheasy.debug.EditorRuntimeDataDummyUI.MenuEventHandler;
 import teacheasy.debug.EditorRuntimeDataDummyUI.MouseEventHandler;
+import teacheasy.render.RenderUtil;
 import teacheasy.runtime.EditorRunTimeData;
 import teacheasy.runtime.editor.LessonInfoWindow;
 import javafx.application.Application;
@@ -68,7 +69,6 @@ public class TeachEasyClient extends Application {
     Button prevPageBtn;
     
     ComboBox<Integer> pageList;
-   
     
     /**
      * Override the start method inside the JavaFX Application
@@ -240,8 +240,8 @@ public class TeachEasyClient extends Application {
         /* Page */
         
         r = new Rectangle();
-        r.setWidth(937.5);
-        r.setHeight(527.34);
+        r.setWidth(RenderUtil.TE_WIDTH);
+        r.setHeight(RenderUtil.TE_HEIGHT);
         r.setFill(Color.WHITE);
         r.setEffect(new DropShadow());
         

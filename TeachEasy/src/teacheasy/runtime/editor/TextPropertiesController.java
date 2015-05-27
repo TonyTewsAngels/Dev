@@ -12,7 +12,7 @@ import javafx.scene.web.HTMLEditor;
 import javafx.stage.Stage;
 import teacheasy.data.RichText;
 import teacheasy.data.TextObject;
-import teacheasy.render.Util;
+import teacheasy.render.RenderUtil;
 import teacheasy.runtime.editor.text.TextEditorWindow;
 import wavemedia.graphic.GraphicType;
 import javafx.event.ActionEvent;
@@ -125,7 +125,7 @@ public class TextPropertiesController {
             xEndProperty.setText(String.valueOf(selectedText.getXEnd()));
             yEndProperty.setText(String.valueOf(selectedText.getYEnd()));
             fontSizeProperty.setText(String.valueOf(selectedText.getFontSize()));
-            fontColorProperty.setValue(Util.colorFromString(selectedText.getColor()));
+            fontColorProperty.setValue(RenderUtil.colorFromString(selectedText.getColor()));
             fontProperty.setValue(selectedText.getFont());
         }
         
@@ -225,10 +225,10 @@ public class TextPropertiesController {
             
             switch(source.getId()) {
                 case "fontColor":
-                    selectedText.setColor(Util.stringFromColor(source.getValue()));
+                    selectedText.setColor(RenderUtil.stringFromColor(source.getValue()));
                     
                     for(int i = 0; i < selectedText.textFragments.size(); i++) {
-                        selectedText.textFragments.get(i).setColor(Util.stringFromColor(source.getValue()));
+                        selectedText.textFragments.get(i).setColor(RenderUtil.stringFromColor(source.getValue()));
                     }
                     
                     break;

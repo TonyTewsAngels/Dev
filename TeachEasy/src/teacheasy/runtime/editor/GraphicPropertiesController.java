@@ -7,7 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import teacheasy.data.GraphicObject;
-import teacheasy.render.Util;
+import teacheasy.render.RenderUtil;
 import wavemedia.graphic.GraphicType;
 import wavemedia.graphic.Shading;
 import javafx.event.ActionEvent;
@@ -136,8 +136,8 @@ public class GraphicPropertiesController {
             outlineThicknessProperty.setText(String.valueOf(selectedGraphic.getOutlineThickness()));
             solidProperty.setSelected(selectedGraphic.isSolid());
             shadowProperty.setSelected(selectedGraphic.isShadow());
-            graphicColorProperty.setValue(Util.colorFromString(selectedGraphic.getGraphicColour()));
-            lineColorProperty.setValue(Util.colorFromString(selectedGraphic.getLineColor()));
+            graphicColorProperty.setValue(RenderUtil.colorFromString(selectedGraphic.getGraphicColour()));
+            lineColorProperty.setValue(RenderUtil.colorFromString(selectedGraphic.getLineColor()));
             typeProperty.setValue(selectedGraphic.getGraphicType().toString());
             shadingProperty.setValue(selectedGraphic.getShading().toString());
         }
@@ -226,13 +226,13 @@ public class GraphicPropertiesController {
             
             switch(source.getId()) {
                 case "graphicColor":
-                    selectedGraphic.setGraphicColor(Util.stringFromColor(source.getValue()));
+                    selectedGraphic.setGraphicColor(RenderUtil.stringFromColor(source.getValue()));
                     break;
                 case "lineColor":
-                    selectedGraphic.setLineColor(Util.stringFromColor(source.getValue()));
+                    selectedGraphic.setLineColor(RenderUtil.stringFromColor(source.getValue()));
                     break;
                 case "shadingColor":
-                    selectedGraphic.setShadingColor(Util.stringFromColor(source.getValue()));
+                    selectedGraphic.setShadingColor(RenderUtil.stringFromColor(source.getValue()));
                     break;
                 default:
                     break;
