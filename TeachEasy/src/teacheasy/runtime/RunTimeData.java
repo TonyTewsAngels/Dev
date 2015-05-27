@@ -42,6 +42,7 @@ import learneasy.homePage.HomePage;
 import learneasy.trackProgress.ProgressTracker;
 import teacheasy.data.*;
 import teacheasy.main.LearnEasyClient;
+import teacheasy.main.PreviewWindow;
 import teacheasy.render.Renderer;
 import teacheasy.xml.*;
 import teacheasy.xml.util.XMLNotification;
@@ -56,8 +57,9 @@ import teacheasy.xml.util.XMLNotification.Level;
  * @version 1.0 20 Feb 2015
  */
 public class RunTimeData {
-    /* Parent Reference */
+    /* Parent References */
     private LearnEasyClient parent;
+    private PreviewWindow previewParent;
 
     /* */
     private Group group;
@@ -86,8 +88,31 @@ public class RunTimeData {
     
    
     /** Constructor method */
-    public RunTimeData(Group nGroup, Rectangle2D nBounds,
-            LearnEasyClient nParent) {
+    public RunTimeData(Group nGroup, Rectangle2D nBounds, LearnEasyClient nParent) {
+        this.previewParent = null;
+        
+        setup(nGroup, nBounds, nParent);
+    }
+    
+    /** Alternate constructor for preview mode */
+    public RunTimeData(Group nGroup, Rectangle2D nBounds, PreviewWindow preview, Lesson nLesson) {
+        this.previewParent = preview;
+        
+        setup(nGroup, nBounds, null);
+        
+        /* Open the lesson */
+        lesson = nLesson;
+        setPageCount(lesson.pages.size());
+        setCurrentPage(0);
+        setLessonOpen(true);
+        
+        /* Initialise the progress tracker */
+        progressTracker = new ProgressTracker(pageCount);
+        
+        redraw(group, bounds);
+    }
+    
+    public void setup(Group nGroup, Rectangle2D nBounds, LearnEasyClient nParent) {
         /* Set the class level variables */
         this.group = nGroup;
         this.bounds = nBounds;
@@ -99,8 +124,7 @@ public class RunTimeData {
         this.lessonOpen = false;
         
         pageDirection = false;
-        
-      
+
         /* Instantiate an empty lesson */
         this.lesson = new Lesson();
 
@@ -113,7 +137,8 @@ public class RunTimeData {
         homePage = new HomePage();
         homePage.setPreference();
         
-       
+        System.out.println(group);
+        
         redraw(group, bounds);
     }
 
@@ -256,7 +281,7 @@ public class RunTimeData {
                 	prevPage();
                 }
                 
-                parent.updateUI();
+                updateParentUI();
             }
             /* If user wants to attempt questions close the dialog */
             else if (id.equals("no")) {
@@ -484,7 +509,7 @@ public class RunTimeData {
         
         redraw(group, bounds);
         
-        parent.updateUI();
+        updateParentUI();
         
         return true;
     }
@@ -555,6 +580,14 @@ public class RunTimeData {
         vbox.relocate(0, 0);
         group.getChildren().add(vbox);
         
+    }
+    
+    private void updateParentUI() {
+        if(parent != null) {
+            parent.updateUI();
+        } else if(previewParent != null) {
+            previewParent.updateUI();
+        }
     }
     
     

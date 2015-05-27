@@ -235,9 +235,11 @@ public class LearnEasyClient extends Application {
          */
         if(runtimeData.isLessonOpen()) {
             if(!runtimeData.isNextPage()) {
-                nextBtn.setDisable(true);
+                nextBtn.setText("Finish");
+                nextBtn.setId("finishBtn");
             } else {
-                nextBtn.setDisable(false);
+                nextBtn.setText("Next");
+                nextBtn.setId("nextBtn");
             }
             
             if(!runtimeData.isPrevPage()) {
@@ -264,6 +266,8 @@ public class LearnEasyClient extends Application {
                     break;
                 case "prevBtn":
                     prevPageButtonPressed();
+                    break;
+                case "finishBtn":
                     break;
                 default:
                     /* Do Nothing */

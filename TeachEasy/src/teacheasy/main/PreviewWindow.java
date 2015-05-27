@@ -177,7 +177,7 @@ public class PreviewWindow {
         AnchorPane.setRightAnchor(nextBtn, 8.0);
         AnchorPane.setLeftAnchor(prevBtn, 8.0);
         
-        runtimeData = new RunTimeData(group, canvasBounds, new LearnEasyClient());
+        runtimeData = new RunTimeData(group, canvasBounds, this, lesson);
         
         /* Show the window */
         primaryStage.show(); 
