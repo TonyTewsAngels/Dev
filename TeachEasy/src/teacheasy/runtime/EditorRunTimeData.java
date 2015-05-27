@@ -454,14 +454,14 @@ public class EditorRunTimeData {
     }
     
     /** Mouse Pressed in the page area */
-    public void mousePressed(float relX, float relY) {
+    public void mousePressed(float relX, float relY, boolean onGroup) {
         if(!isLessonOpen()) {
             return;
         }
         
         System.out.println("Press: " + relX + ", " + relY);
         
-        mouseController.mousePressed(lesson.pages.get(currentPage), propertiesPane, relX, relY);
+        mouseController.mousePressed(lesson.pages.get(currentPage), propertiesPane, relX, relY, onGroup);
     }
     
     /** Mouse released in the page area */

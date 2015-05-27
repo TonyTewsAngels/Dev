@@ -7,12 +7,21 @@ import teacheasy.data.PageObject.PageObjectType;
 
 public class MouseController {
     private boolean objectGrab;
+    private float xOffSet;
+    private float yOffSet;
     
     public MouseController() {
         objectGrab = false;
+        xOffSet = 0.0f;
+        yOffSet = 0.0f;
     }
     
-    public void mousePressed(Page page, PropertiesPane propertiesPane, float relX, float relY) {
+    public void mousePressed(Page page, PropertiesPane propertiesPane, float relX, float relY, boolean onGroup) {
+        if(!onGroup) {
+            objectGrab = false;
+            return;
+        }
+        
         PageObject returnObject = null;
         
         for(int i = page.pageObjects.size()-1; i >= 0; i--) {
@@ -25,8 +34,12 @@ public class MouseController {
                 if(returnObject.equals(propertiesPane.getSelectedObject())) {
                     System.out.println("Grab");
                     objectGrab = true;
+                    xOffSet = relX - propertiesPane.getSelectedObject().getXStart();
+                    yOffSet = relY - propertiesPane.getSelectedObject().getYStart();
                 } else {
                     objectGrab = false;
+                    xOffSet = 0.0f;
+                    yOffSet = 0.0f;
                 }
                 
                 break;
@@ -46,15 +59,20 @@ public class MouseController {
         if(objectGrab) {
             System.out.println("Drop");
             
+            if(Math.abs((relX - xOffSet) - (propertiesPane.getSelectedObject().getXStart())) < 0.005 &&
+               Math.abs((relY - yOffSet) - (propertiesPane.getSelectedObject().getYStart())) < 0.005) {
+                return false;
+            }
+            
             if(propertiesPane.getSelectedObject().getType() == PageObjectType.GRAPHIC) {
                 GraphicObject graphic = (GraphicObject)propertiesPane.getSelectedObject();
                 
-                graphic.setXEnd(graphic.getXEnd() - graphic.getXStart() + relX);
-                graphic.setYEnd(graphic.getYEnd() - graphic.getYStart() + relY);
+                graphic.setXEnd(graphic.getXEnd() - graphic.getXStart() + relX - xOffSet);
+                graphic.setYEnd(graphic.getYEnd() - graphic.getYStart() + relY - yOffSet);
             }
             
-            propertiesPane.getSelectedObject().setXStart(relX);
-            propertiesPane.getSelectedObject().setYStart(relY);
+            propertiesPane.getSelectedObject().setXStart(relX - xOffSet);
+            propertiesPane.getSelectedObject().setYStart(relY - yOffSet);
             
             
             
