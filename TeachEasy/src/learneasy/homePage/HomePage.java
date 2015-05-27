@@ -281,9 +281,13 @@ public class HomePage {
                         preference.put(RecentlyOpened2, preference.get(
                                     RecentlyOpened1, "doesn't exist!"));
                         preference.put(RecentlyOpened1, pathToLesson);
-                    } else {
+                    } else if (!preference.get(RecentlyOpened2,"doesn't exist!").equals("doesn't exist!")){
                         preference.put(RecentlyOpened3, preference.get(
                                 RecentlyOpened2, "doesn't exist!"));
+                        preference.put(RecentlyOpened2, preference.get(
+                                RecentlyOpened1, "doesn't exist!"));
+                        preference.put(RecentlyOpened1, pathToLesson);
+                    } else {
                         preference.put(RecentlyOpened2, preference.get(
                                 RecentlyOpened1, "doesn't exist!"));
                         preference.put(RecentlyOpened1, pathToLesson);
