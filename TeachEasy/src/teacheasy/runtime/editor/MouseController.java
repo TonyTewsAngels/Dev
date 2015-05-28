@@ -1,6 +1,7 @@
 package teacheasy.runtime.editor;
 
 import teacheasy.data.GraphicObject;
+import teacheasy.data.ImageObject;
 import teacheasy.data.Page;
 import teacheasy.data.PageObject;
 import teacheasy.data.PageObject.PageObjectType;
@@ -99,6 +100,19 @@ public class MouseController {
                 
                 if(text.getYEnd() > 1.0f) {
                     text.setYEnd(1.0f);
+                }
+            } else if(propertiesPane.getSelectedObject().getType() == PageObjectType.IMAGE) {
+                ImageObject image = (ImageObject)propertiesPane.getSelectedObject();
+                
+                image.setXEnd(image.getXEnd() - image.getXStart() + relX - xOffSet);
+                image.setYEnd(image.getYEnd() - image.getYStart() + relY - yOffSet);
+                
+                if(image.getXEnd() > 1.0f) {
+                    image.setXEnd(1.0f);
+                }
+                
+                if(image.getYEnd() > 1.0f) {
+                    image.setYEnd(1.0f);
                 }
             }
             
