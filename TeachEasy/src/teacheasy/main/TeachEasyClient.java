@@ -357,13 +357,14 @@ public class TeachEasyClient extends Application {
         Image arImPRE_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-02.png"));
         
         //Preview Button
-        Image prevIm= new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Choice_PRE_TOP_CIRC_Blue_T-01.png"));
+        Image prevImST = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Preview_ST_TOP_CIRC_Blue_T-01.png"));
+        Image prevImHO = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Preview_HO_TOP_CIRC_Blue_T-01.png"));
+        Image prevImPRE = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Preview_PRE_TOP_CIRC_Blue_T-01.png"));
         
-        ImageView Prev = new ImageView(prevIm);
-        previewBtn.setGraphic(Prev);   
+         
         
-        Prev.setFitWidth(80);
-        Prev.setFitHeight(80);
+        /*Prev.setFitWidth(80);
+        Prev.setFitHeight(80);*/
         
         //TE Logo
         Image Logo = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/TE_V5_1.png"));
@@ -408,6 +409,12 @@ public class TeachEasyClient extends Application {
         final ImageView arHO_R = new ImageView(arImHO_R);
         final ImageView arPRE_R = new ImageView(arImPRE_R);
         
+        final ImageView prevBoxST = new ImageView(prevImST);
+        final ImageView prevBoxHO = new ImageView(prevImHO);
+        final ImageView prevBoxPRE = new ImageView(prevImPRE);
+        
+        //previewBtn.setGraphic(Prev);  
+        
         
         /* Skin buttons */
         textBtn.setGraphic(textBoxST); 
@@ -417,6 +424,7 @@ public class TeachEasyClient extends Application {
         graphicBtn.setGraphic(graphicBoxST); 
         audioBtn.setGraphic(audioBoxST); 
         questionBtn.setGraphic(queBoxST);
+        previewBtn.setGraphic(prevBoxST);
 
         nextPageBtn.setGraphic(arST_R);
         prevPageBtn.setGraphic(arST_L);
@@ -475,6 +483,14 @@ public class TeachEasyClient extends Application {
         mulBoxPR.setFitWidth(x);
         mulBoxPR.setFitHeight(y);
         
+        prevBoxST.setFitWidth(1.5*x);
+        prevBoxST.setFitHeight(y);
+        prevBoxHO.setFitWidth(1.5*x);
+        prevBoxHO.setFitHeight(y);
+        prevBoxPRE.setFitWidth(1.5*x);
+        prevBoxPRE.setFitHeight(y);
+        
+        
         x = 40;
         y = 40;
         
@@ -504,7 +520,7 @@ public class TeachEasyClient extends Application {
         questionBtn.setOnMousePressed(new ButtonEventHandler(questionBtn, queBoxPR));
         nextPageBtn.setOnMousePressed(new ButtonEventHandler(nextPageBtn, arPRE_R));
         prevPageBtn.setOnMousePressed(new ButtonEventHandler(prevPageBtn, arPRE_L));
-        previewBtn.setOnMousePressed(new ButtonEventHandler(previewBtn, textBoxPR));
+        previewBtn.setOnMousePressed(new ButtonEventHandler(previewBtn, prevBoxPRE));
 
         /* Mouse Released */      
         textBtn.setOnMouseReleased(new ButtonEventHandler(textBtn, textBoxHO)); 
@@ -516,6 +532,7 @@ public class TeachEasyClient extends Application {
         questionBtn.setOnMouseReleased(new ButtonEventHandler(questionBtn, queBoxHO));
         nextPageBtn.setOnMouseReleased(new ButtonEventHandler(nextPageBtn, arHO_R));
         prevPageBtn.setOnMouseReleased(new ButtonEventHandler(prevPageBtn, arHO_L));
+        previewBtn.setOnMouseReleased(new ButtonEventHandler(previewBtn, prevBoxHO));
         
         /* Mouse Entered */
         textBtn.setOnMouseEntered(new ButtonEventHandler(textBtn, textBoxHO)); 
@@ -527,7 +544,8 @@ public class TeachEasyClient extends Application {
         questionBtn.setOnMouseEntered(new ButtonEventHandler(questionBtn, queBoxHO));
         nextPageBtn.setOnMouseEntered(new ButtonEventHandler(nextPageBtn, arHO_R));
         prevPageBtn.setOnMouseEntered(new ButtonEventHandler(prevPageBtn, arHO_L));
-               
+        previewBtn.setOnMouseEntered(new ButtonEventHandler(previewBtn, prevBoxHO));
+        
         /* Mouse Exited */
         textBtn.setOnMouseExited(new ButtonEventHandler(textBtn, textBoxST)); 
         imageBtn.setOnMouseExited(new ButtonEventHandler(imageBtn, imBoxST)); 
@@ -538,6 +556,7 @@ public class TeachEasyClient extends Application {
         questionBtn.setOnMouseExited(new ButtonEventHandler(questionBtn, queBoxST)); 
         nextPageBtn.setOnMouseExited(new ButtonEventHandler(nextPageBtn, arST_R));
         prevPageBtn.setOnMouseExited(new ButtonEventHandler(prevPageBtn, arST_L));
+        previewBtn.setOnMouseExited(new ButtonEventHandler(previewBtn, prevBoxST));
         
         /* Top Bar Constraints */
         
@@ -698,6 +717,7 @@ public class TeachEasyClient extends Application {
             graphicBtn.setDisable(false);
             tickBtn.setDisable(false);
             questionBtn.setDisable(false);
+            previewBtn.setDisable(false);
             
             if(!editorRuntimeData.isNextPage()) {
                 nextPageBtn.setDisable(true);
@@ -729,6 +749,7 @@ public class TeachEasyClient extends Application {
             graphicBtn.setDisable(true);
             tickBtn.setDisable(true);
             questionBtn.setDisable(true);
+            previewBtn.setDisable(true);
             
             nextPageBtn.setDisable(true);
             prevPageBtn.setDisable(true);
