@@ -910,7 +910,7 @@ public class TeachEasyClient extends Application {
             this.button = nButton;
             this.image = nImage;
         }
-        
+
         @Override
         public void handle(MouseEvent me) {
             button.setGraphic(image);

@@ -1,6 +1,7 @@
 package teacheasy.main;
 
 import teacheasy.data.Lesson;
+import teacheasy.main.TeachEasyClient.ButtonEventHandler;
 import teacheasy.runtime.RunTimeData;
 import javafx.application.*;
 import javafx.event.ActionEvent;
@@ -10,6 +11,7 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.scene.shape.*;
@@ -21,8 +23,8 @@ public class PreviewWindow {
     Text text;
     
     /* UI Elements */
-    Button nextBtn;
-    Button prevBtn;
+    Button nextPageBtn;
+    Button prevPageBtn;
     
     /* Application state */
     RunTimeData runtimeData;
@@ -99,7 +101,6 @@ public class PreviewWindow {
         
         /* Set Pane Colours */
         hBoxTop.setStyle("-fx-background-color: blue;");
-        //group.setStyle("-fx-blend-mode: hard-light;");
         contentPane.setStyle("-fx-background-color: rgb(74, 104, 177);");
         botAnchor.setStyle("-fx-background-color: Grey;");
         gridBot.setStyle("-fx-background-color: Grey;");
@@ -109,17 +110,87 @@ public class PreviewWindow {
         primaryStage.setScene(scene);
         
         /* Create a buttons */
-        prevBtn = new Button();
-        nextBtn = new Button();
+        prevPageBtn = new Button();
+        nextPageBtn = new Button();
       
+        /* Set buttons as transparent */
+        nextPageBtn.setStyle("-fx-background-color: transparent;");
+        prevPageBtn.setStyle("-fx-background-color: transparent;");
         
-        /* Add button images */
+        /* Set Tooltip */
+        nextPageBtn.setTooltip(new Tooltip("Next Page"));
+        prevPageBtn.setTooltip(new Tooltip("Previous Page"));
+        
+        /* Set button ID */
+        nextPageBtn.setId("nextPageBtn");
+        prevPageBtn.setId("prevPageBtn");
+        
+        
+       /*  Add button images 
         Image image = new Image("file://userfs/lt669/w2k/Desktop/Workspace/Learneasy_v2_3.png");
         ImageView imageNext = new ImageView(image);
         imageNext.setFitWidth(20);
         imageNext.setFitHeight(20);
         //nextBtn.setGraphic(imageNext);
+*/        
+        /* Add Arrow images */
+        Image arImST_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_ST_BOTTOM_RECT_DarkBlue_L-01.png"));
+        Image arImHO_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_HO_BOTTOM_RECT_DarkBlue_L-01.png"));
+        Image arImPRE_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-01.png"));
         
+        Image arImST_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_ST_BOTTOM_RECT_DarkBlue_L-02.png"));
+        Image arImHO_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_HO_BOTTOM_RECT_DarkBlue_L-02.png"));
+        Image arImPRE_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-02.png"));
+        
+        /* Image Views*/
+        final ImageView arST_L = new ImageView(arImST_L);
+        final ImageView arHO_L = new ImageView(arImHO_L);
+        final ImageView arPRE_L = new ImageView(arImPRE_L);
+        
+        final ImageView arST_R = new ImageView(arImST_R);
+        final ImageView arHO_R = new ImageView(arImHO_R);
+        final ImageView arPRE_R = new ImageView(arImPRE_R);
+        
+        /* Skin Buttons */
+        nextPageBtn.setGraphic(arST_R);
+        prevPageBtn.setGraphic(arST_L);
+        
+        
+        /* Arrow image sizes */
+        int x = 40;
+        int y = 40;
+        
+        arST_L.setFitWidth(x);
+        arST_L.setFitHeight(y);
+        arHO_L.setFitWidth(x);
+        arHO_L.setFitHeight(y);
+        arPRE_L.setFitWidth(x);
+        arPRE_L.setFitHeight(y);
+        
+        arST_R.setFitWidth(x);
+        arST_R.setFitHeight(y);
+        arHO_R.setFitWidth(x);
+        arHO_R.setFitHeight(y);
+        arPRE_R.setFitWidth(x);
+        arPRE_R.setFitHeight(y);
+        
+        /* Setup the button event handling */
+        
+        /* Mouse Pressed */
+        nextPageBtn.setOnMousePressed(new ButtonEventHandler(nextPageBtn, arPRE_R));
+        prevPageBtn.setOnMousePressed(new ButtonEventHandler(prevPageBtn, arPRE_L));
+        
+        /* Mouse Released */  
+        nextPageBtn.setOnMouseReleased(new ButtonEventHandler(nextPageBtn, arHO_R));
+        prevPageBtn.setOnMouseReleased(new ButtonEventHandler(prevPageBtn, arHO_L));
+        
+        /* Mouse Entered */
+        nextPageBtn.setOnMouseEntered(new ButtonEventHandler(nextPageBtn, arHO_R));
+        prevPageBtn.setOnMouseEntered(new ButtonEventHandler(prevPageBtn, arHO_L));
+        
+        /* Mouse Exited */
+        nextPageBtn.setOnMouseExited(new ButtonEventHandler(nextPageBtn, arST_R));
+        prevPageBtn.setOnMouseExited(new ButtonEventHandler(prevPageBtn, arST_L));
         
         /* Add central LE icon */
         Image image2 = new Image("file://userfs/lt669/w2k/Desktop/Workspace/Learneasy_v2_3.png");
@@ -128,14 +199,9 @@ public class PreviewWindow {
         LE.setFitHeight(50);
         
         
-        /* Setup the buttons */        
-        prevBtn.setText("Previous");
-        prevBtn.setId("prevBtn");
-        prevBtn.setOnAction(new UIButtonEventHandler());
-
-        nextBtn.setText("Next");
-        nextBtn.setId("nextBtn");
-        nextBtn.setOnAction(new UIButtonEventHandler());
+       /*  Setup the buttons actions         
+        prevPageBtn.setOnAction(new UIButtonEventHandler());
+        nextPageBtn.setOnAction(new UIButtonEventHandler());*/
         
         /* Create Menubar */
         MenuBar menuBar = new MenuBar();
@@ -159,23 +225,22 @@ public class PreviewWindow {
         contentPane.setCenter(group);
         
         /* Add content to panes */
-        hBoxTop.getChildren().addAll(menuBar,imageNext);
-        group.getChildren().addAll(text,r,imageNext);
+        hBoxTop.getChildren().addAll(menuBar/*,imageNext*/);
+        group.getChildren().addAll(text,r/*,imageNext*/);
        // contentPane.getChildren().addAll(group);
         //botAnchor.getChildren().addAll(nextBtn, prevBtn,LE);
-        gridBot.add(prevBtn, 0, 0); 
+        gridBot.add(prevPageBtn, 0, 0); 
         gridBot.add(LE, 2, 0);      
-        gridBot.add(nextBtn, 4, 0);
+        gridBot.add(nextPageBtn, 4, 0);
         gridBot.setAlignment(Pos.CENTER);
         
         
         /* Add other panes to grid layout */
         grid.add(hBoxTop, 0, 0);
         grid.add(contentPane, 0, 1);
-        //grid.add(botAnchor, 0, 2);
         grid.add(gridBot, 0, 2);
-        AnchorPane.setRightAnchor(nextBtn, 8.0);
-        AnchorPane.setLeftAnchor(prevBtn, 8.0);
+        AnchorPane.setRightAnchor(nextPageBtn, 8.0);
+        AnchorPane.setLeftAnchor(prevPageBtn, 8.0);
         
         runtimeData = new RunTimeData(group, canvasBounds, this, lesson);
         
@@ -222,41 +287,51 @@ public class PreviewWindow {
          */
         if(runtimeData.isLessonOpen()) {
             if(!runtimeData.isNextPage()) {
-                nextBtn.setDisable(true);
+                nextPageBtn.setDisable(true);
             } else {
-                nextBtn.setDisable(false);
+                nextPageBtn.setDisable(false);
             }
             
             if(!runtimeData.isPrevPage()) {
-                prevBtn.setDisable(true);
+                prevPageBtn.setDisable(true);
             } else {
-                prevBtn.setDisable(false);
+                prevPageBtn.setDisable(false);
             }
         } else {
-            nextBtn.setDisable(true);
-            prevBtn.setDisable(true);
+            nextPageBtn.setDisable(true);
+            prevPageBtn.setDisable(true);
         }
     }
     
-    public class UIButtonEventHandler implements EventHandler<ActionEvent> {
+    public class ButtonEventHandler implements EventHandler<MouseEvent> {
+        private Button button;
+        private ImageView image;
+        
+        ButtonEventHandler(Button nButton, ImageView nImage) {
+            this.button = nButton;
+            this.image = nImage;
+        }
+    
         @Override
-        public void handle(ActionEvent e) {
-            /* Get the source */
-            Button sourceButton = (Button) e.getSource();
+        public void handle(MouseEvent me) {        	
+            button.setGraphic(image);
             
             /* Check the ID of the source button and call the relevant runtime method */
-            switch(sourceButton.getId()) {
-                case "nextBtn":
-                    nextPageButtonPressed();
-                    break;
-                case "prevBtn":
-                    prevPageButtonPressed();
-                    break;
-                default:
-                    /* Do Nothing */
-                    break;
+            
+            if(me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+	            switch(button.getId()) {
+	                case "nextPageBtn":
+	                    nextPageButtonPressed();
+	                    break;
+	                case "prevPageBtn":
+	                    prevPageButtonPressed();
+	                    break;
+	                default:
+	                     /*Do Nothing */
+	                    break;
+	            }
             }
-
+            
             /* Update the UI to reflect any changes to the application state */
             updateUI();
         }
