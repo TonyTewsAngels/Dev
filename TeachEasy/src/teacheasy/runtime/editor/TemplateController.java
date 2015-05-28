@@ -24,8 +24,6 @@ public class TemplateController {
 		AUDIO
 	}
 
-	
-	
 	public void ApplyTemplate(Page page, LessonDefaultSettings defaults, TemplateType templateType) {
 		
 		switch(templateType) {
@@ -48,38 +46,6 @@ public class TemplateController {
 	            break;
 		}
 	}
-	
-	
-	/**
-	 * public TextObject(float nXStart, float nYStart, float nXEnd, float nYEnd,  
-                      String nFont, int nFontSize, String nColor, String nSourceFile,
-                      float nDuration, float nStartTime)
-                      
-	 * public MultipleChoiceObject(float nXStart, float nYStart, 
-                                Orientation nOrientation,
-                                MultiChoiceType nType,
-                                int nMarks, boolean nRetry)
-     
-     *public AnswerBoxObject(float nXStart, float nYStart, int nCharacterLimit,
-						   int nMarks, boolean nRetry, boolean nNumerical,
-						   float nUpperBound, float nLowerBound, String... nAnswers)
-                                
-     *public VideoObject(float nXStart, float nYStart, float nXEnd, String nSourcefile, 
-     						boolean nAutoPlay, boolean nLoop)         
-                            
-     *public AudioObject(float nXStart, float nYStart,
-	                   float nXEnd,
-	                   String nSourcefile,
-	                   float nStartTime,
-	                   boolean nViewProgress, 
-	                   boolean nAutoPlay, 
-	                   boolean nLoop)                       
-                           
-     *                       
-     *                       
-     *                       
-	 */
-	
 	
 	public void ApplyInformationTemplate(Page page, LessonDefaultSettings defaults) {
 		
@@ -278,9 +244,5 @@ public class TemplateController {
 		page.addObject(info);
 		
 	}
-	
-	
-	
-	
 	
 }
