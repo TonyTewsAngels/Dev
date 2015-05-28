@@ -58,6 +58,10 @@ public class MouseController {
             objectGrab = false;
         }
         
+        if(propertiesPane.getSelectedObject() == null) {
+            return false;
+        }
+        
         if(objectGrab) {            
             if(Math.abs((relX - xOffSet) - (propertiesPane.getSelectedObject().getXStart())) < 0.005 &&
                Math.abs((relY - yOffSet) - (propertiesPane.getSelectedObject().getYStart())) < 0.005) {

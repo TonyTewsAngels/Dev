@@ -272,6 +272,8 @@ public class AnswerBox {
 
                 /* Display the outcome */
                 displayFeedback();
+            } else if(key.getCode().equals(KeyCode.ESCAPE)) {
+                answerField.getParent().requestFocus();
             }
         }
     }
