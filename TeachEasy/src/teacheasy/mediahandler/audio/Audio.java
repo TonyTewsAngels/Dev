@@ -96,6 +96,8 @@ public class Audio {
 	 * 2 = full visibility 
 	 *  */
 	public int buttonVisibilityLevel = 0;
+	/** Public boolean to indicate if controls are collapsed or not */
+	public boolean collapsedControls = false;
 	/** Variables for x and y start and width, for finding the bounding box*/
 	public float xStartPos = 0;
 	public float yStartPos = 0;
@@ -577,14 +579,14 @@ public class Audio {
 		@Override
 		public void handle(ActionEvent e) {
 			if (volumeMuteHBox.getChildren().contains(volumeSlider)) {
-				buttonVisibilityLevel = 1;
+				collapsedControls = true;
 				timeProgressVbox.getChildren().remove(progressSlider);
 				volumeMuteHBox.getChildren().remove(volumeSlider);
 				volumeMuteHBox.getChildren().remove(muteButton);
 				elapsedLabelVBox.getChildren().remove(elapsedLabel);
 				remainingLabelVBox.getChildren().remove(remainingLabel);
 			} else {			
-				buttonVisibilityLevel = 2;
+				collapsedControls = false;
 				elapsedLabelVBox.getChildren().add(elapsedLabel);
 				remainingLabelVBox.getChildren().add(remainingLabel);
 				timeProgressVbox.getChildren().add(progressSlider);

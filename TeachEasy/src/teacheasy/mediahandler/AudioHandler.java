@@ -222,7 +222,11 @@ public class AudioHandler {
     			xEnd = xStart + 30;
     			System.out.println("xEnd with lvl 1: " +xEnd);
     		} else if (audios.get(audioId).buttonVisibilityLevel == 2){
-    			xEnd = xStart + audios.get(audioId).widthValue;
+    			if (audios.get(audioId).collapsedControls == false){
+    				xEnd = xStart + audios.get(audioId).widthValue;
+    			} else if (audios.get(audioId).collapsedControls == true){
+    				xEnd = xStart + 30;
+    			}
     		}
     	}   	
         return xEnd;
@@ -241,8 +245,8 @@ public class AudioHandler {
     			yEnd = yStart;
     		} else if (audios.get(audioId).buttonVisibilityLevel == 1){
     			yEnd = yStart + 30;
-    		} else if (audios.get(audioId).buttonVisibilityLevel == 1){
-    			yEnd = yStart + 100;
+    		} else if (audios.get(audioId).buttonVisibilityLevel == 2){
+    			yEnd = yStart + 80;
     		}
     	}   	
         return yEnd;

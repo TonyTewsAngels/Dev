@@ -51,8 +51,8 @@ public class AudioHandlerDummyGUI extends Application {
 
         //audioHandler.createAudio(50, 50, 10, sourceFile, false, true, false, true);
         audioHandler.createAudio(50, 200, 200, sourceFile, false, true, true, false);
-        //audioHandler.createAudio(50, 200, 500, sourceFile, true, false, true, true);
-        //audioHandler.createAudio(50, 400, 200, sourceFile, false, true, false, true);
+        audioHandler.createAudio(300, 200, 500, sourceFile, false, false, true, true);
+        audioHandler.createAudio(50, 400, 200, sourceFile, false, false, false, true);
         
         
 
@@ -67,7 +67,14 @@ public class AudioHandlerDummyGUI extends Application {
     public class buttonEventHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent e) {
-        	System.out.println("xEnd is:" +audioHandler.getAudioXEnd(0));
+        	System.out.println("xEnd0 is:" +audioHandler.getAudioXEnd(0));
+        	System.out.println("yEnd0 is:" +audioHandler.getAudioYEnd(0));
+        	
+        	System.out.println("xEnd1 is:" +audioHandler.getAudioXEnd(1));
+        	System.out.println("yEnd1 is:" +audioHandler.getAudioYEnd(1));
+        	
+        	System.out.println("xEnd2 is:" +audioHandler.getAudioXEnd(2));
+        	System.out.println("yEnd2 is:" +audioHandler.getAudioYEnd(2));
             }
         }
       
