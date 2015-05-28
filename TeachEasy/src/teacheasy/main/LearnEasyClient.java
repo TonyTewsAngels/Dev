@@ -187,7 +187,7 @@ public class LearnEasyClient extends Application {
         
         
         /* Add central LE icon */
-        Image image2 = new Image("file://userfs/lt669/w2k/Desktop/Workspace/Learneasy_v2_3.png");
+        Image image2 = new Image("/teacheasy/topIcons/Learneasy_v2_3.png");
         ImageView LE = new ImageView(image2);
         LE.setFitWidth(50);
         LE.setFitHeight(50);
@@ -232,8 +232,6 @@ public class LearnEasyClient extends Application {
         /* Add content to panes */
         hBoxTop.getChildren().addAll(menuBar/*,imageNext*/);
         group.getChildren().addAll(text,r/*,imageNext*/);
-       // contentPane.getChildren().addAll(group);
-        //botAnchor.getChildren().addAll(nextBtn, prevBtn,LE);
         gridBot.add(prevPageBtn, 0, 0); 
         gridBot.add(LE, 2, 0);      
         gridBot.add(nextPageBtn, 4, 0);
@@ -302,8 +300,8 @@ public class LearnEasyClient extends Application {
             	nextPageBtn.setText("Finish");
             	nextPageBtn.setId("finishBtn");
             } else {
-            	nextPageBtn.setText("Next");
-            	nextPageBtn.setId("nextBtn");
+            	nextPageBtn.setText("");
+            	nextPageBtn.setId("nextPageBtn");
             }
             
             if(!runtimeData.isPrevPage()) {

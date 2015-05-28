@@ -184,7 +184,7 @@ public class PreviewWindow {
         prevPageBtn.setOnMouseExited(new ButtonEventHandler(prevPageBtn, arST_L));
         
         /* Add central LE icon */
-        Image image2 = new Image("file://userfs/lt669/w2k/Desktop/Workspace/Learneasy_v2_3.png");
+        Image image2 = new Image("/teacheasy/topIcons/Learneasy_v2_3.png");
         ImageView LE = new ImageView(image2);
         LE.setFitWidth(50);
         LE.setFitHeight(50);
