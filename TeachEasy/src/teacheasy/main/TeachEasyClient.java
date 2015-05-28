@@ -366,10 +366,10 @@ public class TeachEasyClient extends Application {
         Prev.setFitHeight(80);
         
         //TE Logo
-        Image Logo = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/TE_4_0.png"));
+        Image Logo = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/TE_V5_1.png"));
         ImageView TE = new ImageView(Logo);
-        TE.setFitWidth(80);
-        TE.setFitHeight(80);
+        TE.setFitWidth(55);
+        TE.setFitHeight(65);
         
         /* Image Views */
         final ImageView textBoxST = new ImageView(textImST);   
