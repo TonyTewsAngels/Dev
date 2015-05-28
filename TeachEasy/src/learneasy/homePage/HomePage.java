@@ -20,6 +20,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.DirectoryChooser;
@@ -147,12 +148,12 @@ public class HomePage {
 
         infoLabel = new Label();
         infoLabel
-                .setText("Having default folder simplifies lesson loading.\nPlease choose a default folder\n\n");
+                .setText("Please select a default folder\n\n");
         infoLabel.setFont(new Font("Calibri", 16));
         
 
         defaultLabel = new Label();
-        defaultLabel.setText("Default: ");
+        defaultLabel.setText("Folder: ");
         defaultLabel.setFont(new Font("Calibri", 14));
 
         fileAddress = new TextField();
@@ -211,9 +212,19 @@ public class HomePage {
         border.setCenter(filePathBox);
         border.setBottom(okBox);
 
+   /*     GridPane grid = new GridPane();
+        grid.setPrefSize(400, 150);
+        
+        grid.add(infoLabel,0,0);
+        grid.add(defaultLabel,0,1);
+        grid.add(filePathBox,1,1);
+        grid.add(browseButton,2,1);
+        grid.add(border,0,0,2,0);*/
+        
+        
         /* Create the dialog box and draw on screen */
         dialogStage = new Stage();
-        dialogStage.setScene(new Scene(border));
+        dialogStage.setScene(new Scene(border,400,100));
         dialogStage.showAndWait();
     }
 

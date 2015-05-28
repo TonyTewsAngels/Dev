@@ -348,34 +348,6 @@ public class LearnEasyClient extends Application {
             updateUI();
         }
     }
-    /*
-    public class UIButtonEventHandler implements EventHandler<ActionEvent> {
-        @Override
-        public void handle(ActionEvent e) {
-             Get the source 
-            Button sourceButton = (Button) e.getSource();
-            
-             TODO Check the ID of the source button and call the relevant runtime method 
-            switch(sourceButton.getId()) {
-                case "nextBtn":
-                    nextPageButtonPressed();
-                    break;
-                case "prevBtn":
-                    prevPageButtonPressed();
-                    break;
-                case "finishBtn":
-                    runtimeData.collatePageMarks();
-                    new CertificateWindow(runtimeData.getLesson(), runtimeData.getProgress().getTotalMarks());
-                    break;
-                default:
-                     Do Nothing 
-                    break;
-            }
-
-             TODO Update the UI to reflect any changes to the application state 
-            updateUI();
-        }
-    }*/
     
     public class UIMenuEventHandler implements EventHandler<ActionEvent> {
         @Override
