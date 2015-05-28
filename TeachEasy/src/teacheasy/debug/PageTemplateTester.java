@@ -14,7 +14,7 @@ public class PageTemplateTester {
 		
 		LessonDefaultSettings defaults = new LessonDefaultSettings(12, "arial", "#ffffffff", "#000000ff", "#000000ff", "#000000ff");
 		
-		controller.ApplyTemplate(page, defaults, TemplateType.MCQUIZ);
+		controller.ApplyTemplate(page, defaults, TemplateType.VIDEO);
 				
 		page.debugPrint();
 	}

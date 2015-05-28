@@ -1,6 +1,7 @@
 package teacheasy.runtime.editor;
 
 import teacheasy.data.AnswerBoxObject;
+import teacheasy.data.AudioObject;
 import teacheasy.data.ImageObject;
 import teacheasy.data.Lesson;
 import teacheasy.data.MultipleChoiceObject;
@@ -9,6 +10,7 @@ import teacheasy.data.RichText;
 import teacheasy.data.TextObject;
 import teacheasy.data.MultipleChoiceObject.MultiChoiceType;
 import teacheasy.data.MultipleChoiceObject.Orientation;
+import teacheasy.data.VideoObject;
 import teacheasy.data.lessondata.LessonDefaultSettings;
 import teacheasy.data.multichoice.Answer;
 
@@ -18,7 +20,8 @@ public class TemplateController {
 		INFORMATION,
 		MCQUIZ,
 		ABQUIZ,
-		VIDEO
+		VIDEO,
+		AUDIO
 	}
 
 	
@@ -37,6 +40,9 @@ public class TemplateController {
 	            break;
 	        case VIDEO:
 	        	ApplyVideoTemplate(page, defaults);
+	            break;
+	        case AUDIO:
+	        	ApplyAudioTemplate(page, defaults);
 	            break;
 	        default:
 	            break;
@@ -57,11 +63,18 @@ public class TemplateController {
      *public AnswerBoxObject(float nXStart, float nYStart, int nCharacterLimit,
 						   int nMarks, boolean nRetry, boolean nNumerical,
 						   float nUpperBound, float nLowerBound, String... nAnswers)
-     *                           
-     *         
-     *                       
-     *                       
-     *                       
+                                
+     *public VideoObject(float nXStart, float nYStart, float nXEnd, String nSourcefile, 
+     						boolean nAutoPlay, boolean nLoop)         
+                            
+     *public AudioObject(float nXStart, float nYStart,
+	                   float nXEnd,
+	                   String nSourcefile,
+	                   float nStartTime,
+	                   boolean nViewProgress, 
+	                   boolean nAutoPlay, 
+	                   boolean nLoop)                       
+                           
      *                       
      *                       
      *                       
@@ -91,7 +104,7 @@ public class TemplateController {
 	public void ApplyMCQuizTemplate(Page page, LessonDefaultSettings defaults) {
 		
 		// Add Title text object to page (Top Centre)
-		TextObject title = new TextObject(0.25f, 0.08f, 0.8f, 0.15f, defaults.getFont(), defaults.getFontSize()+10, defaults.getFontColour(), "null", 0f, 0f);
+		TextObject title = new TextObject(0.2f, 0.08f, 0.8f, 0.15f, defaults.getFont(), defaults.getFontSize()+10, defaults.getFontColour(), "null", 0f, 0f);
 		RichText titleText = new RichText("Insert Title Here", title.getFont(), title.getFontSize(), title.getColor(), "bold", "underline");
 		title.textFragments.add(titleText);
 		page.addObject(title);
@@ -145,7 +158,7 @@ public class TemplateController {
 	public void ApplyABQuizTemplate(Page page, LessonDefaultSettings defaults) {
 		
 		// Add Title text object to page (Top Centre)
-		TextObject title = new TextObject(0.25f, 0.08f, 0.8f, 0.15f, defaults.getFont(), defaults.getFontSize()+10, defaults.getFontColour(), "null", 0f, 0f);
+		TextObject title = new TextObject(0.2f, 0.08f, 0.8f, 0.15f, defaults.getFont(), defaults.getFontSize()+10, defaults.getFontColour(), "null", 0f, 0f);
 		RichText titleText = new RichText("Insert Title Here", title.getFont(), title.getFontSize(), title.getColor(), "bold", "underline");
 		title.textFragments.add(titleText);
 		page.addObject(title);
@@ -224,6 +237,46 @@ public class TemplateController {
 	
 	public void ApplyVideoTemplate(Page page, LessonDefaultSettings defaults) {
 	
+		// Add Title text object to page (Top Centre)
+		TextObject title = new TextObject(0.2f, 0.08f, 0.8f, 0.15f, defaults.getFont(), defaults.getFontSize()+10, defaults.getFontColour(), "null", 0f, 0f);
+		RichText titleText = new RichText("Insert Title Here", title.getFont(), title.getFontSize(), title.getColor(), "bold", "underline");
+		title.textFragments.add(titleText);
+		page.addObject(title);
+		
+		// Add Video (Bottom Left)
+		VideoObject video = new VideoObject(0.55f, 0.25f, 0.9f, "null", false, false);
+		page.addObject(video);
+		
+		// Add Information text object to page (Bottom Right)
+		TextObject info = new TextObject(0.55f, 0.25f, 0.9f, 0.9f, defaults.getFont(), defaults.getFontSize(), defaults.getFontColour(), "null", 0f, 0f);
+		RichText infoText = new RichText("Insert Information Here", info.getFont(), info.getFontSize(), info.getColor());
+		info.textFragments.add(infoText);
+		page.addObject(info);
+				
+	}
+	
+	public void ApplyAudioTemplate(Page page, LessonDefaultSettings defaults) {
+		
+		// Add Title text object to page (Top Centre)
+		TextObject title = new TextObject(0.2f, 0.08f, 0.8f, 0.15f, defaults.getFont(), defaults.getFontSize()+10, defaults.getFontColour(), "null", 0f, 0f);
+		RichText titleText = new RichText("Insert Title Here", title.getFont(), title.getFontSize(), title.getColor(), "bold", "underline");
+		title.textFragments.add(titleText);
+		page.addObject(title);
+		
+		// Add Audio 1 (Bottom Left)
+		AudioObject audio1 = new AudioObject(0.2f, 0.3f, 0.3f, "null", 0, true, false, false);
+		page.addObject(audio1);
+		
+		// Add Audio 2 (Bottom Left)
+		AudioObject audio2 = new AudioObject(0.2f, 0.55f, 0.3f, "null", 0, true, false, false);
+		page.addObject(audio2);
+		
+		// Add Information text object to page (Bottom Right)
+		TextObject info = new TextObject(0.55f, 0.25f, 0.9f, 0.9f, defaults.getFont(), defaults.getFontSize(), defaults.getFontColour(), "null", 0f, 0f);
+		RichText infoText = new RichText("Insert Information Here", info.getFont(), info.getFontSize(), info.getColor());
+		info.textFragments.add(infoText);
+		page.addObject(info);
+		
 	}
 	
 	
