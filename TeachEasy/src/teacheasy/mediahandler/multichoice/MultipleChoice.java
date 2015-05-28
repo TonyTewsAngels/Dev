@@ -54,6 +54,7 @@ public class MultipleChoice{
 	private int marks;
 	private int awardedMarks;
 	private boolean markCollated;
+	private int numberOfAnswers;
 	
 	/* Create Drop Down List  */
 	public ComboBox dropDownList = new ComboBox();
@@ -65,6 +66,8 @@ public class MultipleChoice{
 	    /* Set the group reference */
 		this.group = nGroup;
 		
+		/* Set the variable to say how many possible answers there are */
+		numberOfAnswers = answers.size();
 		
 		/* Instantiate the array lists */
 		cB = new ArrayList<MChoiceCheckBox>();
@@ -195,6 +198,24 @@ public class MultipleChoice{
     			getMarkButton().setOnAction(new MultipleChoiceCheckHandler());
     			break;
 		}
+	}
+	
+	/**
+	 * Public method to return the type of the multiple choice question
+	 * 
+	 * @return type of multiple choice
+	 */
+	public MultiChoiceType getMultiChoiceType() {
+		return type;
+	}
+	
+	/**
+	 * Public method to return the number of possible answers
+	 * 
+	 * @return number of answers
+	 */
+	public int getNumberMultiChoice(){
+		return numberOfAnswers;
 	}
 
 	/**

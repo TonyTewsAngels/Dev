@@ -59,7 +59,24 @@ public class MultipleChoiceHandler {
                 type, orientation, retry, marks));
     }
 
-
+    /** Returns the type of multiple choice question */
+    public MultiChoiceType getMultiChoiceType(int questionId){
+    	if(questionId < multipleChoice.size() && questionId >= 0) {
+    		return multipleChoice.get(questionId).getMultiChoiceType();
+    	} else {
+    		return null;
+    	}
+    }
+    
+    /** Returns the number of multiple choice questions */
+    public int getNumberMultiChoice(int questionId){
+    	if(questionId < multipleChoice.size() && questionId >= 0) {
+    		return multipleChoice.get(questionId).getNumberMultiChoice();
+    	} else {
+    		return 0;
+    	}
+    }
+    
     /** Grays out all of the multiple choices currently on page */
     public void DisableAllMultipleChoices() {
         for (int i = 0; i < multipleChoice.size(); i++) {
