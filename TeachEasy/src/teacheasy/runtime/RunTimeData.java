@@ -53,8 +53,8 @@ import teacheasy.xml.util.XMLNotification.Level;
  * data. The methods in this class are called when events occur in the top level
  * class which incorporates the GUI.
  * 
- * @author amj523
- * @version 1.0 20 Feb 2015
+ * @author Alistair Jewers & Daniel Berhe
+ * @version 2.0 28 May 2015
  */
 public class RunTimeData {
     /* Parent References */
@@ -86,19 +86,20 @@ public class RunTimeData {
     /*Initialise HomePage class*/
     HomePage homePage;
     
+    private boolean previewMode;
    
     /** Constructor method */
     public RunTimeData(Group nGroup, Rectangle2D nBounds, LearnEasyClient nParent) {
         this.previewParent = null;
         
-        setup(nGroup, nBounds, nParent);
+        setup(nGroup, nBounds, nParent, false);
     }
     
     /** Alternate constructor for preview mode */
     public RunTimeData(Group nGroup, Rectangle2D nBounds, PreviewWindow preview, Lesson nLesson) {
         this.previewParent = preview;
         
-        setup(nGroup, nBounds, null);
+        setup(nGroup, nBounds, null, true);
         
         /* Open the lesson */
         lesson = nLesson;
@@ -112,11 +113,14 @@ public class RunTimeData {
         redraw(group, bounds);
     }
     
-    public void setup(Group nGroup, Rectangle2D nBounds, LearnEasyClient nParent) {
+    public void setup(Group nGroup, Rectangle2D nBounds, LearnEasyClient nParent, boolean nPreviewMode) {
         /* Set the class level variables */
         this.group = nGroup;
         this.bounds = nBounds;
         this.parent = nParent;
+        
+        /* Preview mode */
+        this.previewMode = nPreviewMode;
 
         /* Instantiate class level variables */
         this.pageCount = 0;
@@ -135,7 +139,9 @@ public class RunTimeData {
         renderer = new Renderer(group, bounds);
         
         homePage = new HomePage();
-        homePage.setPreference();
+        if(!previewMode) {
+            homePage.setPreference();
+        }
         
         System.out.println(group);
         
@@ -517,6 +523,9 @@ public class RunTimeData {
     /** This method checks the storage of recently opened lessons
      * and lists them on the screen in the form of hyperlinks */
     private void displayRecentlyOpenedLessons(){
+        if(previewMode) {
+            return;
+        }
         
         VBox vbox = new VBox();
         vbox.setSpacing(5);
