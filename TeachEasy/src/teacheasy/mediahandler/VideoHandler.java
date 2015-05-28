@@ -239,4 +239,9 @@ public class VideoHandler {
     public int getVideoCount() {
         return videos.size();
     }
+    
+    public void debugPrint() {
+        System.out.println("### Video Handler ###");
+        System.out.println("Handling: " + videos.size());
+    }
 }

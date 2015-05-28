@@ -97,6 +97,8 @@ public class Renderer {
                     break;
             }
         }
+        
+        debugPrint();
     }
     
     /** Render the screen if no lesson is loaded */
@@ -118,6 +120,10 @@ public class Renderer {
     public void clearPage() {
         videoHandler.clearVideos();
         audioHandler.clearAudios();
+        imageHandler.clearImages();
+        graphicsHandler.clearGraphics();
+        textHandler.clearTexts();
+        answerBoxHandler.clearAnswerBoxes();
         group.getChildren().clear();
     }
     
@@ -277,5 +283,16 @@ public class Renderer {
                                                    mChoice.getOrientation(),
                                                    mChoice.isRetry(), 
                                                    mChoice.getMarks());
+    }
+    
+    public void debugPrint() {
+        System.out.println("");
+        textHandler.debugPrint();
+        imageHandler.debugPrint();
+        videoHandler.debugPrint();
+        audioHandler.debugPrint();
+        graphicsHandler.debugPrint();
+        answerBoxHandler.debugPrint();
+        System.out.println("");
     }
 }

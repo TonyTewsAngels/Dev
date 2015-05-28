@@ -35,7 +35,6 @@ public class MouseController {
                 returnObject = object;
                 
                 if(returnObject.equals(propertiesPane.getSelectedObject())) {
-                    System.out.println("Grab");
                     objectGrab = true;
                     xOffSet = relX - propertiesPane.getSelectedObject().getXStart();
                     yOffSet = relY - propertiesPane.getSelectedObject().getYStart();
@@ -59,9 +58,11 @@ public class MouseController {
             objectGrab = false;
         }
         
-        if(objectGrab) {
-            System.out.println("Drop");
-            
+        if(propertiesPane.getSelectedObject() == null) {
+            return false;
+        }
+        
+        if(objectGrab) {            
             if(Math.abs((relX - xOffSet) - (propertiesPane.getSelectedObject().getXStart())) < 0.005 &&
                Math.abs((relY - yOffSet) - (propertiesPane.getSelectedObject().getYStart())) < 0.005) {
                 return false;

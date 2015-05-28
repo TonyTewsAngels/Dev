@@ -143,4 +143,9 @@ public class ImageHandler {
            return false;
         }
     }
+    
+    public void debugPrint() {
+        System.out.println("### Image Handler ###");
+        System.out.println("Handling: " + images.size());
+    }
 }

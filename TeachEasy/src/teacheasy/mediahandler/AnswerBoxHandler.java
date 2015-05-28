@@ -68,5 +68,13 @@ public class AnswerBoxHandler {
         }
         return totalPageMarks;
     }
+    
+    public void clearAnswerBoxes() {
+        answerBox.clear();
+    }
 
+    public void debugPrint() {
+        System.out.println("### Answer Box Handler ###");
+        System.out.println("Handling: " + answerBox.size());
+    }
 }

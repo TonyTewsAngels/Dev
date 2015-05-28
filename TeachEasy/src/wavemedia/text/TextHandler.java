@@ -100,4 +100,8 @@ public class TextHandler {
 	public void clearTexts() {
 		texts.clear();
 	}
+	public void debugPrint() {
+        System.out.println("### Text Handler ###");
+        System.out.println("Handling: " + texts.size());
+    }
 }

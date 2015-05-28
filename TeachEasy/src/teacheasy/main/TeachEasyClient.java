@@ -283,6 +283,7 @@ public class TeachEasyClient extends Application {
         graphicBtn.setTooltip(new Tooltip("Insert graphics"));
         audioBtn.setTooltip(new Tooltip("Insert audio clip"));
         questionBtn.setTooltip(new Tooltip("Insert question box"));
+        previewBtn.setTooltip(new Tooltip("Preview"));
         
         nextPageBtn.setTooltip(new Tooltip("Next Page"));
         prevPageBtn.setTooltip(new Tooltip("Previous Page"));
