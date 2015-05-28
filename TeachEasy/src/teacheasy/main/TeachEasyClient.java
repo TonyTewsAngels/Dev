@@ -839,6 +839,18 @@ public class TeachEasyClient extends Application {
         }
     }
     
+    /** Mouse moved */
+    public void mouseMoved(double x, double y) {
+        float relX = (float)(x - contentPanel.getLayoutX())/(float)(r.getWidth());
+        float relY = (float)(y - contentPanel.getLayoutY())/(float)(r.getHeight());
+        
+        if(relX >= 0.0f && relX <= 1.0f && relY >= 0.0f && relY <= 1.0f) {
+            editorRuntimeData.mouseMoved(relX, relY, true);
+        } else {
+            editorRuntimeData.mouseReleased(relX, relY, false);
+        }
+    }
+    
     /**
      * Menu Event Handler Class
      */
@@ -980,6 +992,8 @@ public class TeachEasyClient extends Application {
                 mousePressed(me.getSceneX(), me.getSceneY());
             } else if(me.getEventType() == MouseEvent.MOUSE_RELEASED) {
                 mouseReleased(me.getSceneX(), me.getSceneY());
+            } else if(me.getEventType() == MouseEvent.MOUSE_MOVED) {
+                mouseMoved(me.getSceneX(), me.getSceneY());
             }
         }
     }

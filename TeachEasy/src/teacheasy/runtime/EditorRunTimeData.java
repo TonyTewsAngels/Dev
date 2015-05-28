@@ -482,6 +482,14 @@ public class EditorRunTimeData {
         renderer.renderSelection(propertiesPane.getSelectedObject());
     }
     
+    public void mouseMoved(float relX, float relY, boolean onGroup) {
+        if(!isLessonOpen() || !onGroup) {
+            return;
+        }
+        
+        renderer.renderHover(mouseController.mouseMoved(lesson.pages.get(currentPage), relX, relY));
+    }
+    
     /** Redraw the content */
     public void redraw(Group group, Rectangle2D bounds) {        
         redraw();

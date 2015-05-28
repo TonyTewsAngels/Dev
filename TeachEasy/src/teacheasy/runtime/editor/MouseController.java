@@ -135,4 +135,20 @@ public class MouseController {
         
         return false;
     }
+    
+    public PageObject mouseMoved(Page page, float relX, float relY) {
+        PageObject returnObject = null;
+        
+        for(int i = page.pageObjects.size()-1; i >= 0; i--) {
+            PageObject object = page.pageObjects.get(i);
+            
+            if(relX >= object.getXStart() && relX <= object.getXStart() + 0.1 &&
+               relY >= object.getYStart() && relY <= object.getYStart() + 0.1) {
+                returnObject = object;                
+                break;
+            }
+        }
+        
+        return returnObject;
+    }
 }

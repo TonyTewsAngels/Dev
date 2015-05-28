@@ -38,6 +38,7 @@ public class Renderer {
     private AudioHandler audioHandler;
     
     private Rectangle selectionBox;
+    private Rectangle hoverBox;
    
     /** Constructor */
     public Renderer(Group nGroup, Rectangle2D nBounds) {
@@ -60,6 +61,10 @@ public class Renderer {
         selectionBox.setFill(Color.TRANSPARENT);
         selectionBox.setStroke(Color.RED);
         selectionBox.setStrokeWidth(1);
+        
+        hoverBox = new Rectangle(10.0, 10.0, 10.0, 10.0);
+        hoverBox.setStroke(Color.TRANSPARENT);
+        hoverBox.setFill(new Color(0.1f, 0.1f, 0.1f, 0.1f));
     }
     
     /** Render an individual page */
@@ -292,17 +297,55 @@ public class Renderer {
     }
     
     public void renderHover(PageObject hoverObject) {
+        if(hoverObject == null) {
+            hoverBox.setVisible(false);
+            return;
+        }
         
+        double x = 0.0, y = 0.0, width = 0.0, height = 0.0;
+        
+        switch(hoverObject.getType()) {
+            case IMAGE:
+                ImageObject image = (ImageObject)hoverObject;
+                x = image.getXStart() * bounds.getMaxX();
+                y = image.getYStart() * bounds.getMaxY();
+                width = (image.getXEnd() * bounds.getMaxX()) - x;
+                height = (image.getYEnd() * bounds.getMaxY()) - y;
+                break;
+            case ANSWER_BOX:
+                break;
+            case AUDIO:
+                break;
+            case GRAPHIC:
+                GraphicObject graphic = (GraphicObject)hoverObject;
+                x = graphic.getXStart() * bounds.getMaxX();
+                y = graphic.getYStart() * bounds.getMaxY();
+                width = (graphic.getXEnd() * bounds.getMaxX()) - x;
+                height = (graphic.getYEnd() * bounds.getMaxY()) - y;
+                break;
+            case MULTIPLE_CHOICE:
+                break;
+            case TEXT:
+                TextObject text = (TextObject)hoverObject;
+                x = text.getXStart() * bounds.getMaxX();
+                y = text.getYStart() * bounds.getMaxY();
+                width = (text.getXEnd() * bounds.getMaxX()) - x;
+                height = (text.getYEnd() * bounds.getMaxY()) - y;
+                break;
+            case VIDEO:
+                break;
+            default:
+                break;
+        }
+        
+        renderHoverBox(x, y, width, height);
     }
     
     public void renderSelection(PageObject selectedObject) {
         if(selectedObject == null) {
             selectionBox.setVisible(false);
-            System.out.println("Selection Box Null");
             return;
         }
-        
-        System.out.println("Rendering Selection Box");
         
         double x = 0.0, y = 0.0, width = 0.0, height = 0.0;
         
@@ -352,6 +395,18 @@ public class Renderer {
         
         if(!group.getChildren().contains(selectionBox)) {
             group.getChildren().add(selectionBox);
+        }
+    }
+    
+    public void renderHoverBox(double x, double y, double width, double height) {
+        hoverBox.setVisible(true);
+        hoverBox.relocate(x, y);
+        hoverBox.setWidth(width);
+        hoverBox.setHeight(height);
+        hoverBox.toFront();
+        
+        if(!group.getChildren().contains(hoverBox)) {
+            group.getChildren().add(hoverBox);
         }
     }
     
