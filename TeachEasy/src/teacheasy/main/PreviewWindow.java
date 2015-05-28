@@ -125,14 +125,6 @@ public class PreviewWindow {
         nextPageBtn.setId("nextPageBtn");
         prevPageBtn.setId("prevPageBtn");
         
-        
-       /*  Add button images 
-        Image image = new Image("file://userfs/lt669/w2k/Desktop/Workspace/Learneasy_v2_3.png");
-        ImageView imageNext = new ImageView(image);
-        imageNext.setFitWidth(20);
-        imageNext.setFitHeight(20);
-        //nextBtn.setGraphic(imageNext);
-*/        
         /* Add Arrow images */
         Image arImST_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_ST_BOTTOM_RECT_DarkBlue_L-01.png"));
         Image arImHO_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_HO_BOTTOM_RECT_DarkBlue_L-01.png"));
@@ -154,7 +146,6 @@ public class PreviewWindow {
         /* Skin Buttons */
         nextPageBtn.setGraphic(arST_R);
         prevPageBtn.setGraphic(arST_L);
-        
         
         /* Arrow image sizes */
         int x = 40;
@@ -198,11 +189,6 @@ public class PreviewWindow {
         LE.setFitWidth(50);
         LE.setFitHeight(50);
         
-        
-       /*  Setup the buttons actions         
-        prevPageBtn.setOnAction(new UIButtonEventHandler());
-        nextPageBtn.setOnAction(new UIButtonEventHandler());*/
-        
         /* Create Menubar */
         MenuBar menuBar = new MenuBar();
         
@@ -227,8 +213,6 @@ public class PreviewWindow {
         /* Add content to panes */
         hBoxTop.getChildren().addAll(menuBar/*,imageNext*/);
         group.getChildren().addAll(text,r/*,imageNext*/);
-       // contentPane.getChildren().addAll(group);
-        //botAnchor.getChildren().addAll(nextBtn, prevBtn,LE);
         gridBot.add(prevPageBtn, 0, 0); 
         gridBot.add(LE, 2, 0);      
         gridBot.add(nextPageBtn, 4, 0);
