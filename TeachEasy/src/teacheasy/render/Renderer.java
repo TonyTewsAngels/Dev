@@ -12,6 +12,7 @@ import wavemedia.graphic.*;
 import wavemedia.text.*;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -60,6 +61,7 @@ public class Renderer {
         
         /* Add the background */
         Rectangle bg = new Rectangle(bounds.getMaxX(), bounds.getMaxY(), RenderUtil.colorFromString(page.getPageColour()));
+        bg.setEffect(new DropShadow());
         group.getChildren().add(bg);
         
         /* Loop through all the objects on the page */
@@ -108,12 +110,8 @@ public class Renderer {
         
         /* Add the background */
         Rectangle bg = new Rectangle(bounds.getMaxX(), bounds.getMaxY(), Color.WHITE);
+        bg.setEffect(new DropShadow());
         group.getChildren().add(bg);
-        
-        /* Add the help message */
-        Text text = new Text("Open a lesson to begin!");
-        text.relocate(10, 10);
-        group.getChildren().add(text);
     }
     
     /** Clears the page, releasing memory if necessary */
