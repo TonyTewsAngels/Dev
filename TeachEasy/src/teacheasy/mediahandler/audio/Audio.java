@@ -68,7 +68,7 @@ public class Audio {
     private ImageView controlsImage;
 	
 	/* VBoxes and HBoxes to organise the layout */
-	private VBox mediaControlsVBox; 
+    private VBox mediaControlsVBox;
 	private VBox timeProgressVbox;
 	private VBox elapsedLabelVBox;
 	private VBox remainingLabelVBox;
@@ -89,7 +89,21 @@ public class Audio {
 	private boolean mediaExists;
 	/** Integer variable used to define the width of buttons used for the audio player. */
 	private int buttonWidth = 30;
-
+	
+	/** Variable to be set to denote button visibility level. 
+	 * 0 = no visibility
+	 * 1 = play/pause button only
+	 * 2 = full visibility 
+	 *  */
+	public int buttonVisibilityLevel = 0;
+	/** Public boolean to indicate if controls are collapsed or not */
+	public boolean collapsedControls = false;
+	/** Variables for x and y start and width, for finding the bounding box*/
+	public float xStartPos = 0;
+	public float yStartPos = 0;
+	public float widthValue = 0;
+	
+	
 	/**
      * Constructs the audio track.
      * 
@@ -125,6 +139,11 @@ public class Audio {
 		if (width < 130){
 			width = 130;
 		}
+		
+		/* Assign the values to public variables to be used to get bounding boxes */
+		xStartPos = x;
+		yStartPos = y;
+		widthValue = width;
 		
         /* Load icon images */
         playImage = new ImageView(new Image(getClass().getResourceAsStream("Play_ST_CONTENT_RECT_Transparent_L-01.png")));
@@ -356,7 +375,8 @@ public class Audio {
 		group.getChildren().addAll(mediaControlsVBox);
 		
 		/* Add relevant parts to the group depending on boolean switches in call */		
-		if (visibleControls == true && playButtonOnly == false){	//Add all visible controls				
+		if (visibleControls == true && playButtonOnly == false){	//Add all visible controls		
+			buttonVisibilityLevel = 2; //set visibility to level 2
 			elapsedLabelVBox.getChildren().addAll(elapsedLabel);
 			remainingLabelVBox.getChildren().addAll(durationLabel);	
 			timeLabelsHBox.getChildren().addAll(elapsedLabelVBox, remainingLabelVBox);
@@ -365,9 +385,11 @@ public class Audio {
 			volumeMuteHBox.getChildren().addAll(controlsButton, volumeSlider, muteButton);
 			group.getChildren().addAll(audioView);
 		} else if (visibleControls == true && playButtonOnly == true) {	//Add just the play/pause button
+			buttonVisibilityLevel = 1; //set visibility to level 1
 			playSeekHbox.getChildren().addAll(playPauseButton);
 			group.getChildren().addAll(audioView);
 		} else {
+			buttonVisibilityLevel = 0; //set visibility to level 0
 			group.getChildren().addAll(audioView); //Add no visible controls
 		}
 
@@ -557,12 +579,14 @@ public class Audio {
 		@Override
 		public void handle(ActionEvent e) {
 			if (volumeMuteHBox.getChildren().contains(volumeSlider)) {
+				collapsedControls = true;
 				timeProgressVbox.getChildren().remove(progressSlider);
 				volumeMuteHBox.getChildren().remove(volumeSlider);
 				volumeMuteHBox.getChildren().remove(muteButton);
 				elapsedLabelVBox.getChildren().remove(elapsedLabel);
 				remainingLabelVBox.getChildren().remove(durationLabel);
 			} else {			
+				collapsedControls = false;
 				elapsedLabelVBox.getChildren().add(elapsedLabel);
 				remainingLabelVBox.getChildren().add(durationLabel);
 				timeProgressVbox.getChildren().add(progressSlider);
@@ -619,6 +643,5 @@ public class Audio {
 		Double currentValuePerCent = (percentSeek / 100);
 		player.seek(Duration.millis(durationMillis * currentValuePerCent));
 	}
-
 
 }
