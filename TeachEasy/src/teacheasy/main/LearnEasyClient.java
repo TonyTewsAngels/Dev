@@ -187,15 +187,10 @@ public class LearnEasyClient extends Application {
         
         
         /* Add central LE icon */
-        Image image2 = new Image("/teacheasy/topIcons/Learneasy_v2_3.png");
+        Image image2 = new Image("/teacheasy/topIcons/LE_V5_1.png");
         ImageView LE = new ImageView(image2);
         LE.setFitWidth(50);
-        LE.setFitHeight(50);
-        
-        
-/*      
-        prevBtn.setOnAction(new UIButtonEventHandler());
-        nextBtn.setOnAction(new UIButtonEventHandler());*/
+        LE.setFitHeight(60);
         
         /* Create Menubar */
         MenuBar menuBar = new MenuBar();
