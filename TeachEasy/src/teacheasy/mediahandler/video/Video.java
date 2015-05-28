@@ -295,6 +295,36 @@ public class Video {
         group.getChildren().add(videoFrame);
     }
     
+    /**
+     * Public method to return the width of the video
+     */
+    public double getVideoWidth() {
+    	return video.getFitWidth();
+    }
+    
+    /**
+     * Public method to return the height of the video
+     */
+    public double getVideoHeight() {
+    	return video.getFitHeight();
+    }
+    
+    /**
+     * Public method to return the x co-ordinate of the bottom right corner
+     */
+    public double getVideoXEnd() {
+    	double xStart = videoFrame.getLayoutX();
+    	return xStart + videoFrame.getWidth();
+    }
+    
+    /**
+     * Public method to return the y co-ordinate of the bottom right corner
+     */
+    public double getVideoYEnd() {
+    	double yStart = videoFrame.getLayoutY();
+    	return yStart + videoFrame.getHeight();
+    }
+    
     /** 
      * Programmatically plays this video 
      */
