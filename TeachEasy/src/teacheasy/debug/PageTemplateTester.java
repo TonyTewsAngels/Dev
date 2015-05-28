@@ -8,15 +8,15 @@ import teacheasy.runtime.editor.TemplateController.TemplateType;
 public class PageTemplateTester {
 
 	public static void main(String args[]) {
-		Page x = new Page(1, "WHITE");
+		Page page = new Page(1, "WHITE");
 		
-		TemplateController y = new TemplateController();
+		TemplateController controller = new TemplateController();
 		
 		LessonDefaultSettings defaults = new LessonDefaultSettings(12, "arial", "#ffffffff", "#000000ff", "#000000ff", "#000000ff");
 		
-		y.ApplyTemplate(x, defaults, TemplateType.INFORMATION);
+		controller.ApplyTemplate(page, defaults, TemplateType.VIDEO);
 				
-		x.debugPrint();
+		page.debugPrint();
 	}
 	
 }
