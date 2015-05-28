@@ -73,6 +73,58 @@ public class VideoHandler {
         videos.add(new Video(group, x, y, width, sourcefile, autoPlay, loop, fullScreenCloseHandler));
     }
     
+    /**
+     * Returns the width of the video
+     * 
+     * @param videoId The ID of the video.
+     */
+    public double getVideoWidth(int videoId){
+    	if(videoId < videos.size() && videoId >= 0) {
+           return videos.get(videoId).getVideoWidth();
+        } else {
+        	return 0;
+        }
+    }
+    
+    /**
+     * Returns the height of the video
+     * 
+     * @param videoId The ID of the video.
+     */
+    public double getVideoHeight(int videoId){
+    	if(videoId < videos.size() && videoId >= 0) {
+          return  videos.get(videoId).getVideoHeight();
+        } else {
+        	return 0;
+        }
+    }
+    
+    /**
+     * Returns the x co-ordinate of the bottom right of the video
+     * 
+     * @param videoId The ID of the video.
+     */
+    public double getVideoXEnd(int videoId){
+    	if(videoId < videos.size() && videoId >= 0) {
+           return videos.get(videoId).getVideoXEnd();
+        } else {
+        	return 0;
+        }
+    }
+    
+    /**
+     * Returns the y co-ordinate of the bottom right of the video
+     * 
+     * @param videoId The ID of the video.
+     */
+    public double getVideoYEnd(int videoId){
+    	if(videoId < videos.size() && videoId >= 0) {
+           return videos.get(videoId).getVideoYEnd();
+        } else {
+        	return 0;
+        }
+    }
+    
     /** 
      * Causes a video handled by the handler to play.
      * 
