@@ -460,6 +460,9 @@ public class EditorRunTimeData {
         }
         
         mouseController.mousePressed(lesson.pages.get(currentPage), propertiesPane, relX, relY, onGroup);
+        
+        /* Render the selection box */
+        renderer.renderSelection(propertiesPane.getSelectedObject());
     }
     
     /** Mouse released in the page area */
@@ -474,27 +477,27 @@ public class EditorRunTimeData {
         } else if(onGroup) {
             propertiesPane.lateUpdate();
         }
+        
+        /* Render the selection box */
+        renderer.renderSelection(propertiesPane.getSelectedObject());
     }
     
     /** Redraw the content */
     public void redraw(Group group, Rectangle2D bounds) {        
+        redraw();
+    }
+    
+    /** Redraw the content */
+    public void redraw() {        
         if(isLessonOpen()) {
             /* Update the total marks */
             lesson.lessonInfo.setTotalMarks(lesson.getTotalMarks());
             
             /* Render the current page */
             renderer.renderPage(lesson.pages.get(currentPage));
-        } else {
-            /* Render the no lesson loaded screen */
-            renderer.renderUnLoaded();
-        }
-    }
-    
-    /** Redraw the content */
-    public void redraw() {        
-        if(isLessonOpen()) {
-            /* Render the current page */
-            renderer.renderPage(lesson.pages.get(currentPage));
+            
+            /* Render the selection box */
+            renderer.renderSelection(propertiesPane.getSelectedObject());
         } else {
             /* Render the no lesson loaded screen */
             renderer.renderUnLoaded();

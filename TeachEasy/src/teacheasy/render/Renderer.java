@@ -14,6 +14,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
@@ -35,6 +36,8 @@ public class Renderer {
     public AnswerBoxHandler answerBoxHandler;
     public MultipleChoiceHandler multipleChoiceHandler;
     private AudioHandler audioHandler;
+    
+    private Rectangle selectionBox;
    
     /** Constructor */
     public Renderer(Group nGroup, Rectangle2D nBounds) {
@@ -52,6 +55,11 @@ public class Renderer {
         answerBoxHandler = new AnswerBoxHandler(group);
         multipleChoiceHandler = new MultipleChoiceHandler(group);
         audioHandler = new AudioHandler(group);
+        
+        selectionBox = new Rectangle(10.0, 10.0, 10.0, 10.0);
+        selectionBox.setFill(Color.TRANSPARENT);
+        selectionBox.setStroke(Color.RED);
+        selectionBox.setStrokeWidth(1);
     }
     
     /** Render an individual page */
@@ -281,6 +289,70 @@ public class Renderer {
                                                    mChoice.getOrientation(),
                                                    mChoice.isRetry(), 
                                                    mChoice.getMarks());
+    }
+    
+    public void renderHover(PageObject hoverObject) {
+        
+    }
+    
+    public void renderSelection(PageObject selectedObject) {
+        if(selectedObject == null) {
+            selectionBox.setVisible(false);
+            System.out.println("Selection Box Null");
+            return;
+        }
+        
+        System.out.println("Rendering Selection Box");
+        
+        double x = 0.0, y = 0.0, width = 0.0, height = 0.0;
+        
+        switch(selectedObject.getType()) {
+            case IMAGE:
+                ImageObject image = (ImageObject)selectedObject;
+                x = image.getXStart() * bounds.getMaxX();
+                y = image.getYStart() * bounds.getMaxY();
+                width = (image.getXEnd() * bounds.getMaxX()) - x;
+                height = (image.getYEnd() * bounds.getMaxY()) - y;
+                break;
+            case ANSWER_BOX:
+                break;
+            case AUDIO:
+                break;
+            case GRAPHIC:
+                GraphicObject graphic = (GraphicObject)selectedObject;
+                x = graphic.getXStart() * bounds.getMaxX();
+                y = graphic.getYStart() * bounds.getMaxY();
+                width = (graphic.getXEnd() * bounds.getMaxX()) - x;
+                height = (graphic.getYEnd() * bounds.getMaxY()) - y;
+                break;
+            case MULTIPLE_CHOICE:
+                break;
+            case TEXT:
+                TextObject text = (TextObject)selectedObject;
+                x = text.getXStart() * bounds.getMaxX();
+                y = text.getYStart() * bounds.getMaxY();
+                width = (text.getXEnd() * bounds.getMaxX()) - x;
+                height = (text.getYEnd() * bounds.getMaxY()) - y;
+                break;
+            case VIDEO:
+                break;
+            default:
+                break;
+        }
+        
+        renderSelectionBox(x, y, width, height);
+    }
+    
+    public void renderSelectionBox(double x, double y, double width, double height) {
+        selectionBox.setVisible(true);
+        selectionBox.relocate(x, y);
+        selectionBox.setWidth(width);
+        selectionBox.setHeight(height);
+        selectionBox.toFront();
+        
+        if(!group.getChildren().contains(selectionBox)) {
+            group.getChildren().add(selectionBox);
+        }
     }
     
     public void debugPrint() {
