@@ -459,8 +459,6 @@ public class EditorRunTimeData {
             return;
         }
         
-        System.out.println("Press: " + relX + ", " + relY);
-        
         mouseController.mousePressed(lesson.pages.get(currentPage), propertiesPane, relX, relY, onGroup);
     }
     
@@ -469,8 +467,6 @@ public class EditorRunTimeData {
         if(!isLessonOpen()) {
             return;
         }
-        
-        System.out.println("Release: " + relX + ", " + relY);
         
         if(mouseController.mouseReleased(lesson.pages.get(currentPage), propertiesPane, relX, relY, onGroup)) {
             propertiesPane.update(lesson.pages.get(currentPage), propertiesPane.getSelectedObject());

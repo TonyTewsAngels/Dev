@@ -156,8 +156,9 @@ public class Text {
 		/* Load a css file that hides the scrollbar added by webView */
 		File f = new File("custom.css");
 
-		if (!f.isFile())
+		if (!f.isFile()) {
 			createCustomCss();
+		}
 
 		try {
 			webView.getEngine().setUserStyleSheetLocation(f.toURI().toURL().toString());

@@ -92,4 +92,9 @@ public class GraphicsHandler {
 	public void clearGraphics() {
 		graphics.clear();
 	}
+	
+	public void debugPrint() {
+        System.out.println("### Graphics Handler ###");
+        System.out.println("Handling: " + graphics.size());
+    }
 }

@@ -254,4 +254,8 @@ public class AudioHandler {
         return yEnd;
     }
     
+    public void debugPrint() {
+        System.out.println("### Audio Handler ###");
+        System.out.println("Handling: " + audios.size());
+    }
 }
