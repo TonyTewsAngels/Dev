@@ -128,6 +128,12 @@ public class Renderer {
         float xend = (float)bounds.getMaxX() * text.getXEnd();
         float yend = (float)bounds.getMaxY() * text.getYEnd();
         
+        float textScale = 1.0f;
+        
+        if(RenderUtil.TE_WIDTH - bounds.getMaxX() >= 0.0f) {
+            textScale = 0.75f;
+        }
+        
         TextFragmentList fragmentList = new TextFragmentList();
 
         for(RichText rt : text.textFragments) {
@@ -140,7 +146,7 @@ public class Renderer {
                                                   .strikethrough(rt.isStrikethrough())
                                                   .fontName(rt.getFont())
                                                   .fontColor(rt.getColor())
-                                                  .fontSize(rt.getFontSize())
+                                                  .fontSize(Math.round(rt.getFontSize() * textScale))
                                                   .newline(rt.isNewLine())
                                                   .build());
         }
