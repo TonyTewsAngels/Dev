@@ -484,11 +484,11 @@ public class TeachEasyClient extends Application {
         mulBoxPR.setFitWidth(x);
         mulBoxPR.setFitHeight(y);
         
-        prevBoxST.setFitWidth(1.5*x);
+        prevBoxST.setFitWidth(x);
         prevBoxST.setFitHeight(y);
-        prevBoxHO.setFitWidth(1.5*x);
+        prevBoxHO.setFitWidth(x);
         prevBoxHO.setFitHeight(y);
-        prevBoxPRE.setFitWidth(1.5*x);
+        prevBoxPRE.setFitWidth(x);
         prevBoxPRE.setFitHeight(y);
         
         
