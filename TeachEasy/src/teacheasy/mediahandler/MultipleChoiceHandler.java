@@ -58,8 +58,43 @@ public class MultipleChoiceHandler {
         multipleChoice.add(new MultipleChoice(group, xStart, yStart, answers,
                 type, orientation, retry, marks));
     }
-
-
+    
+    /** Returns the x co ordinate of the start point (top left) */
+    public double getMultiChoiceXStart(int questionId) {
+    	if(questionId < multipleChoice.size() && questionId >= 0) {
+    		return multipleChoice.get(questionId).getMultiChoiceXStart();
+    	} else {
+    		return 0;
+    	}
+    }
+    
+    /** Returns the y co ordinate of the start point (top left) */
+    public double getMultiChoiceYStart(int questionId) {
+    	if(questionId < multipleChoice.size() && questionId >= 0) {
+    		return multipleChoice.get(questionId).getMultiChoiceYStart();
+    	} else {
+    		return 0;
+    	}
+    }
+    
+    /** Returns the x co ordinate of the end point (bottom right) */
+    public double getMultiChoiceXEnd(int questionId) {
+    	if(questionId < multipleChoice.size() && questionId >= 0) {
+    		return multipleChoice.get(questionId).getMultiChoiceXEnd();
+    	} else {
+    		return 0;
+    	}
+    }
+    
+    /** Returns the y co ordinate of the end point (bottom right) */
+    public double getMultiChoiceYEnd(int questionId) {
+    	if(questionId < multipleChoice.size() && questionId >= 0) {
+    		return multipleChoice.get(questionId).getMultiChoiceYEnd();
+    	} else {
+    		return 0;
+    	}
+    }
+    
     /** Grays out all of the multiple choices currently on page */
     public void DisableAllMultipleChoices() {
         for (int i = 0; i < multipleChoice.size(); i++) {

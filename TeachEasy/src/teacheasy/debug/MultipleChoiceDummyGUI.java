@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import teacheasy.data.MultipleChoiceObject.MultiChoiceType;
 import teacheasy.data.MultipleChoiceObject.Orientation;
 import teacheasy.data.multichoice.Answer;
+import teacheasy.debug.ImageHandlerDummyGUI.buttonEventHandler;
 import teacheasy.mediahandler.MultipleChoiceHandler;
 import teacheasy.mediahandler.multichoice.MultipleChoice;
 import javafx.application.Application;
@@ -65,8 +66,22 @@ public class MultipleChoiceDummyGUI extends Application {
         
         multipleChoiceHandler = new MultipleChoiceHandler(group);
         
-        multipleChoiceHandler.createMultipleChoice(5, 5, answers, MultiChoiceType.CHECKBOX, Orientation.VERTICAL, true, 1);
+        multipleChoiceHandler.createMultipleChoice(5, 5, answers, MultiChoiceType.CHECKBOX, Orientation.HORIZONTAL, true, 1);
         multipleChoiceHandler.createMultipleChoice(500, 150, answers, MultiChoiceType.DROPDOWNLIST, Orientation.HORIZONTAL, true, 1);
+        
+        /* Create a button */
+        Button btn = new Button();
+        
+        /* Setup the button */
+        btn.setText("A Button");
+        btn.setId("Button1");
+        btn.relocate(200.0, 50.0);
+        
+        /* Set the button to use the button event handler */
+        btn.setOnAction(new newButtonEventHandler());
+        
+        /* Add the button to the group */
+        group.getChildren().addAll(btn);
         
         /* Show the window */
         primaryStage.show(); 
@@ -93,6 +108,24 @@ public class MultipleChoiceDummyGUI extends Application {
                 System.out.println("GUI");
             } else if(button.getId().equals("OtherButton")) {
                 System.out.println("Other");
+            }
+        }
+    }
+    
+    public class newButtonEventHandler implements EventHandler<ActionEvent> {
+        @Override
+        public void handle(ActionEvent e) {
+            /* Cast the source of the event to a button */
+            Button button = (Button)e.getSource();
+            
+            /* Act based on the ID of the button */
+            if(button.getId().equals("Button1")) {
+            	
+                System.out.println(multipleChoiceHandler.getMultiChoiceXStart(0));
+                System.out.println(multipleChoiceHandler.getMultiChoiceYStart(0));
+                System.out.println(multipleChoiceHandler.getMultiChoiceXEnd(0));
+                System.out.println(multipleChoiceHandler.getMultiChoiceYEnd(0));
+//                System.out.println(multipleChoiceHandler.getMultiChoiceOrientation(0));
             }
         }
     }  

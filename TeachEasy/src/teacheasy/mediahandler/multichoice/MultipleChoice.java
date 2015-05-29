@@ -54,6 +54,7 @@ public class MultipleChoice{
 	private int marks;
 	private int awardedMarks;
 	private boolean markCollated;
+	private int numberOfAnswers;
 	
 	/* Create Drop Down List  */
 	public ComboBox dropDownList = new ComboBox();
@@ -65,6 +66,8 @@ public class MultipleChoice{
 	    /* Set the group reference */
 		this.group = nGroup;
 		
+		/* Set the variable to say how many possible answers there are */
+		numberOfAnswers = answers.size();
 		
 		/* Instantiate the array lists */
 		cB = new ArrayList<MChoiceCheckBox>();
@@ -194,6 +197,68 @@ public class MultipleChoice{
     			/* Set the mark buttons action */
     			getMarkButton().setOnAction(new MultipleChoiceCheckHandler());
     			break;
+		}
+	}
+	
+	/**
+	 * Public method to return the x start position
+	 * 
+	 * @return x co ordinate of top left corner of bounding box
+	 */
+	public double getMultiChoiceXStart() {
+		if (orientation == Orientation.VERTICAL) {
+			return verticalPosition.getLayoutX();
+		} else if (orientation == Orientation.HORIZONTAL) {
+			return horizontalPosition.getLayoutX();
+		} else {
+		return 0;
+		}
+	}
+	
+	/**
+	 * Public method to return the y start position
+	 * 
+	 * @return y co ordinate of top left corner of bounding box
+	 */
+	public double getMultiChoiceYStart() {
+		if (orientation == Orientation.VERTICAL) {
+			return verticalPosition.getLayoutY();
+		} else if (orientation == Orientation.HORIZONTAL) {
+			return horizontalPosition.getLayoutY();
+		} else {
+		return 0;
+		}
+	}
+	
+	/**
+	 * Public method to return the x end position
+	 * 
+	 * @return x co ordinate of bottom right corner of bounding box
+	 */
+	public double getMultiChoiceXEnd() {
+		double xStart = getMultiChoiceXStart();
+		if (orientation == Orientation.VERTICAL) {
+			return xStart + verticalPosition.getWidth();
+		} else if (orientation == Orientation.HORIZONTAL) {
+			return xStart + horizontalPosition.getWidth();
+		} else {
+		return 0;
+		}
+	}
+	
+	/**
+	 * Public method to return the y end position
+	 * 
+	 * @return y co ordinate of bottom right corner of bounding box
+	 */
+	public double getMultiChoiceYEnd() {
+		double yStart = getMultiChoiceYStart();
+		if (orientation == Orientation.VERTICAL) {
+			return yStart + verticalPosition.getHeight();
+		} else if (orientation == Orientation.HORIZONTAL) {
+			return yStart + horizontalPosition.getHeight();
+		} else {
+		return 0;
 		}
 	}
 
