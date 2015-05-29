@@ -131,7 +131,7 @@ public class Audio {
      * 						visibleControls is true, all control buttons are visible
      * 
      */
-	public Audio(Group nGroup, float x, float y, float width, String sourceFile, boolean autoPlay, boolean loop, boolean visibleControls, boolean playButtonOnly){
+	public Audio(Group nGroup, float x, float y, float width, String sourceFile, boolean autoPlay, final boolean loop, boolean visibleControls, boolean playButtonOnly){
 		/* Set the group reference */
 		this.group = nGroup;
 
@@ -365,6 +365,19 @@ public class Audio {
 				remainingLabelVBox.setMinWidth(timeLabelSize);
 				/* Update the labels with the relevant info */
 				updateLabels();	
+			}
+		});
+		
+		player.setOnEndOfMedia(new Runnable() {
+			@Override
+			public void run() {
+				if (!loop) {
+					player.stop();
+					player.seek(Duration.millis(0.0));
+					playPauseButton.setGraphic(playImage);
+					pausedByButton = true;
+				}
+								
 			}
 		});
 
