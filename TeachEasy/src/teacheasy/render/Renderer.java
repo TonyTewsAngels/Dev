@@ -510,6 +510,7 @@ public class Renderer {
             break;
         case MULTIPLE_CHOICE:
             val = bounds.getMaxX() * 0.05;
+            break;
         case TEXT:
             TextObject text = (TextObject)object;
             val = (text.getXEnd() - text.getXStart()) * bounds.getMaxX(); 
