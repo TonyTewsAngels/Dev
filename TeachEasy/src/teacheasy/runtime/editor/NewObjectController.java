@@ -138,7 +138,7 @@ public class NewObjectController {
      * @param page The page to add the text box to.
      */
     public static void addTextObject(Page page) {
-        TextObject text = new TextObject(0.0f, 0.0f, 1.0f, 1.0f, "Arial", 20, "#ff000000", null, 0.0f, 0.0f);
+        TextObject text = new TextObject(0.0f, 0.0f, 0.25f, 0.1f, "Arial", 20, "#ff000000", null, 0.0f, 0.0f);
         
         text.textFragments.add(new RichText("Enter Text Here", text.getFont(), text.getFontSize(), text.getColor()));
         
