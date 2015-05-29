@@ -95,6 +95,22 @@ public class MultipleChoiceHandler {
     	}
     }
     
+    public double getMultiChoiceWidth(int questionId) {
+        if(questionId < multipleChoice.size() && questionId >= 0) {
+            return multipleChoice.get(questionId).getMultiChoiceWidth();
+        } else {
+            return 0;
+        }
+    }
+    
+    public double getMultiChoiceHeight(int questionId) {
+        if(questionId < multipleChoice.size() && questionId >= 0) {
+            return multipleChoice.get(questionId).getMultiChoiceHeight();
+        } else {
+            return 0;
+        }
+    }
+    
     /** Grays out all of the multiple choices currently on page */
     public void DisableAllMultipleChoices() {
         for (int i = 0; i < multipleChoice.size(); i++) {
@@ -126,5 +142,9 @@ public class MultipleChoiceHandler {
             }
         }
         return allDisabled;
+    }
+    
+    public void clearMultiChoice() {
+        multipleChoice.clear();
     }
 }
