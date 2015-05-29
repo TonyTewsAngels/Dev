@@ -93,7 +93,7 @@ public class EditorRunTimeData {
         /* Instantiate the properties pane conroller */
         propertiesPane = new PropertiesPane(propPaneBox, this);
         
-        mouseController = new MouseController();
+        mouseController = new MouseController(renderer);
         
         clipboard = new Page(0, "#00000000");
         

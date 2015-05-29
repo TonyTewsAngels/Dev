@@ -490,6 +490,83 @@ public class Renderer {
         return height;
     }
     
+    public double getObjectWidth(PageObject object, Page page, boolean relative) {
+        double val = 0.0;
+        
+        switch(object.getType()) {
+        case ANSWER_BOX:
+            val = getAnswerBoxWidth((AnswerBoxObject)object, page);
+            break;
+        case AUDIO:
+            val = getAudioWidth((AudioObject)object, page);
+            break;
+        case GRAPHIC:
+            GraphicObject graphic = (GraphicObject)object;
+            val = (graphic.getXEnd() - graphic.getXStart()) * bounds.getMaxX();
+            break;
+        case IMAGE:
+            ImageObject image = (ImageObject)object;
+            val = (image.getXEnd() - image.getXStart()) * bounds.getMaxX(); 
+            break;
+        case MULTIPLE_CHOICE:
+            val = bounds.getMaxX() * 0.05;
+        case TEXT:
+            TextObject text = (TextObject)object;
+            val = (text.getXEnd() - text.getXStart()) * bounds.getMaxX(); 
+            break;
+        case VIDEO:
+            val = getVideoWidth((VideoObject)object, page);
+            break;
+        default:
+            return 0.0;
+        }
+        
+        if(relative) {
+            return val / bounds.getMaxX();
+        } else {
+            return val;
+        }
+    }
+    
+    public double getObjectHeight(PageObject object, Page page, boolean relative) {
+        double val = 0.0;
+        
+        switch(object.getType()) {
+        case ANSWER_BOX:
+            val = getAnswerBoxHeight((AnswerBoxObject)object, page);
+            break;
+        case AUDIO:
+            val = getAudioHeight((AudioObject)object, page);
+            break;
+        case GRAPHIC:
+            GraphicObject graphic = (GraphicObject)object;
+            val = (graphic.getYEnd() - graphic.getYStart()) * bounds.getMaxY(); 
+            break;
+        case IMAGE:
+            ImageObject image = (ImageObject)object;
+            val = (image.getYEnd() - image.getYStart()) * bounds.getMaxY(); 
+            break;
+        case MULTIPLE_CHOICE:
+            val = bounds.getMaxY() * 0.05;
+            break;
+        case TEXT:
+            TextObject text = (TextObject)object;
+            val = (text.getYEnd() - text.getYStart()) * bounds.getMaxY(); 
+            break;
+        case VIDEO:
+            val = getVideoHeight((VideoObject)object, page);
+            break;
+        default:
+            return 0.0;
+        }
+        
+        if(relative) {
+            return val / bounds.getMaxY();
+        } else {
+            return val;
+        }
+    }
+    
     public void debugPrint() {
         System.out.println("");
         textHandler.debugPrint();
