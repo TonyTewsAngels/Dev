@@ -134,6 +134,7 @@ public class Renderer {
         graphicsHandler.clearGraphics();
         textHandler.clearTexts();
         answerBoxHandler.clearAnswerBoxes();
+        multipleChoiceHandler.clearMultiChoice();
         group.getChildren().clear();
     }
     
@@ -325,7 +326,7 @@ public class Renderer {
             case AUDIO:
                 AudioObject audio = (AudioObject)object;
                 x =  audio.getXStart() * bounds.getMaxX();
-                y =  audio.getYStart() * bounds.getMaxY();
+                y =  (audio.getYStart() * bounds.getMaxY()) + 20;
                 width = getAudioWidth(audio, page);
                 height = getAudioHeight(audio, page);
                 break;
@@ -337,6 +338,11 @@ public class Renderer {
                 height = (graphic.getYEnd() * bounds.getMaxY()) - y;
                 break;
             case MULTIPLE_CHOICE:
+                MultipleChoiceObject multipleChoice = (MultipleChoiceObject)object;
+                x = multipleChoice.getXStart() * bounds.getMaxX();
+                y = multipleChoice.getYStart() * bounds.getMaxY();
+                width = getMultipleChoiceWidth(multipleChoice, page);
+                height = getMultipleChoiceHeight(multipleChoice, page);
                 break;
             case TEXT:
                 TextObject text = (TextObject)object;
@@ -496,6 +502,40 @@ public class Renderer {
         return height;
     }
     
+    public double getMultipleChoiceWidth(MultipleChoiceObject multipleChoice, Page page) {
+        int index = 0;
+        double width = 0;
+        
+        for(PageObject p : page.pageObjects) {            
+            if(p.getType() == PageObjectType.MULTIPLE_CHOICE) {                
+                if(p == multipleChoice) {                                        
+                    width = multipleChoiceHandler.getMultiChoiceWidth(index);
+                }
+                
+                index++;
+            }
+        }
+        
+        return width;
+    }
+    
+    public double getMultipleChoiceHeight(MultipleChoiceObject multipleChoice, Page page) {
+        int index = 0;
+        double height = 0;
+        
+        for(PageObject p : page.pageObjects) {            
+            if(p.getType() == PageObjectType.MULTIPLE_CHOICE) {                
+                if(p == multipleChoice) {                                        
+                    height = multipleChoiceHandler.getMultiChoiceHeight(index);
+                }
+                
+                index++;
+            }
+        }
+        
+        return height;
+    }
+    
     public double getObjectWidth(PageObject object, Page page, boolean relative) {
         double val = 0.0;
         
@@ -515,7 +555,7 @@ public class Renderer {
             val = (image.getXEnd() - image.getXStart()) * bounds.getMaxX(); 
             break;
         case MULTIPLE_CHOICE:
-            val = bounds.getMaxX() * 0.05;
+            val = getMultipleChoiceWidth((MultipleChoiceObject)object, page);
             break;
         case TEXT:
             TextObject text = (TextObject)object;
@@ -543,7 +583,7 @@ public class Renderer {
             val = getAnswerBoxHeight((AnswerBoxObject)object, page);
             break;
         case AUDIO:
-            val = getAudioHeight((AudioObject)object, page);
+            val = getAudioHeight((AudioObject)object, page) + 20;
             break;
         case GRAPHIC:
             GraphicObject graphic = (GraphicObject)object;
@@ -554,7 +594,7 @@ public class Renderer {
             val = (image.getYEnd() - image.getYStart()) * bounds.getMaxY(); 
             break;
         case MULTIPLE_CHOICE:
-            val = bounds.getMaxY() * 0.05;
+            val = getMultipleChoiceHeight((MultipleChoiceObject)object, page);
             break;
         case TEXT:
             TextObject text = (TextObject)object;

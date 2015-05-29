@@ -211,7 +211,7 @@ public class MultipleChoice{
 		} else if (orientation == Orientation.HORIZONTAL) {
 			return horizontalPosition.getLayoutX();
 		} else {
-		return 0;
+		    return 0;
 		}
 	}
 	
@@ -226,7 +226,7 @@ public class MultipleChoice{
 		} else if (orientation == Orientation.HORIZONTAL) {
 			return horizontalPosition.getLayoutY();
 		} else {
-		return 0;
+		    return 0;
 		}
 	}
 	
@@ -242,7 +242,7 @@ public class MultipleChoice{
 		} else if (orientation == Orientation.HORIZONTAL) {
 			return xStart + horizontalPosition.getWidth();
 		} else {
-		return 0;
+		    return 0;
 		}
 	}
 	
@@ -258,9 +258,29 @@ public class MultipleChoice{
 		} else if (orientation == Orientation.HORIZONTAL) {
 			return yStart + horizontalPosition.getHeight();
 		} else {
-		return 0;
+		    return 0;
 		}
 	}
+	
+	public double getMultiChoiceWidth() {
+	    if (orientation == Orientation.VERTICAL) {
+            return verticalPosition.getWidth();
+        } else if (orientation == Orientation.HORIZONTAL) {
+            return horizontalPosition.getWidth();
+        } else {
+            return 0;
+        }
+	}
+	
+	public double getMultiChoiceHeight() {
+        if (orientation == Orientation.VERTICAL) {
+            return verticalPosition.getHeight();
+        } else if (orientation == Orientation.HORIZONTAL) {
+            return horizontalPosition.getHeight();
+        } else {
+            return 0;
+        }
+    }
 
 	/**
 	 * Method to check the selected answers.

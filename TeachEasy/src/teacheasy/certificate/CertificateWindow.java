@@ -103,6 +103,9 @@ public class CertificateWindow  {
         stage.setHeight(screen.getBounds().getHeight());
         stage.setScene(scene);
         
+        /* Delete the file */
+        html.delete();
+        
         /* Display the window */
         stage.show();
     }

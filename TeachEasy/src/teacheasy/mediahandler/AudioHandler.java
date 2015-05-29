@@ -222,7 +222,6 @@ public class AudioHandler {
     			xEnd = xStart;
     		} else if (audios.get(audioId).buttonVisibilityLevel == 1){
     			xEnd = xStart + 30;
-    			System.out.println("xEnd with lvl 1: " +xEnd);
     		} else if (audios.get(audioId).buttonVisibilityLevel == 2){
     			if (audios.get(audioId).collapsedControls == false){
     				xEnd = xStart + audios.get(audioId).widthValue;

@@ -211,7 +211,7 @@ public class TemplateController {
 		page.addObject(title);
 		
 		// Add Video (Bottom Left)
-		VideoObject video = new VideoObject(0.55f, 0.25f, 0.9f, "null", false, false);
+		VideoObject video = new VideoObject(0.1f, 0.25f, 0.9f, "null", false, false);
 		page.addObject(video);
 		
 		// Add Information text object to page (Bottom Right)
