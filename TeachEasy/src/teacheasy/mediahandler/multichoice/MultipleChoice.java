@@ -201,21 +201,65 @@ public class MultipleChoice{
 	}
 	
 	/**
-	 * Public method to return the type of the multiple choice question
+	 * Public method to return the x start position
 	 * 
-	 * @return type of multiple choice
+	 * @return x co ordinate of top left corner of bounding box
 	 */
-	public MultiChoiceType getMultiChoiceType() {
-		return type;
+	public double getMultiChoiceXStart() {
+		if (orientation == Orientation.VERTICAL) {
+			return verticalPosition.getLayoutX();
+		} else if (orientation == Orientation.HORIZONTAL) {
+			return horizontalPosition.getLayoutX();
+		} else {
+		return 0;
+		}
 	}
 	
 	/**
-	 * Public method to return the number of possible answers
+	 * Public method to return the y start position
 	 * 
-	 * @return number of answers
+	 * @return y co ordinate of top left corner of bounding box
 	 */
-	public int getNumberMultiChoice(){
-		return numberOfAnswers;
+	public double getMultiChoiceYStart() {
+		if (orientation == Orientation.VERTICAL) {
+			return verticalPosition.getLayoutY();
+		} else if (orientation == Orientation.HORIZONTAL) {
+			return horizontalPosition.getLayoutY();
+		} else {
+		return 0;
+		}
+	}
+	
+	/**
+	 * Public method to return the x end position
+	 * 
+	 * @return x co ordinate of bottom right corner of bounding box
+	 */
+	public double getMultiChoiceXEnd() {
+		double xStart = getMultiChoiceXStart();
+		if (orientation == Orientation.VERTICAL) {
+			return xStart + verticalPosition.getWidth();
+		} else if (orientation == Orientation.HORIZONTAL) {
+			return xStart + horizontalPosition.getWidth();
+		} else {
+		return 0;
+		}
+	}
+	
+	/**
+	 * Public method to return the y end position
+	 * 
+	 * @return y co ordinate of bottom right corner of bounding box
+	 */
+	public double getMultiChoiceYEnd() {
+		double yStart = getMultiChoiceYStart();
+		if (orientation == Orientation.VERTICAL) {
+			return yStart + verticalPosition.getHeight();
+		} else if (orientation == Orientation.HORIZONTAL) {
+			return yStart + horizontalPosition.getHeight();
+		} else {
+		return 0;
+		}
 	}
 
 	/**

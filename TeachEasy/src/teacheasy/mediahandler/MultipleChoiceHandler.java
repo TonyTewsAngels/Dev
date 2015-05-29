@@ -58,20 +58,38 @@ public class MultipleChoiceHandler {
         multipleChoice.add(new MultipleChoice(group, xStart, yStart, answers,
                 type, orientation, retry, marks));
     }
-
-    /** Returns the type of multiple choice question */
-    public MultiChoiceType getMultiChoiceType(int questionId){
+    
+    /** Returns the x co ordinate of the start point (top left) */
+    public double getMultiChoiceXStart(int questionId) {
     	if(questionId < multipleChoice.size() && questionId >= 0) {
-    		return multipleChoice.get(questionId).getMultiChoiceType();
+    		return multipleChoice.get(questionId).getMultiChoiceXStart();
     	} else {
-    		return null;
+    		return 0;
     	}
     }
     
-    /** Returns the number of multiple choice questions */
-    public int getNumberMultiChoice(int questionId){
+    /** Returns the y co ordinate of the start point (top left) */
+    public double getMultiChoiceYStart(int questionId) {
     	if(questionId < multipleChoice.size() && questionId >= 0) {
-    		return multipleChoice.get(questionId).getNumberMultiChoice();
+    		return multipleChoice.get(questionId).getMultiChoiceYStart();
+    	} else {
+    		return 0;
+    	}
+    }
+    
+    /** Returns the x co ordinate of the end point (bottom right) */
+    public double getMultiChoiceXEnd(int questionId) {
+    	if(questionId < multipleChoice.size() && questionId >= 0) {
+    		return multipleChoice.get(questionId).getMultiChoiceXEnd();
+    	} else {
+    		return 0;
+    	}
+    }
+    
+    /** Returns the y co ordinate of the end point (bottom right) */
+    public double getMultiChoiceYEnd(int questionId) {
+    	if(questionId < multipleChoice.size() && questionId >= 0) {
+    		return multipleChoice.get(questionId).getMultiChoiceYEnd();
     	} else {
     		return 0;
     	}
