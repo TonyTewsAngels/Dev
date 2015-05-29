@@ -32,6 +32,7 @@ public class PreviewWindow {
     public PreviewWindow(Lesson lesson) {
         /* Create a stage */
         Stage primaryStage = new Stage();
+        primaryStage.initModality(Modality.APPLICATION_MODAL);
         
         /* Get screen size */
         Screen screen = Screen.getPrimary();
