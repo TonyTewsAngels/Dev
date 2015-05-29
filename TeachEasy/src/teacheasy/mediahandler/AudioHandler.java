@@ -250,7 +250,7 @@ public class AudioHandler {
     		} else if (audios.get(audioId).buttonVisibilityLevel == 2){
     			yEnd = yStart + 80;
     		}
-    	}   	
+    	}
         return yEnd;
     }
     
