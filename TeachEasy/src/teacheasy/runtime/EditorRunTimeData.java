@@ -93,7 +93,7 @@ public class EditorRunTimeData {
         /* Instantiate the properties pane conroller */
         propertiesPane = new PropertiesPane(propPaneBox, this);
         
-        mouseController = new MouseController();
+        mouseController = new MouseController(renderer);
         
         clipboard = new Page(0, "#00000000");
         
@@ -460,6 +460,9 @@ public class EditorRunTimeData {
         }
         
         mouseController.mousePressed(lesson.pages.get(currentPage), propertiesPane, relX, relY, onGroup);
+        
+        /* Render the selection box */
+        renderer.renderSelection(propertiesPane.getSelectedObject(), lesson.pages.get(currentPage), false);
     }
     
     /** Mouse released in the page area */
@@ -474,27 +477,35 @@ public class EditorRunTimeData {
         } else if(onGroup) {
             propertiesPane.lateUpdate();
         }
+        
+        /* Render the selection box */
+        renderer.renderSelection(propertiesPane.getSelectedObject(), lesson.pages.get(currentPage), false);
+    }
+    
+    public void mouseMoved(float relX, float relY, boolean onGroup) {
+        if(!isLessonOpen() || !onGroup) {
+            return;
+        }
+        
+        renderer.renderSelection(mouseController.mouseMoved(lesson.pages.get(currentPage), relX, relY), lesson.pages.get(currentPage), true);
     }
     
     /** Redraw the content */
     public void redraw(Group group, Rectangle2D bounds) {        
+        redraw();
+    }
+    
+    /** Redraw the content */
+    public void redraw() {        
         if(isLessonOpen()) {
             /* Update the total marks */
             lesson.lessonInfo.setTotalMarks(lesson.getTotalMarks());
             
             /* Render the current page */
             renderer.renderPage(lesson.pages.get(currentPage));
-        } else {
-            /* Render the no lesson loaded screen */
-            renderer.renderUnLoaded();
-        }
-    }
-    
-    /** Redraw the content */
-    public void redraw() {        
-        if(isLessonOpen()) {
-            /* Render the current page */
-            renderer.renderPage(lesson.pages.get(currentPage));
+            
+            /* Render the selection box */
+            renderer.renderSelection(propertiesPane.getSelectedObject(), lesson.pages.get(currentPage), false);
         } else {
             /* Render the no lesson loaded screen */
             renderer.renderUnLoaded();

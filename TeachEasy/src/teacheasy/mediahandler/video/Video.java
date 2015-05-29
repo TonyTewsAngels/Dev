@@ -299,14 +299,14 @@ public class Video {
      * Public method to return the width of the video
      */
     public double getVideoWidth() {
-    	return video.getFitWidth();
+    	return videoFrame.getWidth();
     }
     
     /**
      * Public method to return the height of the video
      */
     public double getVideoHeight() {
-    	return video.getFitHeight();
+    	return videoFrame.getHeight();
     }
     
     /**

@@ -7,16 +7,19 @@ import teacheasy.data.PageObject;
 import teacheasy.data.PageObject.PageObjectType;
 import teacheasy.data.TextObject;
 import teacheasy.data.VideoObject;
+import teacheasy.render.Renderer;
 
 public class MouseController {
     private boolean objectGrab;
     private float xOffSet;
     private float yOffSet;
+    private Renderer renderer;
     
-    public MouseController() {
+    public MouseController(Renderer nRenderer) {
         objectGrab = false;
         xOffSet = 0.0f;
         yOffSet = 0.0f;
+        this.renderer = nRenderer;
     }
     
     public void mousePressed(Page page, PropertiesPane propertiesPane, float relX, float relY, boolean onGroup) {
@@ -30,8 +33,8 @@ public class MouseController {
         for(int i = page.pageObjects.size()-1; i >= 0; i--) {
             PageObject object = page.pageObjects.get(i);
             
-            if(relX >= object.getXStart() && relX <= object.getXStart() + 0.1 &&
-               relY >= object.getYStart() && relY <= object.getYStart() + 0.1) {
+            if(relX >= object.getXStart() && relX <= object.getXStart() + renderer.getObjectWidth(object, page, true) &&
+               relY >= object.getYStart() && relY <= object.getYStart() + renderer.getObjectHeight(object, page, true)) {
                 returnObject = object;
                 
                 if(returnObject.equals(propertiesPane.getSelectedObject())) {
@@ -134,5 +137,21 @@ public class MouseController {
         }
         
         return false;
+    }
+    
+    public PageObject mouseMoved(Page page, float relX, float relY) {
+        PageObject returnObject = null;
+        
+        for(int i = page.pageObjects.size()-1; i >= 0; i--) {
+            PageObject object = page.pageObjects.get(i);
+            
+            if(relX >= object.getXStart() && relX <= object.getXStart() + renderer.getObjectWidth(object, page, true) &&
+               relY >= object.getYStart() && relY <= object.getYStart() + renderer.getObjectHeight(object, page, true)) {
+                returnObject = object;                
+                break;
+            }
+        }
+        
+        return returnObject;
     }
 }

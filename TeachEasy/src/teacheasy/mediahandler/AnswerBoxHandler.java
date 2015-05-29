@@ -72,6 +72,22 @@ public class AnswerBoxHandler {
     public void clearAnswerBoxes() {
         answerBox.clear();
     }
+    
+    public double getAnswerBoxHeight(int answerBoxId) {
+        if(answerBoxId < answerBox.size() && answerBoxId >= 0) {
+            return answerBox.get(answerBoxId).getHeight();
+        }
+        
+        return 0.0;
+    }
+    
+    public double getAnswerBoxWidth(int answerBoxId) {
+        if(answerBoxId < answerBox.size() && answerBoxId >= 0) {
+            return answerBox.get(answerBoxId).getWidth();
+        }
+        
+        return 0.0;
+    }
 
     public void debugPrint() {
         System.out.println("### Answer Box Handler ###");

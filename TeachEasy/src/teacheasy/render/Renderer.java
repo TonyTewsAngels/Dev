@@ -7,6 +7,7 @@
 package teacheasy.render;
 
 import teacheasy.data.*;
+import teacheasy.data.PageObject.PageObjectType;
 import teacheasy.mediahandler.*;
 import wavemedia.graphic.*;
 import wavemedia.text.*;
@@ -14,6 +15,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
@@ -35,6 +37,9 @@ public class Renderer {
     public AnswerBoxHandler answerBoxHandler;
     public MultipleChoiceHandler multipleChoiceHandler;
     private AudioHandler audioHandler;
+    
+    private Rectangle selectionBox;
+    private Rectangle hoverBox;
    
     /** Constructor */
     public Renderer(Group nGroup, Rectangle2D nBounds) {
@@ -52,6 +57,15 @@ public class Renderer {
         answerBoxHandler = new AnswerBoxHandler(group);
         multipleChoiceHandler = new MultipleChoiceHandler(group);
         audioHandler = new AudioHandler(group);
+        
+        selectionBox = new Rectangle(10.0, 10.0, 10.0, 10.0);
+        selectionBox.setFill(Color.TRANSPARENT);
+        selectionBox.setStroke(Color.RED);
+        selectionBox.setStrokeWidth(1);
+        
+        hoverBox = new Rectangle(10.0, 10.0, 10.0, 10.0);
+        hoverBox.setStroke(Color.TRANSPARENT);
+        hoverBox.setFill(new Color(0.1f, 0.1f, 0.1f, 0.1f));
     }
     
     /** Render an individual page */
@@ -99,8 +113,6 @@ public class Renderer {
                     break;
             }
         }
-        
-        debugPrint();
     }
     
     /** Render the screen if no lesson is loaded */
@@ -281,6 +293,279 @@ public class Renderer {
                                                    mChoice.getOrientation(),
                                                    mChoice.isRetry(), 
                                                    mChoice.getMarks());
+    }
+    
+    public void renderSelection(PageObject object, Page page, boolean hover) {
+        if(object == null) {
+            if(hover) {
+                hoverBox.setVisible(false);
+            } else {
+                selectionBox.setVisible(false);
+            }
+            return;
+        }
+        
+        double x = 0.0, y = 0.0, width = 0.0, height = 0.0;
+        
+        switch(object.getType()) {
+            case IMAGE:
+                ImageObject image = (ImageObject)object;
+                x = image.getXStart() * bounds.getMaxX();
+                y = image.getYStart() * bounds.getMaxY();
+                width = (image.getXEnd() * bounds.getMaxX()) - x;
+                height = (image.getYEnd() * bounds.getMaxY()) - y;
+                break;
+            case ANSWER_BOX:
+                AnswerBoxObject answerBox = (AnswerBoxObject)object;
+                x = answerBox.getXStart() * bounds.getMaxX();
+                y = answerBox.getYStart() * bounds.getMaxY();
+                width = getAnswerBoxWidth(answerBox, page);
+                height = getAnswerBoxHeight(answerBox, page);
+                break;
+            case AUDIO:
+                AudioObject audio = (AudioObject)object;
+                x =  audio.getXStart() * bounds.getMaxX();
+                y =  audio.getYStart() * bounds.getMaxY();
+                width = getAudioWidth(audio, page);
+                height = getAudioHeight(audio, page);
+                break;
+            case GRAPHIC:
+                GraphicObject graphic = (GraphicObject)object;
+                x = graphic.getXStart() * bounds.getMaxX();
+                y = graphic.getYStart() * bounds.getMaxY();
+                width = (graphic.getXEnd() * bounds.getMaxX()) - x;
+                height = (graphic.getYEnd() * bounds.getMaxY()) - y;
+                break;
+            case MULTIPLE_CHOICE:
+                break;
+            case TEXT:
+                TextObject text = (TextObject)object;
+                x = text.getXStart() * bounds.getMaxX();
+                y = text.getYStart() * bounds.getMaxY();
+                width = (text.getXEnd() * bounds.getMaxX()) - x;
+                height = (text.getYEnd() * bounds.getMaxY()) - y;
+                break;
+            case VIDEO:
+                VideoObject video = (VideoObject)object;
+                x = video.getXStart() * bounds.getMaxX();
+                y = video.getYStart() * bounds.getMaxY();
+                width = getVideoWidth(video, page);
+                height = getVideoHeight(video, page);
+                break;
+            default:
+                break;
+        }
+        
+        if(hover) {
+            renderHoverBox(x, y, width, height);
+        } else {
+            renderSelectionBox(x, y, width, height);
+        }
+        
+    }
+    
+    public void renderSelectionBox(double x, double y, double width, double height) {
+        selectionBox.setVisible(true);
+        selectionBox.relocate(x, y);
+        selectionBox.setWidth(width);
+        selectionBox.setHeight(height);
+        selectionBox.toFront();
+        
+        if(!group.getChildren().contains(selectionBox)) {
+            group.getChildren().add(selectionBox);
+        }
+    }
+    
+    public void renderHoverBox(double x, double y, double width, double height) {
+        hoverBox.setVisible(true);
+        hoverBox.relocate(x, y);
+        hoverBox.setWidth(width);
+        hoverBox.setHeight(height);
+        hoverBox.toFront();
+        
+        if(!group.getChildren().contains(hoverBox)) {
+            group.getChildren().add(hoverBox);
+        }
+    }
+    
+    public double getVideoWidth(VideoObject video, Page page) {
+        int index = 0;
+        double width = 0;
+        
+        for(PageObject p : page.pageObjects) {            
+            if(p.getType() == PageObjectType.VIDEO) {                
+                if(p == video) {                                        
+                    width = videoHandler.getVideoWidth(index);
+                }
+                
+                index++;
+            }
+        }
+        
+        return width;
+    }
+    
+    public double getVideoHeight(VideoObject video, Page page) {
+        int index = 0;
+        double height = 0;
+        
+        for(PageObject p : page.pageObjects) {            
+            if(p.getType() == PageObjectType.VIDEO) {                
+                if(p == video) {                                        
+                    height = videoHandler.getVideoHeight(index);
+                }
+                
+                index++;
+            }
+        }
+        
+        return height;
+    }
+    
+    public double getAudioWidth(AudioObject audio, Page page) {
+        int index = 0;
+        double width = 0;
+        
+        for(PageObject p : page.pageObjects) {            
+            if(p.getType() == PageObjectType.AUDIO) {                
+                if(p == audio) {                                        
+                    width = audioHandler.getAudioXEnd(index) - (audio.getXStart() * bounds.getMaxX());
+                }
+                
+                index++;
+            }
+        }
+        
+        return width;
+    }
+    
+    public double getAudioHeight(AudioObject audio, Page page) {
+        int index = 0;
+        double height = 0;
+        
+        for(PageObject p : page.pageObjects) {            
+            if(p.getType() == PageObjectType.AUDIO) {                
+                if(p == audio) {                                        
+                    height = audioHandler.getAudioYEnd(index) - (audio.getYStart() * bounds.getMaxY());
+                }
+                
+                index++;
+            }
+        }
+        
+        return height;
+    }
+    
+    public double getAnswerBoxWidth(AnswerBoxObject answerBox, Page page) {
+        int index = 0;
+        double width = 0;
+        
+        for(PageObject p : page.pageObjects) {            
+            if(p.getType() == PageObjectType.ANSWER_BOX) {                
+                if(p == answerBox) {                                        
+                    width = answerBoxHandler.getAnswerBoxWidth(index);
+                }
+                
+                index++;
+            }
+        }
+        
+        return width;
+    }
+    
+    public double getAnswerBoxHeight(AnswerBoxObject answerBox, Page page) {
+        int index = 0;
+        double height = 0;
+        
+        for(PageObject p : page.pageObjects) {            
+            if(p.getType() == PageObjectType.ANSWER_BOX) {                
+                if(p == answerBox) {                                        
+                    height = answerBoxHandler.getAnswerBoxHeight(index);
+                }
+                
+                index++;
+            }
+        }
+        
+        return height;
+    }
+    
+    public double getObjectWidth(PageObject object, Page page, boolean relative) {
+        double val = 0.0;
+        
+        switch(object.getType()) {
+        case ANSWER_BOX:
+            val = getAnswerBoxWidth((AnswerBoxObject)object, page);
+            break;
+        case AUDIO:
+            val = getAudioWidth((AudioObject)object, page);
+            break;
+        case GRAPHIC:
+            GraphicObject graphic = (GraphicObject)object;
+            val = (graphic.getXEnd() - graphic.getXStart()) * bounds.getMaxX();
+            break;
+        case IMAGE:
+            ImageObject image = (ImageObject)object;
+            val = (image.getXEnd() - image.getXStart()) * bounds.getMaxX(); 
+            break;
+        case MULTIPLE_CHOICE:
+            val = bounds.getMaxX() * 0.05;
+            break;
+        case TEXT:
+            TextObject text = (TextObject)object;
+            val = (text.getXEnd() - text.getXStart()) * bounds.getMaxX(); 
+            break;
+        case VIDEO:
+            val = getVideoWidth((VideoObject)object, page);
+            break;
+        default:
+            return 0.0;
+        }
+        
+        if(relative) {
+            return val / bounds.getMaxX();
+        } else {
+            return val;
+        }
+    }
+    
+    public double getObjectHeight(PageObject object, Page page, boolean relative) {
+        double val = 0.0;
+        
+        switch(object.getType()) {
+        case ANSWER_BOX:
+            val = getAnswerBoxHeight((AnswerBoxObject)object, page);
+            break;
+        case AUDIO:
+            val = getAudioHeight((AudioObject)object, page);
+            break;
+        case GRAPHIC:
+            GraphicObject graphic = (GraphicObject)object;
+            val = (graphic.getYEnd() - graphic.getYStart()) * bounds.getMaxY(); 
+            break;
+        case IMAGE:
+            ImageObject image = (ImageObject)object;
+            val = (image.getYEnd() - image.getYStart()) * bounds.getMaxY(); 
+            break;
+        case MULTIPLE_CHOICE:
+            val = bounds.getMaxY() * 0.05;
+            break;
+        case TEXT:
+            TextObject text = (TextObject)object;
+            val = (text.getYEnd() - text.getYStart()) * bounds.getMaxY(); 
+            break;
+        case VIDEO:
+            val = getVideoHeight((VideoObject)object, page);
+            break;
+        default:
+            return 0.0;
+        }
+        
+        if(relative) {
+            return val / bounds.getMaxY();
+        } else {
+            return val;
+        }
     }
     
     public void debugPrint() {

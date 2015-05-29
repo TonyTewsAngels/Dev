@@ -239,6 +239,14 @@ public class AnswerBox {
     public void setAwardedMarks(int awardedMarks) {
         this.awardedMarks = awardedMarks;
     }
+    
+    public double getHeight() {
+        return box.getHeight();
+    }
+    
+    public double getWidth() {
+        return box.getWidth();
+    }
 
     /**
      * Button Event Handler Class

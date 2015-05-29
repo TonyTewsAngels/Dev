@@ -80,7 +80,7 @@ public class VideoHandler {
      */
     public double getVideoWidth(int videoId){
     	if(videoId < videos.size() && videoId >= 0) {
-           return videos.get(videoId).getVideoWidth();
+    	    return videos.get(videoId).getVideoWidth();
         } else {
         	return 0;
         }
@@ -93,7 +93,7 @@ public class VideoHandler {
      */
     public double getVideoHeight(int videoId){
     	if(videoId < videos.size() && videoId >= 0) {
-          return  videos.get(videoId).getVideoHeight();
+    	    return  videos.get(videoId).getVideoHeight();
         } else {
         	return 0;
         }
@@ -106,7 +106,7 @@ public class VideoHandler {
      */
     public double getVideoXEnd(int videoId){
     	if(videoId < videos.size() && videoId >= 0) {
-           return videos.get(videoId).getVideoXEnd();
+    	    return videos.get(videoId).getVideoXEnd();
         } else {
         	return 0;
         }
@@ -119,7 +119,7 @@ public class VideoHandler {
      */
     public double getVideoYEnd(int videoId){
     	if(videoId < videos.size() && videoId >= 0) {
-           return videos.get(videoId).getVideoYEnd();
+    	    return videos.get(videoId).getVideoYEnd();
         } else {
         	return 0;
         }
