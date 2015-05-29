@@ -7,6 +7,7 @@
 package teacheasy.render;
 
 import teacheasy.data.*;
+import teacheasy.data.PageObject.PageObjectType;
 import teacheasy.mediahandler.*;
 import wavemedia.graphic.*;
 import wavemedia.text.*;
@@ -112,8 +113,6 @@ public class Renderer {
                     break;
             }
         }
-        
-        debugPrint();
     }
     
     /** Render the screen if no lesson is loaded */
@@ -296,7 +295,7 @@ public class Renderer {
                                                    mChoice.getMarks());
     }
     
-    public void renderHover(PageObject hoverObject) {
+    public void renderHover(PageObject hoverObject, Page page) {
         if(hoverObject == null) {
             hoverBox.setVisible(false);
             return;
@@ -333,6 +332,11 @@ public class Renderer {
                 height = (text.getYEnd() * bounds.getMaxY()) - y;
                 break;
             case VIDEO:
+                VideoObject video = (VideoObject)hoverObject;
+                x = video.getXStart() * bounds.getMaxX();
+                y = video.getYStart() * bounds.getMaxY();
+                width = (video.getXEnd() * bounds.getMaxX()) - x;
+                height = getVideoHeight(video, page);
                 break;
             default:
                 break;
@@ -341,7 +345,7 @@ public class Renderer {
         renderHoverBox(x, y, width, height);
     }
     
-    public void renderSelection(PageObject selectedObject) {
+    public void renderSelection(PageObject selectedObject, Page page) {
         if(selectedObject == null) {
             selectionBox.setVisible(false);
             return;
@@ -378,6 +382,11 @@ public class Renderer {
                 height = (text.getYEnd() * bounds.getMaxY()) - y;
                 break;
             case VIDEO:
+                VideoObject video = (VideoObject)selectedObject;
+                x = video.getXStart() * bounds.getMaxX();
+                y = video.getYStart() * bounds.getMaxY();
+                width = getVideoWidth(video, page);
+                height = getVideoHeight(video, page);
                 break;
             default:
                 break;
@@ -408,6 +417,40 @@ public class Renderer {
         if(!group.getChildren().contains(hoverBox)) {
             group.getChildren().add(hoverBox);
         }
+    }
+    
+    public double getVideoHeight(VideoObject video, Page page) {
+        int index = 0;
+        double height = 0;
+        
+        for(PageObject p : page.pageObjects) {            
+            if(p.getType() == PageObjectType.VIDEO) {                
+                if(p == video) {                                        
+                    height = videoHandler.getVideoHeight(index);
+                }
+                
+                index++;
+            }
+        }
+        
+        return height;
+    }
+    
+    public double getVideoWidth(VideoObject video, Page page) {
+        int index = 0;
+        double height = 0;
+        
+        for(PageObject p : page.pageObjects) {            
+            if(p.getType() == PageObjectType.VIDEO) {                
+                if(p == video) {                                        
+                    height = videoHandler.getVideoWidth(index);
+                }
+                
+                index++;
+            }
+        }
+        
+        return height;
     }
     
     public void debugPrint() {

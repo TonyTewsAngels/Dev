@@ -462,7 +462,7 @@ public class EditorRunTimeData {
         mouseController.mousePressed(lesson.pages.get(currentPage), propertiesPane, relX, relY, onGroup);
         
         /* Render the selection box */
-        renderer.renderSelection(propertiesPane.getSelectedObject());
+        renderer.renderSelection(propertiesPane.getSelectedObject(), lesson.pages.get(currentPage));
     }
     
     /** Mouse released in the page area */
@@ -479,7 +479,7 @@ public class EditorRunTimeData {
         }
         
         /* Render the selection box */
-        renderer.renderSelection(propertiesPane.getSelectedObject());
+        renderer.renderSelection(propertiesPane.getSelectedObject(), lesson.pages.get(currentPage));
     }
     
     public void mouseMoved(float relX, float relY, boolean onGroup) {
@@ -487,7 +487,7 @@ public class EditorRunTimeData {
             return;
         }
         
-        renderer.renderHover(mouseController.mouseMoved(lesson.pages.get(currentPage), relX, relY));
+        renderer.renderHover(mouseController.mouseMoved(lesson.pages.get(currentPage), relX, relY), lesson.pages.get(currentPage));
     }
     
     /** Redraw the content */
@@ -505,7 +505,7 @@ public class EditorRunTimeData {
             renderer.renderPage(lesson.pages.get(currentPage));
             
             /* Render the selection box */
-            renderer.renderSelection(propertiesPane.getSelectedObject());
+            renderer.renderSelection(propertiesPane.getSelectedObject(), lesson.pages.get(currentPage));
         } else {
             /* Render the no lesson loaded screen */
             renderer.renderUnLoaded();
