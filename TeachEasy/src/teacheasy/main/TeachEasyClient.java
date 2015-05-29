@@ -7,6 +7,7 @@ import teacheasy.debug.EditorRuntimeDataDummyUI.MouseEventHandler;
 import teacheasy.render.RenderUtil;
 import teacheasy.runtime.EditorRunTimeData;
 import teacheasy.runtime.editor.LessonInfoWindow;
+import teacheasy.runtime.editor.TemplateController.TemplateType;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -218,24 +219,29 @@ public class TeachEasyClient extends Application {
         menuItemTemplatePage.getItems().add(menuItemTemplateInformation);
         
         MenuItem menuItemTemplateMultipleChoiceQuiz = new MenuItem("Multiple Choice Quiz");
-        menuItemTemplateInformation.setId("TemplateMultipleChoice");
-        menuItemTemplateInformation.setOnAction(new MenuEventHandler());
+        menuItemTemplateMultipleChoiceQuiz.setId("TemplateMultipleChoice");
+        menuItemTemplateMultipleChoiceQuiz.setOnAction(new MenuEventHandler());
         menuItemTemplatePage.getItems().add(menuItemTemplateMultipleChoiceQuiz);
         
         MenuItem menuItemTemplateQAQuiz = new MenuItem("Question & Answer Quiz");
-        menuItemTemplateInformation.setId("TemplateQA");
-        menuItemTemplateInformation.setOnAction(new MenuEventHandler());
+        menuItemTemplateQAQuiz.setId("TemplateQA");
+        menuItemTemplateQAQuiz.setOnAction(new MenuEventHandler());
         menuItemTemplatePage.getItems().add(menuItemTemplateQAQuiz);
         
         MenuItem menuItemTemplateVideoPage = new MenuItem("Video Page");
-        menuItemTemplateInformation.setId("TemplateVideo");
-        menuItemTemplateInformation.setOnAction(new MenuEventHandler());
+        menuItemTemplateVideoPage.setId("TemplateVideo");
+        menuItemTemplateVideoPage.setOnAction(new MenuEventHandler());
         menuItemTemplatePage.getItems().add(menuItemTemplateVideoPage);
         
         MenuItem menuItemTemplateAudioPage = new MenuItem("Audio Page");
-        menuItemTemplateInformation.setId("TemplateAudio");
-        menuItemTemplateInformation.setOnAction(new MenuEventHandler());
+        menuItemTemplateAudioPage.setId("TemplateAudio");
+        menuItemTemplateAudioPage.setOnAction(new MenuEventHandler());
         menuItemTemplatePage.getItems().add(menuItemTemplateAudioPage);
+        
+        MenuItem menuItemPreview = new MenuItem("Play");
+        menuItemPreview.setId("Preview");
+        menuItemPreview.setOnAction(new MenuEventHandler());
+        menuPreview.getItems().add(menuItemPreview);
         
         menuFile.getItems().addAll(menuItemNew, menuItemOpen, menuItemSave, menuItemClose);
         menuEdit.getItems().addAll(menuItemNewPage, menuItemTemplatePage, menuItemRemovePage, menuItemNewObject, menuItemRemoveObject);
@@ -891,7 +897,7 @@ public class TeachEasyClient extends Application {
             } else if(menuItem.getId().equals("FileSave")) {
                 fileSavePressed();
             } else if (menuItem.getId().equals("EditNewPage")) {
-                editorRuntimeData.newPage();
+                editorRuntimeData.newPage(null);
                 updateUI();
             } else if (menuItem.getId().equals("EditRemovePage")) {
                 editorRuntimeData.removePage();
@@ -932,6 +938,23 @@ public class TeachEasyClient extends Application {
             } else if(menuItem.getId().equals("DebugPrevPage")) {
                 editorRuntimeData.prevPage();
                 updateUI();
+            } else if(menuItem.getId().equals("TemplateInformation")) {
+                editorRuntimeData.newPage(TemplateType.INFORMATION);
+                updateUI();
+            } else if(menuItem.getId().equals("TemplateMultipleChoice")) {
+                editorRuntimeData.newPage(TemplateType.MCQUIZ);
+                updateUI();
+            } else if(menuItem.getId().equals("TemplateQA")) {
+                editorRuntimeData.newPage(TemplateType.ABQUIZ);
+                updateUI();
+            } else if(menuItem.getId().equals("TemplateVideo")) {
+                editorRuntimeData.newPage(TemplateType.VIDEO);
+                updateUI();
+            } else if(menuItem.getId().equals("TemplateAudio")) {
+                editorRuntimeData.newPage(TemplateType.AUDIO);
+                updateUI();
+            } else if(menuItem.getId().equals("Preview")) {
+                new PreviewWindow(editorRuntimeData.getLesson());
             }
         }
     }
@@ -996,7 +1019,7 @@ public class TeachEasyClient extends Application {
             } else if(ke.getCode() == KeyCode.O && ke.isControlDown()) {
                 fileOpenPressed();
             } else if(ke.getCode() == KeyCode.N) {
-                editorRuntimeData.newPage();
+                editorRuntimeData.newPage(null);
                 updateUI();
             } else if(ke.getCode() == KeyCode.C && ke.isControlDown()) {
                 editorRuntimeData.copyObject();

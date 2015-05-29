@@ -337,7 +337,7 @@ public class EditorRuntimeDataDummyUI extends Application {
             } else if(menuItem.getId().equals("FileSave")) {
                 fileSavePressed();
             } else if (menuItem.getId().equals("EditNewPage")) {
-                editorRunTimeData.newPage();
+                editorRunTimeData.newPage(null);
                 updateUI();
             } else if (menuItem.getId().equals("EditRemovePage")) {
                 editorRunTimeData.removePage();
