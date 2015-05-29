@@ -61,7 +61,7 @@ public class Lesson {
                                     "Comment", "01/01/2001", 0);
         
         /* Instantiate the default settings */
-        defaultSettings = new LessonDefaultSettings(12, "Arial",
+        defaultSettings = new LessonDefaultSettings(20, "Arial",
                                     "#ff000000", "#ff000000",
                                     "#ff000000", "#ff000000");
         

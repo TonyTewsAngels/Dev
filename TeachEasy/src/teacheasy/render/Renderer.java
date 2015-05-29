@@ -390,7 +390,7 @@ public class Renderer {
     
     public double getVideoWidth(VideoObject video, Page page) {
         int index = 0;
-        double width = 0;
+        double width = 150;
         
         for(PageObject p : page.pageObjects) {            
             if(p.getType() == PageObjectType.VIDEO) {                
@@ -402,12 +402,15 @@ public class Renderer {
             }
         }
         
+        if(width == 0.0) {
+            return 150.0;
+        }
         return width;
     }
     
     public double getVideoHeight(VideoObject video, Page page) {
         int index = 0;
-        double height = 0;
+        double height = 150;
         
         for(PageObject p : page.pageObjects) {            
             if(p.getType() == PageObjectType.VIDEO) {                
@@ -419,6 +422,9 @@ public class Renderer {
             }
         }
         
+        if(height == 0.0) {
+            return 150.0;
+        }
         return height;
     }
     

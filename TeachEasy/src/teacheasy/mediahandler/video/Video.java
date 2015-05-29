@@ -299,6 +299,10 @@ public class Video {
      * Public method to return the width of the video
      */
     public double getVideoWidth() {
+        if(videoFrame == null) {
+            return 0.0;
+        }
+        
     	return videoFrame.getWidth();
     }
     
@@ -306,6 +310,10 @@ public class Video {
      * Public method to return the height of the video
      */
     public double getVideoHeight() {
+        if(videoFrame == null) {
+            return 0.0;
+        }
+        
     	return videoFrame.getHeight();
     }
     
