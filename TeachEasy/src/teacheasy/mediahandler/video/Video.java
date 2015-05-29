@@ -100,6 +100,8 @@ public class Video {
     /** Event handler for fullscreen exit */
     private EventHandler<WindowEvent> fullScreenCloseHandler;
     
+    private boolean loop;
+    
     /**
      * Constructs the video.
      * 
@@ -126,6 +128,8 @@ public class Video {
         
         /* Set the full screen exit event handler reference */
         this.fullScreenCloseHandler = nFullScreenCloseHandler;
+        
+        this.loop = loop;
         
         /* Load icon images */
         playImage = new ImageView(new Image(getClass().getResourceAsStream("Play_ST_CONTENT_RECT_Transparent_L-01.png")));
@@ -549,7 +553,7 @@ public class Video {
             
             /* Set the fullscreen button graphic */
             fullscreenButton.setGraphic(fullscreenImage);
-        } else {
+        } else {            
             /* Remove the video from the main screen */
             group.getChildren().remove(videoFrame);
             
@@ -781,7 +785,10 @@ public class Video {
      */
     public class MediaEndHandler implements Runnable {
         public void run() {
-            mediaPlayer.stop();
+            if(!loop) {
+                mediaPlayer.stop();
+                mediaPlayer.seek(Duration.millis(0.0));
+            }
         }
     }
     
