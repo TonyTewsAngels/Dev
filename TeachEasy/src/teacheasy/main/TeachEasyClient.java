@@ -47,28 +47,27 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class TeachEasyClient extends Application {
-    Text text, text1, botText, propText, titleText, page1, page2, page3;
-    Image textIm;
+    private Text text1, botText, propText, titleText;
     
-    EditorRunTimeData editorRuntimeData;
+    private EditorRunTimeData editorRuntimeData;
     
-    Group contentPanel;
+    private Group contentPanel;
     
-    Rectangle r;
+    private Rectangle r;
     
-    Button textBtn;  
-    Button imageBtn; 
-    Button videoBtn;    
-    Button tickBtn;
-    Button graphicBtn;
-    Button audioBtn;
-    Button questionBtn;
-    Button previewBtn;
+    private Button textBtn;  
+    private Button imageBtn; 
+    private Button videoBtn;    
+    private Button tickBtn;
+    private Button graphicBtn;
+    private Button audioBtn;
+    private Button questionBtn;
+    private Button previewBtn;
      
-    Button nextPageBtn;
-    Button prevPageBtn;
+    private Button nextPageBtn;
+    private Button prevPageBtn;
     
-    ComboBox<Integer> pageList;
+    private ComboBox<Integer> pageList;
     
     /**
      * Override the start method inside the JavaFX Application
@@ -211,8 +210,35 @@ public class TeachEasyClient extends Application {
         menuItemNextObject.setId("DebugNextObject");
         menuItemNextObject.setOnAction(new MenuEventHandler());
         
+        Menu menuItemTemplatePage = new Menu("New Page From Template...");
+        
+        MenuItem menuItemTemplateInformation = new MenuItem("Information Page");
+        menuItemTemplateInformation.setId("TemplateInformation");
+        menuItemTemplateInformation.setOnAction(new MenuEventHandler());
+        menuItemTemplatePage.getItems().add(menuItemTemplateInformation);
+        
+        MenuItem menuItemTemplateMultipleChoiceQuiz = new MenuItem("Multiple Choice Quiz");
+        menuItemTemplateInformation.setId("TemplateMultipleChoice");
+        menuItemTemplateInformation.setOnAction(new MenuEventHandler());
+        menuItemTemplatePage.getItems().add(menuItemTemplateMultipleChoiceQuiz);
+        
+        MenuItem menuItemTemplateQAQuiz = new MenuItem("Question & Answer Quiz");
+        menuItemTemplateInformation.setId("TemplateQA");
+        menuItemTemplateInformation.setOnAction(new MenuEventHandler());
+        menuItemTemplatePage.getItems().add(menuItemTemplateQAQuiz);
+        
+        MenuItem menuItemTemplateVideoPage = new MenuItem("Video Page");
+        menuItemTemplateInformation.setId("TemplateVideo");
+        menuItemTemplateInformation.setOnAction(new MenuEventHandler());
+        menuItemTemplatePage.getItems().add(menuItemTemplateVideoPage);
+        
+        MenuItem menuItemTemplateAudioPage = new MenuItem("Audio Page");
+        menuItemTemplateInformation.setId("TemplateAudio");
+        menuItemTemplateInformation.setOnAction(new MenuEventHandler());
+        menuItemTemplatePage.getItems().add(menuItemTemplateAudioPage);
+        
         menuFile.getItems().addAll(menuItemNew, menuItemOpen, menuItemSave, menuItemClose);
-        menuEdit.getItems().addAll(menuItemNewPage, menuItemRemovePage, menuItemNewObject, menuItemRemoveObject);
+        menuEdit.getItems().addAll(menuItemNewPage, menuItemTemplatePage, menuItemRemovePage, menuItemNewObject, menuItemRemoveObject);
         menuDebug.getItems().addAll(menuItemNextObject, menuItemNextPage, menuItemPrevPage);
         menuBar.getMenus().addAll(menuFile, menuEdit, menuPreview, menuHelp, menuDebug);
         
@@ -302,11 +328,6 @@ public class TeachEasyClient extends Application {
         prevPageBtn.setId("prevPageBtn");
         
         previewBtn.setId("previewBtn");
-        
-        /* Dummy Page Content */
-        page1 = new Text(1, 1,"page1");
-        page2 = new Text(1, 1,"page2");
-        page3 = new Text(1, 1,"page3"); 
         
         
         /* Re-skin buttons */
