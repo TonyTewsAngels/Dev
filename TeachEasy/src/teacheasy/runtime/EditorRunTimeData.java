@@ -25,6 +25,8 @@ import teacheasy.runtime.editor.LessonInfoWindow;
 import teacheasy.runtime.editor.MouseController;
 import teacheasy.runtime.editor.NewObjectController;
 import teacheasy.runtime.editor.PropertiesPane;
+import teacheasy.runtime.editor.TemplateController;
+import teacheasy.runtime.editor.TemplateController.TemplateType;
 import teacheasy.xml.*;
 import teacheasy.xml.util.XMLNotification;
 import teacheasy.xml.util.XMLNotification.Level;
@@ -63,6 +65,9 @@ public class EditorRunTimeData {
     /* Mouse controller */
     private MouseController mouseController;
     
+    /* Template Controller */
+    private TemplateController templateController;
+    
     /* Clip board */
     private Page clipboard;
     
@@ -94,6 +99,8 @@ public class EditorRunTimeData {
         propertiesPane = new PropertiesPane(propPaneBox, this);
         
         mouseController = new MouseController(renderer);
+        
+        templateController = new TemplateController();
         
         clipboard = new Page(0, "#00000000");
         
@@ -336,8 +343,12 @@ public class EditorRunTimeData {
     }
     
     /** Add a new page to the current lesson */
-    public void newPage() {
+    public void newPage(TemplateType template) {
         lesson.pages.add(new Page(lesson.pages.size(), "#ffffffff"));
+        
+        if(template != null) {
+            templateController.ApplyTemplate(lesson.pages.get(lesson.pages.size() - 1), lesson.defaultSettings, template);
+        }
         
         setPageCount(lesson.pages.size());
         setCurrentPage(lesson.pages.size() - 1);

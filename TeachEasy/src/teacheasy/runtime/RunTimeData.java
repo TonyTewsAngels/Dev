@@ -239,9 +239,7 @@ public class RunTimeData {
                 new ChangeListener<Boolean>() {
                     public void changed(ObservableValue<? extends Boolean> ov,
                             Boolean old_val, Boolean new_val) {
-                        if (dialogCheck.isSelected()) {
-                            hideDialog = true;
-                        }
+                        hideDialog = dialogCheck.isSelected();
                     }
                 });
 

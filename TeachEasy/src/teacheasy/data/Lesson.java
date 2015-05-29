@@ -62,8 +62,8 @@ public class Lesson {
         
         /* Instantiate the default settings */
         defaultSettings = new LessonDefaultSettings(12, "Arial",
-                                    "#00000000", "#00000000",
-                                    "#00000000", "#00000000");
+                                    "#ff000000", "#ff000000",
+                                    "#ff000000", "#ff000000");
         
         /* Instantiate the grade settings */
         gradeSettings = new LessonGradeSettings(0, "pass", "fail");
