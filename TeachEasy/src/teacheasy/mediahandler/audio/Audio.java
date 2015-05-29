@@ -367,6 +367,16 @@ public class Audio {
 				updateLabels();	
 			}
 		});
+		
+		player.setOnEndOfMedia(new Runnable() {
+			@Override
+			public void run() {
+				player.stop();
+				player.seek(Duration.millis(0.0));
+				playPauseButton.setGraphic(playImage);
+				pausedByButton = true;				
+			}
+		});
 
 		/* Add a listener to the time property of the player for scanning and scrolling */
 		player.currentTimeProperty().addListener(new progressUpdater());
