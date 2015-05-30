@@ -344,14 +344,14 @@ public class EditorRunTimeData {
     
     /** Add a new page to the current lesson */
     public void newPage(TemplateType template) {
-        lesson.pages.add(new Page(lesson.pages.size(), "#ffffffff"));
+        lesson.pages.add(currentPage + 1, new Page(lesson.pages.size(), "#ffffffff"));
         
         if(template != null) {
-            templateController.ApplyTemplate(lesson.pages.get(lesson.pages.size() - 1), lesson.defaultSettings, template);
+            templateController.ApplyTemplate(lesson.pages.get(currentPage + 1), lesson.defaultSettings, template);
         }
         
         setPageCount(lesson.pages.size());
-        setCurrentPage(lesson.pages.size() - 1);
+        setCurrentPage(currentPage + 1);
     }
     
     /** Remove the current page */
@@ -362,13 +362,22 @@ public class EditorRunTimeData {
         
         if(lesson.pages.size() <= 1) {
             lesson.pages.get(currentPage).pageObjects.clear();
+            setCurrentPage(0);
+            redraw();
             return;
         }
         
         lesson.pages.remove(currentPage);
         
         setPageCount(lesson.pages.size());
-        setCurrentPage(0);
+        
+        int moveToPage = currentPage;
+        if(moveToPage >= lesson.pages.size()) {
+            moveToPage = lesson.pages.size() - 1;
+        }
+        
+        setCurrentPage(moveToPage);
+        redraw();
     }
     
     /** Add a new object to the current page */
