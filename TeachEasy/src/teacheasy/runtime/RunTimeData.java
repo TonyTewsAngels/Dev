@@ -407,7 +407,7 @@ public class RunTimeData {
         xmlHandler.setRecentReadPath(file.getAbsolutePath());
 
         /* Parse the file */
-        ArrayList<XMLNotification> errorList = xmlHandler.parseXML2(file
+        ArrayList<XMLNotification> errorList = xmlHandler.parseXML(file
                 .getAbsolutePath());
 
         /* If any errors were found during parsing, do not load the lesson */
@@ -500,7 +500,7 @@ public class RunTimeData {
         homePage.setRecentlyOpened(file.toString());
          
         /* Parse the file */
-        ArrayList<XMLNotification> errorList = xmlHandler.parseXML2(file
+        ArrayList<XMLNotification> errorList = xmlHandler.parseXML(file
                 .getAbsolutePath());
 
         /* If any errors were found during parsing, do not load the lesson */

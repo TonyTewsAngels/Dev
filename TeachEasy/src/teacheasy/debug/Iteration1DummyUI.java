@@ -126,7 +126,7 @@ public class Iteration1DummyUI extends Application {
         text.appendText("Parsing \'" + filename + "\'...\n");
         
         /* Parse the xml and get errors */
-        ArrayList<XMLNotification> errorList = xmlHandler.parseXML2(filename);
+        ArrayList<XMLNotification> errorList = xmlHandler.parseXML(filename);
         
         /* Output the errors */
         text.appendText("Errors: " + errorList.size() + ".\n");

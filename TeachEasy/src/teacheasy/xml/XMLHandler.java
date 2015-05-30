@@ -42,7 +42,7 @@ public class XMLHandler {
 	}
 	
 	/** Parse an xml file */
-    public ArrayList<XMLNotification> parseXML2(String filename) {
+    public ArrayList<XMLNotification> parseXML(String filename) {
         return xmlParser2.parse(filename);
     }
 	
