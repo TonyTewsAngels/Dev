@@ -81,6 +81,7 @@ public class URLWindow {
         }
         
         pane.update();
+        pane.redraw();
     }
     
     public class ButtonHandler implements EventHandler<ActionEvent> {
