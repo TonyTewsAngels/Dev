@@ -232,7 +232,7 @@ public class EditorRunTimeData {
     }
     
     /** Open a lesson file */
-    public boolean openLesson() {
+    public void openLesson() {        
         /* Create a file chooser */
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Files", "*.xml"));
@@ -248,29 +248,25 @@ public class EditorRunTimeData {
         
         /* Check that the file is not null */
         if(file == null) {
-            return false;
+            ArrayList<XMLNotification> errorList = new ArrayList<XMLNotification>();
+            errorList.add(new XMLNotification(Level.ERROR, "File Not Found"));
+            return;
         }
         
         /* Set the recent read Path */
         xmlHandler.setRecentReadPath(file.getAbsolutePath());
         
         /* Parse the file */
-        ArrayList<XMLNotification> errorList = xmlHandler.parseXML2(file.getAbsolutePath());
+        ArrayList<XMLNotification> errorList = xmlHandler.parseXML(file.getAbsolutePath());
         
         /* If any errors were found during parsing, do not load the lesson */
         if(errorList.size() > 0) {   
-            for(int i = 0; i < errorList.size(); i++) {
-                System.out.println(errorList.get(i));
-            }
-        }
-        
-        if(XMLNotification.countLevel(errorList, Level.ERROR) > 0) {   
-            return false;
+            new XMLErrorWindow(errorList, this, null);
+            return;
         }
         
         /* Get the lesson data */
         lesson = xmlHandler.getLesson();
-        lesson.debugPrint();
         
         /* Open the lesson */
         setPageCount(lesson.pages.size());
@@ -281,7 +277,23 @@ public class EditorRunTimeData {
         
         redraw(group, bounds);
         
-        return true;
+        return;
+    }
+    
+    public void forceOpenLesson() {
+        /* Get the lesson data */
+        lesson = xmlHandler.getLesson();
+        
+        /* Open the lesson */
+        setPageCount(lesson.pages.size());
+        setCurrentPage(0);
+        setLessonOpen(true);
+        
+        propertiesPane.update(lesson.pages.get(currentPage), null);
+        
+        redraw(group, bounds);
+        
+        parent.updateUI();
     }
     
     /** Save a lesson file */
