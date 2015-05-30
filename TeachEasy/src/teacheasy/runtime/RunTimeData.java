@@ -465,16 +465,21 @@ public class RunTimeData {
         } else {
             /* Render the no lesson loaded screen */
             renderer.renderUnLoaded();
-            displayRecentlyOpenedLessons();
-            listAvailableLessons();
+            
             
             Label title = new Label("Learn Easy");
             title.setFont(new Font("Calibri", 46));
-            group.getChildren().add(title);
+            
+            Rectangle box = new Rectangle(RenderUtil.LE_WIDTH - 300, RenderUtil.LE_HEIGHT - 200, Color.LIGHTBLUE);
+            box.relocate(150, 100);
+            box.setEffect(new DropShadow());
+            
+            group.getChildren().addAll(box, title);
             
             title.relocate((RenderUtil.LE_WIDTH/2) - 120, 125);
             
-            
+            displayRecentlyOpenedLessons();
+            listAvailableLessons();
         }
     }
 

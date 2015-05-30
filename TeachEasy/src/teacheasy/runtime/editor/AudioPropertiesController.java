@@ -36,6 +36,8 @@ public class AudioPropertiesController {
     
     /* The check box for the view progress property */
     private CheckBox viewProgressProperty;
+    private CheckBox autoPlayProperty;
+    private CheckBox loopProperty;
     
     /**
      * Constructor. 
@@ -64,6 +66,8 @@ public class AudioPropertiesController {
         
         /* Set up the view progress field */
         viewProgressProperty = PropertiesUtil.addBooleanField("viewProgress", "View Progress: ", viewProgressProperty, audioProperties, new BooleanPropertyChangedHandler());
+        autoPlayProperty = PropertiesUtil.addBooleanField("autoPlay", "Auto Play: ", autoPlayProperty, audioProperties, new BooleanPropertyChangedHandler());
+        loopProperty = PropertiesUtil.addBooleanField("loop", "Loop: ", loopProperty, audioProperties, new BooleanPropertyChangedHandler());
     }
 
     public void update(AudioObject nAudio) {        
@@ -78,11 +82,15 @@ public class AudioPropertiesController {
             yStartProperty.setText("");
             xEndProperty.setText("");
             viewProgressProperty.setSelected(false);
+            autoPlayProperty.setSelected(false);
+            loopProperty.setSelected(false);
         } else {
             xStartProperty.setText(String.valueOf(selectedAudio.getXStart()));
             yStartProperty.setText(String.valueOf(selectedAudio.getYStart()));
             xEndProperty.setText(String.valueOf(selectedAudio.getXEnd()));
             viewProgressProperty.setSelected(selectedAudio.isViewProgress());
+            autoPlayProperty.setSelected(selectedAudio.isAutoPlay());
+            loopProperty.setSelected(selectedAudio.isLoop());
         }
     }
     
@@ -142,6 +150,12 @@ public class AudioPropertiesController {
             switch(source.getId()) {
                 case "viewProgress":
                     selectedAudio.setViewProgress(source.isSelected());
+                    break;
+                case "autoPlay":
+                    selectedAudio.setAutoPlay(source.isSelected());
+                    break;
+                case "loop":
+                    selectedAudio.setLoop(source.isSelected());
                     break;
                 default:
                     break;

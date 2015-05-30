@@ -123,12 +123,8 @@ public class Renderer {
         /* Add the background */
         Rectangle bg = new Rectangle(bounds.getMaxX(), bounds.getMaxY(), Color.LIGHTGREY);
         bg.setEffect(new DropShadow());
-        
-        Rectangle box = new Rectangle(bounds.getMaxX() - 300, bounds.getMaxY() - 200, Color.LIGHTBLUE);
-        box.relocate(150, 100);
-        box.setEffect(new DropShadow());
-        
-        group.getChildren().addAll(bg, box);
+
+        group.getChildren().addAll(bg);
     }
     
     /** Clears the page, releasing memory if necessary */
