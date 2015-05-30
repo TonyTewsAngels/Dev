@@ -48,7 +48,7 @@ public class TELoginGUI  extends Application {
         this.primaryStage = primaryStage;
     
     	//Set title
-    	primaryStage.setTitle("Login GUI");
+    	primaryStage.setTitle("Teach Easy");
     
     	//Set GUI Layout
     	GridPane grid = new GridPane();

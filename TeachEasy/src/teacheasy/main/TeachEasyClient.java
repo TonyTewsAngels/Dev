@@ -715,7 +715,7 @@ public class TeachEasyClient extends Application {
         bottomBar.getChildren().addAll(prevPageBtn, pageList, nextPageBtn);
         
         /* Setup the window */
-        primaryStage.setTitle("TE_GUI_3");
+        primaryStage.setTitle("Teach Easy");
         primaryStage.setScene(scene);
         
         Bounds contentPanelBounds = contentPanel.getBoundsInParent();

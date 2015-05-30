@@ -48,7 +48,7 @@ public class LELoginGUI  extends Application {
         this.primaryStage = primaryStage;
         
     	//Set title
-    	primaryStage.setTitle("Login GUI");
+    	primaryStage.setTitle("Learn Easy");
     
     	//Set GUI Layout
     	GridPane grid = new GridPane();
