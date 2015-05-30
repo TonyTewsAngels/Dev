@@ -4,6 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import teacheasy.data.ImageObject;
+import teacheasy.runtime.editor.VideoPropertiesController.ButtonPressedHandler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -34,6 +35,7 @@ public class ImagePropertiesController {
     
     /* The button for choosing a new file */
     private Button fileButton;
+    private Button URLButton;
     
     /**
      * Constructor. 
@@ -54,6 +56,7 @@ public class ImagePropertiesController {
         
         /* Set up the file select button */
         fileButton = PropertiesUtil.addFileField("file", "File: ", fileButton, imageProperties, new ButtonPressedHandler());
+        URLButton = PropertiesUtil.addFileField("URL", "URL: ", URLButton, imageProperties, new ButtonPressedHandler());
         
         /* Set up the property fields */
         xStartProperty = PropertiesUtil.addPropertyField("xStart", "X Start: ", xStartProperty, imageProperties, new PropertyChangedHandler());
@@ -130,6 +133,8 @@ public class ImagePropertiesController {
                 selectedImage.setSourcefile(PropertiesUtil.validateFile(selectedImage.getSourcefile(), "Images", "*.png", "*.jpg", "*.jpeg", "*.JPG", "*.gif", "*.bmp"));
                 update();
                 parent.redraw();
+            } else if(source.getId() == "URL") {
+                new URLWindow(selectedImage, parent);
             }
         }
     }

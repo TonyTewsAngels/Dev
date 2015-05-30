@@ -33,6 +33,7 @@ public class VideoPropertiesController {
     
     /* The button for choosing a new file */
     private Button fileButton;
+    private Button URLButton;
     
     /* The check boxes for the autoplay and loop settings */
     private CheckBox autoPlayProperty;
@@ -59,6 +60,7 @@ public class VideoPropertiesController {
         
         /* Set up the file select button */
         fileButton = PropertiesUtil.addFileField("file", "File: ", fileButton, videoProperties, new ButtonPressedHandler());
+        URLButton = PropertiesUtil.addFileField("URL", "URL: ", URLButton, videoProperties, new ButtonPressedHandler());
         
         /* Set up the property fields */
         xStartProperty = PropertiesUtil.addPropertyField("xStart", "X Start: ", xStartProperty, videoProperties, new PropertyChangedHandler());
@@ -147,6 +149,8 @@ public class VideoPropertiesController {
                 if(!redrawBlock) {
                     parent.redraw();
                 }
+            } else if(source.getId() == "URL") {
+                new URLWindow(selectedVideo, parent);
             }
         }
     }

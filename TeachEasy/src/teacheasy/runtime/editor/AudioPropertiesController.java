@@ -5,6 +5,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import teacheasy.data.AudioObject;
+import teacheasy.runtime.editor.VideoPropertiesController.ButtonPressedHandler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -33,9 +34,12 @@ public class AudioPropertiesController {
     
     /* The button for choosing a new file */
     private Button fileButton;
+    private Button URLButton;
     
     /* The check box for the view progress property */
     private CheckBox viewProgressProperty;
+    private CheckBox autoPlayProperty;
+    private CheckBox loopProperty;
     
     /**
      * Constructor. 
@@ -56,6 +60,7 @@ public class AudioPropertiesController {
         
         /* Set up the file select button */
         fileButton = PropertiesUtil.addFileField("file", "File: ", fileButton, audioProperties, new ButtonPressedHandler());
+        URLButton = PropertiesUtil.addFileField("URL", "URL: ", URLButton, audioProperties, new ButtonPressedHandler());
         
         /* Set up the property fields */
         xStartProperty = PropertiesUtil.addPropertyField("xStart", "X Start: ", xStartProperty, audioProperties, new PropertyChangedHandler());
@@ -64,6 +69,8 @@ public class AudioPropertiesController {
         
         /* Set up the view progress field */
         viewProgressProperty = PropertiesUtil.addBooleanField("viewProgress", "View Progress: ", viewProgressProperty, audioProperties, new BooleanPropertyChangedHandler());
+        autoPlayProperty = PropertiesUtil.addBooleanField("autoPlay", "Auto Play: ", autoPlayProperty, audioProperties, new BooleanPropertyChangedHandler());
+        loopProperty = PropertiesUtil.addBooleanField("loop", "Loop: ", loopProperty, audioProperties, new BooleanPropertyChangedHandler());
     }
 
     public void update(AudioObject nAudio) {        
@@ -78,11 +85,15 @@ public class AudioPropertiesController {
             yStartProperty.setText("");
             xEndProperty.setText("");
             viewProgressProperty.setSelected(false);
+            autoPlayProperty.setSelected(false);
+            loopProperty.setSelected(false);
         } else {
             xStartProperty.setText(String.valueOf(selectedAudio.getXStart()));
             yStartProperty.setText(String.valueOf(selectedAudio.getYStart()));
             xEndProperty.setText(String.valueOf(selectedAudio.getXEnd()));
             viewProgressProperty.setSelected(selectedAudio.isViewProgress());
+            autoPlayProperty.setSelected(selectedAudio.isAutoPlay());
+            loopProperty.setSelected(selectedAudio.isLoop());
         }
     }
     
@@ -126,6 +137,8 @@ public class AudioPropertiesController {
                 selectedAudio.setSourcefile(PropertiesUtil.validateFile(selectedAudio.getSourcefile(), "Audio: ", "*.wav", "*.mp3"));
                 update();
                 parent.redraw();
+            } else if(source.getId() == "URL") {
+                new URLWindow(selectedAudio, parent);
             }
         }
     }
@@ -142,6 +155,12 @@ public class AudioPropertiesController {
             switch(source.getId()) {
                 case "viewProgress":
                     selectedAudio.setViewProgress(source.isSelected());
+                    break;
+                case "autoPlay":
+                    selectedAudio.setAutoPlay(source.isSelected());
+                    break;
+                case "loop":
+                    selectedAudio.setLoop(source.isSelected());
                     break;
                 default:
                     break;

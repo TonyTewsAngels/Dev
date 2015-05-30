@@ -125,6 +125,7 @@ public class GraphicPropertiesController {
             shadowProperty.setSelected(false);
             graphicColorProperty.setValue(Color.WHITE);
             lineColorProperty.setValue(Color.WHITE);
+            shadingColorProperty.setValue(Color.WHITE);
             typeProperty.setValue("");
             shadingProperty.setValue("");
         } else {
@@ -138,6 +139,7 @@ public class GraphicPropertiesController {
             shadowProperty.setSelected(selectedGraphic.isShadow());
             graphicColorProperty.setValue(RenderUtil.colorFromString(selectedGraphic.getGraphicColour()));
             lineColorProperty.setValue(RenderUtil.colorFromString(selectedGraphic.getLineColor()));
+            shadingColorProperty.setValue(RenderUtil.colorFromString(selectedGraphic.getShadingColor()));
             typeProperty.setValue(selectedGraphic.getGraphicType().toString());
             shadingProperty.setValue(selectedGraphic.getShading().toString());
         }

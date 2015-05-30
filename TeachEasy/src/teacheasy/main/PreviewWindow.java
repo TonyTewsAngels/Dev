@@ -107,7 +107,7 @@ public class PreviewWindow {
         gridBot.setStyle("-fx-background-color: Grey;");
         
         /* Setup the window */
-        primaryStage.setTitle("Learn Easy");
+        primaryStage.setTitle("Preview");
         primaryStage.setScene(scene);
         
         /* Create a buttons */
