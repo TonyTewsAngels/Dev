@@ -1,1 +1,2 @@
-PaulMitchell~moreladies~paul.mitchell@york.ac.uk
+PaulMitchell~password~paul.mitchell@york.ac.uk
+StuartPorter~password~staurt.porter@york.ac.uk
