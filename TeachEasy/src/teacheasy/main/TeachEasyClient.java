@@ -8,6 +8,7 @@ import teacheasy.render.RenderUtil;
 import teacheasy.runtime.EditorRunTimeData;
 import teacheasy.runtime.editor.LessonInfoWindow;
 import teacheasy.runtime.editor.TemplateController.TemplateType;
+import teacheasy.runtime.editor.URLWindow;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -1018,9 +1019,6 @@ public class TeachEasyClient extends Application {
                 editorRuntimeData.removeObject();
             } else if(ke.getCode() == KeyCode.O && ke.isControlDown()) {
                 fileOpenPressed();
-            } else if(ke.getCode() == KeyCode.N) {
-                editorRuntimeData.newPage(null);
-                updateUI();
             } else if(ke.getCode() == KeyCode.C && ke.isControlDown()) {
                 editorRuntimeData.copyObject();
             } else if(ke.getCode() == KeyCode.V && ke.isControlDown()) {

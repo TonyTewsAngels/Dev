@@ -5,6 +5,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import teacheasy.data.AudioObject;
+import teacheasy.runtime.editor.VideoPropertiesController.ButtonPressedHandler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -33,6 +34,7 @@ public class AudioPropertiesController {
     
     /* The button for choosing a new file */
     private Button fileButton;
+    private Button URLButton;
     
     /* The check box for the view progress property */
     private CheckBox viewProgressProperty;
@@ -58,6 +60,7 @@ public class AudioPropertiesController {
         
         /* Set up the file select button */
         fileButton = PropertiesUtil.addFileField("file", "File: ", fileButton, audioProperties, new ButtonPressedHandler());
+        URLButton = PropertiesUtil.addFileField("URL", "URL: ", URLButton, audioProperties, new ButtonPressedHandler());
         
         /* Set up the property fields */
         xStartProperty = PropertiesUtil.addPropertyField("xStart", "X Start: ", xStartProperty, audioProperties, new PropertyChangedHandler());
@@ -134,6 +137,8 @@ public class AudioPropertiesController {
                 selectedAudio.setSourcefile(PropertiesUtil.validateFile(selectedAudio.getSourcefile(), "Audio: ", "*.wav", "*.mp3"));
                 update();
                 parent.redraw();
+            } else if(source.getId() == "URL") {
+                new URLWindow(selectedAudio, parent);
             }
         }
     }
