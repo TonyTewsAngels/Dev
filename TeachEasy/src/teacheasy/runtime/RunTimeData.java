@@ -369,7 +369,7 @@ public class RunTimeData {
     }
 
     /** Open a lesson file */
-    public boolean openLesson() {
+    public void openLesson() {
         /* Create a file chooser */
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(
@@ -398,7 +398,7 @@ public class RunTimeData {
 
         /* Check that the file is not null */
         if (file == null) {
-            return false;
+            return;
         }
         
         homePage.setRecentlyOpened(file.toString());
@@ -412,18 +412,12 @@ public class RunTimeData {
 
         /* If any errors were found during parsing, do not load the lesson */
         if (errorList.size() > 0) {
-            for (int i = 0; i < errorList.size(); i++) {
-                System.out.println(errorList.get(i));
-            }
-        }
-
-        if (XMLNotification.countLevel(errorList, Level.ERROR) > 0) {
-            return false;
+            new XMLErrorWindow(errorList, null, this);
+            return;
         }
 
         /* Get the lesson data */
         lesson = xmlHandler.getLesson();
-        lesson.debugPrint();
 
         /* Open the lesson */
         setPageCount(lesson.pages.size());
@@ -434,7 +428,24 @@ public class RunTimeData {
         progressTracker = new ProgressTracker(pageCount);
         
         redraw(group, bounds);
-        return true;
+        return;
+    }
+    
+    public void forceOpenLesson() {
+        /* Get the lesson data */
+        lesson = xmlHandler.getLesson();
+
+        /* Open the lesson */
+        setPageCount(lesson.pages.size());
+        setCurrentPage(0);
+        setLessonOpen(true);
+        
+        /*This needs moving somewhere more appropriate!*/
+        progressTracker = new ProgressTracker(pageCount);
+        
+        redraw(group, bounds);
+        
+        parent.updateUI();
     }
 
     /** Close the current lesson */

@@ -12,6 +12,7 @@ import teacheasy.runtime.editor.LessonInfoWindow;
 import teacheasy.runtime.editor.TemplateController.TemplateType;
 import teacheasy.runtime.editor.URLWindow;
 import teacheasy.xml.XMLErrorWindow;
+import teacheasy.xml.XMLHandler;
 import teacheasy.xml.util.XMLNotification;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -809,14 +810,9 @@ public class TeachEasyClient extends Application {
     
     /** File->Open menu option functionality */
     public void fileOpenPressed() {
-        /* Open the file */
-        if(editorRuntimeData.openLesson()) {
-            /* Opened Successfully */
-        } else {
-            System.out.print("Parse Failed");
-        }
         
-        /* Redraw the window */
+        editorRuntimeData.openLesson();
+        
         updateUI();
     }
     

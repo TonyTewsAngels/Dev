@@ -232,7 +232,7 @@ public class EditorRunTimeData {
     }
     
     /** Open a lesson file */
-    public boolean openLesson() {        
+    public void openLesson() {        
         /* Create a file chooser */
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new ExtensionFilter("XML Files", "*.xml"));
@@ -250,7 +250,7 @@ public class EditorRunTimeData {
         if(file == null) {
             ArrayList<XMLNotification> errorList = new ArrayList<XMLNotification>();
             errorList.add(new XMLNotification(Level.ERROR, "File Not Found"));
-            return false;
+            return;
         }
         
         /* Set the recent read Path */
@@ -261,13 +261,8 @@ public class EditorRunTimeData {
         
         /* If any errors were found during parsing, do not load the lesson */
         if(errorList.size() > 0) {   
-            for(int i = 0; i < errorList.size(); i++) {
-                System.out.println(errorList.get(i));
-            }
-        }
-        
-        if(XMLNotification.countLevel(errorList, Level.ERROR) > 0) {   
-            return false;
+            new XMLErrorWindow(errorList, this, null);
+            return;
         }
         
         /* Get the lesson data */
@@ -282,7 +277,7 @@ public class EditorRunTimeData {
         
         redraw(group, bounds);
         
-        return true;
+        return;
     }
     
     public void forceOpenLesson() {
@@ -297,6 +292,8 @@ public class EditorRunTimeData {
         propertiesPane.update(lesson.pages.get(currentPage), null);
         
         redraw(group, bounds);
+        
+        parent.updateUI();
     }
     
     /** Save a lesson file */

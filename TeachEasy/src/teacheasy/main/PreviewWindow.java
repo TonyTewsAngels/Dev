@@ -236,19 +236,6 @@ public class PreviewWindow {
         updateUI();
     }
     
-    public void openFilePressed() {
-        /* Open the file */
-        if(runtimeData.openLesson()) {
-            /* Opened Successfully */
-        } else {
-            System.out.print("Parse Failed");
-        }
-    }
-    
-    public void closeFilePressed() {
-        runtimeData.closeLesson();
-    }
-    
     public void nextPageButtonPressed() {
         runtimeData.setPageDirection(true);
         

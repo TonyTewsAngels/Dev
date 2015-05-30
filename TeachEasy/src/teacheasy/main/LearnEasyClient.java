@@ -256,11 +256,7 @@ public class LearnEasyClient extends Application {
     
     public void openFilePressed() {
         /* Open the file */
-        if(runtimeData.openLesson()) {
-            /* Opened Successfully */
-        } else {
-            System.out.print("Parse Failed");
-        }
+        runtimeData.openLesson();
     }
     
     public void closeFilePressed() {

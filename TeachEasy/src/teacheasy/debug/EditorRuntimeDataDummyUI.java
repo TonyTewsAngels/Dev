@@ -235,11 +235,7 @@ public class EditorRuntimeDataDummyUI extends Application {
     /** File->Open menu option functionality */
     public void fileOpenPressed() {
         /* Open the file */
-        if(editorRunTimeData.openLesson()) {
-            /* Opened Successfully */
-        } else {
-            System.out.print("Parse Failed");
-        }
+        editorRunTimeData.openLesson();
         
         /* Redraw the window */
         updateUI();
