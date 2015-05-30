@@ -85,7 +85,7 @@ public class Renderer {
             
             /* Act based on type */
             if(pageObject == null) {
-                System.out.println(i);
+                //System.out.println(i);
             }
             switch(pageObject.getType()) {
                 case TEXT:
@@ -121,9 +121,14 @@ public class Renderer {
         clearPage();
         
         /* Add the background */
-        Rectangle bg = new Rectangle(bounds.getMaxX(), bounds.getMaxY(), Color.WHITE);
+        Rectangle bg = new Rectangle(bounds.getMaxX(), bounds.getMaxY(), Color.LIGHTGREY);
         bg.setEffect(new DropShadow());
-        group.getChildren().add(bg);
+        
+        Rectangle box = new Rectangle(bounds.getMaxX() - 300, bounds.getMaxY() - 200, Color.LIGHTBLUE);
+        box.relocate(150, 100);
+        box.setEffect(new DropShadow());
+        
+        group.getChildren().addAll(bg, box);
     }
     
     /** Clears the page, releasing memory if necessary */

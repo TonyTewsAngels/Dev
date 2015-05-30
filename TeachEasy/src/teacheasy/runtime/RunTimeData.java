@@ -27,6 +27,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.VBoxBuilder;
@@ -43,6 +44,7 @@ import learneasy.trackProgress.ProgressTracker;
 import teacheasy.data.*;
 import teacheasy.main.LearnEasyClient;
 import teacheasy.main.PreviewWindow;
+import teacheasy.render.RenderUtil;
 import teacheasy.render.Renderer;
 import teacheasy.xml.*;
 import teacheasy.xml.util.XMLNotification;
@@ -465,6 +467,14 @@ public class RunTimeData {
             renderer.renderUnLoaded();
             displayRecentlyOpenedLessons();
             listAvailableLessons();
+            
+            Label title = new Label("Learn Easy");
+            title.setFont(new Font("Calibri", 46));
+            group.getChildren().add(title);
+            
+            title.relocate((RenderUtil.LE_WIDTH/2) - 120, 125);
+            
+            
         }
     }
 
@@ -547,7 +557,7 @@ public class RunTimeData {
             }
         }
         
-        vbox.relocate(500, 0);
+        vbox.relocate(675, 265);
         group.getChildren().add(vbox);
     }
     
@@ -581,10 +591,14 @@ public class RunTimeData {
             availableLessonLinks.get(i).setOnAction(new HyperlinkHandler(availableLessonLinks.get(i)));
             availableLessonLinks.get(i).setFont(new Font("Calibri", 14));
             vbox.getChildren().add(availableLessonLinks.get(i));
+            
+            if(i > 8) {
+                i = listOfLessons.length;
+            }
         }
         
         /* Place the list on the top left corner of the learnEasy screen */
-        vbox.relocate(0, 0);
+        vbox.relocate(175, 265);
         group.getChildren().add(vbox);
         
     }
