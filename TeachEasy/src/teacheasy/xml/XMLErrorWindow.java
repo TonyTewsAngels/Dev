@@ -6,6 +6,8 @@ import teacheasy.runtime.EditorRunTimeData;
 import teacheasy.runtime.RunTimeData;
 import teacheasy.xml.util.XMLNotification;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -54,6 +56,7 @@ public class XMLErrorWindow {
         HBox showErrorRow = new HBox(10);
         Label show = new Label("Show Warnings");
         CheckBox showCheck = new CheckBox();
+        showCheck.selectedProperty().addListener(new CheckboxChangeListener());
         showErrorRow.getChildren().addAll(show, showCheck);
         
         contentBox.getChildren().addAll(title, btnRow, showErrorRow);
@@ -81,5 +84,14 @@ public class XMLErrorWindow {
                 break;
             }
         }
+    }
+    
+    public class CheckboxChangeListener implements ChangeListener<Boolean> {
+        @Override
+        public void changed(ObservableValue<? extends Boolean> arg0,
+                            Boolean oldVal, Boolean newVal) {
+            System.out.println(newVal);
+        }
+        
     }
 }
