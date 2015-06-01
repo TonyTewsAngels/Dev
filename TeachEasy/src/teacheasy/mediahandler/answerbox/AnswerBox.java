@@ -62,23 +62,31 @@ public class AnswerBox {
     /**
      * A constructor to create answer box object
      * 
-     * @param nXStart  The x coordinate of the object
-     * @param nYStart The y coordinate of the object
-     * @param nCharacterLimit Maximum allowed characters 
-     * @param nRetry To allow retry
-     * @param nMarks Possible marks for a correct answer
-     * @param nIsNumerical Whether or not numerical input is expected
+     * @param nXStart
+     *            The x coordinate of the object
+     * @param nYStart
+     *            The y coordinate of the object
+     * @param nCharacterLimit
+     *            Maximum allowed characters
+     * @param nRetry
+     *            To allow retry
+     * @param nMarks
+     *            Possible marks for a correct answer
+     * @param nIsNumerical
+     *            Whether or not numerical input is expected
      * @param nGroup
-     * @param nUpperBound Upper range of numerical solution
-     * @param nLowerBound Lower range of numerical solution
-     * @param nAnswers Solutions to questions
+     * @param nUpperBound
+     *            Upper range of numerical solution
+     * @param nLowerBound
+     *            Lower range of numerical solution
+     * @param nAnswers
+     *            Solutions to questions
      */
     public AnswerBox(double nXStart, double nYStart, int nCharacterLimit,
             boolean nRetry, int nMarks, boolean nIsNumerical, Group nGroup,
             float nUpperBound, float nLowerBound, ArrayList<Answer> nAnswers) {
 
-      
-        if (nMarks > 0){
+        if (nMarks > 0) {
             this.marks = nMarks;
         } else {
             this.marks = 0;
@@ -148,15 +156,16 @@ public class AnswerBox {
         group.getChildren().add(box);
     }
 
-   /**
-    * This method stores the potential answers in an array. When an answer is
-    * provided the loop compares the entered answer against the possible
-    * answers in the array. It also allows/disallows retry depending on the
-    * value of the variable retry.
-    * 
-    * @param nMarks Awarded marks for a correct answer
-    * @return true for a correct answer
-    */
+    /**
+     * This method stores the potential answers in an array. When an answer is
+     * provided the loop compares the entered answer against the possible
+     * answers in the array. It also allows/disallows retry depending on the
+     * value of the variable retry.
+     * 
+     * @param nMarks
+     *            Awarded marks for a correct answer
+     * @return true for a correct answer
+     */
     public boolean checkAnswer(int nMarks) {
         boolean isCorrect = false;
 
@@ -166,9 +175,9 @@ public class AnswerBox {
                  * Checks if there is at least a character and compares user
                  * submitted answers with the list of available answers
                  */
-                if (answerField.getText().length() >= 1 && 
-                    answerField.getText().equalsIgnoreCase(a.getText())) {
-                    
+                if (answerField.getText().length() >= 1
+                        && answerField.getText().equalsIgnoreCase(a.getText())) {
+
                     /* Award marks */
                     setAwardedMarks(getAwardedMarks() + marks);
 
@@ -213,13 +222,13 @@ public class AnswerBox {
 
         /* Lock answer box depending on the value of retry */
         answerField.setEditable(retry);
-        
+
         /* Disable answer box depending on the value of retry */
         answerField.setDisable(!retry);
-        
+
         /* Disable button depending on the value of retry */
         checkAnswerButton.setDisable(!retry);
-        
+
         return isCorrect;
     }
 
@@ -252,29 +261,33 @@ public class AnswerBox {
         return markCollated;
     }
 
-    /** method for setting markCollated */
+    /** Sets markCollated */
     public void setMarkCollated(boolean markCollated) {
         this.markCollated = markCollated;
     }
 
+    /** Gets the awardedMarks */
     public int getAwardedMarks() {
         return awardedMarks;
     }
 
+    /** Sets awardedMarks */
     public void setAwardedMarks(int awardedMarks) {
         this.awardedMarks = awardedMarks;
     }
-    
+
+    /** Gets height of the box */
     public double getHeight() {
         return box.getHeight();
     }
-    
+
+    /** Gets width of the box */
     public double getWidth() {
         return box.getWidth();
     }
 
     /**
-     * Button Event Handler Class
+     * Button event handler class
      */
     public class ButtonEventHandler implements EventHandler<ActionEvent> {
         @Override
@@ -305,7 +318,7 @@ public class AnswerBox {
 
                 /* Display the outcome */
                 displayFeedback();
-            } else if(key.getCode().equals(KeyCode.ESCAPE)) {
+            } else if (key.getCode().equals(KeyCode.ESCAPE)) {
                 answerField.getParent().requestFocus();
             }
         }
