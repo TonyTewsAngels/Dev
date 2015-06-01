@@ -1,38 +1,46 @@
 /*
- * Sam Hall and Sam Raeburn
+ * Sam Raeburn & Sam Hall
  * 
  * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
- * 
  */
 package teacheasy.data;
 
 /**
- * A class to hold Picture Data
+ * Encapsulates the data that describes an Image Object
+ * as defined in the TeachEasy digital lesson XML format.
+ * Extends the page object supertype.
  * 
- * @author 	sh1157 sr896
- * @version	1.2 13 Feb 2015
+ * @author  Sam Raeburn and Sam Hall
+ * @version 1.2 13 Feb 2015
  */
 public class ImageObject extends PageObject {
+    
+    /** Sourcefile location as a string */
 	private String sourcefile;
-	private float xEnd, yEnd;
-	private float xScaleFactor, yScaleFactor;
+	
+	/* Data variables */
+	private float xEnd;
+	private float yEnd;
+	private float xScaleFactor; // Compatibility only
+	private float yScaleFactor; // Compatibility only
 	private float rotation;
 	private float startTime;
 	private float duration;
 	
 	/** 
-	 * Constructor Method
+	 * Constructor to create the data object with the data parsed
+     * from XML.
 	 * 
-	 * @param nXStart Relative X start position.
-	 * @param nYStart Relative Y start position.
-	 * @param nXEnd Relative X end position.
-	 * @param nYEnd Relative Y end position.
+	 * @param nXStart Relative X axis start position.
+	 * @param nYStart Relative Y axis start position.
+	 * @param nXEnd Relative X axis end position.
+	 * @param nYEnd Relative Y axis end position.
 	 * @param nSourcefile Image file path.
 	 * @param nXScaleFactor X Scale as a proportion of image size.
 	 * @param nYScaleFactor Y Scale as a proportion of image size.
 	 * @param nRotation Rotation in degrees.
-	 * @param nStartTime Start time of object.
-	 * @param nDuration End time of object.
+	 * @param nStartTime Start time of object (not used).
+	 * @param nDuration End time of object (not used).
 	 */
 	public ImageObject (float nXStart, float nYStart,
 	                    float nXEnd, float nYEnd,
@@ -41,10 +49,10 @@ public class ImageObject extends PageObject {
                         float nRotation,
                         float nStartTime, float nDuration) {
     
-        /* Must call the constructor method of superclass */
+        /* Call the superconstructor */
         super(PageObjectType.IMAGE, nXStart, nYStart);
         
-        /* Instantiate class level variables */
+        /* Instantiate class level data variables */
         this.sourcefile = nSourcefile;
         this.xEnd = nXEnd;
         this.yEnd = nYEnd;
@@ -55,107 +63,95 @@ public class ImageObject extends PageObject {
         this.startTime = nStartTime;
     }
 	
-	/** Old Compatibility Constructor Method. Deprecated. */
-	public ImageObject (float nXStart, float nYStart, String nSourcefile,
-						float nXScaleFactor, float nYScaleFactor, float nRotation) {
-		
-		/* Must call the constructor method of superclass */
-		super(PageObjectType.IMAGE, nXStart, nYStart);
-		
-		/* Instantiate class level variables */
-		this.sourcefile = nSourcefile;
-		this.xScaleFactor = nXScaleFactor;
-		this.yScaleFactor = nYScaleFactor;
-		this.rotation = nRotation;
-	}
-	
-	/** Method to get the URL */
+	/** Gets the sourcefile file path */
 	public String getSourcefile() {
 		return sourcefile;
 	}
 	
-	/** Method to set the URL */
+	/** Sets the sourcefile file path */
 	public void setSourcefile(String nSourcefile) {
 		this.sourcefile = nSourcefile;
 	}
 	
-	/** Method to get the X End position */
-	public float getXEnd() {
-	    return xEnd;
-	}
-	
-	/** Method to set the X End position */
-	public void setXEnd(float nXEnd) {
-	    this.xEnd = nXEnd;
-	}
-	
-	/** Method to get the Y End position */
+	/** Gets the relative X axis end position */
+    public float getXEnd() {
+        return xEnd;
+    }
+    
+    /** Sets the relative X axis end positon */
+    public void setXEnd(float nXEnd) {
+        xEnd = nXEnd;
+    }
+    
+    /** Gets the relative Y axis end position */
     public float getYEnd() {
         return yEnd;
     }
-    
-    /** Method to set the Y End position */
-    public void setYEnd(float nXEnd) {
-        this.yEnd = nXEnd;
+
+    /** Sets the relative Y axis end position */
+    public void setYEnd(float nYEnd) {
+        yEnd = nYEnd;
     }
 	
-	/** Method to get the x scale factor */
+	/** Gets the X axis scale factor */
 	public float getxScaleFactor() {
 		return xScaleFactor;
 	}
 	
-	/** Method to set the x scale factor */
+	/** Sets the X axis scale factor */
 	public void setxScaleFactor(float nXScaleFactor) {
 		this.xScaleFactor = nXScaleFactor;
 	}
 	
-	/** Method to get the y scale factor */
+	/** Gets the Y axis scale factor */
 	public float getyScaleFactor() {
 		return yScaleFactor;
 	}
 	
-	/** Method to set the y scale factor */
+	/** Sets the Y axis scale factor */
 	public void setyScaleFactor(float nYScaleFactor) {
 		this.yScaleFactor = nYScaleFactor;
 	}
 	
-	/** Method to get the rotation */
+	/** Gets the rotation in degrees */
 	public float getRotation() {
 		return rotation;
 	}
 	
-	/** Method to set the rotation */
+	/** Sets the rotation in degrees */
 	public void setRotation(float nRotation) {
 		this.rotation = nRotation;
 	}
 	
-	/** Method to get the duration */
-    public float getDuration() {
-        return duration;
-    }
-    
-    /** Method to set the duration */
-    public void setDuration(float nDuration) {
-        this.duration = nDuration;
-    }
-    
-    /** Method to get the start time */
+	/** Gets the start time (not used) */
     public float getStartTime() {
         return startTime;
     }
-    
-    /** Method to set the X End position */
+
+    /** Sets the start time (not used) */
     public void setStartTime(float nStartTime) {
         this.startTime = nStartTime;
     }
 	
+	/** Gets the duration (not used) */
+    public float getDuration() {
+        return duration;
+    }
+    
+    /** Sets the duration (not used) */
+    public void setDuration(float nDuration) {
+        this.duration = nDuration;
+    }
+    
 	/** Prints information about the object to the screen */
 	public void debugPrint() {
+	    /* Print the supertype data  */
 	    super.debugPrint();
 	    
+	    /* Print the data variables */
 	    System.out.println(", Sourcefile " + sourcefile + 
-	                       ", xScale " + xScaleFactor + 
-	                       ", yScale " + yScaleFactor + 
+	                       ", X End " + xEnd + 
+	                       ", Y End " + yEnd + 
 	                       ", Rotation " + rotation + ".\n");
 	}
 }

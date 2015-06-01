@@ -127,7 +127,7 @@ public class NewObjectController {
         
         String filePath = audioFile.getAbsolutePath();
         
-        AudioObject audio = new AudioObject(0.0f, 0.0f, true, filePath);
+        AudioObject audio = new AudioObject(0.0f, 0.0f, 0.35f, filePath, 0.0f, true, false, false);
         
         page.pageObjects.add(audio);
     }
@@ -260,9 +260,13 @@ public class NewObjectController {
      */
     public static void copyAudioObject(Page page, AudioObject audio) {
         AudioObject newAudio = new AudioObject(audio.getXStart(),
-                                               audio.getXEnd(), 
-                                               audio.isViewProgress(), 
-                                               audio.getSourcefile());
+                                               audio.getYStart(),
+                                               audio.getXEnd(),
+                                               audio.getSourcefile(),
+                                               audio.getStartTime(),
+                                               audio.isViewProgress(),
+                                               audio.isAutoPlay(),
+                                               audio.isLoop());
         
         page.pageObjects.add(newAudio);
     }

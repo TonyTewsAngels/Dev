@@ -13,11 +13,11 @@ import teacheasy.data.PageObject.PageObjectType;
 import teacheasy.data.lessondata.*;
 
 /**
- * This class encapsulates a single Lesson
- * within the TeachEasy product.
+ * Encapsulates the data that describes a lesson
+ * as defined in the TeachEasy digital lesson XML format.
  * 
- * @version     1.1 08 Feb 2015
- * @author      Alistair Jewers
+ * @author  Alistair Jewers
+ * @version 1.1 08 Feb 2015
  */
 public class Lesson {
 	
@@ -33,7 +33,14 @@ public class Lesson {
     /** Grade Settings Object */
     public LessonGradeSettings gradeSettings;
 
-    /** Constructor Method */
+    /**
+     * Constructor to create the data object with the data parsed
+     * from XML.
+     * 
+     * @param nLessonInfo The lesson information object.
+     * @param nDFSettings The default lesson settings object.
+     * @param nGradeSettings The grade settings object.
+     */
     public Lesson(LessonInfo nLessonInfo, 
                   LessonDefaultSettings nDFSettings,
                   LessonGradeSettings nGradeSettings) {
@@ -41,17 +48,19 @@ public class Lesson {
         /* Instantiate the pages container */
         pages = new ArrayList<Page>();
     		
-        /* Instantiate the metadata object */
+        /* Set the lesson information object reference */
         this.lessonInfo = nLessonInfo;
 
-        /* Instantiate the default settings */
+        /* Set the default settings object reference */
         this.defaultSettings = nDFSettings;
 		
-        /* Instantiate the grade settings */
+        /* Set the grade settings object reference */
         this.gradeSettings = nGradeSettings;
     }
 	
-    /** Blank constructor */
+    /** 
+     * Blank constructor 
+     */
     public Lesson() {
         /* Instantiate the pages container */
         pages = new ArrayList<Page>();
@@ -70,29 +79,27 @@ public class Lesson {
     }
     
     /**
-     * Method to count the total marks in a lesson.
+     * Counts the total marks in a lesson.
      * 
      * @return The total number of marks available in this lesson.
      */
     public int getTotalMarks() {
-        /* Running total */
+        /* Running total variable */
         int total = 0;
         
         /* Loop through every page */
-        for(int i = 0; i < pages.size(); i++) {
-            Page page = pages.get(i);
-            
+        for(Page page : pages) {            
             /* Loop through every page object */
-            for(int j = 0; j < page.pageObjects.size(); j++) {
-                PageObject object = page.getObject(j);
-                
-                /* Check for the two mark awarding object types */
+            for(PageObject object : page.pageObjects) {                
+                /* Check for the two question object types */
                 if(object.getType() == PageObjectType.MULTIPLE_CHOICE) {
+                    /* Type cast to access variables */
                     MultipleChoiceObject mchoice = (MultipleChoiceObject)object;
                     
                     /* Add to the running total */
                     total += mchoice.getMarks();
                 } else if(object.getType() == PageObjectType.ANSWER_BOX) {
+                    /* Type cast to access variables */
                     AnswerBoxObject answerbox = (AnswerBoxObject)object;
                     
                     /* Add to the running total */
@@ -101,11 +108,11 @@ public class Lesson {
             }
         }
         
-        /* Return the running total */
+        /* Return the total */
         return total;
     }
     
-    /** Prints the Lesson object data to console */
+    /** Prints the data in the lesson object to the console */
     public void debugPrint() {
         System.out.println("Author: " + lessonInfo.getAuthor());
         System.out.println("Version: " + lessonInfo.getVersion());
@@ -125,8 +132,9 @@ public class Lesson {
         
         System.out.println("Page Count: " + pages.size() + "\n");
         
-        for(int i = 0; i < pages.size(); i++) {
-            pages.get(i).debugPrint();
+        /* Print the data of each page */
+        for(Page page : pages) {
+            page.debugPrint();
         }
     }
 }

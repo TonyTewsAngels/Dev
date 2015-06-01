@@ -6,14 +6,13 @@
  */
 package teacheasy.data;
 
-import teacheasy.xml.XMLElement;
-
 /**
- * This class encapsulates a single object 
- * on a page.
+ * Encapsulates the data that describes a Page Object 
+ * as defined in the TeachEasy digital lesson XML format.
+ * Extended by all the various page object types.
  * 
- * @version 	1.0 05 Feb 2015
- * @author 		Alistair Jewers
+ * @version 1.0 05 Feb 2015
+ * @author  Alistair Jewers
  */
 public abstract class PageObject {
 	
@@ -31,44 +30,53 @@ public abstract class PageObject {
 	/** The type of this page object */
 	private PageObjectType type;
 	
-	/** Relative X and Y position, measured from top left */
+	/** 
+	 * Relative X axis start position, 
+	 * measured from top left as a proportion of the page. 
+	 */
 	private float xStart;
+	
+	/** 
+     * Relative Y axis start position, 
+     * measured from top left as a proportion of the page. 
+     */
 	private float yStart;
 	
 	/**
-	 * Constructor Method
+	 * Constructor to initialise the super type data.
 	 * 
-	 * @param nType - The type of this page object
-	 * @param nXStart - Relative X position
-	 * @param nYStart - Relative Y position
+	 * @param nType The type of this page object.
+	 * @param nXStart Relative X axis start position.
+	 * @param nYStart Relative Y axis start position.
 	 */
 	public PageObject(PageObjectType nType, float nXStart, float nYStart) {
+	    /* Initialise the data variables */
 		this.type = nType;
 		this.xStart = nXStart;
 		this.yStart = nYStart;
 	}
 	
-	/** Get the xstart position */
+	/** Gets the relative X axis start position */
 	public float getXStart() {
 	    return xStart;
 	}
 	
-	/** Get the ystart position */
+	/** Sets the relative X axis start position */
+	public void setXStart(float nXStart) {
+        this.xStart = nXStart;
+    }
+	
+	/** Gets the relative Y axis start position */
 	public float getYStart() {
 	    return yStart;
 	}
-	
-	/** Set the xstart position */
-    public void setXStart(float nXStart) {
-        this.xStart = nXStart;
-    }
-    
-    /** Set the ystart position */
+
+	/** Sets the relative Y axis start position */
     public void setYStart(float nYStart) {
         this.yStart = nYStart;
     }
 	
-	/** Get the type of this page object */
+	/** Gets the type of this page object */
 	public PageObjectType getType() {
 	    return type;
 	}
