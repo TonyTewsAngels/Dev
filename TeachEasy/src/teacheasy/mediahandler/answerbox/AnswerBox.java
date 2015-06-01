@@ -26,7 +26,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
 /**
- * Class to draw answer boxes with the specified x & y location and character
+ * Class to draw answer boxes with the specified x & y locations and character
  * limit. The class also checks entered answer against list of possible answers
  * and assigns them the predefined marks.
  * 
@@ -59,12 +59,25 @@ public class AnswerBox {
     /* For checking if marks have been collated */
     private boolean markCollated;
 
-    /** Constructor method */
+    /**
+     * A constructor to create answer box object
+     * 
+     * @param nXStart  The x coordinate of the object
+     * @param nYStart The y coordinate of the object
+     * @param nCharacterLimit Maximum allowed characters 
+     * @param nRetry To allow retry
+     * @param nMarks Possible marks for a correct answer
+     * @param nIsNumerical Whether or not numerical input is expected
+     * @param nGroup
+     * @param nUpperBound Upper range of numerical solution
+     * @param nLowerBound Lower range of numerical solution
+     * @param nAnswers Solutions to questions
+     */
     public AnswerBox(double nXStart, double nYStart, int nCharacterLimit,
             boolean nRetry, int nMarks, boolean nIsNumerical, Group nGroup,
             float nUpperBound, float nLowerBound, ArrayList<Answer> nAnswers) {
 
-        /* Setting local variables */
+      
         if (nMarks > 0){
             this.marks = nMarks;
         } else {
@@ -78,6 +91,7 @@ public class AnswerBox {
             this.characterLimit = 2;
         }
 
+        /* Setting local variables */
         this.xStart = nXStart;
         this.yStart = nYStart;
         this.group = nGroup;
@@ -86,7 +100,6 @@ public class AnswerBox {
         this.upperBound = nUpperBound;
         this.lowerBound = nLowerBound;
         this.answers = nAnswers;
-
         setAwardedMarks(0);
         setMarkCollated(false);
 
@@ -133,18 +146,17 @@ public class AnswerBox {
 
         /* Add box back to the main screen */
         group.getChildren().add(box);
-
-        // /*Initialise the buttonPressed variable as false*/
-        // this.buttonPressed = false;
     }
 
-    /**
-     * This method stores the potential answers in an array. When an answer is
-     * provided the loop compares the entered answer against the possible
-     * answers in the array. It also allows/disallows retry depending on the
-     * value of the variable retry.
-     * 
-     */
+   /**
+    * This method stores the potential answers in an array. When an answer is
+    * provided the loop compares the entered answer against the possible
+    * answers in the array. It also allows/disallows retry depending on the
+    * value of the variable retry.
+    * 
+    * @param nMarks Awarded marks for a correct answer
+    * @return true for a correct answer
+    */
     public boolean checkAnswer(int nMarks) {
         boolean isCorrect = false;
 
@@ -156,6 +168,7 @@ public class AnswerBox {
                  */
                 if (answerField.getText().length() >= 1 && 
                     answerField.getText().equalsIgnoreCase(a.getText())) {
+                    
                     /* Award marks */
                     setAwardedMarks(getAwardedMarks() + marks);
 
@@ -198,13 +211,21 @@ public class AnswerBox {
             }
         }
 
+        /* Lock answer box depending on the value of retry */
         answerField.setEditable(retry);
+        
+        /* Disable answer box depending on the value of retry */
         answerField.setDisable(!retry);
+        
+        /* Disable button depending on the value of retry */
         checkAnswerButton.setDisable(!retry);
+        
         return isCorrect;
     }
 
-    /** A method to display feedback to the user */
+    /**
+     * A method to display feedback to the user
+     */
     public void displayFeedback() {
 
         if (validInput == false && isNumerical == true) {
@@ -222,7 +243,11 @@ public class AnswerBox {
         }
     }
 
-    /** method for getting markCollated */
+    /**
+     * Method for getting markCollated
+     * 
+     * @return true if marks have been collated
+     */
     public boolean isMarkCollated() {
         return markCollated;
     }
