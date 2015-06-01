@@ -2,18 +2,20 @@
  * Alistair Jewers
  * 
  * Copyright (C) Sofia Software Solutions
- * 
  */
 package teacheasy.data.lessondata;
 
 /**
- * A class to encapsulate the
- * metadata for a lesson.
+ * Encapsulates the data that describes the information
+ * for a lesson as defined in the TeachEasy digital lesson 
+ * XML format.
  * 
- * @author Alistair Jewers
+ * @author  Alistair Jewers
  * @version 1.0 08 Feb 2015
  */
 public class LessonInfo {
+    
+    /* Data variables */
     private String lessonName;
     private String author;
     private String version;
@@ -21,7 +23,17 @@ public class LessonInfo {
     private String dateCreated;
     private int totalMarks;
     
-    /** Constructor method */
+    /**
+     * Constructor to create the data object with the data parsed
+     * from XML.
+     * 
+     * @param nLessonName The title of the lesson.
+     * @param nAuthor The lesson creator.
+     * @param nVersion Lesson version.
+     * @param nComment Description of the lesson.
+     * @param nDateCreated Date
+     * @param nTotalMarks
+     */
     public LessonInfo(String nLessonName, String nAuthor, String nVersion,
                       String nComment, String nDateCreated, int nTotalMarks) {
         
@@ -34,64 +46,63 @@ public class LessonInfo {
         this.setTotalMarks(nTotalMarks);
     }
 
-    /** Get the lesson name */
+    /** Gets the lesson title */
     public String getLessonName() {
         return lessonName;
     }
 
-    /** Set the lesson name */
+    /** Sets the lesson title */
     public void setLessonName(String nLessonName) {
         this.lessonName = nLessonName;
     }
 
-    /** Get the lesson author */
+    /** Gets the lesson author */
     public String getAuthor() {
         return author;
     }
 
-    /** Set the lesson author */
+    /** Sets the lesson author */
     public void setAuthor(String nAuthor) {
         this.author = nAuthor;
     }
 
-    /** Get the version tag */
+    /** Gets the version tag */
     public String getVersion() {
         return version;
     }
 
-    /** Set the version tag */
+    /** Sets the version tag */
     public void setVersion(String nVersion) {
         this.version = nVersion;
     }
 
-    /** Get the description */
+    /** Gets the description */
     public String getComment() {
         return comment;
     }
 
-    /** Set the description */
+    /** Sets the description */
     public void setComment(String nComment) {
         this.comment = nComment;
     }
 
-    /** Get the date created */
+    /** Gets the date created */
     public String getDateCreated() {
         return dateCreated;
     }
 
-    /** Set the date created */
+    /** Sets the date created */
     public void setDateCreated(String nDateCreated) {
         this.dateCreated = nDateCreated;
     }
 
-    /** Get the total marks */
+    /** Gets the total marks */
     public int getTotalMarks() {
         return totalMarks;
     }
 
-    /** Set the total marks */
+    /** Sets the total marks */
     public void setTotalMarks(int nTotalMarks) {
         this.totalMarks = nTotalMarks;
     }
-    
 }
