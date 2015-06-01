@@ -34,7 +34,6 @@ import javafx.stage.Stage;
  * @version 1.0 25/05/15
  *
  */
-
 public class HomePage {
 
     /* Homepage */
