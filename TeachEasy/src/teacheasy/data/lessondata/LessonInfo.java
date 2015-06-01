@@ -31,8 +31,8 @@ public class LessonInfo {
      * @param nAuthor The lesson creator.
      * @param nVersion Lesson version.
      * @param nComment Description of the lesson.
-     * @param nDateCreated Date
-     * @param nTotalMarks
+     * @param nDateCreated Date the lesson was created.
+     * @param nTotalMarks Total marks available.
      */
     public LessonInfo(String nLessonName, String nAuthor, String nVersion,
                       String nComment, String nDateCreated, int nTotalMarks) {
