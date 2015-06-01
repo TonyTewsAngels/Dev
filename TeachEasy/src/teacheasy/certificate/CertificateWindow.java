@@ -1,3 +1,9 @@
+/*
+ * Alistair Jewers
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
+ * 
+ */
 package teacheasy.certificate;
 
 import java.awt.image.BufferedImage;
@@ -33,22 +39,29 @@ import javafx.stage.Stage;
  * pulled from the document info and inserted into an HTML certificate template
  * which is then made visible. A button is provided to print the certificate.
  * 
- * @author Alistair Jewers
+ * @author  Alistair Jewers
  * @version 1.0 27 May 2015
  */
 public class CertificateWindow  {
-    /* Class level variables */
+    /* JavaFX HTML Components */
     private WebView htmlView;
     private WebEngine htmlEngine;
-    private Lesson lesson;
-    private int marks;
+    
+    /* JavaFX Components */
     private Screen screen;
     private Scene scene;
     private VBox root;
     private Button printBtn;
     
+    /* Lesson data object */
+    private Lesson lesson;
+    
+    /* Marks achieved */
+    private int marks;
+
     /**
-     * Constructor method. Creates the certificate window.
+     * Constructor method. Creates the certificate window, 
+     * filling in the necessary information.
      * 
      * @param nLesson The lesson the certificate is for.
      * @param nMarks The number of marks the student gained during the lesson.
@@ -116,85 +129,106 @@ public class CertificateWindow  {
      * @return A new HTML file object of the certificate.
      */
     public File buildHtml() {
+        /* Load the template file */
         File templateFile = new File("Certificate_Template.html");
+        
+        /* Create the output file */
         File outputHtml = new File("Output_Html.html");
         
+        /* Reader and writer */
         BufferedReader input;
         BufferedWriter output;
         
         try {
+            /* Create streams */
             input = new BufferedReader(new FileReader(templateFile));
             output = new BufferedWriter(new FileWriter(outputHtml));
-            String line = null;
             
-            while((line = input.readLine()) != null) {
-                String outputLine;
-                
+            /* Strings to hold the current input and output lines */
+            String line = null;
+            String outputLine;
+            
+            /* 
+             * While there are lines remaining, check for tags and 
+             * replace with information.
+             */
+            while((line = input.readLine()) != null) { 
                 if(line.contains("LESSONTITLE")) {
+                    /* Replace the LESSONTITLE tag with the lesson title */
                     int index = line.indexOf("LESSONTITLE");
                     outputLine = new String(line.substring(0, index) + " " +
                                             lesson.lessonInfo.getLessonName() + 
                                             line.substring(index + 11));
+                    
                 } else if(line.contains("TEACHERNAME")) {
+                    /* Replace the TEACHERNAME tag with the author of the lesson */
                     int index = line.indexOf("TEACHERNAME");
                     outputLine = new String(line.substring(0, index) + " " +
                                             lesson.lessonInfo.getAuthor() + 
                                             line.substring(index + 11));
+                    
                 } else if(line.contains("DATE")) {
+                    /* Replace the DATE tag with the current date */
                     String date = new SimpleDateFormat("dd-MM-yyy").format(new Date());
                     int index = line.indexOf("DATE");
                     outputLine = new String(line.substring(0, index) + " " +
                                             date + 
                                             line.substring(index + 4));
-                } else if(line.contains("STUDENTNAME")) {
-                    int index = line.indexOf("STUDENTNAME");
-                    outputLine = new String(line.substring(0, index) + " " +
-                                            "Student Name" + 
-                                            line.substring(index + 11));
+                    
                 } else if(line.contains("MARK")) {
+                    /* Replace the MARK tag with the mark the student achieved */
                     int index = line.indexOf("MARK");
                     outputLine = new String(line.substring(0, index) + " " +
                                             marks + 
                                             line.substring(index + 4));
+                    
                 } else if(line.contains("TOTAL")) {
+                    /* Replace the TOTAL tag with the total marks for this lesson */
                     int index = line.indexOf("TOTAL");
                     outputLine = new String(line.substring(0, index) + " " + 
                                             lesson.lessonInfo.getTotalMarks() + 
                                             line.substring(index + 5));
+                    
                 } else if(line.contains("PASSFAILMESSAGE")) {
+                    /* A string to hold the message */
                     String messageStr;
                     
+                    /* Get the appropriate string for the students mark (pass or fail)*/
                     if(marks >= lesson.gradeSettings.getPassBoundary()) {
                         messageStr = new String(lesson.gradeSettings.getPassMessage());
                     } else {
                         messageStr = new String(lesson.gradeSettings.getFailMessage());
                     }
                     
+                    /* Replace the PASSFAILMESSAGE tag with the appropriate message */
                     int index = line.indexOf("PASSFAILMESSAGE");
                     outputLine = new String(line.substring(0, index) + " " + 
                                             messageStr + 
                                             line.substring(index + 15));
                 } else {
+                    /* If no tag is found output the line as-is */
                     outputLine = new String(line);
                 }
                 
+                /* Write the line to the output file */
                 output.write(outputLine);
             }
             
+            /* Close the streams */
             input.close();
             output.close();
         } catch (IOException e) {
+            /* Print any exceptions caught to the console */
             e.printStackTrace();
         }
         
+        /* Return the new html file */
         return outputHtml;
     }
     
     /**
-     * Handles pressing the print button by taking a snapshot of
+     * Handles presses on the print button by taking a snapshot of
      * the screen and printing it.
-     * 
-     * @author Alistair Jewers
      */
     public class PrintButtonHandler implements EventHandler<ActionEvent> {
         @Override
