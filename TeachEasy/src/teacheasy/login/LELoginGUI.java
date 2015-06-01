@@ -1,32 +1,28 @@
+/*
+ * Lewis Thresh & Alistair Jewers
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
+ */
 package teacheasy.login;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-
-import teacheasy.data.Lesson;
 import teacheasy.main.LearnEasyClient;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.animation.FadeTransition;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
@@ -35,37 +31,47 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Creates the login screen for the Learn Easy application.
+ * Allows login details entered by a user to be verified.
+ * Extends the JavaFX Application class.
+ * 
+ * @author  Lewis Thresh & Alistair Jewers
+ * @version 1.0 20 May 2015
+ */
 public class LELoginGUI  extends Application {
+    
+    /* JavaFX components */
+    private Stage primaryStage;
     private TextField userText;
     private PasswordField passText;
     private Label failLabel;    
     
-    private Stage primaryStage;
-
-    //Application starting point
+    /**
+     * Override the start method to launch the login window.
+     */
     @Override
     public void start(Stage primaryStage) {
+        
+        /* Set the stage reference */
         this.primaryStage = primaryStage;
         
-    	//Set title
+    	/* Set the stage title */
     	primaryStage.setTitle("Learn Easy");
-    
-    	//Set GUI Layout
-    	GridPane grid = new GridPane();
-    	VBox Vtext = new VBox();
-    	VBox logoBox = new VBox();
-    	VBox buttonBox = new VBox();
-    	Button loginBtn = new Button("Login");
-    	
+
     	failLabel = new Label("User name or password not recognised.");
     	failLabel.setTextFill(Color.web("#BB0000"));
     	failLabel.setVisible(false);
-
+    	
+    	Button loginBtn = new Button("Login");
     	loginBtn.setPrefWidth(300);
     	loginBtn.setOnAction(new LoginButtonHandler());
     	
+    	VBox buttonBox = new VBox();
     	buttonBox.getChildren().add(loginBtn);
     	buttonBox.setAlignment(Pos.CENTER);
+    	
+    	GridPane grid = new GridPane();
     	    	
     	//Column constraints
     	ColumnConstraints farLeft = new ColumnConstraints();
@@ -115,6 +121,8 @@ public class LELoginGUI  extends Application {
         
         //Set grid colour
         grid.setStyle("-fx-background-color:  rgb(74, 104, 177);");
+        
+        VBox Vtext = new VBox();
         Vtext.setStyle("-fx-background-color: rgb(74, 104, 177);");
         
     	//Welcome Labels
@@ -136,7 +144,7 @@ public class LELoginGUI  extends Application {
     	int y = 143;
     	
     	// Dimensions: 1000 x 1000 (Use x,y to make appropriate size)
-    	Image LE = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/LE_V4_1_1.png"));
+    	Image LE = new Image(getClass().getResourceAsStream("/teacheasy/icons/LE_V4_1_1.png"));
     
     	ImageView Logo = new ImageView(LE);
     	Logo.setFitWidth(x);
@@ -155,6 +163,7 @@ public class LELoginGUI  extends Application {
     	Vtext.setAlignment(Pos.CENTER);
     	
     	//Add logo to logoBox
+    	VBox logoBox = new VBox();
     	logoBox.getChildren().addAll(Logo);
     	logoBox.setAlignment(Pos.CENTER);
     	
@@ -180,24 +189,39 @@ public class LELoginGUI  extends Application {
         launch(args);
     }
     
+    /**
+     * Action event handler to react to button presses.
+     * 
+     * @author Alistair Jewers
+     */
     public class LoginButtonHandler implements EventHandler<ActionEvent> {
+        
+        /**
+         * Override handle method to act on button presses.
+         */
         @Override
         public void handle(ActionEvent arg0) {
+            /* Make the incorrect password prompt invisible */
             failLabel.setVisible(false);
             
-            if(LoginChecker.checkLELogin(userText.getText(), passText.getText())) {
+            /* Check the credentials */
+            if(LoginChecker.checkLogin(userText.getText(), passText.getText(), true)) {
+                /* Credentials correct, que an instance of Learn Easy to run */
                 Platform.runLater(new Runnable() {
                     public void run() {
                         new LearnEasyClient().start(new Stage());
                     }
                 });
                 
+                /* Close this window */
                 primaryStage.close();
 
             } else {
+                /* Credentials incorrect, clear the fields */
                 userText.clear();
                 passText.clear();
                 
+                /* Show the incorrect password prompt */
                 failLabel.setVisible(true);
             }
         }

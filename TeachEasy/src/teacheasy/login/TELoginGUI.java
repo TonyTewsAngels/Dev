@@ -1,32 +1,28 @@
+/*
+ * Lewis Thresh & Alistair Jewers
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
+ */
 package teacheasy.login;
 
-import java.io.File;
-
-import teacheasy.login.LELoginGUI.LoginButtonHandler;
-import teacheasy.main.LearnEasyClient;
 import teacheasy.main.TeachEasyClient;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.animation.FadeTransition;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
@@ -35,6 +31,14 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Creates the login screen for the Teach Easy application.
+ * Allows login details entered by a user to be verified.
+ * Extends the JavaFX Application class.
+ * 
+ * @author  Lewis Thresh & Alistair Jewers
+ * @version 1.0 20 May 2015
+ */
 public class TELoginGUI  extends Application {
     private TextField userText;
     private PasswordField passText;
@@ -136,7 +140,7 @@ public class TELoginGUI  extends Application {
     	int y = 0;
     	
     	//Image LE = new Image("LE_V4_1_1.png");
-    	Image LE = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/TE_V5.png"));
+    	Image LE = new Image(getClass().getResourceAsStream("/teacheasy/icons/TE_V5.png"));
     	ImageView Logo = new ImageView(LE);
     	Logo.setFitWidth(x);
     	Logo.setFitHeight(y);
@@ -179,12 +183,17 @@ public class TELoginGUI  extends Application {
         launch(args);
     }
     
+    /**
+     * Action event handler to react to button pressed.
+     * 
+     * @author Alistair Jewers
+     */
     public class LoginButtonHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent arg0) {
             failLabel.setVisible(false);
             
-            if(LoginChecker.checkTELogin(userText.getText(), passText.getText())) {
+            if(LoginChecker.checkLogin(userText.getText(), passText.getText(), false)) {
                 Platform.runLater(new Runnable() {
                     public void run() {
                         new TeachEasyClient().start(new Stage());

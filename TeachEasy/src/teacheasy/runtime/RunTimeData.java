@@ -145,8 +145,6 @@ public class RunTimeData {
             homePage.setPreference();
         }
         
-        System.out.println(group);
-        
         redraw(group, bounds);
     }
 
