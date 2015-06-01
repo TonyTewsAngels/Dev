@@ -92,7 +92,10 @@ public class AnswerBoxHandler {
         for (int i = 0; i < answerBox.size(); i++) {
             if (answerBox.get(i).checkAnswerButton.isDisabled()
                     && !answerBox.get(i).isMarkCollated()) {
+
+                /* Add marks to total page marks */
                 totalPageMarks += answerBox.get(i).getAwardedMarks();
+
                 answerBox.get(i).setMarkCollated(true);
             }
         }
@@ -107,7 +110,8 @@ public class AnswerBoxHandler {
     /**
      * Gets the height of the answer box
      * 
-     * @param answerBoxId Id of the answer box
+     * @param answerBoxId
+     *            Id of the answer box
      * @return Height of the answer box
      */
     public double getAnswerBoxHeight(int answerBoxId) {
@@ -120,7 +124,8 @@ public class AnswerBoxHandler {
 
     /**
      * 
-     * @param answerBoxId Id of the answer box
+     * @param answerBoxId
+     *            Id of the answer box
      * @return Width of the answer box
      */
     public double getAnswerBoxWidth(int answerBoxId) {
@@ -131,6 +136,7 @@ public class AnswerBoxHandler {
         return 0.0;
     }
 
+    /** Debug print for answer box handler */
     public void debugPrint() {
         System.out.println("### Answer Box Handler ###");
         System.out.println("Handling: " + answerBox.size());
