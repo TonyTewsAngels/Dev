@@ -21,11 +21,9 @@ public class MChoiceCheckBox {
 
     /**
      * Constructor that instantiated the class variables from the parameters
-     * @param nCB
-     *            CheckBox object to be labelled
-     * @param nCorrect
-     *            <code>true</code> if object answered correctly;
-     *            <code>false</code> otherwise.
+     * @param nCB CheckBox object to be labelled
+     * @param nCorrect <code>true</code> if object answered correctly;
+     *                 <code>false</code> otherwise.
      */
     public MChoiceCheckBox(CheckBox nCB, boolean nCorrect) {
         this.checkBox = nCB;

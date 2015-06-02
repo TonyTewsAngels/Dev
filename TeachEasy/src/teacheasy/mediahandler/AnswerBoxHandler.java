@@ -31,24 +31,15 @@ public class AnswerBoxHandler {
     /**
      * Creates a new answer box object
      * 
-     * @param nXStart
-     *            X coordinate of the object
-     * @param nYStart
-     *            Y coordinate of the object
-     * @param nCharacterLimit
-     *            Maximum allowed characters
-     * @param nRetry
-     *            To allow retry
-     * @param nMarks
-     *            Possible marks for a correct answer
-     * @param nIsNumerical
-     *            Whether or not numerical input is expected
-     * @param nUpperBound
-     *            Upper range of numerical solution
-     * @param nLowerBound
-     *            Lower range of numerical solution
-     * @param nAnswers
-     *            Solutions to questions
+     * @param nXStart X coordinate of the object
+     * @param nYStart Y coordinate of the object
+     * @param nCharacterLimit Maximum allowed characters
+     * @param nRetry To allow retry
+     * @param nMarks Possible marks for a correct answer
+     * @param nIsNumerical Whether or not numerical input is expected
+     * @param nUpperBound Upper range of numerical solution
+     * @param nLowerBound Lower range of numerical solution
+     * @param nAnswers Solutions to questions
      */
     public void createAnswerBox(double xStart, double yStart,
             int characterLimit, boolean retry, int marks, boolean isNumerical,
@@ -69,7 +60,7 @@ public class AnswerBoxHandler {
     /**
      * Grays out all of the answer boxes on a page
      * 
-     * @return true if all answer boxes are disabled
+     * @return <code>true</code> if all answer boxes are disabled
      */
     public boolean allBoxesDisabled() {
 
@@ -111,8 +102,7 @@ public class AnswerBoxHandler {
     /**
      * Gets the height of the answer box
      * 
-     * @param answerBoxId
-     *            Id of the answer box
+     * @param answerBoxId Id of the answer box
      * @return Height of the answer box
      */
     public double getAnswerBoxHeight(int answerBoxId) {
@@ -125,8 +115,7 @@ public class AnswerBoxHandler {
 
     /**
      * 
-     * @param answerBoxId
-     *            Id of the answer box
+     * @param answerBoxId Id of the answer box
      * @return Width of the answer box
      */
     public double getAnswerBoxWidth(int answerBoxId) {

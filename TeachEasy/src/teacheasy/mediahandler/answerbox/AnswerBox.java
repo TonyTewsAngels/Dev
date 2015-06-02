@@ -63,25 +63,16 @@ public class AnswerBox {
     /**
      * A constructor to create answer box object
      * 
-     * @param nXStart
-     *            The x coordinate of the object
-     * @param nYStart
-     *            The y coordinate of the object
-     * @param nCharacterLimit
-     *            Maximum allowed characters
-     * @param nRetry
-     *            To allow retry
-     * @param nMarks
-     *            Possible marks for a correct answer
-     * @param nIsNumerical
-     *            Whether or not numerical input is expected
-     * @param nGroup
-     * @param nUpperBound
-     *            Upper range of numerical solution
-     * @param nLowerBound
-     *            Lower range of numerical solution
-     * @param nAnswers
-     *            Solutions to questions
+     * @param nXStart The x coordinate of the object
+     * @param nYStart The y coordinate of the object
+     * @param nCharacterLimit Maximum allowed characters
+     * @param nRetry To allow retry
+     * @param nMarks Possible marks for a correct answer
+     * @param nIsNumerical Whether or not numerical input is expected
+     * @param nGroup The group this answer box will be added to
+     * @param nUpperBound Upper range of numerical solution
+     * @param nLowerBound Lower range of numerical solution
+     * @param nAnswers Solutions to questions
      */
     public AnswerBox(double nXStart, double nYStart, int nCharacterLimit,
             boolean nRetry, int nMarks, boolean nIsNumerical, Group nGroup,
@@ -163,8 +154,7 @@ public class AnswerBox {
      * answers in the array. It also allows/disallows retry depending on the
      * value of the variable retry.
      * 
-     * @param nMarks
-     *            Awarded marks for a correct answer
+     * @param nMarks Awarded marks for a correct answer
      * @return true for a correct answer
      */
     public boolean checkAnswer(int nMarks) {
@@ -256,7 +246,7 @@ public class AnswerBox {
     /**
      * Method for getting markCollated
      * 
-     * @return true if marks have been collated
+     * @return <code>true</code> if marks have been collated
      */
     public boolean isMarkCollated() {
         return markCollated;

@@ -22,11 +22,9 @@ public class MChoiceRadio {
     /**
      * Constructor that instantiated the class variables from the parameters
      * 
-     * @param nRb
-     *            RadioButton object which is to be labelled
-     * @param nCorrect
-     *            <code>true</code> if object answered correctly;
-     *            <code>false</code> otherwise.
+     * @param nRb RadioButton object which is to be labelled
+     * @param nCorrect <code>true</code> if object answered correctly;
+     *                 <code>false</code> otherwise.
      */
     public MChoiceRadio(RadioButton nRb, boolean nCorrect) {
         this.radioButton = nRb;
@@ -43,8 +41,7 @@ public class MChoiceRadio {
 
     /**
      * 
-     * @param nrB
-     *            RadioButton object
+     * @param nrB RadioButton object
      */
     public void setRadioButton(RadioButton nrB) {
         this.radioButton = nrB;
@@ -62,8 +59,7 @@ public class MChoiceRadio {
     /**
      * Sets the boolean variable correct
      * 
-     * @param ncorrect
-     *            Desired boolean value for the variable correct
+     * @param ncorrect Desired boolean value for the variable correct
      */
     public void setCorrect(boolean ncorrect) {
         this.correct = ncorrect;

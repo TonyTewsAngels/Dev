@@ -51,11 +51,9 @@ public class MultipleChoice {
     public MultiChoiceType type;
     private Orientation orientation;
     private boolean retry;
-    private boolean buttonPressed;
     private int marks;
     private int awardedMarks;
     private boolean markCollated;
-    private int numberOfAnswers;
 
     /* Create Drop Down List */
     public ComboBox dropDownList = new ComboBox();
@@ -63,22 +61,14 @@ public class MultipleChoice {
     /**
      * Constructor method to create multiple choice object
      * 
-     * @param nGroup
-     *            A node to contain the multiple choice object
-     * @param xStart
-     *            X-coordinate of the top left corner multiple choice in pixels
-     * @param yStart
-     *            Y-coordinate of the top left corner multiple choice in pixels
-     * @param answers
-     *            List of correct answers
-     * @param nType
-     *            Type of multiple choice. E.g. drop down, radio..
-     * @param nOrientation
-     *            Vertical/horizontal orientation of the object
-     * @param nRetry
-     *            Enable/disable retry after wrong attempt
-     * @param nMarks
-     *            Marks for correct answer
+     * @param nGroup A group this object will be added to
+     * @param xStart X-coordinate of the top left corner multiple choice in pixels
+     * @param yStart Y-coordinate of the top left corner multiple choice in pixels
+     * @param answers List of correct answers
+     * @param nType Type of multiple choice. E.g. drop down, radio..
+     * @param nOrientation Vertical/horizontal orientation of the object
+     * @param nRetry Enable/disable retry after wrong attempt
+     * @param nMarks Marks for correct answer
      */
     public MultipleChoice(Group nGroup, float xStart, float yStart,
             ArrayList<Answer> answers, MultiChoiceType nType,
@@ -87,8 +77,6 @@ public class MultipleChoice {
         /* Set the group reference */
         this.group = nGroup;
 
-        /* Set the variable to say how many possible answers there are */
-        numberOfAnswers = answers.size();
 
         /* Instantiate the array lists */
         cB = new ArrayList<MChoiceCheckBox>();
@@ -228,7 +216,7 @@ public class MultipleChoice {
     /**
      * Public method to return the x start position
      * 
-     * @return x-coordinate of top left corner of bounding box
+     * @return X-coordinate of top left corner of bounding box
      */
     public double getMultiChoiceXStart() {
         if (orientation == Orientation.VERTICAL) {
@@ -243,7 +231,7 @@ public class MultipleChoice {
     /**
      * Public method to return the y start position
      * 
-     * @return y-coordinate of top left corner of bounding box
+     * @return Y-coordinate of top left corner of bounding box
      */
     public double getMultiChoiceYStart() {
         if (orientation == Orientation.VERTICAL) {
@@ -258,7 +246,7 @@ public class MultipleChoice {
     /**
      * Public method to return the x end position
      * 
-     * @return x-coordinate of bottom right corner of bounding box
+     * @return X-coordinate of bottom right corner of bounding box
      */
     public double getMultiChoiceXEnd() {
         double xStart = getMultiChoiceXStart();
@@ -274,7 +262,7 @@ public class MultipleChoice {
     /**
      * Public method to return the y end position
      * 
-     * @return y-coordinate of bottom right corner of bounding box
+     * @return Y-coordinate of bottom right corner of bounding box
      */
     public double getMultiChoiceYEnd() {
         double yStart = getMultiChoiceYStart();
@@ -472,8 +460,7 @@ public class MultipleChoice {
     /**
      * Sets mark button object
      * 
-     * @param mark
-     *            button object
+     * @param mark button object
      */
     public void setMarkButton(Button markButton) {
         this.markButton = markButton;
@@ -492,8 +479,7 @@ public class MultipleChoice {
     /**
      * Sets the boolean variable marksCollated
      * 
-     * @param markCollated
-     *            Desired boolean variable of markCollated
+     * @param markCollated Desired boolean variable of markCollated
      */
     public void setMarkCollated(boolean markCollated) {
         this.markCollated = markCollated;
@@ -511,8 +497,7 @@ public class MultipleChoice {
     /**
      * Sets the variable awardedMarks
      * 
-     * @param awardedMarks
-     *            Number of marks to award
+     * @param awardedMarks Number of marks to award
      */
     public void setAwardedMarks(int awardedMarks) {
         this.awardedMarks = awardedMarks;

@@ -41,22 +41,15 @@ public class MultipleChoiceHandler {
     /**
      * Method to add a multiple choice object to a page
      * 
-     * @param xStart
-     *            X-coordinate of the top left corner of the multiple choice
+     * @param xStart X-coordinate of the top left corner of the multiple choice
      *            object
-     * @param yStart
-     *            Y-coordinate of the top left corner of the multiple choice
+     * @param yStart Y-coordinate of the top left corner of the multiple choice
      *            object
-     * @param answers
-     *            List of correct answers
-     * @param type
-     *            Type of multiple choice. E.g. drop down, radio..
-     * @param orientation
-     *            Vertical/horizontal orientation of the object
-     * @param retry
-     *            Enable/disable retry after wrong attempt
-     * @param marks
-     *            Awarded marks for correct answer
+     * @param answers List of correct answers
+     * @param type Type of multiple choice. E.g. drop down, radio..
+     * @param orientation Vertical/horizontal orientation of the object
+     * @param retry Enable/disable retry after wrong attempt
+     * @param marks Awarded marks for correct answer
      */
     public void createMultipleChoice(float xStart, float yStart,
             ArrayList<Answer> answers, MultiChoiceType type,
@@ -68,8 +61,7 @@ public class MultipleChoiceHandler {
     /**
      * Returns the x-coordinate of the starting point
      * 
-     * @param questionId
-     *            The id of the multiple choice object
+     * @param questionId The id of the multiple choice object
      * @return Top left x-coordinate of the object in pixels
      */
     public double getMultiChoiceXStart(int questionId) {
@@ -83,8 +75,7 @@ public class MultipleChoiceHandler {
     /**
      * Returns the y-coordinate of the starting point
      * 
-     * @param questionId
-     *            The id of the multiple choice object
+     * @param questionId The id of the multiple choice object
      * @return Top left y-coordinate of the object in pixels
      */
     public double getMultiChoiceYStart(int questionId) {
@@ -98,8 +89,7 @@ public class MultipleChoiceHandler {
     /**
      * Returns the x-coordinate of the end point
      * 
-     * @param questionId
-     *            The id of the multiple choice object
+     * @param questionId The id of the multiple choice object
      * @return Bottom right x-coordinate of the object in pixels
      */
     public double getMultiChoiceXEnd(int questionId) {
@@ -113,8 +103,7 @@ public class MultipleChoiceHandler {
     /**
      * Returns the y-coordinate of the end point
      * 
-     * @param questionId
-     *            The id of the multiple choice object
+     * @param questionId  The id of the multiple choice object
      * @return Bottom right y-coordinate of the object in pixels
      */
     public double getMultiChoiceYEnd(int questionId) {
@@ -128,8 +117,7 @@ public class MultipleChoiceHandler {
     /**
      * Gets the width of the multiple choice object in pixels
      * 
-     * @param questionId
-     *            The id of the multiple choice object
+     * @param questionId The id of the multiple choice object
      * @return Width of the object in pixels
      */
     public double getMultiChoiceWidth(int questionId) {
@@ -143,8 +131,7 @@ public class MultipleChoiceHandler {
     /**
      * Gets the height of the multiple choice object in pixels
      * 
-     * @param questionId
-     *            The id of the multiple choice object
+     * @param questionId The id of the multiple choice object
      * @return The height of the object in pixels
      */
     public double getMultiChoiceHeight(int questionId) {

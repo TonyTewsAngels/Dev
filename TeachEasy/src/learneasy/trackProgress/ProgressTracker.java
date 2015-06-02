@@ -27,8 +27,7 @@ public class ProgressTracker {
      * Constructor for creating and initialising arrays that hold individual
      * page marks and visited pages.
      * 
-     * @param nTotalNumberOfPages
-     *            Total number of pages in an opened lesson
+     * @param nTotalNumberOfPages Total number of pages in an opened lesson
      */
     public ProgressTracker(int nTotalNumberOfPages) {
         this.totalNumberOfPages = nTotalNumberOfPages;
@@ -44,8 +43,7 @@ public class ProgressTracker {
     /**
      * A method that keeps track of all the marks in a lesson
      * 
-     * @param pageNumber
-     *            The number of the page in which the marks came from
+     * @param pageNumber The number of the page in which the marks came from
      */
     private void collateMarks(int pageNumber) {
         marks += individualPageMarks[pageNumber];
@@ -54,8 +52,7 @@ public class ProgressTracker {
     /**
      * Method to keep track of all the visited pages
      * 
-     * @param pageNumber
-     *            The page number of the visited page
+     * @param pageNumber The page number of the visited page
      */
     public void setVisitedPages(int pageNumber) {
         visitedPages[pageNumber] = true;
@@ -64,10 +61,9 @@ public class ProgressTracker {
     /**
      * A method to keep track of individual page marks
      * 
-     * @param pageMarks
-     *            Total marks of a single page
-     * @param pageNumber
-     *            The number of the page in which the marks came from
+     * @param pageMarks Total marks of a single page
+     * @param pageNumber The number of the page in which the
+     *                   marks came from
      */
     public void inidividualPageMarks(int pageMarks, int pageNumber) {
         individualPageMarks[pageNumber] = pageMarks;
@@ -77,8 +73,7 @@ public class ProgressTracker {
     /**
      * A method that specifies whether a page has been visited
      * 
-     * @param pageNumber
-     *            The page number of the page to be checked
+     * @param pageNumber The page number of the page to be checked
      * @return <code>true</code> if the page has been visited;
      *         <code>false</code> otherwise.
      */
