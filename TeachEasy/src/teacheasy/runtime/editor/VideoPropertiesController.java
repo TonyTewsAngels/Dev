@@ -1,3 +1,8 @@
+/*
+ * Alistair Jewers
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved. 
+ */
 package teacheasy.runtime.editor;
 
 import javafx.scene.control.Button;
@@ -10,13 +15,14 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 
 /**
- * Encapsulates functionality relating to editor
- * functionality for Video objects.
+ * Contains code relating to editor functionality for video
+ * objects.
  * 
- * @author Alistair Jewers
+ * @author  Alistair Jewers
  * @version 1.0 Apr 21 2015
  */
 public class VideoPropertiesController {
+    
     /* Reference to the properties pane responsible for this controller */
     private PropertiesPane parent;
     
@@ -38,8 +44,6 @@ public class VideoPropertiesController {
     /* The check boxes for the autoplay and loop settings */
     private CheckBox autoPlayProperty;
     private CheckBox loopProperty;
-    
-    public boolean redrawBlock = false;
     
     /**
      * Constructor. 
@@ -67,16 +71,27 @@ public class VideoPropertiesController {
         yStartProperty = PropertiesUtil.addPropertyField("yStart", "Y Start: ", yStartProperty, videoProperties, new PropertyChangedHandler());
         xEndProperty = PropertiesUtil.addPropertyField("xEnd", "X End: ", xEndProperty, videoProperties, new PropertyChangedHandler());
         
+        /* Set up the auto play and loop properties */
         autoPlayProperty = PropertiesUtil.addBooleanField("autoPlay", "Auto Play: ", autoPlayProperty, videoProperties, new BooleanPropertyChangedHandler());
         loopProperty = PropertiesUtil.addBooleanField("loop", "Loop: ", loopProperty, videoProperties, new BooleanPropertyChangedHandler());
     }
 
+    /**
+     * Update the controller with a new video object selection.
+     *  
+     * @param nVideo The new object to select.
+     */
     public void update(VideoObject nVideo) {        
+        /* Set the selection reference */
         selectedVideo = nVideo;
         
+        /* Update the pane */
         update();
     }
     
+    /**
+     * Updates the controller fields.
+     */
     public void update() {
         if(selectedVideo == null) {
             xStartProperty.setText("");
@@ -93,19 +108,33 @@ public class VideoPropertiesController {
         }
     }
     
+    /**
+     * Gets the video portion of the properties pane.
+     */
     public VBox getVideoProperties() {
         return videoProperties;
     }
 
+    /**
+     * Handles changes to the properties fields.
+     * 
+     * @author Alistair Jewers
+     */
     public class PropertyChangedHandler implements EventHandler<ActionEvent> {
+        /**
+         * Override the action event handler method.
+         */
         @Override
         public void handle(ActionEvent e) {
+            /* If no object is selected cancel */
             if(selectedVideo == null) {
                 return;
             }
             
+            /* Get the source */
             TextField source = (TextField)e.getSource();
             
+            /* Check the ID and change the associated property */
             switch(source.getId()) {
                 case "xStart":
                     float oldXStart = selectedVideo.getXStart();
@@ -132,38 +161,66 @@ public class VideoPropertiesController {
                     break;
             }
             
+            /* Update the pane */
             update();
-            if(!redrawBlock) {
-                parent.redraw();
-            }
+            
+            /* Redraw */
+            parent.redraw();
         }
     }
     
+    /**
+     * Handles button presses.
+     * 
+     * @author Alistair Jewers
+     */
     public class ButtonPressedHandler implements EventHandler<ActionEvent> {
+        /**
+         * Overrides the action event handler method.
+         */
+        @Override
         public void handle(ActionEvent e) {
+            /* Get the source */
             Button source = (Button)e.getSource();
             
+            /* Check the ID */
             if(source.getId() == "file") {
+                /* Change the sourcefile */
                 selectedVideo.setSourcefile(PropertiesUtil.validateFile(selectedVideo.getSourcefile(), "Videos","*.mp4", "*.flv"));
+                
+                /* Update the pane */
                 update();
-                if(!redrawBlock) {
-                    parent.redraw();
-                }
+                
+                /* Redraw */
+                parent.redraw();
+                
             } else if(source.getId() == "URL") {
+                /* Launch a URL window */
                 new URLWindow(selectedVideo, parent);
             }
         }
     }
     
+    /**
+     * Handles changes to boolean properties.
+     * 
+     * @author Alistair Jewers
+     */
     public class BooleanPropertyChangedHandler implements EventHandler<ActionEvent> {
+        /**
+         * Override the action event handler method.
+         */
         @Override
         public void handle(ActionEvent e) {
+            /* If no object is selected cancel */
             if(selectedVideo == null) {
                 return;
             }
             
+            /* Get the source */
             CheckBox source = (CheckBox)e.getSource();
             
+            /* Check the ID and update the relevant property */
             switch(source.getId()) {
                 case "autoPlay":
                     selectedVideo.setAutoPlay(source.isSelected());
@@ -175,7 +232,10 @@ public class VideoPropertiesController {
                     break;
             }
             
+            /* Update the pane */
             update();
+
+            /* Redraw */
             parent.redraw();
         }
     }

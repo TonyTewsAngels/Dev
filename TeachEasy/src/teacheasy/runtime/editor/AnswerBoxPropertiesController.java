@@ -370,8 +370,7 @@ public class AnswerBoxPropertiesController {
             /* Set the new answer text */
             ((AnswerProperty)t.getTableView()
                               .getItems()
-                              .get(t.getTablePosition()
-                              .getRow()))
+                              .get(t.getTablePosition().getRow()))
                               .setAnswer(t.getNewValue());
             
             /* Redraw */

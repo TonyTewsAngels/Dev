@@ -1,3 +1,8 @@
+/*
+ * Alistair Jewers
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved. 
+ */
 package teacheasy.runtime.editor;
 
 import javafx.scene.control.Button;
@@ -10,13 +15,13 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 
 /**
- * Encapsulates functionality relating to editor
- * functionality for Image objects.
+ * Contains code relating to editor functionality for image objects.
  * 
- * @author Alistair Jewers
+ * @author  Alistair Jewers
  * @version 1.0 Apr 21 2015
  */
 public class ImagePropertiesController {
+    
     /* Reference to the properties pane responsible for this controller */
     private PropertiesPane parent;
     
@@ -66,12 +71,20 @@ public class ImagePropertiesController {
         rotationProperty = PropertiesUtil.addPropertyField("rotation", "Rotation: ", rotationProperty, imageProperties, new PropertyChangedHandler());
     }
 
+    /**
+    * Update the controller with a new image object selection.
+    * 
+    * @param nImage The new object to select.
+    */
     public void update(ImageObject nImage) {        
         selectedImage = nImage;
         
         update();
     }
     
+    /**
+     * Updates the property fields for the image pane.
+     */
     public void update() {
         if(selectedImage == null) {
             xStartProperty.setText("");
@@ -88,19 +101,33 @@ public class ImagePropertiesController {
         }
     }
     
+    /**
+     * Gets the image portion of the properties pane.
+     */
     public VBox getImageProperties() {
         return imageProperties;
     }
 
+    /**
+     * Handles changes to the properties fields.
+     * 
+     * @author Alistair Jewers
+     */
     public class PropertyChangedHandler implements EventHandler<ActionEvent> {
+        /**
+         * Override the action event handler method.
+         */
         @Override
         public void handle(ActionEvent e) {
+            /* If no image is selected cancel */
             if(selectedImage == null) {
                 return;
             }
             
+            /* Get the source */
             TextField source = (TextField)e.getSource();
             
+            /* Check the source ID  and update the appropriate property */
             switch(source.getId()) {
                 case "xStart":
                     selectedImage.setXStart(PropertiesUtil.validatePosition(source.getText(), selectedImage.getXStart()));
@@ -120,20 +147,41 @@ public class ImagePropertiesController {
                     break;
             }
             
+            /* Update the fields */
             update();
+            
+            /* Redraw */
             parent.redraw();
         }
     }
     
+    /**
+     * Handles button presses.
+     * 
+     * @author Alistair Jewers
+     *
+     */
     public class ButtonPressedHandler implements EventHandler<ActionEvent> {
+        /**
+         * Overrides the action event handler method.
+         */
+        @Override
         public void handle(ActionEvent e) {
+            /* Get the source */
             Button source = (Button)e.getSource();
             
+            /* Check the ID */
             if(source.getId() == "file") {
+                /* Change the sourcefile */
                 selectedImage.setSourcefile(PropertiesUtil.validateFile(selectedImage.getSourcefile(), "Images", "*.png", "*.jpg", "*.jpeg", "*.JPG", "*.gif", "*.bmp"));
+                
+                /* Update the pane */
                 update();
+                
+                /* Redraw */
                 parent.redraw();
             } else if(source.getId() == "URL") {
+                /* Launch a URL window */
                 new URLWindow(selectedImage, parent);
             }
         }

@@ -195,7 +195,7 @@ public class GraphicPropertiesController {
                 return;
             }
             
-            /* Get the souce */
+            /* Get the source */
             TextField source = (TextField)e.getSource();
             
             /* Check the source ID  and update the appropriate property */
