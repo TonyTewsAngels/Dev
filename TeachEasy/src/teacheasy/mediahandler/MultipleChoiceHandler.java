@@ -141,9 +141,11 @@ public class MultipleChoiceHandler {
     }
 
     /**
+     * Gets the height of the multiple choice object in pixels
      * 
      * @param questionId
-     * @return
+     *            The id of the multiple choice object
+     * @return The height of the object in pixels
      */
     public double getMultiChoiceHeight(int questionId) {
         if (questionId < multipleChoice.size() && questionId >= 0) {
@@ -153,17 +155,25 @@ public class MultipleChoiceHandler {
         }
     }
 
-    /** Grays out all of the multiple choices currently on page */
+    /** Grays out all of the multiple choices currently on the page */
     public void DisableAllMultipleChoices() {
         for (int i = 0; i < multipleChoice.size(); i++) {
             multipleChoice.get(i).disable();
         }
     }
 
-    /** Total marks for multiple choice questions on a page */
+    /**
+     * Collates the total marks for multiple choice questions on a page
+     * 
+     * @return <code>int</code> value of the total page marks
+     */
     public int totalPageMarks() {
         int totalPageMarks = 0;
 
+        /*
+         * Loops through all the multiple choice object on the page collating
+         * the marks for the answered ones
+         */
         for (int i = 0; i < multipleChoice.size(); i++) {
             if (multipleChoice.get(i).getMarkButton().isDisabled()
                     && !multipleChoice.get(i).isMarkCollated()) {
@@ -175,9 +185,18 @@ public class MultipleChoiceHandler {
         return totalPageMarks;
     }
 
-    /** Checks if all multiple choices are grayed out */
+    /**
+     * Checks if all multiple choices are grayed out
+     * 
+     * @return <code>true</code> if all multiple choice objects on a page are
+     *         grayed out; <code>false</false> otherwise.
+     */
     public boolean allMultipleChoicesDisabled() {
         boolean allDisabled = true;
+        /*
+         * Loops through all the multiple choice object on the page checking if
+         * the mark button is disabled
+         */
         for (int i = 0; i < multipleChoice.size(); i++) {
             if (!multipleChoice.get(i).getMarkButton().isDisabled()) {
                 allDisabled = false;
@@ -186,6 +205,9 @@ public class MultipleChoiceHandler {
         return allDisabled;
     }
 
+    /**
+     * Clears the multiple choice object
+     */
     public void clearMultiChoice() {
         multipleChoice.clear();
     }
