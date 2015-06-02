@@ -177,7 +177,9 @@ public class MultipleChoiceHandler {
         for (int i = 0; i < multipleChoice.size(); i++) {
             if (multipleChoice.get(i).getMarkButton().isDisabled()
                     && !multipleChoice.get(i).isMarkCollated()) {
+                /* Increment total page marks */
                 totalPageMarks += multipleChoice.get(i).getAwardedMarks();
+                /* Set the variable markCollated so it doesn't get counted again */
                 multipleChoice.get(i).setMarkCollated(true);
             }
         }
