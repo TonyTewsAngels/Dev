@@ -1,3 +1,8 @@
+/*
+ * Alistair Jewers
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved. 
+ */
 package teacheasy.runtime.editor;
 
 import javafx.scene.control.Button;
@@ -5,16 +10,14 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import teacheasy.data.AudioObject;
-import teacheasy.runtime.editor.VideoPropertiesController.ButtonPressedHandler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 
 /**
- * Encapsulates functionality relating to editor
- * functionality for Video objects.
+ * Contains code relating to editor functionality for audio objects.
  * 
- * @author Alistair Jewers
+ * @author  Alistair Jewers
  * @version 1.0 Apr 21 2015
  */
 public class AudioPropertiesController {
@@ -73,12 +76,22 @@ public class AudioPropertiesController {
         loopProperty = PropertiesUtil.addBooleanField("loop", "Loop: ", loopProperty, audioProperties, new BooleanPropertyChangedHandler());
     }
 
-    public void update(AudioObject nAudio) {        
+    /**
+     * Update the controller with a new object reference.
+     * 
+     * @param nAudio The new object to reference.
+     */
+    public void update(AudioObject nAudio) {
+        /* Set the new object */
         selectedAudio = nAudio;
         
+        /* Update the properties pane */
         update();
     }
     
+    /**
+     * Updates all the fields in the pane.
+     */
     public void update() {
         if(selectedAudio == null) {
             xStartProperty.setText("");
@@ -97,19 +110,33 @@ public class AudioPropertiesController {
         }
     }
     
+    /**
+     * Gets the audio portion of the properties pane.
+     */
     public VBox getAudioProperties() {
         return audioProperties;
     }
 
+    /**
+     * Handles changes to the property fields.
+     * 
+     * @author Alistair Jewers
+     */
     public class PropertyChangedHandler implements EventHandler<ActionEvent> {
+        /**
+         * Override the method for handling action events.
+         */
         @Override
         public void handle(ActionEvent e) {
+            /* If there is no audio object selected cancel */
             if(selectedAudio == null) {
                 return;
             }
             
+            /* Get the source */
             TextField source = (TextField)e.getSource();
             
+            /* Check the ID and update the relevant property */
             switch(source.getId()) {
                 case "xStart":
                     selectedAudio.setXStart(PropertiesUtil.validatePosition(source.getText(), selectedAudio.getXStart()));
@@ -124,34 +151,65 @@ public class AudioPropertiesController {
                     break;
             }
             
+            /* Update the pane */
             update();
+            
+            /* Redraw */
             parent.redraw();
         }
     }
     
+    /**
+     * Handles button presses.
+     * 
+     * @author Alistair Jewers
+     */
     public class ButtonPressedHandler implements EventHandler<ActionEvent> {
+        /**
+         * Override the method for handling action events.
+         */
+        @Override
         public void handle(ActionEvent e) {
+            /* Get the source */
             Button source = (Button)e.getSource();
             
+            /* Check the ID */
             if(source.getId() == "file") {
+                /* Get new sourcefile */
                 selectedAudio.setSourcefile(PropertiesUtil.validateFile(selectedAudio.getSourcefile(), "Audio: ", "*.wav", "*.mp3"));
+                
+                /* Update the pane */
                 update();
+                
+                /* Redraw */
                 parent.redraw();
             } else if(source.getId() == "URL") {
+                /* Launch a URL window */
                 new URLWindow(selectedAudio, parent);
             }
         }
     }
     
+    /**
+     * Handles changes to boolean properties.
+     * 
+     * @author Alistair Jewers 
+     */
     public class BooleanPropertyChangedHandler implements EventHandler<ActionEvent> {
+        /**
+         * Override the action event handling method.
+         */
         @Override
         public void handle(ActionEvent e) {
+            /* If no audio is selected cancel */
             if(selectedAudio == null) {
                 return;
             }
             
+            /* Get the source */
             CheckBox source = (CheckBox)e.getSource();
             
+            /* Check the ID and update the relevant property */
             switch(source.getId()) {
                 case "viewProgress":
                     selectedAudio.setViewProgress(source.isSelected());
@@ -166,7 +224,10 @@ public class AudioPropertiesController {
                     break;
             }
             
+            /* Update the pane */
             update();
+            
+            /* Redraw */
             parent.redraw();
         }
     }

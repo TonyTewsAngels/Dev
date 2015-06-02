@@ -1,3 +1,8 @@
+/*
+ * Alistair Jewers
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved. 
+ */
 package teacheasy.runtime.editor;
 
 import javafx.scene.control.CheckBox;
@@ -15,13 +20,13 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 
 /**
- * Encapsulates functionality relating to editor
- * functionality for Video objects.
+ * Contains code relating to editor functionality for graphics objects.
  * 
- * @author Alistair Jewers
+ * @author  Alistair Jewers
  * @version 1.0 Apr 21 2015
  */
 public class GraphicPropertiesController {
+    
     /* Reference to the properties pane responsible for this controller */
     private PropertiesPane parent;
     
@@ -100,19 +105,34 @@ public class GraphicPropertiesController {
         shadingColorProperty = PropertiesUtil.addColorField("shadingColor", "Shading Color: ", shadingColorProperty, graphicProperties, new ColorPropertyChangedHandler());
     }
 
+    /**
+     * Update the controller with a new graphic object selection.
+     * 
+     * @param nGraphic The new object to select.
+     */
     public void update(GraphicObject nGraphic) {
         if(selectedGraphic != null) {
             if(selectedGraphic.equals(nGraphic)) {
+                /* If this object was previously selected, do a soft update */
                 update(true);
+                
+                /* Leave the method */
                 return;
             }
         }
         
+        /* Set the reference to the new graphic object */
         selectedGraphic = nGraphic;
         
+        /* Do a hard update */
         update(false);
     }
     
+    /**
+     * Updates the property fields for the graphics pane.
+     * 
+     * @param soft Whether or not this is a soft update.
+     */
     public void update(boolean soft) {
         if(selectedGraphic == null) {
             xStartProperty.setText("");
@@ -144,6 +164,7 @@ public class GraphicPropertiesController {
             shadingProperty.setValue(selectedGraphic.getShading().toString());
         }
         
+        /* If this is a hard update fire the color chooser events */
         if(!soft) {
             graphicColorProperty.fireEvent(new ActionEvent(graphicColorProperty, graphicColorProperty));
             lineColorProperty.fireEvent(new ActionEvent(lineColorProperty, lineColorProperty));
@@ -151,19 +172,33 @@ public class GraphicPropertiesController {
         }
     }
     
+    /**
+     * Gets the graphics portion of the properties pane.
+     */
     public VBox getGraphicProperties() {
         return graphicProperties;
     }
 
+    /**
+     * Handles changes to the properties fields.
+     * 
+     * @author Alistair Jewers
+     */
     public class PropertyChangedHandler implements EventHandler<ActionEvent> {
+        /**
+         * Override the action event handler method.
+         */
         @Override
         public void handle(ActionEvent e) {
+            /* If no graphic is selected cancel */
             if(selectedGraphic == null) {
                 return;
             }
             
+            /* Get the souce */
             TextField source = (TextField)e.getSource();
             
+            /* Check the source ID  and update the appropriate property */
             switch(source.getId()) {
                 case "xStart":
                     selectedGraphic.setXStart(PropertiesUtil.validatePosition(source.getText(), selectedGraphic.getXStart()));
@@ -187,20 +222,34 @@ public class GraphicPropertiesController {
                     break;
             }
             
+            /* Hard update */
             update(false);
+            
+            /* Redraw */
             parent.redraw();
         }
     }
     
+    /**
+     * Handles changes to boolean properties.
+     * 
+     * @author Alistair Jewers
+     */
     public class BooleanPropertyChangedHandler implements EventHandler<ActionEvent> {
+        /**
+         * Override the action event handler method.
+         */
         @Override
         public void handle(ActionEvent e) {
+            /* If no object is selected cancel */
             if(selectedGraphic == null) {
                 return;
             }
             
+            /* Get the source */
             CheckBox source = (CheckBox)e.getSource();
             
+            /* Check the ID and update the relevant property */
             switch(source.getId()) {
                 case "solid":
                     selectedGraphic.setSolid(source.isSelected());
@@ -212,20 +261,34 @@ public class GraphicPropertiesController {
                     break;
             }
             
+            /* Hard update */
             update(false);
+            
+            /* Redraw */
             parent.redraw();
         }
     }
     
+    /**
+     * Handles changes to color properties.
+     * 
+     * @author Alistair Jewers
+     */
     public class ColorPropertyChangedHandler implements EventHandler<ActionEvent> {
+        /**
+         * Override the action event handler method.
+         */
         @Override
         public void handle(ActionEvent e) {
+            /* If no object is selected cancel */
             if(selectedGraphic == null) {
                 return;
             }
             
+            /* Get the source */
             ColorPicker source = (ColorPicker)e.getSource();
             
+            /* Check the ID and update the relevant property */
             switch(source.getId()) {
                 case "graphicColor":
                     selectedGraphic.setGraphicColor(RenderUtil.stringFromColor(source.getValue()));
@@ -240,19 +303,31 @@ public class GraphicPropertiesController {
                     break;
             }
             
+            /* Redraw */
             parent.redraw();
         }
     }
     
+    /**
+     * Handles changes to drop down selection lists.
+     * 
+     * @author Alistair Jewers
+     */
     public class SelectionPropertyChangedHandler implements EventHandler<ActionEvent> {
+        /**
+         * Override the action event handler method.
+         */
         @Override
         public void handle(ActionEvent e) {
+            /* If no object is selected cancel */
             if(selectedGraphic == null) {
                 return;
             }
             
+            /* Get the source */
             ComboBox<String> source = (ComboBox<String>)e.getSource();
             
+            /* Check the ID and update the relevant property */
             switch(source.getId()) {
                 case "type":
                     selectedGraphic.setType(GraphicType.valueOf(source.getValue()));
@@ -264,7 +339,10 @@ public class GraphicPropertiesController {
                     break;
             }
             
+            /* Hard update */
             update(false);
+            
+            /* Redraw */
             parent.redraw();
         }
     }
