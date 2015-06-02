@@ -76,7 +76,7 @@ public class MultipleChoice {
      * @param nOrientation
      *            Vertical/horizontal orientation of the object
      * @param nRetry
-     *            Enable/disable retry
+     *            Enable/disable retry after wrong attempt
      * @param nMarks
      *            Marks for correct answer
      */
