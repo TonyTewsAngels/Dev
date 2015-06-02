@@ -2,7 +2,6 @@
  * Alistair Jewers
  * 
  * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
- * 
  */
 package teacheasy.xml;
 

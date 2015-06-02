@@ -2,7 +2,6 @@
  * Alistair Jewers
  * 
  * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
- * 
  */
 package teacheasy.xml;
 
@@ -16,8 +15,8 @@ import teacheasy.xml.util.XMLNotification;
  * writing whilst maintaining info
  * about file locations (recent files).
  * 
- * @version 	1.0 05 Feb 2015
- * @author 		Alistair Jewers
+ * @author  Alistair Jewers
+ * @version 1.0 05 Feb 2015
  */
 public class XMLHandler {	
 	/** XML Parser */

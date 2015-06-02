@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 /**
  * Creates a window to edit a text box's content from.
  * 
- * @author Alistair Jewers
+ * @author  Alistair Jewers
  * @version 1.0 20 May 2015
  */
 public class TextEditorWindow {
