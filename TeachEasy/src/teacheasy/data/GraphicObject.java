@@ -13,7 +13,8 @@ import wavemedia.graphic.Shading;
  * as defined in the TeachEasy digital lesson XML format.
  * Extends the page object supertype.
  * 
- * @author 	Lewis Thresh & Calum Armstrong
+ * @author 	Lewis Thresh 
+ * @author  Calum Armstrong
  * @version 1.0 05 Feb 2015
  */
 public class GraphicObject extends PageObject {	

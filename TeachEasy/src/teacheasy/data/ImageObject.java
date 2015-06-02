@@ -10,7 +10,8 @@ package teacheasy.data;
  * as defined in the TeachEasy digital lesson XML format.
  * Extends the page object supertype.
  * 
- * @author  Sam Raeburn and Sam Hall
+ * @author  Sam Raeburn 
+ * @author  Sam Hall
  * @version 1.2 13 Feb 2015
  */
 public class ImageObject extends PageObject {

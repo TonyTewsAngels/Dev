@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Encapsulates the data that describes a Rich Text Fragment
  * as defined in the TeachEasy digital lesson XML format.
  * 
- * @author Alistair Jewers
+ * @author  Alistair Jewers
  * @version 1.0 17 Feb 2015
  */
 public class RichText {

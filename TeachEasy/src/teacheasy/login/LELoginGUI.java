@@ -36,7 +36,8 @@ import javafx.util.Duration;
  * Allows login details entered by a user to be verified.
  * Extends the JavaFX Application class.
  * 
- * @author  Lewis Thresh & Alistair Jewers
+ * @author  Lewis Thresh 
+ * @author  Alistair Jewers
  * @version 1.0 20 May 2015
  */
 public class LELoginGUI  extends Application {

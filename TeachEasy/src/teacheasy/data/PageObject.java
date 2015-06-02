@@ -11,8 +11,8 @@ package teacheasy.data;
  * as defined in the TeachEasy digital lesson XML format.
  * Extended by all the various page object types.
  * 
- * @version 1.0 05 Feb 2015
  * @author  Alistair Jewers
+ * @version 1.0 05 Feb 2015
  */
 public abstract class PageObject {
 	

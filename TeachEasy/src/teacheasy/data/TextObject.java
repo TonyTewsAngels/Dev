@@ -13,7 +13,8 @@ import java.util.List;
  * as defined in the TeachEasy digital lesson XML format.
  * Extends the page object supertype.
  * 
- * @author 	Daniel Berhe & Jake Ransom
+ * @author 	Daniel Berhe 
+ * @author  Jake Ransom
  * @version 1.0 05 Feb 2015
  */
 public class TextObject extends PageObject {

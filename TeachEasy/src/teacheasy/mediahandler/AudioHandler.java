@@ -1,8 +1,7 @@
 /*
- * Alex Cash and Calum Armstrong
+ * Alex Cash & Calum Armstrong
  * 
  * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
- * 
  */
 package teacheasy.mediahandler;
 
@@ -14,7 +13,10 @@ import teacheasy.mediahandler.audio.Audio;
 import javafx.scene.*;
 
 /**
- * This class is the handler for audio
+ * Handles audio objects on a page, including their addition and
+ * deletion as well as maintaining their state. Audio objects
+ * are added by supplying the relevant data from the data structure.
+ * This class is used by the renderer when redrawing pages.
  * 
  * @author Alex Cash 
  * @author Calum Armstrong

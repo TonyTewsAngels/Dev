@@ -11,7 +11,8 @@ import java.io.*;
  * Contains static methods for checking student and teacher
  * login credentials.
  * 
- * @author  Lewis Thresh & Alistair Jewers
+ * @author  Lewis Thresh 
+ * @author  Alistair Jewers
  * @version 1.0 25 May 2015
  */
 public class LoginChecker {

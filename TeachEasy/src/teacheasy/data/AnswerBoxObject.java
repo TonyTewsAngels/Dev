@@ -13,7 +13,8 @@ import teacheasy.data.multichoice.Answer;
  * as defined in the TeachEasy digital lesson XML format.
  * Extends the page object supertype.
  * 
- * @author	Sam Raeburn and Sam Hall
+ * @author	Sam Raeburn
+ * @author  Sam Hall
  * @version	1.1 08 Feb 2015
  */
 public class AnswerBoxObject extends PageObject {
