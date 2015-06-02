@@ -24,8 +24,9 @@ import teacheasy.xml.util.XMLNotification.Level;
 /**
  * Parses the XML file that makes up a Teach Easy digital
  * lesson into a data structure for use by the programs.
- * @author amj523
- *
+ * 
+ * @author  Alistair Jewers
+ * @version 2.0 10 Apr 2015
  */
 public class XMLParser extends DefaultHandler {
     /** The lesson being constructed from the data */
