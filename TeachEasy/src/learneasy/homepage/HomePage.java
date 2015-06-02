@@ -403,7 +403,7 @@ public class HomePage {
 
             /* Act according to id */
             if (id.equals("OK")) {
-                /* Change the vaule of the variable defaultFolder */
+                /* Change the value of the variable defaultFolder */
                 setDefaultFolder(fileAddress.getText());
                 
                 /* Close the prompt window */
