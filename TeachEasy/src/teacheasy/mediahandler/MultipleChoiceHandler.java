@@ -39,18 +39,17 @@ public class MultipleChoiceHandler {
     }
 
     /**
-     * Method to add a multiple choice object to a page.
+     * Method to add a multiple choice object to a page
      * 
-     * @param answers
-     *            - Array list of Answer objects representing the possible
-     *            answers; correct or incorrect.
-     * @param defaultPadding
-     * @param spacing
-     * @param type
-     *            - The type of multiple choice object being created
-     * @param orientation
-     *            - Which orientation (vertical or horizontal) to draw the
-     *            answers.
+     * @param xStart X-coordinate of the top left corner of the multiple choice
+     *               object
+     * @param yStart Y-coordinate of the top left corner of the multiple choice
+     *               object
+     * @param answers List of correct answers
+     * @param type Type of multiple choice. E.g. drop down, radio..
+     * @param orientation Vertical/horizontal orientation of the object
+     * @param retry Enable/disable retry after wrong attempt
+     * @param marks Awarded marks for correct answer
      */
     public void createMultipleChoice(float xStart, float yStart,
             ArrayList<Answer> answers, MultiChoiceType type,
@@ -58,74 +57,116 @@ public class MultipleChoiceHandler {
         multipleChoice.add(new MultipleChoice(group, xStart, yStart, answers,
                 type, orientation, retry, marks));
     }
-    
-    /** Returns the x co ordinate of the start point (top left) */
+
+    /**
+     * Returns the x-coordinate of the starting point
+     * 
+     * @param questionId The id of the multiple choice object
+     * @return Top left x-coordinate of the object in pixels
+     */
     public double getMultiChoiceXStart(int questionId) {
-    	if(questionId < multipleChoice.size() && questionId >= 0) {
-    		return multipleChoice.get(questionId).getMultiChoiceXStart();
-    	} else {
-    		return 0;
-    	}
+        if (questionId < multipleChoice.size() && questionId >= 0) {
+            return multipleChoice.get(questionId).getMultiChoiceXStart();
+        } else {
+            return 0;
+        }
     }
-    
-    /** Returns the y co ordinate of the start point (top left) */
+
+    /**
+     * Returns the y-coordinate of the starting point
+     * 
+     * @param questionId The id of the multiple choice object
+     * @return Top left y-coordinate of the object in pixels
+     */
     public double getMultiChoiceYStart(int questionId) {
-    	if(questionId < multipleChoice.size() && questionId >= 0) {
-    		return multipleChoice.get(questionId).getMultiChoiceYStart();
-    	} else {
-    		return 0;
-    	}
+        if (questionId < multipleChoice.size() && questionId >= 0) {
+            return multipleChoice.get(questionId).getMultiChoiceYStart();
+        } else {
+            return 0;
+        }
     }
-    
-    /** Returns the x co ordinate of the end point (bottom right) */
+
+    /**
+     * Returns the x-coordinate of the end point
+     * 
+     * @param questionId The id of the multiple choice object
+     * @return Bottom right x-coordinate of the object in pixels
+     */
     public double getMultiChoiceXEnd(int questionId) {
-    	if(questionId < multipleChoice.size() && questionId >= 0) {
-    		return multipleChoice.get(questionId).getMultiChoiceXEnd();
-    	} else {
-    		return 0;
-    	}
+        if (questionId < multipleChoice.size() && questionId >= 0) {
+            return multipleChoice.get(questionId).getMultiChoiceXEnd();
+        } else {
+            return 0;
+        }
     }
-    
-    /** Returns the y co ordinate of the end point (bottom right) */
+
+    /**
+     * Returns the y-coordinate of the end point
+     * 
+     * @param questionId  The id of the multiple choice object
+     * @return Bottom right y-coordinate of the object in pixels
+     */
     public double getMultiChoiceYEnd(int questionId) {
-    	if(questionId < multipleChoice.size() && questionId >= 0) {
-    		return multipleChoice.get(questionId).getMultiChoiceYEnd();
-    	} else {
-    		return 0;
-    	}
+        if (questionId < multipleChoice.size() && questionId >= 0) {
+            return multipleChoice.get(questionId).getMultiChoiceYEnd();
+        } else {
+            return 0;
+        }
     }
-    
+
+    /**
+     * Gets the width of the multiple choice object in pixels
+     * 
+     * @param questionId The id of the multiple choice object
+     * @return Width of the object in pixels
+     */
     public double getMultiChoiceWidth(int questionId) {
-        if(questionId < multipleChoice.size() && questionId >= 0) {
+        if (questionId < multipleChoice.size() && questionId >= 0) {
             return multipleChoice.get(questionId).getMultiChoiceWidth();
         } else {
             return 0;
         }
     }
-    
+
+    /**
+     * Gets the height of the multiple choice object in pixels
+     * 
+     * @param questionId The id of the multiple choice object
+     * @return The height of the object in pixels
+     */
     public double getMultiChoiceHeight(int questionId) {
-        if(questionId < multipleChoice.size() && questionId >= 0) {
+        if (questionId < multipleChoice.size() && questionId >= 0) {
             return multipleChoice.get(questionId).getMultiChoiceHeight();
         } else {
             return 0;
         }
     }
-    
-    /** Grays out all of the multiple choices currently on page */
+
+    /** Grays out all of the multiple choices currently on the page */
     public void DisableAllMultipleChoices() {
         for (int i = 0; i < multipleChoice.size(); i++) {
             multipleChoice.get(i).disable();
         }
     }
 
-    /** Total marks for multiple choice questions on a page */
+    /**
+     * Collates the total marks for multiple choice questions on a page
+     * 
+     * @return <code>int</code> value of the total page marks
+     */
     public int totalPageMarks() {
         int totalPageMarks = 0;
 
+        /*
+         * Loops through all the multiple choice object on the page collating
+         * the marks for the answered ones
+         */
         for (int i = 0; i < multipleChoice.size(); i++) {
             if (multipleChoice.get(i).getMarkButton().isDisabled()
                     && !multipleChoice.get(i).isMarkCollated()) {
+                /* Increment total page marks */
                 totalPageMarks += multipleChoice.get(i).getAwardedMarks();
+                /* Set the variable markCollated so it doesn't get counted again */
                 multipleChoice.get(i).setMarkCollated(true);
             }
         }
@@ -133,9 +174,18 @@ public class MultipleChoiceHandler {
         return totalPageMarks;
     }
 
-    /** Checks if all multiple choices are grayed out */
+    /**
+     * Checks if all multiple choices are grayed out
+     * 
+     * @return <code>true</code> if all multiple choice objects on a page are
+     *         grayed out; <code>false</false> otherwise.
+     */
     public boolean allMultipleChoicesDisabled() {
         boolean allDisabled = true;
+        /*
+         * Loops through all the multiple choice object on the page checking if
+         * the mark button is disabled
+         */
         for (int i = 0; i < multipleChoice.size(); i++) {
             if (!multipleChoice.get(i).getMarkButton().isDisabled()) {
                 allDisabled = false;
@@ -143,7 +193,10 @@ public class MultipleChoiceHandler {
         }
         return allDisabled;
     }
-    
+
+    /**
+     * Clears the multiple choice object
+     */
     public void clearMultiChoice() {
         multipleChoice.clear();
     }

@@ -26,11 +26,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
 /**
- * Class to draw answer boxes with the specified x & y location and character
+ * Class to draw answer boxes with the specified x & y locations and character
  * limit. The class also checks entered answer against list of possible answers
  * and assigns them the predefined marks.
  * 
- * @author Daniel Berhe and Jake Ransom
+ * @author Daniel Berhe
+ * @author Jake Ransom
  * @version 1.1 07 Mar 2015
  * 
  */
@@ -59,13 +60,25 @@ public class AnswerBox {
     /* For checking if marks have been collated */
     private boolean markCollated;
 
-    /** Constructor method */
+    /**
+     * A constructor to create answer box object
+     * 
+     * @param nXStart The x coordinate of the object
+     * @param nYStart The y coordinate of the object
+     * @param nCharacterLimit Maximum allowed characters
+     * @param nRetry To allow retry
+     * @param nMarks Possible marks for a correct answer
+     * @param nIsNumerical Whether or not numerical input is expected
+     * @param nGroup The group this answer box will be added to
+     * @param nUpperBound Upper range of numerical solution
+     * @param nLowerBound Lower range of numerical solution
+     * @param nAnswers Solutions to questions
+     */
     public AnswerBox(double nXStart, double nYStart, int nCharacterLimit,
             boolean nRetry, int nMarks, boolean nIsNumerical, Group nGroup,
             float nUpperBound, float nLowerBound, ArrayList<Answer> nAnswers) {
 
-        /* Setting local variables */
-        if (nMarks > 0){
+        if (nMarks > 0) {
             this.marks = nMarks;
         } else {
             this.marks = 0;
@@ -78,6 +91,7 @@ public class AnswerBox {
             this.characterLimit = 2;
         }
 
+        /* Setting local variables */
         this.xStart = nXStart;
         this.yStart = nYStart;
         this.group = nGroup;
@@ -86,7 +100,6 @@ public class AnswerBox {
         this.upperBound = nUpperBound;
         this.lowerBound = nLowerBound;
         this.answers = nAnswers;
-
         setAwardedMarks(0);
         setMarkCollated(false);
 
@@ -133,9 +146,6 @@ public class AnswerBox {
 
         /* Add box back to the main screen */
         group.getChildren().add(box);
-
-        // /*Initialise the buttonPressed variable as false*/
-        // this.buttonPressed = false;
     }
 
     /**
@@ -144,6 +154,8 @@ public class AnswerBox {
      * answers in the array. It also allows/disallows retry depending on the
      * value of the variable retry.
      * 
+     * @param nMarks Awarded marks for a correct answer
+     * @return true for a correct answer
      */
     public boolean checkAnswer(int nMarks) {
         boolean isCorrect = false;
@@ -154,8 +166,9 @@ public class AnswerBox {
                  * Checks if there is at least a character and compares user
                  * submitted answers with the list of available answers
                  */
-                if (answerField.getText().length() >= 1 && 
-                    answerField.getText().equalsIgnoreCase(a.getText())) {
+                if (answerField.getText().length() >= 1
+                        && answerField.getText().equalsIgnoreCase(a.getText())) {
+
                     /* Award marks */
                     setAwardedMarks(getAwardedMarks() + marks);
 
@@ -198,13 +211,21 @@ public class AnswerBox {
             }
         }
 
+        /* Lock answer box depending on the value of retry */
         answerField.setEditable(retry);
+
+        /* Disable answer box depending on the value of retry */
         answerField.setDisable(!retry);
+
+        /* Disable button depending on the value of retry */
         checkAnswerButton.setDisable(!retry);
+
         return isCorrect;
     }
 
-    /** A method to display feedback to the user */
+    /**
+     * A method to display feedback to the user
+     */
     public void displayFeedback() {
 
         if (validInput == false && isNumerical == true) {
@@ -222,34 +243,42 @@ public class AnswerBox {
         }
     }
 
-    /** method for getting markCollated */
+    /**
+     * Method for getting markCollated
+     * 
+     * @return <code>true</code> if marks have been collated
+     */
     public boolean isMarkCollated() {
         return markCollated;
     }
 
-    /** method for setting markCollated */
+    /** Sets markCollated */
     public void setMarkCollated(boolean markCollated) {
         this.markCollated = markCollated;
     }
 
+    /** Gets the awardedMarks */
     public int getAwardedMarks() {
         return awardedMarks;
     }
 
+    /** Sets awardedMarks */
     public void setAwardedMarks(int awardedMarks) {
         this.awardedMarks = awardedMarks;
     }
-    
+
+    /** Gets height of the box */
     public double getHeight() {
         return box.getHeight();
     }
-    
+
+    /** Gets width of the box */
     public double getWidth() {
         return box.getWidth();
     }
 
     /**
-     * Button Event Handler Class
+     * Button event handler class
      */
     public class ButtonEventHandler implements EventHandler<ActionEvent> {
         @Override
@@ -280,7 +309,7 @@ public class AnswerBox {
 
                 /* Display the outcome */
                 displayFeedback();
-            } else if(key.getCode().equals(KeyCode.ESCAPE)) {
+            } else if (key.getCode().equals(KeyCode.ESCAPE)) {
                 answerField.getParent().requestFocus();
             }
         }
