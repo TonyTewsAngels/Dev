@@ -152,7 +152,7 @@ public class AnswerXMLHandler extends DefaultHandler{
     }
     
     /**
-     * Called when text is found.
+     * Called when text is found in the XML.
      */
     public void characters(char[] ch, int start, int length) {
         /* Stash the text in the read buffer */
@@ -165,7 +165,8 @@ public class AnswerXMLHandler extends DefaultHandler{
     
     /**
      * Called to start constructing the answer object.
-     * @param attrs
+     * 
+     * @param attrs The attributes found in the XML.
      */
     public void answerStart(Attributes attrs) {
         /* Check the type of object being constructed */
