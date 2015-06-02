@@ -36,30 +36,35 @@ import javafx.stage.Stage;
  */
 public class HomePage {
 
-    /* Homepage */
+    /* Class level variables */
     private Preferences preference;
     private String defaultFolder;
     private Button okButton, browseButton;
     private Label infoLabel, defaultLabel;
     private TextField fileAddress;
     private CheckBox checkBox;
-
     private HBox labelBox, filePathBox, okBox;
-
     private Stage dialogStage;
-
     final DirectoryChooser defaultFolderChooser;
-
     private String RecentlyOpened5;
     private String RecentlyOpened4;
     private String RecentlyOpened3;
     private String RecentlyOpened2;
     private String RecentlyOpened1;
 
+    /**
+     * Constructor for instialising local variables and setting 
+     * the default folder to user home folder. If nothing is already
+     * stored, the file path of the default folder is stored.
+     */
     public HomePage() {
         
+        /* Set default folder to user home folder */
         setDefaultFolder(new File(System.getProperty("user.home")).toString());
+        /* New instance of directory chooser */
         defaultFolderChooser = new DirectoryChooser();
+        
+        /* Initialisation of local variables */
         RecentlyOpened5 = "RecentlyOpened5";
         RecentlyOpened4 = "RecentlyOpened4";
         RecentlyOpened3 = "RecentlyOpened3";
@@ -67,6 +72,10 @@ public class HomePage {
         RecentlyOpened1 = "RecentlyOpened1";
     }
 
+    /**
+     * Method created a new instance of preference and sets the initial
+     * configurations based on what is stored in the preference. 
+     */
     public void setPreference() {
         
         /* variables for checking the existence of keys */
@@ -76,14 +85,8 @@ public class HomePage {
         /* Instantiate preferences */
         preference = Preferences.userRoot().node(this.getClass().getName());
 
-        /* This code clears user preference. Please only uncomment during testing */
-        /******************************************
-        try {
-            preference.clear();
-        } catch (BackingStoreException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }*****************************************/
+        /* This code clears user preference. Uncomment only for testing purposes */
+        //flushPreference();
 
         try {
             String[] storedKeys = new String[preference.keys().length];
@@ -93,7 +96,7 @@ public class HomePage {
                 preference.put("recentlyOpened", getDefaultFolder());
 
                 /*
-                 * Store user choice for prompt window at the start of LearnEasy
+                 * Store users choice for prompt window at the start of LearnEasy
                  */
                 preference.putBoolean("showPrompt", true);
 
@@ -110,7 +113,6 @@ public class HomePage {
             }
 
         } catch (BackingStoreException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -118,14 +120,12 @@ public class HomePage {
             /* Store default folder with key recentlyOpened */
             preference.put("recentlyOpened", getDefaultFolder());
         } else {
-            /* if default folder not chosen assign set it to the user home */
+            /* if default folder not chosen set it to the user home folder */
             setDefaultFolder(preference.get("recentlyOpened", "user.home"));
         }
 
         if (!userPromptKeyExists) {
-            /*
-             * Store user choice for prompt window at the start of LearnEasy
-             */
+            /* Store user choice for prompt window at the start of LearnEasy */
             preference.putBoolean("showPrompt", true);
         }
 
@@ -133,24 +133,28 @@ public class HomePage {
         defaultDirectoryPrompt();
     }
 
-    /** A method to displays a dialog box for choosing 
+    /** 
+     * A method to display a dialog box for choosing 
      * a default folder
      */
     private void defaultDirectoryPrompt() {
+        /* Checks the preference for users choice of prompt window */
         if (preference.getBoolean("showPrompt", false)) {
             createPromptWindow();
         }
     }
 
-    /** A method that makes the prompt window */
+    /**
+     * A method for creating the prompt window
+     */
     final void createPromptWindow() {
 
+        /* Label to contain message to the user */
         infoLabel = new Label();
-        infoLabel
-                .setText("Please select a default folder\n\n");
+        infoLabel.setText("Please select a default folder\n\n");
         infoLabel.setFont(new Font("Calibri", 16));
         
-
+        /* Label that contains the text "Folder: " */
         defaultLabel = new Label();
         defaultLabel.setText("Folder: ");
         defaultLabel.setFont(new Font("Calibri", 14));
@@ -370,6 +374,15 @@ public class HomePage {
                     fileAddress.setText(file.toString());
                 }
             }
+        }
+    }
+    
+    private void flushPreference() {
+        try {
+            preference.clear();
+        } catch (BackingStoreException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
         }
     }
 }
