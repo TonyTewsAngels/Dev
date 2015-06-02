@@ -9,34 +9,58 @@ package teacheasy.mediahandler.multichoice;
 import javafx.scene.control.CheckBox;
 
 /**
- * A class to label right and wrong check boxes 
+ * A class to label right and wrong check boxes
  * 
- * @author	Emmanuel Olutayo
- * @version	1.0 07 Mar 2015
+ * @author Emmanuel Olutayo
+ * @version 1.0 07 Mar 2015
  */
 public class MChoiceCheckBox {
 
-	private CheckBox checkBox;
-	private boolean correct;
+    private CheckBox checkBox;
+    private boolean correct;
 
-	public MChoiceCheckBox(CheckBox nCB, boolean nCorrect){
-		this.checkBox = nCB;
-		this.correct = nCorrect;
-	}
+    /**
+     * Constructor that instantiated the class variables from the parameters
+     * @param nCB
+     *            CheckBox object to be labelled
+     * @param nCorrect
+     *            <code>true</code> if object answered correctly;
+     *            <code>false</code> otherwise.
+     */
+    public MChoiceCheckBox(CheckBox nCB, boolean nCorrect) {
+        this.checkBox = nCB;
+        this.correct = nCorrect;
+    }
 
-	public CheckBox getCheckBox() {
-		return checkBox;
-	}
+    /**
+     * 
+     * @return
+     */
+    public CheckBox getCheckBox() {
+        return checkBox;
+    }
 
-	public void setCheckBox(CheckBox ncB) {
-		this.checkBox = ncB;
-	}
+    /**
+     * 
+     * @param ncB
+     */
+    public void setCheckBox(CheckBox ncB) {
+        this.checkBox = ncB;
+    }
 
-	public boolean isCorrect() {
-		return correct;
-	}
+    /**
+     * 
+     * @return
+     */
+    public boolean isCorrect() {
+        return correct;
+    }
 
-	public void setCorrect(boolean nCorrect) {
-		this.correct = nCorrect;
-	}
+    /**
+     * 
+     * @param nCorrect
+     */
+    public void setCorrect(boolean nCorrect) {
+        this.correct = nCorrect;
+    }
 }

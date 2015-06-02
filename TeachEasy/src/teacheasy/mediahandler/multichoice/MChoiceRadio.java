@@ -20,6 +20,7 @@ public class MChoiceRadio {
     private boolean correct;
 
     /**
+     * Constructor that instantiated the class variables from the parameters
      * 
      * @param nRb
      *            RadioButton object which is to be labelled
