@@ -17,6 +17,7 @@ package learneasy.trackProgress;
  */
 public class ProgressTracker {
 
+    /* Class level variables */
     private int marks = 0;
     private boolean visitedPages[];
     private int individualPageMarks[];
