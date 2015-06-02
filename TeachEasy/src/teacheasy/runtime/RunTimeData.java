@@ -34,7 +34,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser.ExtensionFilter;
 import learneasy.homepage.HomePage;
-import learneasy.trackprogress.ProgressTracker;
+import learneasy.trackProgress.ProgressTracker;
 import teacheasy.data.*;
 import teacheasy.main.LearnEasyClient;
 import teacheasy.main.PreviewWindow;

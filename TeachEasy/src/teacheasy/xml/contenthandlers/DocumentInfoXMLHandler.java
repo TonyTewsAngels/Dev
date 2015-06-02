@@ -1,3 +1,8 @@
+/*
+ * Alistair Jewers
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved. 
+ */
 package teacheasy.xml.contenthandlers;
 
 import java.util.ArrayList;
@@ -12,12 +17,26 @@ import teacheasy.xml.XMLElement;
 import teacheasy.xml.util.XMLNotification;
 import teacheasy.xml.util.XMLNotification.Level;
 
+/**
+ * The XML content handler for the default settings element.
+ * 
+ * @author  Alistair Jewers
+ * @version 1.0 Apr 12 2015 
+ */
 public class DocumentInfoXMLHandler extends DefaultHandler{
+    /** Lesson object */
     private Lesson lesson;
+    
+    /** List of errors and warnings */
     private ArrayList<XMLNotification> errorList;
+    
+    /** The XML reader reference */
     private XMLReader xmlReader;
+    
+    /** The handler that called this one */
     private DefaultHandler parent;
     
+    /** The buffer of characters read in */
     private String readBuffer;
     
     private LessonInfo lessonInfo;
