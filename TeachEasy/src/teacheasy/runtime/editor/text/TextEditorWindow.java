@@ -1,3 +1,8 @@
+/*
+ * Alistair Jewers
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved. 
+ */
 package teacheasy.runtime.editor.text;
 
 import teacheasy.data.TextObject;
@@ -7,14 +12,20 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * Creates a window to edit a text box's content from.
+ * 
+ * @author Alistair Jewers
+ * @version 1.0 20 May 2015
+ */
 public class TextEditorWindow {
+    /* JavaFX components */
     private Stage stage;
     private Scene scene;
     private VBox box;
@@ -23,6 +34,12 @@ public class TextEditorWindow {
     private Button cancelBtn;
     private HBox buttonBox;
     
+    /**
+     * Constructor.
+     * 
+     * @param handler The handler for the results of the window.
+     * @param text The text to display initially.
+     */
     public TextEditorWindow(TextEditorHandler handler, TextObject text) {
         /* Initialise the stage */
         stage = new Stage();
@@ -49,11 +66,9 @@ public class TextEditorWindow {
         
         /* Fill the text area */
         StringBuilder sb = new StringBuilder();
-        
         for(int i = 0; i < text.textFragments.size(); i++) {
             sb.append(text.textFragments.get(i).getText());
         }
-        
         textArea.setText(sb.toString());
         textArea.setWrapText(true);
         
@@ -70,13 +85,21 @@ public class TextEditorWindow {
         stage.show();
     }
     
+    /**
+     * Handler for button events.
+     * 
+     * @author Alistair Jewers
+     * @version 1.0 20 May 2015
+     */
     public class ButtonHandler implements EventHandler<ActionEvent> {
         @Override
         public void handle(ActionEvent e) {
+            /* Get the source */
             Button source = (Button)e.getSource();
-            
+
             switch(source.getId()) {
                 case "cancel":
+                    /* Close the window */
                     stage.close();
                     break;
             }
