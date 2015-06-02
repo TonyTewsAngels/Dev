@@ -1,3 +1,8 @@
+/*
+ * Alistair Jewers
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved. 
+ */
 package teacheasy.runtime.editor;
 
 import javafx.scene.control.Button;
@@ -22,10 +27,10 @@ import teacheasy.data.AnswerBoxObject;
 import teacheasy.data.multichoice.Answer;
 
 /**
- * Encapsulates functionality relating to editor
+ * Contains code relating to editor
  * functionality for Answer Box objects.
  * 
- * @author Alistair Jewers
+ * @author  Alistair Jewers
  * @version 1.0 Apr 21 2015
  */
 public class AnswerBoxPropertiesController {
@@ -97,20 +102,30 @@ public class AnswerBoxPropertiesController {
         newAnswerButton.setId("newAnswer");
         newAnswerButton.setOnAction(new ButtonPressedHandler());
         
+        /* Set up the remove answer button */
         Button removeAnswerButton = new Button("Remove Selected");
         removeAnswerButton.setId("removeAnswer");
         removeAnswerButton.setOnAction(new ButtonPressedHandler());
         
+        /* Create the button container */
         answerButtons = new HBox();
         answerButtons.getChildren().addAll(newAnswerButton, removeAnswerButton);
         
+        /* Add the button container */
         answerBoxProperties.getChildren().add(answerButtons);
     }
     
+    /**
+     * Sets up the table of answers
+     */
     public void setupAnswerTable() {
+        /* Instantiate the table*/
         answerTable = new TableView<AnswerProperty>();
+        
+        /* Set the table fields editable */
         answerTable.setEditable(true);
         
+        /* Create the answer column */
         TableColumn<AnswerProperty, String> answerColumn = new TableColumn<AnswerProperty, String>("Answer");
         answerColumn.setMinWidth(100);
         answerColumn.setEditable(true);
@@ -118,26 +133,41 @@ public class AnswerBoxPropertiesController {
         answerColumn.setCellFactory(TextFieldTableCell.<AnswerProperty>forTableColumn());
         answerColumn.setOnEditCommit(new AnswerChangedHandler());
         
+        /* Create the delete column */
         TableColumn<AnswerProperty, Boolean> deleteColumn = new TableColumn<AnswerProperty, Boolean>("Remove");
         deleteColumn.setMinWidth(100);
         deleteColumn.setEditable(true);
         deleteColumn.setCellValueFactory(new RemoveCallback());
         deleteColumn.setCellFactory(CheckBoxTableCell.forTableColumn(deleteColumn));
         
+        /* Add the columns */
         answerTable.getColumns().add(answerColumn);
         answerTable.getColumns().add(deleteColumn);
         
+        /* Fix the size */
         answerTable.setMaxHeight(160);
         
+        /* Add the answer table to the pane */
         answerBoxProperties.getChildren().add(answerTable);
     }
 
-    public void update(AnswerBoxObject nAnswerBox) {       
+    /**
+     * Update the answer box controller.
+     * 
+     * @param nAnswerBox The selected answer box.
+     */
+    public void update(AnswerBoxObject nAnswerBox) {
+        /* Update the selected reference */
         selectedAnswerBox = nAnswerBox;
         
+        /* Update the display */
         update();
     }
     
+    /**
+     * Updates the displayed properties to have the 
+     * values of the selected answerbox.
+     */
     public void update() {
         if(selectedAnswerBox == null) {
             xStartProperty.setText("");
