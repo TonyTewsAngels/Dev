@@ -2,7 +2,6 @@
  * Alistair Jewers
  * 
  * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
- * 
  */
 package teacheasy.mediahandler.video;
 
@@ -40,8 +39,11 @@ import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 /**
- * This class encapsulates an individual video
- * within the video handler.
+ * Encapsulates a single video object on a page,
+ * including controls and media. Each audio object
+ * maintains its own state, and a list of the currently
+ * active audio objects is maintained by the audio
+ * handler.
  * 
  * @author Alistair Jewers
  * @version 1.1 10 Apr 2015
@@ -100,10 +102,11 @@ public class Video {
     /** Event handler for fullscreen exit */
     private EventHandler<WindowEvent> fullScreenCloseHandler;
     
+    /** The loop setting */
     private boolean loop;
     
     /**
-     * Constructs the video.
+     * Constructs the video and adds it to the group.
      * 
      * @param nGroup The group this video goes on.
      * 
@@ -116,11 +119,11 @@ public class Video {
      * @param width The width of the video in pixels.
      * 
      * @param sourcefile Absolute path of the video as a string. Can be a local
-     *                     file path or a web address beginning with 'http'
+     *                     file path or a web address beginning with 'http'.
      * 
-     * @param autoPlay If true the video plays immediately
+     * @param autoPlay If true the video plays immediately.
      * 
-     * @param loop If true the video loops to the beginning when it ends
+     * @param loop If true the video loops to the beginning when it ends.
      */
     public Video(Group nGroup, float x, float y, float width, String sourcefile, boolean autoPlay, boolean loop, EventHandler<WindowEvent> nFullScreenCloseHandler) {
         /* Set the group reference */
@@ -129,6 +132,7 @@ public class Video {
         /* Set the full screen exit event handler reference */
         this.fullScreenCloseHandler = nFullScreenCloseHandler;
         
+        /* Loop setting */
         this.loop = loop;
         
         /* Load icon images */
@@ -272,6 +276,7 @@ public class Video {
         mediaPlayer.currentTimeProperty().addListener(videoListener);
         mediaPlayer.statusProperty().addListener(new PlayerStatusListener());
         
+        /* If the loop variable is set, set the media to cycle infinitely */
         if(loop) {
             mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         }
@@ -279,10 +284,11 @@ public class Video {
         /* Create a media view for the object */
         video = new MediaView(mediaPlayer);
         
-        /* Set up the media view */
+        /* Limit the width to a minimum so the controls display correctly */
         if(width < MIN_WIDTH) {
             width = MIN_WIDTH;
         }
+        
         video.setFitWidth(width);
 
         /* Create a grid */
@@ -518,9 +524,9 @@ public class Video {
     }
     
     /** 
-     * Utility function, adds a leading zero to numbers under 10
+     * Utility function, adds a leading zero to numbers under 10.
      * 
-     * @param n Integer number to be padded
+     * @param n Integer number to be padded.
      */
     private String zeroPad(int n) {
         if(n < 10) {
@@ -531,7 +537,7 @@ public class Video {
     }
     
     /** 
-     * Toggles video in and out of fullscreen 
+     * Toggles video in and out of fullscreen .
      */
     public void fullscreen() {                
         /* If the video is already fullscreen, go back. If not, go fullscreen */
@@ -596,22 +602,21 @@ public class Video {
      */
     private static boolean mediaExists(String url){
         try {
-          /* Do not follow redirects */
-          HttpURLConnection.setFollowRedirects(false);
-          
-          /* Open a connection to the media */
-          HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
-          
-          /* Use a head only request to just retrieve metadata */
-          con.setRequestMethod("HEAD");
-          
-          /* If a response code of 200 (okay) is received, the media is available */
-          return (con.getResponseCode() == HttpURLConnection.HTTP_OK);
+            /* Do not follow redirects */
+            HttpURLConnection.setFollowRedirects(false);
+              
+            /* Open a connection to the media */
+            HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
+              
+            /* Use a head only request to just retrieve metadata */
+            con.setRequestMethod("HEAD");
+              
+            /* If a response code of 200 (okay) is received, the media is available */
+            return (con.getResponseCode() == HttpURLConnection.HTTP_OK);
+        } catch (Exception e) {
+            return false;
         }
-        catch (Exception e) {
-           return false;
-        }
-      }
+    }
     
     /**
      * Handles adding and removing the controls from the video when
@@ -799,7 +804,8 @@ public class Video {
     public class PlayerStatusListener implements ChangeListener<Status> {
         @Override
         public void changed(ObservableValue<? extends Status> val,
-                            Status oldVal, Status newVal) {            
+                            Status oldVal, Status newVal) {
+            /* Switch based on the new state */
             switch(newVal) {
                 case DISPOSED:
                     break;

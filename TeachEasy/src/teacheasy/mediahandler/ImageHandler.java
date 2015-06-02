@@ -14,19 +14,22 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-/**This class inserts an image with specified image name, size, location(x and y) and rotation degrees.
+/**
+ * Handles image objects on a page, including their addition and
+ * deletion as well as maintaining their state. Image objects
+ * are added by supplying the relevant data from the data structure.
+ * This class is used by the renderer when redrawing pages.
  * 
  * @Author Daniel Berhe 
  * @author Jake Ransom
  * @Verion 1.0 23 Feb 2015
- * 
  */
 public class ImageHandler {
     
-    /* Reference to the group to add images to */
+    /** Reference to the group to add images to */
 	private Group group;
 	
-	/* Array list of the image being handled */
+	/** Array list of the image being handled */
 	private ArrayList<ImageView> images;
 
 	/**

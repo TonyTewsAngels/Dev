@@ -2,7 +2,6 @@
  * Alistair Jewers
  * 
  * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
- * 
  */
 package teacheasy.mediahandler;
 
@@ -16,20 +15,23 @@ import javafx.stage.WindowEvent;
 import teacheasy.mediahandler.video.Video;
 
 /**
- * This class encapsulates the video handler,
- * and enables video playback and control.
+ * Handles video objects on a page, including their addition and
+ * deletion as well as maintaining their state. Video objects
+ * are added by supplying the relevant data from the data structure.
+ * This class is used by the renderer when redrawing pages.
  * 
  * @author Alistair Jewers
  * @version 1.0 24 Feb 2015
  */
 public class VideoHandler {
-    /* Reference to the group on which to draw videos */
+    
+    /** Reference to the group on which to draw videos */
     private Group group;
     
     /** Event handler for fullscreen exit */
     private EventHandler<WindowEvent> fullScreenCloseHandler;
     
-    /* Array List of the videos currently on the screen */
+    /** Array List of the videos currently on the screen */
     private List<Video> videos;
     
     /** 
@@ -55,16 +57,16 @@ public class VideoHandler {
      * Adds a video to the group associated with the handler.
      * 
      * @param x The x coordinate for the top left of the video
-     *            relative to the groups origin.
-     *            
+     *            relative to the groups origin. 
+     *                     
      * @param y The y coordinate for the top left of the video
-     *            relative to the group's origin.
-     *            
+     *            relative to the group's origin.   
+     *                     
      * @param width The width of the video in pixels.
      * 
      * @param sourcefile Absolute path of the video as a string. Can be a local
-     *                     file path or a web address beginning with 'http'
-     * 
+     *                   file path or a web address beginning with 'http'
+     *                   
      * @param autoPlay If true video plays as soon as created.
      * 
      * @param loop If true video loops to beginning once it ends.
@@ -74,7 +76,7 @@ public class VideoHandler {
     }
     
     /**
-     * Returns the width of the video
+     * Returns the width of the selected video.
      * 
      * @param videoId The ID of the video.
      */
@@ -87,7 +89,7 @@ public class VideoHandler {
     }
     
     /**
-     * Returns the height of the video
+     * Returns the height of the selected video.
      * 
      * @param videoId The ID of the video.
      */
@@ -100,7 +102,7 @@ public class VideoHandler {
     }
     
     /**
-     * Returns the x co-ordinate of the bottom right of the video
+     * Returns the x co-ordinate of the bottom right of the video.
      * 
      * @param videoId The ID of the video.
      */
@@ -113,7 +115,7 @@ public class VideoHandler {
     }
     
     /**
-     * Returns the y co-ordinate of the bottom right of the video
+     * Returns the y co-ordinate of the bottom right of the video.
      * 
      * @param videoId The ID of the video.
      */
@@ -165,8 +167,8 @@ public class VideoHandler {
      * @param videoId The ID of the video to be played.
      * 
      * @param percent The time in the video to move
-     *                  playback to as a percentage of the
-     *                  total time.
+     *                playback to as a percentage of the
+     *                total time.
      */
     public void scanVideo(int videoId, double percent) {
         if(videoId < videos.size() && videoId >= 0) {    
@@ -180,7 +182,7 @@ public class VideoHandler {
      * 
      * @param videoId The ID of the video to be played.
      * 
-     * @param nWidth - The new width for the video.
+     * @param nWidth The new width for the video.
      */
     public void resizeVideo(int videoId, float nWidth) {
         if(videoId < videos.size() && videoId >= 0) {
@@ -240,6 +242,10 @@ public class VideoHandler {
         return videos.size();
     }
     
+    /**
+     * Prints information about the video handler to the
+     * console for debugging purposes.
+     */
     public void debugPrint() {
         System.out.println("### Video Handler ###");
         System.out.println("Handling: " + videos.size());

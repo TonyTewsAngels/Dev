@@ -25,10 +25,10 @@ import javafx.scene.*;
 
 public class AudioHandler {
     
-	/* Reference to the group on which to add the Audio */
+	/** Reference to the group on which to add the Audio */
 	private Group group;
 	
-	/* Array List of the audio objects on screen */
+	/** Array List of the audio objects on screen */
 	private List<Audio> audios;
 	
 	/** 
