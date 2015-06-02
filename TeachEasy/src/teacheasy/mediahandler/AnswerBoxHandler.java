@@ -13,7 +13,8 @@ import teacheasy.mediahandler.answerbox.AnswerBox;
 /**
  * Class to draw answer boxes with the specified x & y location
  * 
- * @author Daniel Berhe and Jake Ransom
+ * @author Daniel Berhe
+ * @author Jake Ransom
  * @version 1.0
  * 
  */

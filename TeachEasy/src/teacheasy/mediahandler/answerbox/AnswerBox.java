@@ -30,7 +30,8 @@ import javafx.scene.layout.HBox;
  * limit. The class also checks entered answer against list of possible answers
  * and assigns them the predefined marks.
  * 
- * @author Daniel Berhe and Jake Ransom
+ * @author Daniel Berhe
+ * @author Jake Ransom
  * @version 1.1 07 Mar 2015
  * 
  */
