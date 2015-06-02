@@ -64,6 +64,7 @@ public class MultipleChoice {
      * Constructor method to create multiple choice object
      * 
      * @param nGroup
+     *            A node to contain the multiple choice object
      * @param xStart
      *            X-coordinate of the top left corner multiple choice in pixels
      * @param yStart
@@ -341,7 +342,8 @@ public class MultipleChoice {
     /**
      * Method to check a set of check boxes.
      * 
-     * @return true if the selected answers are the correct answers.
+     * @return <code>true</code> if the selected answers are the correct
+     *         answers; <code>false</code> otherwise.
      */
     private boolean CheckBoxCheck() {
         /* Loop through all the check boxes */
@@ -367,7 +369,8 @@ public class MultipleChoice {
     /**
      * Method to check a set of radio buttons.
      * 
-     * @return true if the correct answer is selected.
+     * @return <code>true</code> if the correct answer is selected;
+     *         <code>false</code> otherwise.
      */
     private boolean RadioCheck() {
         /* Loop through all the radio buttons */
@@ -387,7 +390,8 @@ public class MultipleChoice {
     /**
      * Checks if the correct answer is selected from the drop down list
      * 
-     * @return true if correct answer is selected
+     * @return <code>true</code> if correct answer is selected;
+     *         <code>false</code> otherwise.
      */
 
     private boolean DropDownListCheck() {
@@ -459,7 +463,7 @@ public class MultipleChoice {
     /**
      * Gets the mark button object
      * 
-     * @return markButton
+     * @return The mark button object
      */
     public Button getMarkButton() {
         return markButton;
@@ -468,32 +472,48 @@ public class MultipleChoice {
     /**
      * Sets mark button object
      * 
-     * @param markButton
+     * @param mark
+     *            button object
      */
     public void setMarkButton(Button markButton) {
         this.markButton = markButton;
     }
 
+    /**
+     * Gets the boolean variable markCollated
+     * 
+     * @return <code>true</code> if marks have been collated;
+     *         <code>false</otherwise>
+     */
     public boolean isMarkCollated() {
         return markCollated;
     }
 
+    /**
+     * Sets the boolean variable marksCollated
+     * 
+     * @param markCollated
+     *            Desired boolean variable of markCollated
+     */
     public void setMarkCollated(boolean markCollated) {
         this.markCollated = markCollated;
     }
 
-    public boolean isButtonPressed() {
-        return buttonPressed;
-    }
-
-    public void setButtonPressed(boolean buttonPressed) {
-        this.buttonPressed = buttonPressed;
-    }
-
+    /**
+     * Gets awarded marks for this object
+     * 
+     * @return Value of the awarded marks
+     */
     public int getAwardedMarks() {
         return awardedMarks;
     }
 
+    /**
+     * Sets the variable awardedMarks
+     * 
+     * @param awardedMarks
+     *            Number of marks to award
+     */
     public void setAwardedMarks(int awardedMarks) {
         this.awardedMarks = awardedMarks;
     }
@@ -510,7 +530,6 @@ public class MultipleChoice {
             } else {
                 handleIncorrect();
             }
-            setButtonPressed(true);
         }
     }
 
