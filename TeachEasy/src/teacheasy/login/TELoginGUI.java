@@ -40,38 +40,50 @@ import javafx.util.Duration;
  * @version 1.0 20 May 2015
  */
 public class TELoginGUI  extends Application {
+    
+    /* JavaFX components */
+    private Stage primaryStage;
     private TextField userText;
     private PasswordField passText;
     private Label failLabel;  
     
-    private Stage primaryStage;
-    
-    //Application starting point
+
+    /**
+     * Override the start method to launch the login window.
+     */
     @Override
     public void start(Stage primaryStage) {
+            
+        /* Set the stage reference */
         this.primaryStage = primaryStage;
     
-    	//Set title
+        /* Set the stage title */
     	primaryStage.setTitle("Teach Easy");
     
     	//Set GUI Layout
-    	GridPane grid = new GridPane();
-    	VBox Vtext = new VBox();
     	VBox logoBox = new VBox();
-    	VBox buttonBox = new VBox();
-        Button loginBtn = new Button("Login");
+    	
+        
 
+        /* Set up the incorrect password prompt */
         failLabel = new Label("User name or password not recognised.");
         failLabel.setTextFill(Color.web("#BB0000"));
         failLabel.setVisible(false);
-
+        
+        /* Set up the login button */
+        Button loginBtn = new Button("Login");
         loginBtn.setPrefWidth(300);
         loginBtn.setOnAction(new LoginButtonHandler());
         
+        /* Set up the VBox to contain the button */
+        VBox buttonBox = new VBox();
         buttonBox.getChildren().add(loginBtn);
         buttonBox.setAlignment(Pos.CENTER);
+        
+        /* Create a grid to hold components */
+    	GridPane grid = new GridPane();
     	
-    	//Column constraints
+    	/* Set up grid column constraints */
     	ColumnConstraints farLeft = new ColumnConstraints();
         farLeft.setFillWidth(true);
         farLeft.setHgrow(Priority.SOMETIMES);
@@ -86,7 +98,7 @@ public class TELoginGUI  extends Application {
         centerRow.setHgrow(Priority.SOMETIMES);
         grid.getColumnConstraints().add(centerRow);
     	
-    	//Row constraints
+        /* Set up grid row constraints */
         RowConstraints topRow = new RowConstraints();
         topRow.setFillHeight(true);
         topRow.setVgrow(Priority.ALWAYS);
@@ -117,31 +129,33 @@ public class TELoginGUI  extends Application {
         botRow.setVgrow(Priority.ALWAYS);
         grid.getRowConstraints().add(botRow);
         
-        //Set grid colour
+        /* Set grid colour */
         grid.setStyle("-fx-background-color:  rgb(241 ,241, 241);");
-        Vtext.setStyle("-fx-background-color: rgb(241 ,241, 241);");
         
-    	//Welcome Labels
+        /* Set up the container for the text */
+        VBox Vtext = new VBox();
+        Vtext.setStyle("-fx-background-color: rgb(241 ,241, 241);");
+
+        /* Set up welcome Labels */
         Label wel = new Label("Welcome to TeachEasy");
+        Label wel_2 = new Label("Please Log In");
+        
     	wel.setFont(new Font("Myriad", 30));
-    	
-    	Label wel_2 = new Label("Please Log In");
-    	wel_2.setFont(new Font("", 15));
+    	wel_2.setFont(new Font("Myriad", 15));
     
-    	//TextFileds
+    	/* Set up Text Fields */
     	userText = new TextField();
         passText = new PasswordField();
         
     	userText.setPromptText("Username or Email");
     	passText.setPromptText("Password");
     	
-    	//Add LE Logo
+    	/* Add TeachEasy Logo*/
     	int x = 0;
     	int y = 0;
     	
-    	//Image LE = new Image("LE_V4_1_1.png");
-    	Image LE = new Image(getClass().getResourceAsStream("/teacheasy/icons/TE_V5.png"));
-    	ImageView Logo = new ImageView(LE);
+    	Image teachEasyLogo = new Image(getClass().getResourceAsStream("/teacheasy/icons/TE_V5.png"));
+    	ImageView Logo = new ImageView(teachEasyLogo);
     	Logo.setFitWidth(x);
     	Logo.setFitHeight(y);
     	Logo.setEffect(new DropShadow());	
@@ -153,15 +167,15 @@ public class TELoginGUI  extends Application {
     	ft.setCycleCount(1);
     	ft.play();
     	
-    	//Add text to Vtext
+    	/* Add text to Vtext */
     	Vtext.getChildren().addAll(wel_2);
     	Vtext.setAlignment(Pos.CENTER);
     	
-    	//Add logo to logoBox
+    	/* Add logo to logoBox */
     	logoBox.getChildren().addAll(Logo);
     	logoBox.setAlignment(Pos.CENTER);
     	
-    	//Add content to grid
+    	/* Add content to grid */
     	grid.add(logoBox,1,0);
     	grid.add(wel,1,1);
     	grid.add(Vtext, 1, 2);
@@ -170,15 +184,20 @@ public class TELoginGUI  extends Application {
     	grid.add(buttonBox, 1, 5);
     	grid.add(failLabel, 1, 6);
     
-    	//Add to scene
+    	/* Add to scene */
     	Scene appScene = new Scene(grid,600,400);
 
-    	//Add scene to stage
+    	/* Add scene to stage */
     	primaryStage.setScene(appScene);
     	primaryStage.setResizable(false);
     	primaryStage.show();
     }
     
+    /**
+     * Main method to make application executable.
+     * 
+     * @param args Command line arguments.
+     */
     public static void main(String[] args)  {
         launch(args);
     }
@@ -189,23 +208,32 @@ public class TELoginGUI  extends Application {
      * @author Alistair Jewers
      */
     public class LoginButtonHandler implements EventHandler<ActionEvent> {
+        
+        /**
+         * Override handle method to act on button presses.
+         */
         @Override
         public void handle(ActionEvent arg0) {
+            /* Make the incorrect password prompt invisible */
             failLabel.setVisible(false);
             
+            /* Check the credentials */
             if(LoginChecker.checkLogin(userText.getText(), passText.getText(), false)) {
+                /* Credentials correct, queue an instance of Learn Easy to run */
                 Platform.runLater(new Runnable() {
                     public void run() {
                         new TeachEasyClient().start(new Stage());
                     }
                 });
                 
+                /* Close this window */
                 primaryStage.close();
-
             } else {
+                /* Credentials incorrect, clear the fields */
                 userText.clear();
                 passText.clear();
 
+                /* Show the incorrect password prompt */
                 failLabel.setVisible(true);
             }
         }

@@ -59,21 +59,25 @@ public class LELoginGUI  extends Application {
     	/* Set the stage title */
     	primaryStage.setTitle("Learn Easy");
 
+    	/* Set up the incorrect password prompt */
     	failLabel = new Label("User name or password not recognised.");
     	failLabel.setTextFill(Color.web("#BB0000"));
     	failLabel.setVisible(false);
     	
+    	/* Set up the login button */
     	Button loginBtn = new Button("Login");
     	loginBtn.setPrefWidth(300);
     	loginBtn.setOnAction(new LoginButtonHandler());
     	
+    	/* Set up the VBox to contain the button */
     	VBox buttonBox = new VBox();
     	buttonBox.getChildren().add(loginBtn);
     	buttonBox.setAlignment(Pos.CENTER);
     	
+    	/* Create a grid to hold components */
     	GridPane grid = new GridPane();
     	    	
-    	//Column constraints
+    	/* Set up grid column constraints */
     	ColumnConstraints farLeft = new ColumnConstraints();
         farLeft.setFillWidth(true);
         farLeft.setHgrow(Priority.SOMETIMES);
@@ -88,7 +92,7 @@ public class LELoginGUI  extends Application {
         centerRow.setHgrow(Priority.SOMETIMES);
         grid.getColumnConstraints().add(centerRow);
     	
-    	//Row constraints
+    	/* Set up grid row constraints */
         RowConstraints topRow = new RowConstraints();
         topRow.setFillHeight(true);
         topRow.setVgrow(Priority.ALWAYS);
@@ -119,34 +123,34 @@ public class LELoginGUI  extends Application {
         botRow.setVgrow(Priority.ALWAYS);
         grid.getRowConstraints().add(botRow);
         
-        //Set grid colour
+        /* Set grid colour */
         grid.setStyle("-fx-background-color:  rgb(74, 104, 177);");
         
+        /* Set up the container for the text */
         VBox Vtext = new VBox();
         Vtext.setStyle("-fx-background-color: rgb(74, 104, 177);");
         
-    	//Welcome Labels
+    	/* Set up welcome Labels */
         Label wel = new Label("Welcome to LearnEasy");
-    	wel.setFont(new Font("Myriad", 30));
-    	
     	Label wel_2 = new Label("Please Log In");
+    	wel.setFont(new Font("Myriad", 30));
     	wel_2.setFont(new Font("Myriad", 15));
     
-    	//TextFileds
+    	/* Set up Text Fields */
     	userText = new TextField();
     	passText = new PasswordField();
     	
     	userText.setPromptText("Username or Email");
     	passText.setPromptText("Password");
     	
-    	//Add LE Logo
+    	/* Add LearnEasy Logo */
     	int x = 143;
     	int y = 143;
     	
-    	// Dimensions: 1000 x 1000 (Use x,y to make appropriate size)
-    	Image LE = new Image(getClass().getResourceAsStream("/teacheasy/icons/LE_V4_1_1.png"));
+    	/* Dimensions: 1000 x 1000 (Use x,y to make appropriate size) */
+    	Image learnEasyLogo = new Image(getClass().getResourceAsStream("/teacheasy/icons/LE_V4_1_1.png"));
     
-    	ImageView Logo = new ImageView(LE);
+    	ImageView Logo = new ImageView(learnEasyLogo);
     	Logo.setFitWidth(x);
     	Logo.setFitHeight(y);
     	Logo.setEffect(new DropShadow());	
@@ -158,16 +162,16 @@ public class LELoginGUI  extends Application {
     	ft.setCycleCount(1);
     	ft.play();
     	
-    	//Add text to Vtext
+    	/* Add text to Vtext */
     	Vtext.getChildren().addAll(wel_2);
     	Vtext.setAlignment(Pos.CENTER);
     	
-    	//Add logo to logoBox
+    	/* Add logo to logoBox */
     	VBox logoBox = new VBox();
     	logoBox.getChildren().addAll(Logo);
     	logoBox.setAlignment(Pos.CENTER);
     	
-    	//Add content to grid
+    	/* Add content to grid */
     	grid.add(logoBox,1,0);
     	grid.add(wel,1,1);
     	grid.add(Vtext, 1, 2);
@@ -176,15 +180,20 @@ public class LELoginGUI  extends Application {
     	grid.add(buttonBox, 1, 5);
     	grid.add(failLabel, 1, 6);
     
-    	//Add to scene
+    	/* Add to scene */
     	Scene appScene = new Scene(grid,600,400);
 
-    	//Add scene to stage
+    	/* Add scene to stage */
     	primaryStage.setScene(appScene);
     	primaryStage.setResizable(false);
     	primaryStage.show();
     }
     
+    /**
+     * Main method to make application executable.
+     * 
+     * @param args Command line arguments.
+     */
     public static void main(String[] args)  {
         launch(args);
     }
@@ -206,7 +215,7 @@ public class LELoginGUI  extends Application {
             
             /* Check the credentials */
             if(LoginChecker.checkLogin(userText.getText(), passText.getText(), true)) {
-                /* Credentials correct, que an instance of Learn Easy to run */
+                /* Credentials correct, queue an instance of Learn Easy to run */
                 Platform.runLater(new Runnable() {
                     public void run() {
                         new LearnEasyClient().start(new Stage());
@@ -215,7 +224,6 @@ public class LELoginGUI  extends Application {
                 
                 /* Close this window */
                 primaryStage.close();
-
             } else {
                 /* Credentials incorrect, clear the fields */
                 userText.clear();
