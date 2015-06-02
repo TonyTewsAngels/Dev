@@ -92,8 +92,8 @@ public class HomePage {
             String[] storedKeys = new String[preference.keys().length];
             storedKeys = preference.keys();
             if (storedKeys.length == 0) {
-                /* Store default folder with key recentlyOpened */
-                preference.put("recentlyOpened", getDefaultFolder());
+                /* Store default folder with key "Default folder" */
+                preference.put("Default folder", getDefaultFolder());
 
                 /*
                  * Store users choice for prompt window at the start of LearnEasy
@@ -103,7 +103,7 @@ public class HomePage {
             } else {
                 /* check the existence of keys */
                 for (int i = 0; i < storedKeys.length; i++) {
-                    if (storedKeys[i].equals("recentlyOpened")) {
+                    if (storedKeys[i].equals("Default folder")) {
                         defaultFolderChosen = true;
 
                     } else if (storedKeys[i].equals("showPrompt")) {
@@ -117,11 +117,11 @@ public class HomePage {
         }
 
         if (!defaultFolderChosen) {
-            /* Store default folder with key recentlyOpened */
-            preference.put("recentlyOpened", getDefaultFolder());
+            /* Store default folder with key "Default folder */
+            preference.put("Default folder", getDefaultFolder());
         } else {
             /* if default folder not chosen set it to the user home folder */
-            setDefaultFolder(preference.get("recentlyOpened", "user.home"));
+            setDefaultFolder(preference.get("Default folder", "user.home"));
         }
 
         if (!userPromptKeyExists) {
@@ -159,6 +159,7 @@ public class HomePage {
         defaultLabel.setText("Folder: ");
         defaultLabel.setFont(new Font("Calibri", 14));
 
+        /* A text field to contain the file path of a desired default folder */
         fileAddress = new TextField();
         fileAddress.setPrefWidth(290);
         fileAddress.setText(getDefaultFolder());
@@ -203,7 +204,7 @@ public class HomePage {
         filePathBox.getChildren().addAll(defaultLabel, fileAddress,
                 browseButton);
 
-        /* HBox to hold the checkbox and the OK button */
+        /* HBox to hold the check box and the OK button */
         okBox = new HBox();
         okBox.setAlignment(Pos.BASELINE_LEFT);
         okBox.setSpacing(80);
@@ -215,44 +216,62 @@ public class HomePage {
         border.setCenter(filePathBox);
         border.setBottom(okBox);
 
-   /*     GridPane grid = new GridPane();
-        grid.setPrefSize(400, 150);
-        
-        grid.add(infoLabel,0,0);
-        grid.add(defaultLabel,0,1);
-        grid.add(filePathBox,1,1);
-        grid.add(browseButton,2,1);
-        grid.add(border,0,0,2,0);*/
-        
-        
         /* Create the dialog box and draw on screen */
         dialogStage = new Stage();
         dialogStage.setScene(new Scene(border,400,100));
         dialogStage.showAndWait();
     }
 
+    /**
+     * Gets the preference object
+     * 
+     * @return preference object
+     */
     public Preferences getPreference() {
         return preference;
     }
 
+    /**
+     * Sets the preference object
+     * 
+     * @param preference object
+     */
     public void setPreference(Preferences preference) {
         this.preference = preference;
     }
 
+    /**
+     * Method for configuring the title and initial directory 
+     * of the directory chooser
+     * 
+     * @param fileChooser file chooser object to be configured
+     */
     private static void configureDirectoryChooser(
             final DirectoryChooser fileChooser) {
+        /* Setting the title of the directory chooser */
         fileChooser.setTitle("Choose a Directory");
+        
+        /* Set initial directory to user home folder */
         fileChooser.setInitialDirectory(new File(System
                 .getProperty("user.home")));
     }
 
-    /** A method that stores and organises the recently opened lessons */
+    /**
+     * A method that stores and organises the recently opened lessons
+     * in the the java preference API
+     * 
+     * @param pathToLesson the address of the recently opened lesson
+     */
     public void setRecentlyOpened(String pathToLesson) {
-
+        
+        /* For storing the keys in the java preference API */
         String[] storedKeys;
+        
+        /* Initialising local variables */
         boolean recentlyOpenedListExists = false;
         boolean pathAlreadyStored = false;
         int existingPathIndex = -1;
+        
         try {
             /* Checking if there are already stored lessons */
             storedKeys = new String[preference.keys().length];
@@ -269,29 +288,40 @@ public class HomePage {
             }
             /*This statement reorganises the list of stored lessons depending on how many recently
              * opened lessons are currently in the list. This is necessary to ensure that if a
-             * lesson already in the list is opened, it it moved to the top of the list
+             * lesson already in the list is opened, it it moved to the top of the list rather
+             * than adding it again
              *  */
             if (recentlyOpenedListExists) {
                 if (pathAlreadyStored) {
                     if (existingPathIndex == 2){
                         preference.put(storedKeys[existingPathIndex], pathToLesson);
                     } else if (existingPathIndex == 3){
-                        preference.put(storedKeys[existingPathIndex], preference.get(storedKeys[existingPathIndex-1], "doesn't exist!"));
+                        preference.put(storedKeys[existingPathIndex], 
+                                       preference.get(storedKeys[existingPathIndex-1], "doesn't exist!"));
                         preference.put(storedKeys[existingPathIndex-1], pathToLesson);
                     } else if (existingPathIndex == 4) {
-                        preference.put(storedKeys[existingPathIndex], preference.get(storedKeys[existingPathIndex-1], "doesn't exist!"));
-                        preference.put(storedKeys[existingPathIndex-1], preference.get(storedKeys[existingPathIndex-2], "doesn't exist!"));
+                        preference.put(storedKeys[existingPathIndex],
+                                       preference.get(storedKeys[existingPathIndex-1], "doesn't exist!"));
+                        preference.put(storedKeys[existingPathIndex-1], 
+                                       preference.get(storedKeys[existingPathIndex-2], "doesn't exist!"));
                         preference.put(storedKeys[existingPathIndex-2], pathToLesson);
                     } else if (existingPathIndex == 5) {
-                        preference.put(storedKeys[existingPathIndex], preference.get(storedKeys[existingPathIndex-1], "doesn't exist!"));
-                        preference.put(storedKeys[existingPathIndex-1], preference.get(storedKeys[existingPathIndex-2], "doesn't exist!"));
-                        preference.put(storedKeys[existingPathIndex-2], preference.get(storedKeys[existingPathIndex-3], "doesn't exist!"));
+                        preference.put(storedKeys[existingPathIndex], 
+                                       preference.get(storedKeys[existingPathIndex-1], "doesn't exist!"));
+                        preference.put(storedKeys[existingPathIndex-1], 
+                                       preference.get(storedKeys[existingPathIndex-2], "doesn't exist!"));
+                        preference.put(storedKeys[existingPathIndex-2], 
+                                       preference.get(storedKeys[existingPathIndex-3], "doesn't exist!"));
                         preference.put(storedKeys[existingPathIndex-3], pathToLesson);
                     } else if (existingPathIndex == 6) {
-                        preference.put(storedKeys[existingPathIndex], preference.get(storedKeys[existingPathIndex-1], "doesn't exist!"));
-                        preference.put(storedKeys[existingPathIndex-1], preference.get(storedKeys[existingPathIndex-2], "doesn't exist!"));
-                        preference.put(storedKeys[existingPathIndex-2], preference.get(storedKeys[existingPathIndex-3], "doesn't exist!"));
-                        preference.put(storedKeys[existingPathIndex-3], preference.get(storedKeys[existingPathIndex-4], "doesn't exist!"));
+                        preference.put(storedKeys[existingPathIndex], 
+                                       preference.get(storedKeys[existingPathIndex-1], "doesn't exist!"));
+                        preference.put(storedKeys[existingPathIndex-1], 
+                                       preference.get(storedKeys[existingPathIndex-2], "doesn't exist!"));
+                        preference.put(storedKeys[existingPathIndex-2], 
+                                       preference.get(storedKeys[existingPathIndex-3], "doesn't exist!"));
+                        preference.put(storedKeys[existingPathIndex-3], 
+                                       preference.get(storedKeys[existingPathIndex-4], "doesn't exist!"));
                         preference.put(storedKeys[existingPathIndex-4], pathToLesson);
                     }
                 
@@ -335,16 +365,25 @@ public class HomePage {
                 preference.put(RecentlyOpened1, pathToLesson);
             }
         } catch (BackingStoreException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
 
     }
 
+    /**
+     * Gets the file path of default folder
+     * 
+     * @return <code>String</code> path of the default folder
+     */
     public String getDefaultFolder() {
         return defaultFolder;
     }
 
+    /**
+     * Sets defaultFolder to the path of the default folder 
+     * 
+     * @param defaultFolder <code>String</code> file path of default folder
+     */
     public void setDefaultFolder(String defaultFolder) {
         this.defaultFolder = defaultFolder;
     }
@@ -364,24 +403,34 @@ public class HomePage {
 
             /* Act according to id */
             if (id.equals("OK")) {
+                /* Change the vaule of the variable defaultFolder */
                 setDefaultFolder(fileAddress.getText());
+                
+                /* Close the prompt window */
                 dialogStage.close();
-                preference.put("recentlyOpened", getDefaultFolder());
+                
+                /* Store it as the default folder */
+                preference.put("Default folder", getDefaultFolder());
             } else if (id.equals("Browse")) {
+                /* Configure the directory chooser */
                 configureDirectoryChooser(defaultFolderChooser);
+                /* Show the standard windows dialog for choosing a folder */
                 File file = defaultFolderChooser.showDialog(dialogStage);
                 if (file != null) {
+                    /* Store the file path as a string */
                     fileAddress.setText(file.toString());
                 }
             }
         }
     }
     
+    /**
+     * A method for clearing the java preference API
+     */
     private void flushPreference() {
         try {
             preference.clear();
         } catch (BackingStoreException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
     }
