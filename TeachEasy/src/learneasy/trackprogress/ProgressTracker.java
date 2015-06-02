@@ -5,7 +5,7 @@
  * 
  */
 
-package learneasy.trackProgress;
+package learneasy.trackprogress;
 
 /**
  * This class keeps track of visited pages and marks earned throughout the
