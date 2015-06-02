@@ -4,7 +4,7 @@
  * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
  * 
  */
-package learneasy.homePage;
+package learneasy.homepage;
 
 import java.io.File;
 import java.util.prefs.BackingStoreException;
@@ -34,7 +34,6 @@ import javafx.stage.Stage;
  * @version 1.0 25/05/15
  *
  */
-
 public class HomePage {
 
     /* Homepage */

@@ -1,8 +1,7 @@
 /*
- * Alex Cash and Calum Armstrong
+ * Alex Cash & Calum Armstrong
  * 
  * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
- * 
  */
 package teacheasy.mediahandler;
 
@@ -14,24 +13,28 @@ import teacheasy.mediahandler.audio.Audio;
 import javafx.scene.*;
 
 /**
- * This class is the handler for audio
+ * Handles audio objects on a page, including their addition and
+ * deletion as well as maintaining their state. Audio objects
+ * are added by supplying the relevant data from the data structure.
+ * This class is used by the renderer when redrawing pages.
  * 
  * @author Alex Cash 
  * @author Calum Armstrong
- * @version 1.6 14 April 2015
+ * @version 1.6 14 Apr 2015
  */
 
 public class AudioHandler {
-	/* Reference to the group on which to add the Audio */
+    
+	/** Reference to the group on which to add the Audio */
 	private Group group;
 	
-	/* Array List of the Audios on screen */
+	/** Array List of the audio objects on screen */
 	private List<Audio> audios;
 	
 	/** 
-	 * Constructs the audio handler.
+	 * Constructor for the audio handler.
 	 * 
-	 * @param nGroup The group this handler should add audio tracks to.
+	 * @param nGroup The group this handler should add audio objects to.
 	 * 
 	 */
 	public AudioHandler(Group nGroup) {
@@ -43,7 +46,7 @@ public class AudioHandler {
 	}
 	
 	 /** 
-	  * Adds an audio track to the group associated with the handler
+	  * Adds an audio track to the group associated with the handler.
 	  * 
 	  *  @param x The x-coordinate for the top left of the audio player relative to 
 	  *  			the groups origin.
@@ -75,9 +78,9 @@ public class AudioHandler {
     }
     
     /** 
-     * Will cause the selected audio track to play.
+     * Causes the selected audio object to play.
      * 
-     * @param audioId The ID of the audio track to be played.
+     * @param audioId The ID of the audio object to be played.
      * 
      */
     public void playAudio(int audioId) {
@@ -87,9 +90,9 @@ public class AudioHandler {
     }
     
     /** 
-     * Will cause the selected audio track to pause.
+     * Causes the selected audio object to pause.
      * 
-     * @param audioId The ID of the audio track to be paused.
+     * @param audioId The ID of the audio object to be paused.
      * 
      */
     public void pauseAudio(int audioId) {
@@ -99,9 +102,9 @@ public class AudioHandler {
     }    
     
     /** 
-     * Will cause the selected audio track to stop.
+     * Causes the selected audio object to stop.
      * 
-     * @param audioId The ID of the audio track to be stopped.
+     * @param audioId The ID of the audio object to be stopped.
      * 
      */
     public void stopAudio(int audioId) {
@@ -111,9 +114,9 @@ public class AudioHandler {
     }
     
     /** 
-     * Will cause the selected audio track to be disposed.
+     * Causes the selected audio object to be disposed.
      * 
-     * @param audioId The ID of the audio track to be disposed.
+     * @param audioId The ID of the audio object to be disposed.
      * 
      */
     public void disposeAudio(int audioId) {
@@ -123,12 +126,12 @@ public class AudioHandler {
     }
     
     /** 
-     * Will cause the selected audio player to be resized.
+     * Causes the selected audio object to be resized.
      * 
-     * @param audioId The ID of the audio track associated with the audio
+     * @param audioId The ID of the audio object associated with the audio
      * 					player to be resized.
      * 
-     * @param nWidth The new width for the audio player
+     * @param nWidth The new width for the audio player.
      * 
      */
     public void resize(int audioId, float nWidth) {
@@ -138,14 +141,14 @@ public class AudioHandler {
     }
     
     /** 
-     * Will cause the selected audio player to be relocated.
+     * Causes the selected audio player to be relocated.
      * 
      * @param audioId The ID of the audio track associated with the audio
      * 					player to be relocated.
      * 
-     * @param x The new x-coordinate for the audio player
+     * @param x The new x-coordinate for the audio player.
      * 
-     * @param y The new y-coordinate for the audio player
+     * @param y The new y-coordinate for the audio player.
      * 
      */
     public void relocate(int audioId, float x, float y) {
@@ -170,11 +173,11 @@ public class AudioHandler {
     }
     
     /** 
-     * Will cause the selected audio track to seek through the media.
+     * Causes the selected audio object to seek through the media.
      * 
-     * @param audioId The ID of the audio track to be seeked through.
+     * @param audioId The ID of the audio object to be seeked through.
      * 
-     * @param percent The new location through the audio track, as a percentage.
+     * @param percent The new location through the audio object, as a percentage.
      * 
      */
     public void seekAudio(int audioId, double percent) {
@@ -184,8 +187,7 @@ public class AudioHandler {
     }
     
     /** 
-     * Will clear all audio tracks being handled.
-     * 
+     * Clears all audio tracks being handled.
      */
     public void clearAudios() {
         /* Remove all the media views (audios) from the group */
@@ -208,49 +210,75 @@ public class AudioHandler {
     }
     
     /** 
-     * Will return the end x co-ordinate for the audio player selected
-     * 
+     * Returns the x axis end co-ordinate for the audio object selected.
      */
     public double getAudioXEnd(int audioId) {
+        /* Position variables */
        	double xStart = 0;
     	double xEnd = 0;
+    	
+    	/* Check the ID is in range */
     	if(audioId < audios.size() && audioId >= 0) {
+    	    /* Start position */
     		xStart = audios.get(audioId).xStartPos;
+    		
+    		/* Check controls state */
     		if(audios.get(audioId).buttonVisibilityLevel == 0){
+    		    /* Controls invisible, width is 0 */
     			xEnd = xStart;
     		} else if (audios.get(audioId).buttonVisibilityLevel == 1){
+    		    /* Controls minimal, width is 30 */
     			xEnd = xStart + 30;
     		} else if (audios.get(audioId).buttonVisibilityLevel == 2){
+    		    /* Controls full, check collapsed setting */
     			if (audios.get(audioId).collapsedControls == false){
+    			    /* Controls open, get full width */
     				xEnd = xStart + audios.get(audioId).widthValue;
     			} else if (audios.get(audioId).collapsedControls == true){
+    			    /* Controls collapsed, width is 30 */
     				xEnd = xStart + 30;
     			}
     		}
-    	}   	
+    	}
+    	
+    	/* Return the end position */
         return xEnd;
     }
     
     /** 
-     * Will return the end y co-ordinate for the audio player selected
-     * 
+     * Returns the  y axis end co-ordinate for the audio object selected.
      */
     public double getAudioYEnd(int audioId) {
+        /* Position variables */
        	double yStart = 0;
     	double yEnd = 0;
+    	
+    	/* Check the ID is in range */
     	if(audioId < audios.size() && audioId >= 0) {
+    	    /* Start position */
     		yStart = audios.get(audioId).yStartPos;
+    		
+    		/* Check controls state */
     		if(audios.get(audioId).buttonVisibilityLevel == 0){
+    		    /* Controls not visible, height is 0 */
     			yEnd = yStart;
     		} else if (audios.get(audioId).buttonVisibilityLevel == 1){
+    		    /* Controls are minimal, height is 30 */
     			yEnd = yStart + 30;
     		} else if (audios.get(audioId).buttonVisibilityLevel == 2){
+    		    /* Controls full, height is 80 */
     			yEnd = yStart + 80;
     		}
     	}
+    	
+    	/* Return the end position */
         return yEnd;
     }
     
+    /** 
+     * Prints information about the audio handler to console
+     * for debugging purposes.
+     */
     public void debugPrint() {
         System.out.println("### Audio Handler ###");
         System.out.println("Handling: " + audios.size());

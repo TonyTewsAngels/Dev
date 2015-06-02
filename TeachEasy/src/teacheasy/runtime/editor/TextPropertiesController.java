@@ -1,3 +1,8 @@
+/*
+ * Alistair Jewers
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved. 
+ */
 package teacheasy.runtime.editor;
 
 import javafx.scene.control.Button;
@@ -8,25 +13,24 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.web.HTMLEditor;
 import javafx.stage.Stage;
 import teacheasy.data.RichText;
 import teacheasy.data.TextObject;
 import teacheasy.render.RenderUtil;
 import teacheasy.runtime.editor.text.TextEditorWindow;
-import wavemedia.graphic.GraphicType;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 
 /**
- * Encapsulates functionality relating to editor
- * functionality for Video objects.
+ * Contains code relating to editor functionality for text box
+ * objects.
  * 
- * @author Alistair Jewers
+ * @author  Alistair Jewers
  * @version 1.0 Apr 21 2015
  */
 public class TextPropertiesController {
+    
     /* Reference to the properties pane responsible for this controller */
     private PropertiesPane parent;
     
@@ -48,9 +52,6 @@ public class TextPropertiesController {
     
     /* The drop down list of fonts */
     private ComboBox<String> fontProperty;
-    
-    /* The button for choosing a new file */
-    private Button fileButton;
     
     /* The button for changing the text */
     private Button editTextButton;
@@ -97,19 +98,35 @@ public class TextPropertiesController {
         fontProperty.setMaxWidth(100);
     }
 
+    /**
+     * Update the text controller with a new selection.
+     * 
+     * @param nText The newly selected text.
+     */
     public void update(TextObject nText) {
         if(selectedText != null) {
+            /* If the new selection is the same as the old */
             if(selectedText.equals(nText)) {
+                /* Soft update */
                 update(true);
+                
+                /* Exit method */
                 return;
             }
         }
 
+        /* Update the selection reference */
         selectedText = nText;
         
+        /* Hard update */
         update(false);
     }
     
+    /**
+     * Updates the controller fields. 
+     * 
+     * @param soft Whether or not this is a soft update.
+     */
     public void update(boolean soft) {
         if(selectedText == null) {
             xStartProperty.setText("");
@@ -129,27 +146,43 @@ public class TextPropertiesController {
             fontProperty.setValue(selectedText.getFont());
         }
         
+        /* If the update is a hard one fire the color event */
         if(!soft) {
             fontColorProperty.fireEvent(new ActionEvent(fontColorProperty, fontColorProperty));
         }
     }
     
+    /**
+     * Gets the text portion of the properties pane.
+     */
     public VBox getTextProperties() {
         return textProperties;
     }
 
+    /**
+     * Handles changes to the properties fields.
+     * 
+     * @author Alistair Jewers
+     */
     public class PropertyChangedHandler implements EventHandler<ActionEvent> {
+        /**
+         * Override the action event handler method.
+         */
         @Override
         public void handle(ActionEvent e) {
+            /* If no object is selected cancel */
             if(selectedText == null) {
                 return;
             }
             
+            /* Get the source */
             TextField source = (TextField)e.getSource();
             
+            /* Check that the value has changed */
             float oldVal = 0.0f;
             float newVal = 0.0f;
             
+            /* Check the ID and change the associated property */
             switch(source.getId()) {
                 case "xStart":
                     oldVal = selectedText.getXStart();
@@ -190,39 +223,60 @@ public class TextPropertiesController {
                     break;
             }
             
-            if(newVal != oldVal) {
-                System.out.println("new: " + newVal + " old: " + oldVal);
-                
+            /* If the value has changed */
+            if(newVal != oldVal) {      
+                /* Hard update */
                 update(false);
+                
+                /* Redraw */
                 parent.redraw();
             }
         }
     }
     
+    /**
+     * Handles button presses.
+     * 
+     * @author Alistair Jewers
+     */
     public class ButtonPressedHandler implements EventHandler<ActionEvent> {
+        /**
+         * Overrides the action event handler method.
+         */
+        @Override
         public void handle(ActionEvent e) {
+            /* Get the source */
             Button source = (Button)e.getSource();
             
-            if(source.getId() == "file") {
-                selectedText.setSourceFile(PropertiesUtil.validateFile(selectedText.getSourceFile(), "Text: ", "*.txt"));
-                update(false);
-                parent.redraw();
-            } else if(source.getId() == "editText") {                
+            /* Check the ID */
+            if(source.getId() == "editText") {
+                /* Launch a text edit window */
                 TextEditorHandler handler = new TextEditorHandler();
                 new TextEditorWindow(handler, selectedText);
             }
         }
     }
     
+    /**
+     * Handles changes to color properties.
+     * 
+     * @author Alistair Jewers
+     */
     public class ColorPropertyChangedHandler implements EventHandler<ActionEvent> {
+        /**
+         * Override the action event handler method.
+         */
         @Override
         public void handle(ActionEvent e) {
+            /* If no object is selected cancel */
             if(selectedText == null) {
                 return;
             }
             
+            /* Get the source */
             ColorPicker source = (ColorPicker)e.getSource();
             
+            /* Check the ID and update the relevant property */
             switch(source.getId()) {
                 case "fontColor":
                     selectedText.setColor(RenderUtil.stringFromColor(source.getValue()));
@@ -236,19 +290,30 @@ public class TextPropertiesController {
                     break;
             }
             
+            /* Redraw */
             parent.redraw();
         }
     }
     
+    /**
+     * Handles changes to drop down selection lists.
+     * 
+     * @author Alistair Jewers
+     */
     public class SelectionPropertyChangedHandler implements EventHandler<ActionEvent> {
+        /**
+         * Override the action event handler method.
+         */
         @Override
         public void handle(ActionEvent e) {
             if(selectedText == null) {
                 return;
             }
             
+            /* Get the source */
             ComboBox<String> source = (ComboBox<String>)e.getSource();
             
+            /* Check the ID and update the relevant property */
             switch(source.getId()) {
                 case "font":
                     selectedText.setFont(source.getValue());
@@ -262,35 +327,62 @@ public class TextPropertiesController {
                     break;
             }
             
+            /* Hard update */
             update(false);
+            
+            /* Redraw */
             parent.redraw();
         }
     }
     
+    /**
+     * Handles the results of a text editing window.
+     * 
+     * @author Alistair Jewers
+     */
     public class TextEditorHandler implements EventHandler<ActionEvent> {
+        /* Window components */
         private TextArea textArea;
         private Stage stage;
         
+        /**
+         * Constructor.
+         */
         public TextEditorHandler(){
             textArea = new TextArea();
             stage = new Stage();
         }
         
+        /**
+         * Sets up the handler with references to the window components.
+         * 
+         * @param nTextArea The reference to the text area in the text window.
+         * @param nStage The stage of the text window.
+         */
         public void setup(TextArea nTextArea, Stage nStage) {
             this.textArea = nTextArea;
             this.stage = nStage;
         }
         
+        /**
+         * Overrides the action event handler method.
+         */
         @Override
         public void handle(ActionEvent e) {
+            /* Close the text window */
             stage.close();
             
+            /* Construct the new text */
             RichText text = new RichText(textArea.getText(), selectedText.getFont(), selectedText.getFontSize(), selectedText.getColor());
             
+            /* Clear the selected text and add the new text */
             selectedText.textFragments.clear();
             selectedText.textFragments.add(text);
             
+            /* Update the pane */
             update(false);
+            
+            /* Redraw */
             parent.redraw();
         }
     }

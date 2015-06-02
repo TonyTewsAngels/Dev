@@ -347,53 +347,53 @@ public class TeachEasyClient extends Application {
         /* Import Images */
         
         //Text Box
-        Image textImST = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Textbox_ST_TOP_CIRC_Blue_T-01.png"));
-        Image textImHO = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Textbox_HO_TOP_CIRC_Blue_T-01.png"));
-        Image textImPR = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Textbox_PRE_TOP_CIRC_Blue_T-01.png"));
+        Image textImST = new Image(getClass().getResourceAsStream("/teacheasy/icons/Textbox_ST_TOP_CIRC_Blue_T-01.png"));
+        Image textImHO = new Image(getClass().getResourceAsStream("/teacheasy/icons/Textbox_HO_TOP_CIRC_Blue_T-01.png"));
+        Image textImPR = new Image(getClass().getResourceAsStream("/teacheasy/icons/Textbox_PRE_TOP_CIRC_Blue_T-01.png"));
         
         //Image
-        Image imImST = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Image_ST_TOP_CIRC_Blue_T-01.png"));
-        Image imImHO = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Image_HO_TOP_CIRC_Blue_T-01.png"));
-        Image imImPR = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Image_PRE_TOP_CIRC_Blue_T-01.png"));
+        Image imImST = new Image(getClass().getResourceAsStream("/teacheasy/icons/Image_ST_TOP_CIRC_Blue_T-01.png"));
+        Image imImHO = new Image(getClass().getResourceAsStream("/teacheasy/icons/Image_HO_TOP_CIRC_Blue_T-01.png"));
+        Image imImPR = new Image(getClass().getResourceAsStream("/teacheasy/icons/Image_PRE_TOP_CIRC_Blue_T-01.png"));
         
         //Video
-        Image vidImST = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Video_ST_TOP_CIRC_Blue_T-01.png"));
-        Image vidImHO = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Video_HO_TOP_CIRC_Blue_T-01.png"));
-        Image vidImPR = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Video_PRE_TOP_CIRC_Blue_T-01.png"));
+        Image vidImST = new Image(getClass().getResourceAsStream("/teacheasy/icons/Video_ST_TOP_CIRC_Blue_T-01.png"));
+        Image vidImHO = new Image(getClass().getResourceAsStream("/teacheasy/icons/Video_HO_TOP_CIRC_Blue_T-01.png"));
+        Image vidImPR = new Image(getClass().getResourceAsStream("/teacheasy/icons/Video_PRE_TOP_CIRC_Blue_T-01.png"));
         
         //Audio
-        Image audioImST = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Audio_ST_TOP_CIRC_Blue_T-01.png"));
-        Image audioImHO = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Audio_HO_TOP_CIRC_Blue_T-01.png"));
-        Image audioImPR = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Audio_PRE_TOP_CIRC_Blue_T-01.png"));
+        Image audioImST = new Image(getClass().getResourceAsStream("/teacheasy/icons/Audio_ST_TOP_CIRC_Blue_T-01.png"));
+        Image audioImHO = new Image(getClass().getResourceAsStream("/teacheasy/icons/Audio_HO_TOP_CIRC_Blue_T-01.png"));
+        Image audioImPR = new Image(getClass().getResourceAsStream("/teacheasy/icons/Audio_PRE_TOP_CIRC_Blue_T-01.png"));
         
         //Graphics
-        Image graphicImST = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Shape_ST_TOP_CIRC_Blue_T-01.png"));
-        Image graphicImHO = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Shape_HO_TOP_CIRC_Blue_T-01.png"));
-        Image graphicImPR = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Shape_PRE_TOP_CIRC_Blue_T-01.png"));
+        Image graphicImST = new Image(getClass().getResourceAsStream("/teacheasy/icons/Shape_ST_TOP_CIRC_Blue_T-01.png"));
+        Image graphicImHO = new Image(getClass().getResourceAsStream("/teacheasy/icons/Shape_HO_TOP_CIRC_Blue_T-01.png"));
+        Image graphicImPR = new Image(getClass().getResourceAsStream("/teacheasy/icons/Shape_PRE_TOP_CIRC_Blue_T-01.png"));
         
         //Question Box
-        Image queImST = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Questionbox_ST_TOP_CIRC_Blue_T-01.png"));
-        Image queImHO = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Questionbox_HO_TOP_CIRC_Blue_T-01.png"));
-        Image queImPR = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Questionbox_PRE_TOP_CIRC_Blue_T-01.png"));
+        Image queImST = new Image(getClass().getResourceAsStream("/teacheasy/icons/Questionbox_ST_TOP_CIRC_Blue_T-01.png"));
+        Image queImHO = new Image(getClass().getResourceAsStream("/teacheasy/icons/Questionbox_HO_TOP_CIRC_Blue_T-01.png"));
+        Image queImPR = new Image(getClass().getResourceAsStream("/teacheasy/icons/Questionbox_PRE_TOP_CIRC_Blue_T-01.png"));
         
         //Multiple Choice
-        Image mulImST = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Choice_ST_TOP_CIRC_Blue_T-01.png"));
-        Image mulImHO = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Choice_HO_TOP_CIRC_Blue_T-01.png"));
-        Image mulImPR = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Choice_PRE_TOP_CIRC_Blue_T-01.png"));
+        Image mulImST = new Image(getClass().getResourceAsStream("/teacheasy/icons/Choice_ST_TOP_CIRC_Blue_T-01.png"));
+        Image mulImHO = new Image(getClass().getResourceAsStream("/teacheasy/icons/Choice_HO_TOP_CIRC_Blue_T-01.png"));
+        Image mulImPR = new Image(getClass().getResourceAsStream("/teacheasy/icons/Choice_PRE_TOP_CIRC_Blue_T-01.png"));
         
         //Arrows
-        Image arImST_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_ST_BOTTOM_RECT_DarkBlue_L-01.png"));
-        Image arImHO_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_HO_BOTTOM_RECT_DarkBlue_L-01.png"));
-        Image arImPRE_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-01.png"));
+        Image arImST_R = new Image(getClass().getResourceAsStream("/teacheasy/icons/Arrow_ST_BOTTOM_RECT_DarkBlue_L-01.png"));
+        Image arImHO_R = new Image(getClass().getResourceAsStream("/teacheasy/icons/Arrow_HO_BOTTOM_RECT_DarkBlue_L-01.png"));
+        Image arImPRE_R = new Image(getClass().getResourceAsStream("/teacheasy/icons/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-01.png"));
         
-        Image arImST_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_ST_BOTTOM_RECT_DarkBlue_L-02.png"));
-        Image arImHO_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_HO_BOTTOM_RECT_DarkBlue_L-02.png"));
-        Image arImPRE_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-02.png"));
+        Image arImST_L = new Image(getClass().getResourceAsStream("/teacheasy/icons/Arrow_ST_BOTTOM_RECT_DarkBlue_L-02.png"));
+        Image arImHO_L = new Image(getClass().getResourceAsStream("/teacheasy/icons/Arrow_HO_BOTTOM_RECT_DarkBlue_L-02.png"));
+        Image arImPRE_L = new Image(getClass().getResourceAsStream("/teacheasy/icons/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-02.png"));
         
         //Preview Button
-        Image prevImST = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Preview_ST_TOP_CIRC_Blue_T-01.png"));
-        Image prevImHO = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Preview_HO_TOP_CIRC_Blue_T-01.png"));
-        Image prevImPRE = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Preview_PRE_TOP_CIRC_Blue_T-01.png"));
+        Image prevImST = new Image(getClass().getResourceAsStream("/teacheasy/icons/Preview_ST_TOP_CIRC_Blue_T-01.png"));
+        Image prevImHO = new Image(getClass().getResourceAsStream("/teacheasy/icons/Preview_HO_TOP_CIRC_Blue_T-01.png"));
+        Image prevImPRE = new Image(getClass().getResourceAsStream("/teacheasy/icons/Preview_PRE_TOP_CIRC_Blue_T-01.png"));
         
          
         
@@ -401,7 +401,7 @@ public class TeachEasyClient extends Application {
         Prev.setFitHeight(80);*/
         
         //TE Logo
-        Image Logo = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/TE_V5_1.png"));
+        Image Logo = new Image(getClass().getResourceAsStream("/teacheasy/icons/TE_V5_1.png"));
         ImageView TE = new ImageView(Logo);
         TE.setFitWidth(55);
         TE.setFitHeight(65);

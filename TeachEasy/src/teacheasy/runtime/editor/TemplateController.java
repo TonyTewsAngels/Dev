@@ -1,9 +1,13 @@
+/*
+ * Calum Armstrong & Penny Nicole
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved. 
+ */
 package teacheasy.runtime.editor;
 
 import teacheasy.data.AnswerBoxObject;
 import teacheasy.data.AudioObject;
 import teacheasy.data.ImageObject;
-import teacheasy.data.Lesson;
 import teacheasy.data.MultipleChoiceObject;
 import teacheasy.data.Page;
 import teacheasy.data.RichText;
@@ -14,8 +18,16 @@ import teacheasy.data.VideoObject;
 import teacheasy.data.lessondata.LessonDefaultSettings;
 import teacheasy.data.multichoice.Answer;
 
+/**
+ * Contains methods for adding template pages to a lesson.
+ * 
+ * @author  Calum Armstrong
+ * @author  Penny Nicole
+ * @version 1.0 20 May 2015
+ */
 public class TemplateController {
 	
+    /** Enumeration of the template types */
 	public static enum TemplateType {
 		INFORMATION,
 		MCQUIZ,
@@ -24,8 +36,15 @@ public class TemplateController {
 		AUDIO
 	}
 
+	/**
+	 * Applies a template to a page.
+	 * 
+	 * @param page The page to edit.
+	 * @param defaults The default lesson settings.
+	 * @param templateType The type of template to apply.
+	 */
 	public void ApplyTemplate(Page page, LessonDefaultSettings defaults, TemplateType templateType) {
-		
+		/* Call the relevant method to the type of template being applied */
 		switch(templateType) {
 			case INFORMATION:
 				ApplyInformationTemplate(page, defaults);
@@ -47,6 +66,12 @@ public class TemplateController {
 		}
 	}
 	
+	/**
+	 * Applies the information template.
+	 * 
+	 * @param page The page to apply the template to.
+	 * @param defaults The lesson defaults.
+	 */
 	public void ApplyInformationTemplate(Page page, LessonDefaultSettings defaults) {
 		
 		// Add Title text object to page (Top Centre)
@@ -67,6 +92,12 @@ public class TemplateController {
 		
 	}
 	
+	/**
+     * Applies the multi-choice quiz template.
+     * 
+     * @param page The page to apply the template to.
+     * @param defaults The lesson defaults.
+     */
 	public void ApplyMCQuizTemplate(Page page, LessonDefaultSettings defaults) {
 		
 		// Add Title text object to page (Top Centre)
@@ -121,6 +152,12 @@ public class TemplateController {
 		
 	}
 	
+	/**
+     * Applies the answer box quiz template.
+     * 
+     * @param page The page to apply the template to.
+     * @param defaults The lesson defaults.
+     */
 	public void ApplyABQuizTemplate(Page page, LessonDefaultSettings defaults) {
 	    page.setPageColour("#ffccffff");
 		
@@ -202,6 +239,12 @@ public class TemplateController {
 		
 	}
 	
+	/**
+     * Applies the video template.
+     * 
+     * @param page The page to apply the template to.
+     * @param defaults The lesson defaults.
+     */
 	public void ApplyVideoTemplate(Page page, LessonDefaultSettings defaults) {
 	
 		// Add Title text object to page (Top Centre)
@@ -222,6 +265,12 @@ public class TemplateController {
 				
 	}
 	
+	/**
+     * Applies the audio template.
+     * 
+     * @param page The page to apply the template to.
+     * @param defaults The lesson defaults.
+     */
 	public void ApplyAudioTemplate(Page page, LessonDefaultSettings defaults) {
 		
 		// Add Title text object to page (Top Centre)
@@ -245,5 +294,4 @@ public class TemplateController {
 		page.addObject(info);
 		
 	}
-	
 }

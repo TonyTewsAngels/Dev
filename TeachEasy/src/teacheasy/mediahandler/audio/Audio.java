@@ -2,7 +2,6 @@
  * Alex Cash
  * 
  * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
- * 
  */
 package teacheasy.mediahandler.audio;
 
@@ -32,14 +31,17 @@ import javafx.scene.*;
 import javafx.util.Duration;
 
 /**
- * This class is describes an individual audio track 
- * that will be handled by the audio handler
+ * Encapsulates a single audio object on a page,
+ * including controls and media. Each audio object
+ * maintains its own state, and a list of the currently
+ * active audio objects is maintained by the audio
+ * handler.
  * 
- * @author Alex Cash
- * @version 1.3 April 2015
+ * @author  Alex Cash
+ * @version 1.3 15 April 2015
  */
-
 public class Audio {
+    
 	/** Reference to the group to which the audio tracks will be added. */
 	private Group group;
 	
@@ -76,17 +78,21 @@ public class Audio {
 	private HBox volumeMuteHBox;
 	private HBox timeLabelsHBox;
 	
-	/* Variables */
 	/** Double variable used to store the volume level so as to restore it after un-muting. */
 	private double oldVolume;
+	
 	/** Double variable used to calculate the duration of the audio track. */
 	private double durationMillis;
+	
 	/** Duration variable used to store the duration of the audio track. */
 	private Duration duration;	
+	
 	/** Boolean variable used to indicate whether the audio was paused using the "Pause" button. */
 	private boolean pausedByButton = true;
+	
 	/** Boolean to be used to check if media exists */
 	private boolean mediaExists;
+	
 	/** Integer variable used to define the width of buttons used for the audio player. */
 	private int buttonWidth = 30;
 	
@@ -96,18 +102,20 @@ public class Audio {
 	 * 2 = full visibility 
 	 *  */
 	public int buttonVisibilityLevel = 0;
+	
 	/** Public boolean to indicate if controls are collapsed or not */
 	public boolean collapsedControls = false;
-	/** Variables for x and y start and width, for finding the bounding box*/
+	
+	/* Variables for x and y start and width, for finding the bounding box*/
 	public float xStartPos = 0;
 	public float yStartPos = 0;
 	public float widthValue = 0;
 	
 	
 	/**
-     * Constructs the audio track.
+     * Constructs the audio object.
      * 
-     * @param nGroup The group this audio track goes on.
+     * @param nGroup The group this audio object goes on.
      * 
      * @param x The x coordinate of the top left of the audio player 
      *            relative to the group's origin.
@@ -131,7 +139,8 @@ public class Audio {
      * 						visibleControls is true, all control buttons are visible
      * 
      */
-	public Audio(Group nGroup, float x, float y, float width, String sourceFile, boolean autoPlay, final boolean loop, boolean visibleControls, boolean playButtonOnly){
+	public Audio(Group nGroup, float x, float y, float width, String sourceFile, boolean autoPlay,
+	             final boolean loop, boolean visibleControls, boolean playButtonOnly){
 		/* Set the group reference */
 		this.group = nGroup;
 
@@ -146,12 +155,20 @@ public class Audio {
 		widthValue = width;
 		
         /* Load icon images */
-        playImage = new ImageView(new Image(getClass().getResourceAsStream("Play_ST_CONTENT_RECT_Transparent_L-01.png")));
-        pauseImage = new ImageView(new Image(getClass().getResourceAsStream("Pause_ST_CONTENT_RECT_Transparent_L-01.png")));        
-        volumeImage = new ImageView(new Image(getClass().getResourceAsStream("VolumeON_ST_CONTENT_RECT_Transparent_L-01.png")));
-        volumeOffImage = new ImageView(new Image(getClass().getResourceAsStream("VolumeOFF_ST_CONTENT_RECT_Transparent_L-01.png")));
-        controlsImage = new ImageView(new Image(getClass().getResourceAsStream("Cog_ST_CONTENT_RECT_Transparent_L-01.png")));
+        playImage = new ImageView(new Image(getClass().getResourceAsStream(
+                "Play_ST_CONTENT_RECT_Transparent_L-01.png")));
         
+        pauseImage = new ImageView(new Image(getClass().getResourceAsStream(
+                "Pause_ST_CONTENT_RECT_Transparent_L-01.png")));   
+        
+        volumeImage = new ImageView(new Image(getClass().getResourceAsStream(
+                "VolumeON_ST_CONTENT_RECT_Transparent_L-01.png")));
+        
+        volumeOffImage = new ImageView(new Image(getClass().getResourceAsStream(
+                "VolumeOFF_ST_CONTENT_RECT_Transparent_L-01.png")));
+        
+        controlsImage = new ImageView(new Image(getClass().getResourceAsStream(
+                "Cog_ST_CONTENT_RECT_Transparent_L-01.png")));
         
         /* Create and arrange the VBoxes and HBoxes required to lay out the audio player */
 		mediaControlsVBox = new VBox();
@@ -159,67 +176,62 @@ public class Audio {
 		mediaControlsVBox.setSpacing(0);
 		mediaControlsVBox.setMinHeight(100);
 		mediaControlsVBox.relocate(x, y);
-
 		
 		playSeekHbox = new HBox();
 		playSeekHbox.setAlignment(Pos.CENTER);
 		playSeekHbox.setSpacing(0);
-		playSeekHbox.setMinHeight(45); //To account for the size of the buttons and the slider, and their respective positions in their boxes
-
+		
+		/* 
+		 * To account for the size of the buttons and the slider, and their respective positions
+		 * in their boxes, set the minimum height to 45. 
+		 */
+		playSeekHbox.setMinHeight(45);
 		
 		volumeMuteHBox = new HBox();
 		volumeMuteHBox.setAlignment(Pos.BOTTOM_LEFT);
 		volumeMuteHBox.setSpacing(0);
 		volumeMuteHBox.setMinHeight(30);
 
-		
 		timeProgressVbox = new VBox();
 		timeProgressVbox.setAlignment(Pos.BOTTOM_CENTER);
 		timeProgressVbox.setSpacing(0);
 
-		
 		timeLabelsHBox = new HBox();
 		timeLabelsHBox.setAlignment(Pos.CENTER);
 		timeLabelsHBox.setSpacing(0);
 		timeLabelsHBox.setMaxWidth(width - buttonWidth - 15);
 
-		
 		elapsedLabelVBox = new VBox();
 		elapsedLabelVBox.setAlignment(Pos.BASELINE_LEFT);
 		elapsedLabelVBox.setSpacing(10);
-
 
 		remainingLabelVBox = new VBox();
 		remainingLabelVBox.setAlignment(Pos.BASELINE_RIGHT);
 		remainingLabelVBox.setSpacing(10);				
 		
 		mediaControlsVBox.getChildren().addAll(playSeekHbox, volumeMuteHBox);
-		
-		
-		/* playPause button with default icon */
+
+		/* Play/Pause button with default icon */
 		playPauseButton = new Button ("");
 		playPauseButton.setOnAction(new playHandler());
 		playPauseButton.getStylesheets().add(this.getClass().getResource("MediaHandlerStyle.css").toExternalForm());
 		playPauseButton.setGraphic(playImage);
 		playPauseButton.setId("play");
-		
-		
+
 		/* Mute button with default icon */
 		muteButton = new Button("");
 		muteButton.setOnAction(new muteHandler());
 		muteButton.getStylesheets().add(this.getClass().getResource("MediaHandlerStyle.css").toExternalForm());
 		muteButton.setGraphic(volumeImage);
 		muteButton.setId("mute");
-		
-		
+	
 		/* Controls button with default icon */
 		controlsButton = new Button("");
 		controlsButton.setOnAction(new controlsHandler());		
 		controlsButton.getStylesheets().add(this.getClass().getResource("MediaHandlerStyle.css").toExternalForm());
 		controlsButton.setGraphic(controlsImage);
 		controlsButton.setId("controls");
-		
-		
+
 		/* Create new listener for the volume value */
 		volumeListener = new VolumeListener();
 		
@@ -237,12 +249,13 @@ public class Audio {
 		volumeSlider.setSnapToTicks(true);
 		volumeSlider.setOrientation(Orientation.HORIZONTAL);		
 		volumeSlider.valueProperty().addListener(volumeListener);
+		
 		/* Set the size of the volume slider */
 		volumeSlider.setPrefSize(width - (2 * buttonWidth), 5);
-		
-		
+
 		/* Create new listener for the progress bar/slider */ 
 		seekListener = new SeekListener();
+		
 		/* Create the slider for the progress bar using our .css styling */
 		progressSlider = new Slider();
 		progressSlider.getStylesheets().add(this.getClass().getResource("MediaHandlerStyle.css").toExternalForm());
@@ -258,26 +271,23 @@ public class Audio {
 		progressSlider.valueProperty().addListener(seekListener);
 		progressSlider.setOnMousePressed(new AudioSeekHandler());
 		progressSlider.setOnMouseReleased(new AudioSeekHandler());	
+		
 		/* Set the size of the progress slider */
 		progressSlider.setPrefSize(width-buttonWidth+5, 5);
-		
-		
+
 		/* Labels for tracking elapsed and remaining time */
 		elapsedLabel = new Label("00:00");
 		elapsedLabel.setTextFill(Color.BLACK);
 		durationLabel = new Label("00:00");
 		durationLabel.setTextFill(Color.BLACK);
 
-
-		
 		/* Create a media object */
 		final Media audio;
 		
 		/* Create a temporary file object */
 		File file;
 		
-		/* Sourcefile handling */
-		/* First check that the sourcefile is not null */
+		/* First that the sourcefile is not null */
 		if(sourceFile == null) {
 			return;
 		}
@@ -291,19 +301,21 @@ public class Audio {
                 label.relocate(x, y);
                 group.getChildren().add(label);
                 mediaExists = false;
-                /* Return to halt the creation of this video */
+                
+                /* Return immediately to end the creation of this video */
                 return;
             }
             
+            /* The media exists and can be accessed */
             mediaExists = true;
+            
             /* Load the media from URL */
             audio = new Media(sourceFile);
-            
         } else {
             /* File is a local resource */
             file = new File(sourceFile);
             
-            /* Check that the file exists and is .mp3, .aac, or .wav */
+            /* Check that the file exists and is .mp3 or .wav */
             if(!file.exists()) {
                 /* Add a label to notify the user that the file could not be found */
                 Label label = new Label("File could not be found");
@@ -313,6 +325,7 @@ public class Audio {
                 return;
             } else if(!file.getAbsolutePath().endsWith(".mp3") &&
                       !file.getAbsolutePath().endsWith(".wav")) {
+                /* Add a label to notify the user that the file format could not be opened */
             	Label label = new Label("Audio file is not an acceptable format");
                 label.relocate(x, y);
                 group.getChildren().add(label);
@@ -352,8 +365,10 @@ public class Audio {
 		}
 
 
-		/* Once the player is ready, get the information about the duration of the audio file */
-		/* Use this to set the max value of the progress slider */
+		/* 
+		 * Once the player is ready, get the information about the duration of the audio file,
+		 * and use this to set the max value of the progress slider
+		 */
 		player.setOnReady(new Runnable() {
 			@Override
 			public void run() {
@@ -368,6 +383,10 @@ public class Audio {
 			}
 		});
 		
+		/*
+		 * When the player reaches the end of the audio file, check the loop setting. If
+		 * it is not set, rewind to the beginning of the audio and stop the player.
+		 */
 		player.setOnEndOfMedia(new Runnable() {
 			@Override
 			public void run() {
@@ -388,8 +407,9 @@ public class Audio {
 		group.getChildren().addAll(mediaControlsVBox);
 		
 		/* Add relevant parts to the group depending on boolean switches in call */		
-		if (visibleControls == true && playButtonOnly == false){	//Add all visible controls		
-			buttonVisibilityLevel = 2; //set visibility to level 2
+		if (visibleControls == true && playButtonOnly == false){
+		    /* Add all visible controls, level 2 */		
+			buttonVisibilityLevel = 2;
 			elapsedLabelVBox.getChildren().addAll(elapsedLabel);
 			remainingLabelVBox.getChildren().addAll(durationLabel);	
 			timeLabelsHBox.getChildren().addAll(elapsedLabelVBox, remainingLabelVBox);
@@ -397,15 +417,16 @@ public class Audio {
 			playSeekHbox.getChildren().addAll(playPauseButton, timeProgressVbox);
 			volumeMuteHBox.getChildren().addAll(controlsButton, volumeSlider, muteButton);
 			group.getChildren().addAll(audioView);
-		} else if (visibleControls == true && playButtonOnly == true) {	//Add just the play/pause button
-			buttonVisibilityLevel = 1; //set visibility to level 1
+		} else if (visibleControls == true && playButtonOnly == true) {	
+		    /* Add just the play/pause button, level 1 */
+			buttonVisibilityLevel = 1;
 			playSeekHbox.getChildren().addAll(playPauseButton);
 			group.getChildren().addAll(audioView);
 		} else {
-			buttonVisibilityLevel = 0; //set visibility to level 0
-			group.getChildren().addAll(audioView); //Add no visible controls
+		    /* Add no controls, level 0 */
+			buttonVisibilityLevel = 0;
+			group.getChildren().addAll(audioView);
 		}
-
 	}
 	
 	/** 
@@ -433,28 +454,28 @@ public class Audio {
     }
     
 	
-	/** Programmatically play this audio track. */
+	/** Programmatically plays this audio track. */
     public void play() {
         if(player != null) {
             player.play();
         }
     }
     
-    /** Programmatically pause this audio track. */
+    /** Programmatically pauses this audio track. */
     public void pause() {
         if(player != null) {
             player.pause();
         }
     }
     
-    /** Programatically stop this audio track. */
+    /** Programatically stops this audio track. */
     public void stop() {
         if(player != null) {
             player.stop();
         }
     }
     
-    /** Programmatically dispose of this audio track. */
+    /** Programmatically disposes of this audio track. */
     public void dispose() {
         if(player != null) {
             player.dispose();
@@ -488,7 +509,8 @@ public class Audio {
 	public class progressUpdater implements ChangeListener<Duration> {		
 		@Override
         public void changed(ObservableValue<? extends Duration> arg0,
-                            Duration arg1, Duration arg2) {			
+                            Duration arg1, Duration arg2) {		
+		    /* Calculate the percentage based on current and total times */
 			double currentTime = player.getCurrentTime().toSeconds();				
 			double perCent = (currentTime / duration.toSeconds());
 			
@@ -496,6 +518,7 @@ public class Audio {
 			if (!seekListener.isEnabled()) {
 				progressSlider.setValue(perCent * 100.0);
 			}
+			
 			/* Always update the label values */
 			updateLabels();
         }		
@@ -506,9 +529,14 @@ public class Audio {
 	 * of the media.
 	 */
 	public void updateLabels() {
+	    /* Current location in the audio */
 		double currentTime = player.getCurrentTime().toSeconds();
+		
+		/* Elapsed time */
 		int elapsedTimeSecs = (int) Math.round(currentTime);
 		int elapsedTimeMins = elapsedTimeSecs / 60;
+		
+		/* Total times */
 		int totalSeconds = ((int) Math.round(duration.toSeconds()));
 		int totalMins = totalSeconds / 60;
 
@@ -516,7 +544,7 @@ public class Audio {
 		if (duration.toMinutes() > 99){
 			elapsedLabel.setText(String.format("%03d:%02d",elapsedTimeMins, elapsedTimeSecs - elapsedTimeMins*60));
 			durationLabel.setText(String.format("%03d:%02d",totalMins, totalSeconds - totalMins*60));
-		/* Otherwise, sod it. Use 2. */
+		/* Otherwise use 2. */
 		} else {
 			elapsedLabel.setText(String.format("%02d:%02d",elapsedTimeMins, elapsedTimeSecs - elapsedTimeMins*60));
 			durationLabel.setText(String.format("%02d:%02d",totalMins, totalSeconds - totalMins*60));

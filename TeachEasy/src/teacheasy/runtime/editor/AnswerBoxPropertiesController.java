@@ -1,3 +1,8 @@
+/*
+ * Alistair Jewers
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved. 
+ */
 package teacheasy.runtime.editor;
 
 import javafx.scene.control.Button;
@@ -22,11 +27,11 @@ import teacheasy.data.AnswerBoxObject;
 import teacheasy.data.multichoice.Answer;
 
 /**
- * Encapsulates functionality relating to editor
+ * Contains code relating to editor
  * functionality for Answer Box objects.
  * 
- * @author Alistair Jewers
- * @version 1.0 Apr 21 2015
+ * @author  Alistair Jewers
+ * @version 1.0 21 Apr 2015
  */
 public class AnswerBoxPropertiesController {
     /* Reference to the properties pane responsible for this controller */
@@ -97,20 +102,30 @@ public class AnswerBoxPropertiesController {
         newAnswerButton.setId("newAnswer");
         newAnswerButton.setOnAction(new ButtonPressedHandler());
         
+        /* Set up the remove answer button */
         Button removeAnswerButton = new Button("Remove Selected");
         removeAnswerButton.setId("removeAnswer");
         removeAnswerButton.setOnAction(new ButtonPressedHandler());
         
+        /* Create the button container */
         answerButtons = new HBox();
         answerButtons.getChildren().addAll(newAnswerButton, removeAnswerButton);
         
+        /* Add the button container */
         answerBoxProperties.getChildren().add(answerButtons);
     }
     
+    /**
+     * Sets up the table of answers
+     */
     public void setupAnswerTable() {
+        /* Instantiate the table*/
         answerTable = new TableView<AnswerProperty>();
+        
+        /* Set the table fields editable */
         answerTable.setEditable(true);
         
+        /* Create the answer column */
         TableColumn<AnswerProperty, String> answerColumn = new TableColumn<AnswerProperty, String>("Answer");
         answerColumn.setMinWidth(100);
         answerColumn.setEditable(true);
@@ -118,26 +133,41 @@ public class AnswerBoxPropertiesController {
         answerColumn.setCellFactory(TextFieldTableCell.<AnswerProperty>forTableColumn());
         answerColumn.setOnEditCommit(new AnswerChangedHandler());
         
+        /* Create the delete column */
         TableColumn<AnswerProperty, Boolean> deleteColumn = new TableColumn<AnswerProperty, Boolean>("Remove");
         deleteColumn.setMinWidth(100);
         deleteColumn.setEditable(true);
         deleteColumn.setCellValueFactory(new RemoveCallback());
         deleteColumn.setCellFactory(CheckBoxTableCell.forTableColumn(deleteColumn));
         
+        /* Add the columns */
         answerTable.getColumns().add(answerColumn);
         answerTable.getColumns().add(deleteColumn);
         
+        /* Fix the size */
         answerTable.setMaxHeight(160);
         
+        /* Add the answer table to the pane */
         answerBoxProperties.getChildren().add(answerTable);
     }
 
-    public void update(AnswerBoxObject nAnswerBox) {       
+    /**
+     * Update the answer box controller.
+     * 
+     * @param nAnswerBox The selected answer box.
+     */
+    public void update(AnswerBoxObject nAnswerBox) {
+        /* Update the selected reference */
         selectedAnswerBox = nAnswerBox;
         
+        /* Update the display */
         update();
     }
     
+    /**
+     * Updates the displayed properties to have the 
+     * values of the selected answerbox.
+     */
     public void update() {
         if(selectedAnswerBox == null) {
             xStartProperty.setText("");
@@ -161,38 +191,58 @@ public class AnswerBoxPropertiesController {
             answerTable.getItems().clear();
             answerBoxProperties.getChildren().removeAll(answerTable, answerButtons);
             
+            /* Check if this answerbox is non-numerical */
             if(!selectedAnswerBox.isNumerical()) {
+                /* Disable the upper and lower bound property boxes */
                 upperLimitProperty.setDisable(true);
                 lowerLimitProperty.setDisable(true);
                 
+                /* Add the answer table and answer buttons */
                 answerBoxProperties.getChildren().addAll(answerTable, answerButtons);
                 
+                /* For each answer add a row to the table */
                 for(Answer a : selectedAnswerBox.getAnswers()) {
                     answerTable.getItems().add(new AnswerProperty(a));
                 }
             } else {
+                /* Enable the upper and lower bound property fields */
                 upperLimitProperty.setDisable(false);
                 lowerLimitProperty.setDisable(false);
                 
+                /* Set the text */
                 lowerLimitProperty.setText("" + selectedAnswerBox.getLowerBound());
                 upperLimitProperty.setText("" + selectedAnswerBox.getUpperBound());
             }
         }
     }
     
+    /**
+     * Gets the answer box portion of the properties pane.
+     */
     public VBox getAnswerBoxProperties() {
         return answerBoxProperties;
     }
 
+    /**
+     * Handles changes to the properties of the answer box.
+     * 
+     * @author Alistair Jewers
+     */
     public class PropertyChangedHandler implements EventHandler<ActionEvent> {
+        /**
+         * Override the action event handling method.
+         */
         @Override
         public void handle(ActionEvent e) {
+            /* If there is no answerbox selected cancel */
             if(selectedAnswerBox == null) {
                 return;
             }
             
+            /* Get the source of the event */
             TextField source = (TextField)e.getSource();
             
+            /* Check the ID and update the relevant property */
             switch(source.getId()) {
                 case "xStart":
                     selectedAnswerBox.setXStart(PropertiesUtil.validatePosition(source.getText(), selectedAnswerBox.getXStart()));
@@ -216,24 +266,41 @@ public class AnswerBoxPropertiesController {
                     break;
             }
             
+            /* Update the property fields */
             update();
+            
+            /* Redrasw the application UI */
             parent.redraw();
         }
     }
     
+    /**
+     * Handles button press events in the answer box properties.
+     * 
+     * @author Alistair Jewers
+     */
     public class ButtonPressedHandler implements EventHandler<ActionEvent> {
+        /**
+         * Override the action event handling method
+         */
+        @Override
         public void handle(ActionEvent e) {
+            /* If there is no answer box selected cancel */
             if(selectedAnswerBox == null) {
                 return;
             }
             
+            /* Get the source */
             Button source = (Button)e.getSource();
             
+            /* Check the source ID */
             switch(source.getId()){
                 case "newAnswer":
+                    /* Add an answer to the answer box data object */
                     selectedAnswerBox.addAnswer(new Answer("New Answer", true));
                     break;
                 case "removeAnswer":
+                    /* Remove any answers which have the remove box ticked */
                     for(AnswerProperty a : answerTable.getItems()) {
                         if(a.getRemove()) {
                             selectedAnswerBox.removeAnswer(a.getAnswerObject());
@@ -242,20 +309,35 @@ public class AnswerBoxPropertiesController {
                     break; 
             }
             
+            /* Update the property fields */
             update();
+            
+            /* Redraw */
             parent.redraw();
         }
     }
     
+    /**
+     * Handles changes to boolean properties.
+     * 
+     * @author Alistair Jewers
+     *
+     */
     public class BooleanPropertyChangedHandler implements EventHandler<ActionEvent> {
+        /**
+         * Override the action event handling method.
+         */
         @Override
         public void handle(ActionEvent e) {
+            /* If no answer box is selected cancel */
             if(selectedAnswerBox == null) {
                 return;
             }
             
+            /* Get the source */
             CheckBox source = (CheckBox)e.getSource();
             
+            /* Check the ID and update the properties */
             switch(source.getId()) {
                 case "retry":
                     selectedAnswerBox.setRetry(source.isSelected());
@@ -266,25 +348,48 @@ public class AnswerBoxPropertiesController {
                     break;
             }
             
+            /* Update the properties pane properties */
             update();
+            
+            /* Redraw */
             parent.redraw();
         }
     }
     
+    /**
+     * Handles the user changing answers in the answer table.
+     * 
+     * @author Alistair Jewers
+     */
     public class AnswerChangedHandler implements EventHandler<CellEditEvent<AnswerProperty, String>> {
+        /**
+         * Overrides the handle method for a change to the string
+         */
         @Override
         public void handle(CellEditEvent<AnswerProperty, String> t) {
-            ((AnswerProperty) t.getTableView().getItems().get(
-                t.getTablePosition().getRow())
-                ).setAnswer(t.getNewValue());
+            /* Set the new answer text */
+            ((AnswerProperty)t.getTableView()
+                              .getItems()
+                              .get(t.getTablePosition().getRow()))
+                              .setAnswer(t.getNewValue());
             
+            /* Redraw */
             parent.redraw();
         }
     }
     
+    /**
+     * Handles the user changing the remove checkbox
+     * 
+     * @author Alistair Jewers
+     */
     public class RemoveCallback implements Callback<TableColumn.CellDataFeatures<AnswerProperty, Boolean>, ObservableValue<Boolean>> {
+        /**
+         * Overrides the handle method for a change to the boolean property
+         */
         @Override
         public ObservableValue<Boolean> call(CellDataFeatures<AnswerProperty, Boolean> b) {
+            /* Return the value of the checkbox to the calling method */
             return b.getValue().getRemoveProperty();
         }
     }

@@ -2,7 +2,6 @@
  * Alistair Jewers
  * 
  * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
- * 
  */
 package teacheasy.xml;
 
@@ -30,19 +29,27 @@ import teacheasy.data.multichoice.Answer;
  * This class handles XML writing, 
  * based on data stored in Lesson objects.
  * 
- * @version 	1.0 05 Feb 2015
- * @author 		Alistair Jewers
+ * @author  Alistair Jewers
+ * @version 1.0 05 Feb 2015
  */
 public class XMLWriter {
     /** List of errors that occurred during writing */
     private ArrayList<String> errorList;
 	
-	/** Constructor Method */
+	/**
+	 *  Constructor.
+	 */
 	public XMLWriter() {
 		/* No Setup Required */
 	}
 	
-	/** Write an XML file based on a lesson data object */
+	/**
+	 * Writes an XML file with the data stored in a lesson data structure.
+	 * 
+	 * @param lesson The lesson to convert to XML.
+	 * @param filename The file name and path.
+	 * @return A list of the errors and warnings that occured during writing.
+	 */
 	public ArrayList<String> writeXML(Lesson lesson, String filename) {
 	    /* Instantiate the error list */
 	    errorList = new ArrayList<String>();
@@ -98,7 +105,13 @@ public class XMLWriter {
 	    return errorList;
 	}
 	
-	/** Add the lesson info element to the xml file */
+	/** 
+	 * Add the lesson info element to the xml file
+	 * 
+	 * @param lessonInfo The lesson information.
+	 * @param lessonElement The XML element of the lesson.
+	 * @param doc The XML document to add to.
+	 */
 	public void addLessonInfo(LessonInfo lessonInfo, Element lessonElement, Document doc) {
 	    /* Create the lesson info element and add it to the lesson element */
 	    Element lessonInfoElement = doc.createElement("documentinfo");
@@ -134,7 +147,13 @@ public class XMLWriter {
         lessonInfoElement.appendChild(lessonName);
 	}
 	
-	/** Add the default settings element to the xml file */
+	/** 
+	 * Add the default settings element to the xml file
+	 * 
+	 * @param defaultSettings The default settings of the lesson.
+	 * @param lessonElement The lesson XML element to add to.
+	 * @param doc The XML document to add to.
+	 */
 	public void addDefaultSettings(LessonDefaultSettings defaultSettings, Element lessonElement, Document doc) {
 	    /* Create the default settings element and add it to the lesson element*/
 	    Element defaultSettingsElement = doc.createElement("defaultsettings");
@@ -158,7 +177,13 @@ public class XMLWriter {
         defaultSettingsElement.appendChild(fontColor);
     }
 	
-	/** Add the grade settings element */
+	/** 
+	 * Add the grade settings element
+	 * 
+	 * @param gradeSettings The lesson's grade settings.
+	 * @param lessonElement The lesson XML element to add to.
+	 * @param doc The XML document to add to.
+	 */
 	public void addGradeSettings(LessonGradeSettings gradeSettings, Element lessonElement, Document doc) {
 	    /* Create the grade settings element and add it to the lesson element*/
 	    Element gradeSettingsElement = doc.createElement("gradesettings");
@@ -172,7 +197,13 @@ public class XMLWriter {
         gradeSettingsElement.appendChild(passBoundary);
     }
 	
-	/** Add a page element to the xml file*/
+	/**
+	 *  Add a page element to the xml file
+	 *  
+	 * @param page The data object of the page to add
+	 * @param lessonElement The lesson XML element to add to.
+	 * @param doc The XML document to add to.
+	 */
 	public void addPage(Page page, Element lessonElement, Document doc) {
 	    /* Create the page element and add it to the lesson element */
 	    Element pageElement = doc.createElement("slide"); 
@@ -222,7 +253,13 @@ public class XMLWriter {
 	    }
 	}
 	
-	/** Add a text box element */
+	/** 
+	 * Add a text box element
+	 * 
+	 * @param text The data object of the text box to add.
+	 * @param pageElement The XML page element to add to.
+	 * @param doc The XML document to add to.
+	 */
 	public void addText(TextObject text, Element pageElement, Document doc) {
 	    /* Create the text box element and add it to the page element */
 	    Element textElement = doc.createElement("text");
@@ -268,7 +305,13 @@ public class XMLWriter {
 	    }
 	}
 	
-	/** Add an image element */
+	/** 
+	 * Add an image element 
+	 * 
+	 * @param image The image data object to add.
+	 * @param pageElement The XML page element to add to.
+	 * @param doc The XML document to add to.
+	 */
 	public void addImage(ImageObject image, Element pageElement, Document doc) {
 	    /* Create the image element and add it to the page element */
 	    Element imageElement = doc.createElement("image");
@@ -287,7 +330,13 @@ public class XMLWriter {
         imageElement.setAttribute("duration", String.valueOf(image.getDuration()));
 	}
 	
-	/** Add an audio clip */
+	/** 
+	 * Add an audio clip 
+	 * 
+	 * @param audio The audio data object to add.
+	 * @param pageElement The XML page element to add to.
+	 * @param doc The XML document to add to.
+	 */
 	public void addAudio(AudioObject audio, Element pageElement, Document doc) {
 	    /* Create the audio element and add it to the page element */
 	    Element audioElement = doc.createElement("audio");
@@ -304,7 +353,13 @@ public class XMLWriter {
         audioElement.setAttribute("loop", String.valueOf(audio.isLoop()));
 	}
 	
-	/** Add a graphics element */
+	/** 
+	 * Add a graphics element
+	 * 
+	 * @param graphic The graphic data object to add.
+	 * @param pageElement The XML page element to add to.
+	 * @param doc The XML document to add to.
+	 */
 	public void addGraphic(GraphicObject graphic, Element pageElement, Document doc) {
 	    /* Create the graphic element and add it to the page element */
 	    Element graphicElement = doc.createElement("graphic");
@@ -338,7 +393,13 @@ public class XMLWriter {
         shadingElement.setAttribute("shadingcolor", graphic.getShadingColor());
 	}
 	
-	/** Add a video */
+	/** 
+	 * Add a video 
+	 * 
+	 * @param video The video data object to add.
+	 * @param pageElement The XML page element to add to.
+	 * @param doc The XML document to add to.
+	 */
 	public void addVideo(VideoObject video, Element pageElement, Document doc) {
 	    /* Create video element and add it to the page element */
 	    Element videoElement = doc.createElement("video");
@@ -353,7 +414,13 @@ public class XMLWriter {
         videoElement.setAttribute("loop", String.valueOf(video.isLoop()));
 	}
 	
-	/** Add an answer box */
+	/** 
+	 * Add an answer box 
+	 * 
+	 * @param answerBox The answer box data object to add.
+	 * @param pageElement The XML page element to add to.
+	 * @param doc The XML document to add to.
+	 */
 	public void addAnswerBox(AnswerBoxObject answerBox, Element pageElement, Document doc) {
 	    /* Create answer box element and add it to the page element */
 	    Element answerBoxElement = doc.createElement("answerbox");
@@ -386,7 +453,13 @@ public class XMLWriter {
         }
 	}
 	
-	/** Add a multiple choice question */
+	/** 
+	 * Add a multiple choice question
+	 * 
+	 * @param multipleChoice The multiple choice data object to add.
+	 * @param pageElement The XML page element to add to.
+	 * @param doc The XML document to add to.
+	 */
 	public void addMultipleChoice(MultipleChoiceObject multipleChoice, Element pageElement, Document doc) {
 	    /* Create multiple choice element and add it to the page element */
 	    Element multipleChoiceElement = doc.createElement("multiplechoice");
