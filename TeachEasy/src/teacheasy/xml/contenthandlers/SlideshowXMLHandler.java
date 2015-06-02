@@ -12,7 +12,6 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
 import teacheasy.data.Lesson;
-import teacheasy.data.lessondata.LessonInfo;
 import teacheasy.xml.XMLElement;
 import teacheasy.xml.util.XMLNotification;
 import teacheasy.xml.util.XMLNotification.Level;
