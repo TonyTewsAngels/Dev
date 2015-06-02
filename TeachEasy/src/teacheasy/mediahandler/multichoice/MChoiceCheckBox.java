@@ -33,32 +33,36 @@ public class MChoiceCheckBox {
     }
 
     /**
+     * Gets the appropriate CheckBox object
      * 
-     * @return
+     * @return CheckBox object
      */
     public CheckBox getCheckBox() {
         return checkBox;
     }
 
     /**
+     * Sets the local variable checkBox
      * 
-     * @param ncB
+     * @param ncB CheckBox object 
      */
     public void setCheckBox(CheckBox ncB) {
         this.checkBox = ncB;
     }
 
     /**
+     * Checks if the checkBox is answered correctly
      * 
-     * @return
+     * @return <code>true</code> if answered correctly; <code>false</code> otherwise.
      */
     public boolean isCorrect() {
         return correct;
     }
 
     /**
+     * Sets the local variable correct
      * 
-     * @param nCorrect
+     * @param nCorrect Desired boolean variable of the variable correct.
      */
     public void setCorrect(boolean nCorrect) {
         this.correct = nCorrect;
