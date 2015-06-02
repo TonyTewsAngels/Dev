@@ -6,7 +6,6 @@
 package teacheasy.data;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import teacheasy.data.multichoice.Answer;
 

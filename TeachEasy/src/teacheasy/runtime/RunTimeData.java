@@ -1,8 +1,7 @@
 /*
- * Alistair Jewers
+ * Alistair Jewers & Daniel Berhe
  * 
  * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
- * 
  */
 package teacheasy.runtime;
 
@@ -10,10 +9,6 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -28,7 +23,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.VBoxBuilder;
 import javafx.scene.paint.Color;
@@ -51,32 +45,39 @@ import teacheasy.xml.util.XMLNotification;
 import teacheasy.xml.util.XMLNotification.Level;
 
 /**
- * This class encapsulates the current state of the application and all its
- * data. The methods in this class are called when events occur in the top level
- * class which incorporates the GUI.
+ * Encapsulates the current state of an instance of the Learn Easy 
+ * application and all its data. The methods in this class are
+ * called when events occur in the top level class which 
+ * incorporates the GUI.
  * 
- * @author Alistair Jewers & Daniel Berhe
+ * @author Alistair Jewers
+ * @author Daniel Berhe
  * @version 2.0 28 May 2015
  */
 public class RunTimeData {
+    
     /* Parent References */
     private LearnEasyClient parent;
     private PreviewWindow previewParent;
 
-    /* */
+    /* JavaFX references */
     private Group group;
     private Rectangle2D bounds;
     private Stage dialogStage;
 
-    /* Class level variables */
+    /* Lesson control variables */
     private int pageCount;
     private int currentPage;
     private boolean lessonOpen;
+    
+    /* Warning dialog control variables */
     private boolean hideDialog = false;
     private boolean pageDirection;
+    
     /* Current Lesson */
     private Lesson lesson;
 
+    /* Progress tracking object */
     private ProgressTracker progressTracker;
 
     /* XML Handler */
@@ -88,19 +89,39 @@ public class RunTimeData {
     /*Initialise HomePage class*/
     HomePage homePage;
     
+    /* Indicates whether this is running in preview mode*/
     private boolean previewMode;
    
-    /** Constructor method */
+    /**
+     * Constructor method for the run time data in standard mode.
+     * 
+     * @param nGroup The group that lesson content is drawn on.
+     * @param nBounds A rectangle describing the groups size.
+     * @param nParent The parent client.
+     */
     public RunTimeData(Group nGroup, Rectangle2D nBounds, LearnEasyClient nParent) {
+        /* Nullify preview parent reference */
         this.previewParent = null;
         
+        /* Set up the run time data in normal mode */
         setup(nGroup, nBounds, nParent, false);
     }
     
-    /** Alternate constructor for preview mode */
-    public RunTimeData(Group nGroup, Rectangle2D nBounds, PreviewWindow preview, Lesson nLesson) {
-        this.previewParent = preview;
+    /**
+     * Alternative constructor for the run time data in preview
+     * mode from within the Teach Easy application.
+     * 
+     * @param nGroup The group that lesson content is drawn on.
+     * @param nBounds A rectangle describing the groups size.
+     * @param nPreviewParent The preview window that instantiates this
+     *                       instance of the run time data.
+     * @param nLesson The lesson object to load in preview mode.
+     */
+    public RunTimeData(Group nGroup, Rectangle2D nBounds, PreviewWindow nPreviewParent, Lesson nLesson) {
+        /* Set the preview window parent reference */
+        this.previewParent = nPreviewParent;
         
+        /* Set up the run time data in preview mode */
         setup(nGroup, nBounds, null, true);
         
         /* Open the lesson */
@@ -112,9 +133,19 @@ public class RunTimeData {
         /* Initialise the progress tracker */
         progressTracker = new ProgressTracker(pageCount);
         
+        /* Re draw the page */
         redraw(group, bounds);
     }
     
+    /**
+     * Sets up the run time data when it is first instantiated. Operation varies based
+     * on mode.
+     * 
+     * @param nGroup The group on which to draw pages.
+     * @param nBounds A rectangle describing the size of the drawing area.
+     * @param nParent The learn easy client that instantiates this run time data.
+     * @param nPreviewMode Indicates whether this is a preview mode run.
+     */
     public void setup(Group nGroup, Rectangle2D nBounds, LearnEasyClient nParent, boolean nPreviewMode) {
         /* Set the class level variables */
         this.group = nGroup;
@@ -129,6 +160,7 @@ public class RunTimeData {
         this.currentPage = 0;
         this.lessonOpen = false;
         
+        /* Initialise the page direction setting */
         pageDirection = false;
 
         /* Instantiate an empty lesson */
@@ -140,25 +172,29 @@ public class RunTimeData {
         /* Instantiate the renderer */
         renderer = new Renderer(group, bounds);
         
+        /* Create the home page object */
         homePage = new HomePage();
+        
+        /* If this is preview mode don't call the preferences code */
         if(!previewMode) {
             homePage.setPreference();
         }
         
+        /* Re-draw the page */        
         redraw(group, bounds);
     }
 
-    /** Get the current page */
+    /** Gets the current page */
     public Page getCurrentPage() {
         return lesson.pages.get(currentPage);
     }
 
-    /** Get the number of current page */
+    /** Gets the number of current page */
     public int getCurrentPageNumber() {
         return currentPage;
     }
 
-    /** Set the current page number */
+    /** Sets the current page number */
     public void setCurrentPage(int nPage) {
         if (nPage >= pageCount) {
             this.currentPage = pageCount - 1;
@@ -169,64 +205,80 @@ public class RunTimeData {
         }
     }
 
-    /** Move to the next page */
+    /** Moves to the next page */
     public void nextPage() {
         if (currentPage < pageCount - 1) {
+            /* Tally up the marks */
             collatePageMarks();
+            
+            /* Track progress */
             progressTracker.setVisitedPages(currentPage);
+            
+            /* Move forward a page */
             currentPage++;
+            
+            /* Redraw the new page */
             redraw(group, bounds);
+            
+            /* Check if this page has been visited before */
             if(progressTracker.pageStatus(currentPage)){
-                /* grey out the available marks */
+                /* Disable the questions */
                 renderer.answerBoxHandler.DisableAllAnswerBoxes();
                 renderer.multipleChoiceHandler.DisableAllMultipleChoices();
             }
         }
     }
 
+    /**
+     * Checks if a page has been completed fully.
+     */
     public boolean checkPageCompleted() {
         /* Check to see if user has attempted all questions */
-        if ((attemptedAllAvailableMarks()) || (hideDialog)) {
+        if (attemptedAllAvailableMarks() || hideDialog) {
+            /* All questions attempted, return true */
             return true;
         } else {
-
             /* Display dialog box */
             displayWarning();
 
+            /* Page not complete, return false */
             return false;
         }
     }
 
- 
-
     /**
      * A method to count the marks on a page and pass them to progress tracking
-     * class
+     * class.
      */
     public void collatePageMarks() {
+        /* Running total */
         int pageMarks = 0;
 
+        /* Add marks from answer boxes and multiple choice */
         pageMarks += renderer.answerBoxHandler.currentPageMarks();
         pageMarks += renderer.multipleChoiceHandler.totalPageMarks();
 
-       // progressTracker.collateMarks(pageMarks);
+        /* Save the marks obtained on this page */
         progressTracker.inidividualPageMarks(pageMarks, currentPage);
     }
 
     /**
      * Informs user that not all questions have been attempted and gives them
      * the option of either continuing with the lesson or completing the
-     * questions
+     * questions.
      */
     private void displayWarning() {
 
         /* Create buttons */
         Button yesButton = new Button("Yes");
-        yesButton.setId("yes");
-        yesButton.setOnAction(new ButtonEventHandler());
-
         Button noButton = new Button("No");
+        
+        /* Set button IDs */
+        yesButton.setId("yes");
         noButton.setId("no");
+        
+        /* Set button action handlers */
+        yesButton.setOnAction(new ButtonEventHandler());
         noButton.setOnAction(new ButtonEventHandler());
 
         /* Check box giving user the option to never see warning again */
@@ -234,7 +286,8 @@ public class RunTimeData {
         dialogCheck.setId("dialog check box");
         dialogCheck.setIndeterminate(false);
         dialogCheck.setSelected(false);
-        /* What to do if the check box is selected */
+        
+        /* If checkbox is selected, disable the warning dialog */
         dialogCheck.selectedProperty().addListener(
                 new ChangeListener<Boolean>() {
                     public void changed(ObservableValue<? extends Boolean> ov,
@@ -243,21 +296,18 @@ public class RunTimeData {
                     }
                 });
 
-        /* Create the dialog box and draw on screen */
+        /* Create the dialog box */
         dialogStage = new Stage();
         dialogStage.initModality(Modality.APPLICATION_MODAL);
-        dialogStage
-                .setScene(new Scene(
-                        VBoxBuilder
-                                .create()
-                                .children(
-                                        new Text(
-                                                "You haven't attempted every mark available on this page yet!"
-                                                        + "\nAre you sure you want to continue to the next page without"
-                                                        + " attempting them? \nYou won't be able to attempt them later."),
-                                        yesButton, noButton, dialogCheck)
-                                .alignment(Pos.CENTER).padding(new Insets(5))
-                                .build()));
+        dialogStage.setScene(new Scene(VBoxBuilder.create().children(
+                new Text("You haven't attempted every mark available on this page yet!" +
+                         "\nAre you sure you want to continue to the next page without" +
+                         " attempting them? \nYou won't be able to attempt them later."),
+                yesButton, noButton, dialogCheck)                         
+                .alignment(Pos.CENTER).padding(new Insets(5))
+                .build()));
+        
+        /* Show the warning dialog box */
         dialogStage.show();
     }
 
@@ -274,21 +324,21 @@ public class RunTimeData {
             String id = button.getId();
 
             /* Act according to id */
-            /* If user wants to continue, go to next page */
             if (id.equals("yes")) {
-            	
+            	/* Yes pressed, close dialog */
                 dialogStage.close();
                 
+                /* Go to next page */
                 if (isPageDirection()) {
                 	nextPage();
                 } else {
                 	prevPage();
                 }
                 
+                /* Update the UI of the application */
                 updateParentUI();
-            }
-            /* If user wants to attempt questions close the dialog */
-            else if (id.equals("no")) {
+            } else if (id.equals("no")) {
+                /* No pressed, close dialog */
                 dialogStage.close();
             }
         }
@@ -296,34 +346,40 @@ public class RunTimeData {
 
     /** Checks if all marks available on the current page have been attempted */
     private boolean attemptedAllAvailableMarks() {
-
-        if ((!renderer.answerBoxHandler.allBoxesDisabled())
-                || (!renderer.multipleChoiceHandler
-                        .allMultipleChoicesDisabled())) {
+        if ((!renderer.answerBoxHandler.allBoxesDisabled()) || 
+            (!renderer.multipleChoiceHandler.allMultipleChoicesDisabled())) {
+            
+            /* Some questions are not disabled, hence marks are available */
             return false;
         } else {
+            /* All questions disabled, no more marks available */
             return true;
         }
     }
 
-    /** Move to the previous page */
+    /** Moves to the previous page */
     public void prevPage() {
-
+        /* Check that there is a previous page to move to */
         if (currentPage > 0) {
+            /* Track progress */
         	progressTracker.setVisitedPages(currentPage);
+        	
+        	/* Move back a page */
             currentPage--;
+            
+            /* Re-draw the page */
             redraw(group, bounds);
 
+            /* Check if this page has been visited before disable*/
             if (progressTracker.pageStatus(currentPage)) {
-                /* grey out the available marks */
+                /* Disable all questions */
                 renderer.answerBoxHandler.DisableAllAnswerBoxes();
                 renderer.multipleChoiceHandler.DisableAllMultipleChoices();
             }
-
         }
     }
 
-    /** Check if there is a next page */
+    /** Checks if there is a next page */
     public boolean isNextPage() {
         if (currentPage < pageCount - 1) {
             return true;
@@ -332,7 +388,7 @@ public class RunTimeData {
         }
     }
 
-    /** Check if there is a previous page */
+    /** Checks if there is a previous page */
     public boolean isPrevPage() {
         if (currentPage > 0) {
             return true;

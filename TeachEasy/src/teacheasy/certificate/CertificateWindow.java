@@ -18,7 +18,6 @@ import java.util.Date;
 
 import teacheasy.data.Lesson;
 
-import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
