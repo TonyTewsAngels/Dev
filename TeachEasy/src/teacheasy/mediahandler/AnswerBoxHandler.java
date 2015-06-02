@@ -114,6 +114,7 @@ public class AnswerBoxHandler {
     }
 
     /**
+     * Gets the width of the answer box
      * 
      * @param answerBoxId Id of the answer box
      * @return Width of the answer box

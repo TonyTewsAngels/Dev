@@ -42,9 +42,9 @@ public class MultipleChoiceHandler {
      * Method to add a multiple choice object to a page
      * 
      * @param xStart X-coordinate of the top left corner of the multiple choice
-     *            object
+     *               object
      * @param yStart Y-coordinate of the top left corner of the multiple choice
-     *            object
+     *               object
      * @param answers List of correct answers
      * @param type Type of multiple choice. E.g. drop down, radio..
      * @param orientation Vertical/horizontal orientation of the object
