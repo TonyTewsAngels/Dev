@@ -13,13 +13,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.web.HTMLEditor;
 import javafx.stage.Stage;
 import teacheasy.data.RichText;
 import teacheasy.data.TextObject;
 import teacheasy.render.RenderUtil;
 import teacheasy.runtime.editor.text.TextEditorWindow;
-import wavemedia.graphic.GraphicType;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -54,9 +52,6 @@ public class TextPropertiesController {
     
     /* The drop down list of fonts */
     private ComboBox<String> fontProperty;
-    
-    /* The button for choosing a new file */
-    private Button fileButton;
     
     /* The button for changing the text */
     private Button editTextButton;
@@ -254,16 +249,7 @@ public class TextPropertiesController {
             Button source = (Button)e.getSource();
             
             /* Check the ID */
-            if(source.getId() == "file") {
-                /* Change the sourcefile */
-                selectedText.setSourceFile(PropertiesUtil.validateFile(selectedText.getSourceFile(), "Text: ", "*.txt"));
-                
-                /* Hard update */
-                update(false);
-                
-                /* Redraw */
-                parent.redraw();
-            } else if(source.getId() == "editText") {
+            if(source.getId() == "editText") {
                 /* Launch a text edit window */
                 TextEditorHandler handler = new TextEditorHandler();
                 new TextEditorWindow(handler, selectedText);

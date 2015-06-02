@@ -1,3 +1,8 @@
+/*
+ * Alistair Jewers
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved. 
+ */
 package teacheasy.runtime.editor;
 
 import java.io.File;
@@ -24,13 +29,13 @@ import wavemedia.graphic.GraphicType;
 /**
  * Includes static methods for adding objects to a given page.
  * 
- * @author Alistair Jewers
+ * @author  Alistair Jewers
  * @version 1.0 09 May 2015
- *
  */
 public class NewObjectController {
+    
     /**
-     * Add an object to a page.
+     * Adds an object to a page.
      * 
      * @param page The page to add the object to.
      * @param type The type of the object to add.
@@ -64,25 +69,30 @@ public class NewObjectController {
     }
     
     /**
-     * Add an image to a page by selecting a file.
+     * Adds an image to a page by selecting a file.
      * 
      * @param page The page to add the image to.
      */
     public static void addImageObject(Page page) {
+        /* Open a file chooser to get the file path */
         FileChooser fc = new FileChooser();
         fc.setTitle("Open Image");
         fc.getExtensionFilters().add(new ExtensionFilter( "Images", "*.png", "*.jpg", "*.jpeg", "*.JPG", "*.gif", "*.bmp"));
         
         File imageFile = fc.showOpenDialog(new Stage());
         
+        /* Return if file path is null */
         if(imageFile == null) {
             return;
         }
         
+        /* Convert path to string */
         String filePath = imageFile.getAbsolutePath();
         
+        /* Create a new image data object */
         ImageObject image = new ImageObject(0.0f, 0.0f, 1.0f, 1.0f, filePath, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f);
         
+        /* Add the image object to the page */
         page.pageObjects.add(image);
     }
     
@@ -92,20 +102,25 @@ public class NewObjectController {
      * @param page The page to add the video to.
      */
     public static void addVideoObject(Page page) {
+        /* Open a file chooser to get the file path */
         FileChooser fc = new FileChooser();
         fc.setTitle("Open Video");
         fc.getExtensionFilters().add(new ExtensionFilter( "Videos", "*.mp4", "*.flv"));
         
         File videoFile = fc.showOpenDialog(new Stage());
         
+        /* Return if file path is null */
         if(videoFile == null) {
             return;
         }
         
+        /* Convert path to string */
         String filePath = videoFile.getAbsolutePath();
         
+        /* Create a new video data object */
         VideoObject video = new VideoObject(0.0f, 0.0f, 1.0f, filePath, false, false);
         
+        /* Add the video object to the page */
         page.pageObjects.add(video);
     }
     
@@ -115,20 +130,25 @@ public class NewObjectController {
      * @param page The page to add the clip to.
      */
     public static void addAudioObject(Page page) {
+        /* Open a file chooser to get the file path */
         FileChooser fc = new FileChooser();
         fc.setTitle("Open Audio");
         fc.getExtensionFilters().add(new ExtensionFilter( "Audio", "*.wav", "*.mp3"));
         
         File audioFile = fc.showOpenDialog(new Stage());
         
+        /* Return if file path is null */
         if(audioFile == null) {
             return;
         }
         
+        /* Convert path to string */
         String filePath = audioFile.getAbsolutePath();
         
+        /* Create a new audio data object */
         AudioObject audio = new AudioObject(0.0f, 0.0f, 0.35f, filePath, 0.0f, true, false, false);
         
+        /* Add the audio object to the page */
         page.pageObjects.add(audio);
     }
     
@@ -138,10 +158,13 @@ public class NewObjectController {
      * @param page The page to add the text box to.
      */
     public static void addTextObject(Page page) {
+        /* Create a new text box */
         TextObject text = new TextObject(0.0f, 0.0f, 0.25f, 0.1f, "Arial", 20, "#ff000000", null, 0.0f, 0.0f);
         
+        /* Add placeholder text */
         text.textFragments.add(new RichText("Enter Text Here", text.getFont(), text.getFontSize(), text.getColor()));
         
+        /* Add the text box to the page */
         page.pageObjects.add(text);
     }
     
@@ -151,10 +174,13 @@ public class NewObjectController {
      * @param page The page to add the multiple choice object to.
      */
     public static void addMultipleChoiceObject(Page page) {
+        /* Create a new multiple choice object */
         MultipleChoiceObject multipleChoice = new MultipleChoiceObject(0.0f, 0.0f, Orientation.VERTICAL, MultiChoiceType.CHECKBOX, 1, true);
         
+        /* Add placeholder answer */
         multipleChoice.addAnswer(new Answer("New Answer", true));
         
+        /* Add the multiple choice object to the page */
         page.pageObjects.add(multipleChoice);
     }
     
@@ -164,8 +190,10 @@ public class NewObjectController {
      * @param page The page to add the answer box to.
      */
     public static void addAnswerBoxObject(Page page) {
+        /* Create a new answer box data object */
         AnswerBoxObject answerBox = new AnswerBoxObject(0.0f, 0.0f, 12, 1, true, false, 0.0f, 0.0f, "Answer 1", "Answer 2");
         
+        /* Add it to the page */
         page.pageObjects.add(answerBox);
     }
     
@@ -175,8 +203,10 @@ public class NewObjectController {
      * @param page The page to add the graphic to.
      */
     public static void addGraphicObject(Page page) {
+        /* Create a new graphic data object */
         GraphicObject graphic = new GraphicObject(GraphicType.OVAL, 0.0f, 0.0f, 0.1f, 0.1f, 0.0f, "#ff000000", true, "#ff000000", 0.5f, false, 0.0f, 0.0f);
         
+        /* Add it to the page */
         page.pageObjects.add(graphic);
     }
     
@@ -220,7 +250,8 @@ public class NewObjectController {
      * @param page The page to copy the image onto.
      * @param image The image object
      */
-    public static void copyImageObject(Page page, ImageObject image) {        
+    public static void copyImageObject(Page page, ImageObject image) {
+        /* Copy properties of the source image data object */
         ImageObject newImage = new ImageObject(image.getXStart(),
                                                image.getYStart(),
                                                image.getXEnd(),
@@ -232,6 +263,7 @@ public class NewObjectController {
                                                image.getStartTime(),
                                                image.getDuration());
         
+        /* Add copy to page */
         page.pageObjects.add(newImage);
     }
     
@@ -241,7 +273,8 @@ public class NewObjectController {
      * @param page The page to copy the video onto.
      * @param video The video to copy.
      */
-    public static void copyVideoObject(Page page, VideoObject video) {        
+    public static void copyVideoObject(Page page, VideoObject video) {     
+        /* Copy properties of the source video data object */
         VideoObject newVideo = new VideoObject(video.getXStart(),
                                                video.getYStart(),
                                                video.getXEnd(),
@@ -249,6 +282,7 @@ public class NewObjectController {
                                                video.isAutoPlay(),
                                                video.isLoop());
         
+        /* Add copy to page */
         page.pageObjects.add(newVideo);
     }
     
@@ -259,6 +293,7 @@ public class NewObjectController {
      * @param audio The audio object to copy.
      */
     public static void copyAudioObject(Page page, AudioObject audio) {
+        /* Copy properties of the source audio data object */
         AudioObject newAudio = new AudioObject(audio.getXStart(),
                                                audio.getYStart(),
                                                audio.getXEnd(),
@@ -268,6 +303,7 @@ public class NewObjectController {
                                                audio.isAutoPlay(),
                                                audio.isLoop());
         
+        /* Add copy to page */
         page.pageObjects.add(newAudio);
     }
     
@@ -278,6 +314,7 @@ public class NewObjectController {
      * @text The text box object to copy.
      */
     public static void copyTextObject(Page page, TextObject text) {
+        /* Copy properties of the source text box data object */
         TextObject newText = new TextObject(text.getXStart(),
                                             text.getYStart(),
                                             text.getXEnd(),
@@ -289,6 +326,7 @@ public class NewObjectController {
                                             text.getStartTime(),
                                             text.getDuration());
         
+        /* Copy the rich text fragments across */
         for(int i = 0; i < text.textFragments.size(); i++) {
             RichText frag = text.textFragments.get(i);
             
@@ -299,6 +337,7 @@ public class NewObjectController {
                                                    frag.getSettings().toArray(new String[frag.getSettings().size()])));
         }
         
+        /* Add copy to page */
         page.pageObjects.add(newText);
     }
     
@@ -309,6 +348,7 @@ public class NewObjectController {
      * @param mchoice The multiple choice object to copy.
      */
     public static void copyMultipleChoiceObject(Page page, MultipleChoiceObject mChoice) {
+        /* Copy properties of the source multiple choice data object */
         MultipleChoiceObject newMChoice = new MultipleChoiceObject(mChoice.getXStart(),
                                                                    mChoice.getYStart(),
                                                                    mChoice.getOrientation(),
@@ -316,11 +356,13 @@ public class NewObjectController {
                                                                    mChoice.getMarks(),
                                                                    mChoice.isRetry());
         
+        /* Copy all the answers across */
         for(int i = 0; i < mChoice.getAnswers().size(); i++) {
             Answer answer = mChoice.getAnswers().get(i);
             newMChoice.addAnswer(new Answer(answer.getText(), answer.isCorrect()));
         }
         
+        /* Add copy to page */
         page.pageObjects.add(newMChoice);
     }
     
@@ -331,6 +373,7 @@ public class NewObjectController {
      * @param answerBox The answerbox to copy.
      */
     public static void copyAnswerBoxObject(Page page, AnswerBoxObject answerBox) {
+        /* Copy properties of the source answer box data object */
         AnswerBoxObject newAnswerBox = new AnswerBoxObject(answerBox.getXStart(),
                                                            answerBox.getYStart(),
                                                            answerBox.getCharacterLimit(),
@@ -340,6 +383,7 @@ public class NewObjectController {
                                                            answerBox.getUpperBound(),
                                                            answerBox.getLowerBound());
         
+        /* Add copy to page */
         page.pageObjects.add(newAnswerBox);
     }
     
@@ -350,6 +394,7 @@ public class NewObjectController {
      * @param graphic The grpahic to copy.
      */
     public static void copyGraphicObject(Page page, GraphicObject graphic) {
+        /* Copy properties of the source graphic data object */
         GraphicObject newGraphic = new GraphicObject(graphic.getGraphicType(),
                                                      graphic.getXStart(),
                                                      graphic.getYStart(),
@@ -364,6 +409,7 @@ public class NewObjectController {
                                                      graphic.getStartTime(),
                                                      graphic.getDuration());
         
+        /* Add copy to page */
         page.pageObjects.add(newGraphic);
     }
 }

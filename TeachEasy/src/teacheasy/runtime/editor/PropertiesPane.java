@@ -1,3 +1,8 @@
+/*
+ * Alistair Jewers
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved. 
+ */
 package teacheasy.runtime.editor;
 
 import javafx.event.ActionEvent;
@@ -23,10 +28,11 @@ import teacheasy.runtime.EditorRunTimeData;
  * allows their modification. Contains classes to encapsulate editor
  * functionality for specific object types.
  * 
- * @author Alistair Jewers
+ * @author  Alistair Jewers
  * @version 1.0 Apr 21 2015
  */
 public class PropertiesPane {
+    
     /* A reference to the editor runtime instance that contains this properties pane */
     private EditorRunTimeData editorRuntime;
     
@@ -46,6 +52,7 @@ public class PropertiesPane {
     /* UI Element to change the page background color */
     private ColorPicker backgroundColorPicker;
     
+    /* Properties controllers for different object types */
     private TextPropertiesController textPropertiesController;
     private ImagePropertiesController imagePropertiesController;
     private VideoPropertiesController videoPropertiesController;
@@ -54,9 +61,8 @@ public class PropertiesPane {
     private AnswerBoxPropertiesController answerBoxPropertiesController;
     private MultipleChoicePropertiesController multipleChoicePropertiesController;
     
+    /* Container for the current properties controller fields */
     private VBox currentController;
-    
-    public boolean redrawBlock = false;
     
     /**
      * Constructor.
@@ -72,6 +78,7 @@ public class PropertiesPane {
         this.pane = nPane;
         this.editorRuntime = parent;
         
+        /* Instantiate the controllers */
         textPropertiesController = new TextPropertiesController(this);
         imagePropertiesController = new ImagePropertiesController(this);
         videoPropertiesController = new VideoPropertiesController(this);
@@ -80,6 +87,7 @@ public class PropertiesPane {
         answerBoxPropertiesController = new AnswerBoxPropertiesController(this);
         multipleChoicePropertiesController = new MultipleChoicePropertiesController(this);
         
+        /* Instantiate the container */
         currentController = new VBox();
         
         /* Initialise a blank page title label */
@@ -115,11 +123,14 @@ public class PropertiesPane {
      * @param nSelectedObject The currently selected object on the page. Can be null if no object is selected.
      */
     public void update(Page nSelectedPage, PageObject nSelectedObject) {
+        /* Set the selection references */
         this.selectedPage = nSelectedPage;
         this.selectedObject = nSelectedObject;
         
+        /* Remove the current controller from the pane */
         pane.getChildren().remove(currentController);
         
+        /* Switch the type of the newly selected object and add the relevant controller */
         if(selectedObject != null) {
             switch(selectedObject.getType()) {
                 case TEXT:
@@ -155,11 +166,14 @@ public class PropertiesPane {
                     break;
             }
         } else {
+            /* Otherwise add an empty container */
             currentController = new VBox();
         }
 
+        /* Add the container to the pane */
         pane.getChildren().add(currentController);
         
+        /* Update the pane */
         update();
     }
     
@@ -196,6 +210,7 @@ public class PropertiesPane {
             backgroundColorPicker.setValue(RenderUtil.colorFromString(selectedPage.getPageColour()));
         }
         
+        /* Fire an event to update the color chooser */
         backgroundColorPicker.fireEvent(new ActionEvent(backgroundColorPicker, backgroundColorPicker));
     }
     
@@ -218,10 +233,11 @@ public class PropertiesPane {
         return selectedObject;
     }
     
+    /**
+     * Redraw the page
+     */
     public void redraw() {
-        if(!redrawBlock) { 
-           editorRuntime.redraw(); 
-        }
+       editorRuntime.redraw(); 
     }
     
     /**

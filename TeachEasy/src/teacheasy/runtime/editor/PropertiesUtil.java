@@ -1,3 +1,8 @@
+/*
+ * Alistair Jewers
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved. 
+ */
 package teacheasy.runtime.editor;
 
 import java.io.File;
@@ -19,7 +24,7 @@ import javafx.stage.Stage;
  * Utility class to hold functions related to properties
  * initialisation and modification in the editor.
  * 
- * @author Alistair Jewers
+ * @author  Alistair Jewers
  * @version 1.0 21 Apr 2015
  */
 public class PropertiesUtil {
@@ -117,7 +122,8 @@ public class PropertiesUtil {
     }
     
     /**
-     * 
+     * Adds a color picker to a property pane controller
+     * to allow a color property to be changed.
      * 
      * @param id The ID to set on the color picker.
      * @param text The text to display next to the color picker.
@@ -146,6 +152,18 @@ public class PropertiesUtil {
         return picker;
     }
     
+    /**
+     * Adds a combo box picker to a property pane controller
+     * to allow a typed property to be changed.
+     * 
+     * @param id The ID to set on the combo box.
+     * @param text The text to display next to the combo box.
+     * @param comboBox The combo box to instantiate.
+     * @param container The container to place the property in.
+     * @param selectionHandler The handler for when the combo box is changed.
+     * 
+     * @return The newly constructed combo box.
+     */
     public static ComboBox<String> addSelectionField(String id, String text, ComboBox<String> comboBox, VBox container, EventHandler<ActionEvent> selectionHandler) {
         /* Create a row to hold the components*/
         HBox newRow = new HBox();

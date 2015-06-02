@@ -1,3 +1,8 @@
+/*
+ * Alistair Jewers
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved. 
+ */
 package teacheasy.runtime.editor;
 
 import teacheasy.data.Lesson;
@@ -19,7 +24,14 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * Creates a window to change lesson information.
+ * 
+ * @author  Alistair Jewers
+ * @version 1.0 Apr 21 2015
+ */
 public class LessonInfoWindow {
+    /* JavaFX components */
     private Stage stage;
     private Scene scene;
     private VBox box;
@@ -47,13 +59,21 @@ public class LessonInfoWindow {
     private Button cancelBtn;
     private HBox buttonBox;
     
+    /* Lesson data */
     private LessonInfo info;
     private LessonGradeSettings gradeSettings;
     
+    /* The client that created the window */
     private TeachEasyClient parent;
     
+    /**
+     * Constructor to set the references and build the window.
+     * 
+     * @param lesson The lesson to edit.
+     * @param nParent The client that created the window.
+     */
     public LessonInfoWindow(Lesson lesson, TeachEasyClient nParent) {
-        /* Initialise the info reference */
+        /* Initialise the references */
         info = lesson.lessonInfo;
         info.setTotalMarks(lesson.getTotalMarks());
         gradeSettings = lesson.gradeSettings;
@@ -138,16 +158,23 @@ public class LessonInfoWindow {
         stage.show();
     }
     
+    /**
+     * Update the lesson info with the info entered
+     */
     public void updateInfo() {
+        /* Get the entered strings */
         String title = titleField.getText();
         String author = authorField.getText();
         String version = versionField.getText();
         String comment = description.getText();
         String passMarkStr = passMarkField.getText();
-        int passMark = 0;
         String passMessage = passMessageField.getText();
         String failMessage = failMessageField.getText();
-
+        
+        /* New pass mark variable */
+        int passMark = 0;
+        
+        /* Limit the strings */
         if(title.length() > 20) {
             title = new String(title.substring(0, 20));
         }
@@ -172,6 +199,7 @@ public class LessonInfoWindow {
             failMessage = new String(failMessage.substring(0, 20));
         }
         
+        /* Try and parse an integer pass mark */
         try{
             passMark = Integer.parseInt(passMarkStr);
         } catch(NumberFormatException nfe) {
@@ -182,6 +210,7 @@ public class LessonInfoWindow {
             passMark = info.getTotalMarks();
         }
         
+        /* Set the new info */
         info.setLessonName(title);
         info.setAuthor(author);
         info.setVersion(version);
@@ -191,18 +220,34 @@ public class LessonInfoWindow {
         gradeSettings.setFailMessage(failMessage);
     }
     
+    /**
+     * Handles button press events.
+     * 
+     * @author Alistair Jewers
+     */
     public class ButtonHandler implements EventHandler<ActionEvent> {
+        /**
+         * Overrides the action evnet handling method.
+         */
         @Override
         public void handle(ActionEvent e) {
+            /* Get the source*/
             Button source = (Button)e.getSource();
             
+            /* Check the ID */
             switch(source.getId()) {
                 case "cancel":
+                    /* Make no changes and close the stage */
                     stage.close();
                     break;
                 case "done":
+                    /* Update the info with the new entered data */
                     updateInfo();                 
+                    
+                    /* Close the stage */
                     stage.close();
+                    
+                    /* Update the application UI */
                     parent.updateUI();
                     break;
             }
