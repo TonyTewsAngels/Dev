@@ -330,7 +330,8 @@ public class HomePage {
                      * in the list. The statement first checks the number of already stored
                      * lessons and pushes the new one on top of the list
                      *  */
-                    if(!preference.get(RecentlyOpened4,"doesn't exist!").equals("doesn't exist!")){
+                    if(!preference.get(RecentlyOpened4,"doesn't exist!").
+                       equals("doesn't exist!")){
                         preference.put(RecentlyOpened5, preference.get(
                             RecentlyOpened4, "doesn't exist!"));
                         preference.put(RecentlyOpened4, preference.get(
@@ -340,7 +341,8 @@ public class HomePage {
                         preference.put(RecentlyOpened2, preference.get(
                                 RecentlyOpened1, "doesn't exist!"));
                         preference.put(RecentlyOpened1, pathToLesson);
-                    } else if(!preference.get(RecentlyOpened3,"doesn't exist!").equals("doesn't exist!")){
+                    } else if(!preference.get(RecentlyOpened3,"doesn't exist!").
+                              equals("doesn't exist!")){
                         preference.put(RecentlyOpened4, preference.get(
                                     RecentlyOpened3, "doesn't exist!"));
                         preference.put(RecentlyOpened3, preference.get(
@@ -348,7 +350,8 @@ public class HomePage {
                         preference.put(RecentlyOpened2, preference.get(
                                     RecentlyOpened1, "doesn't exist!"));
                         preference.put(RecentlyOpened1, pathToLesson);
-                    } else if (!preference.get(RecentlyOpened2,"doesn't exist!").equals("doesn't exist!")){
+                    } else if (!preference.get(RecentlyOpened2,"doesn't exist!").
+                               equals("doesn't exist!")){
                         preference.put(RecentlyOpened3, preference.get(
                                 RecentlyOpened2, "doesn't exist!"));
                         preference.put(RecentlyOpened2, preference.get(
