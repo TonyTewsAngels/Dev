@@ -221,7 +221,153 @@ ul.alert-dropdown {
 .panel-yellow > a {
     color: #f0ad4e;
 }
-
 .panel-yellow > a:hover {
-    color: #df8a13;
+    color: #cc6d16;
+}
+
+.panel-orange > a:hover {
+    color: #cc6d16;
+}
+.panel-orange {
+    border-color: #ff881c;
+}
+
+.panel-orange > .panel-heading {
+    border-color: #ff881c;
+    color: #fff;
+    background-color: #ff881c;
+}
+
+.panel-orange > a {
+    color: #ff881c;
+}
+
+.panel-pink > a:hover {
+    color: #CC56BA;
+}
+.panel-pink {
+    border-color: #ff6ce8;
+}
+
+.panel-pink > .panel-heading {
+    border-color: #ff6ce8;
+    color: #fff;
+    background-color: #ff6ce8;
+}
+
+.panel-pink > a {
+    color: #ff6ce8;
+}
+
+.panel-cyan > a:hover {
+    color: #55b1cc;
+}
+.panel-cyan {
+    border-color: #6bddff;
+}
+
+.panel-cyan > .panel-heading {
+    border-color: #6bddff;
+    color: #fff;
+    background-color: #6bddff;
+}
+
+.panel-cyan > a {
+    color: #6bddff;
+}
+.panel-black > a:hover {
+    color: #A1A1A1;
+}
+.panel-black {
+    border-color: #000000;
+}
+
+.panel-black > .panel-heading {
+    border-color: #000000;
+    color: #fff;
+    background-color: #000000;
+}
+
+.panel-black > a {
+    color: #000000;
+}
+.panel-lgreen > a:hover {
+    color: #6A7F3B;
+}
+.panel-lgreen {
+    border-color: #AACC5E;
+}
+
+.panel-lgreen > .panel-heading {
+    border-color: #AACC5E;
+    color: #fff;
+    background-color: #AACC5E;
+}
+
+.panel-lgreen > a {
+    color: #AACC5E;
+}
+.panel-purple > a:hover {
+    color: #8753CC;
+}
+.panel-purple{
+    border-color: #A968FF;
+}
+
+.panel-purple > .panel-heading {
+    border-color: #A968FF;
+    color: #fff;
+    background-color: #A968FF;
+}
+
+.panel-purple > a {
+    color: #A968FF;
+}
+.panel-red2 > a:hover {
+    color: #CC6261;
+}
+.panel-red2{
+    border-color: #FF7B79;
+}
+
+.panel-red2 > .panel-heading {
+    border-color: #FF7B79;
+    color: #fff;
+    background-color: #FF7B79;
+}
+
+.panel-red2 > a {
+    color: #FF7B79;
+}
+.panel-lblue > a:hover {
+    color: #8C99CC;
+}
+.panel-lblue{
+    border-color: #AFBFFF;
+}
+
+.panel-lblue > .panel-heading {
+    border-color: #AFBFFF;
+    color: #fff;
+    background-color: #AFBFFF;
+}
+
+.panel-lblue > a {
+    color: #AFBFFF;
+}
+.panel-white > a:hover {
+    color: #CCCCCC;
+}
+.panel-white{
+    border-color: #D7D7D7;
+}
+
+.panel-white > .panel-heading {
+    border-color: #D7D7D7;
+    color: #fff;
+    background-color: #D7D7D7;
+}
+
+.panel-white > a {
+    color: #D7D7D7;
 }
