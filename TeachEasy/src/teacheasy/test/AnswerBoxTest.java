@@ -1,5 +1,8 @@
 /*
- * Copyright (C) 2015 Sofia Software Solutions
+ * Sam Raeburn
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
+ * 
  */
 package teacheasy.test;
 
@@ -23,12 +26,12 @@ public class AnswerBoxTest extends Application {
 
 	public void start(Stage stage) {
 
-		/* Create a window to display answer box in */
+		/** Create a window to display answer box in */
 		Group group = new Group();
 		Scene scene = new Scene(group, 800, 800);
 		scene.setFill(Color.LIGHTBLUE);
 		
-		/* Create answer box*/
+		/** Create answer box*/
 		answerBoxHandler = new AnswerBoxHandler(group);
 		//answerBoxHandler.createAnswerBox(0, 0, 10, true,
 		//		"cat", 5, true);

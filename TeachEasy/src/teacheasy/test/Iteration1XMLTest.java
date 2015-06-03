@@ -2,6 +2,7 @@
  * Sam Raeburn
  * 
  * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
+ * 
  */
 package teacheasy.test;
 
@@ -41,12 +42,12 @@ public class Iteration1XMLTest {
 		writer = new XMLWriter();
 	}
 	
-	//The following tests are for the parser
+	/*/The following tests are for the parser*/
 
 	/** Parsing file that doesn't exist returns error */
 	@Test
 	public void checkParserWithNonexistentXML() {
-		//Parse the XML file
+		/*Check that there IS an error in the list*/
 		ArrayList<XMLNotification> errorList = parser.parse("iDontExist.xml");
 		System.out.println("non existent file test:" + errorList);
 		assertTrue(errorList.size() != 0);
@@ -73,7 +74,7 @@ public class Iteration1XMLTest {
 		ArrayList<XMLNotification> errorList;
 		errorList = parser.parse("testXML/missingImageLocation.xml");
 		System.out.println("image location test:" + errorList);
-		//Check that there IS an error in the list
+		/*Check that there IS an error in the list*/
 		assertTrue(errorList.size() != 0);
 	}
 	
@@ -151,53 +152,53 @@ public class Iteration1XMLTest {
 			switch (pageObject.getType()) {
 			case TEXT:
 				TextObject text = (TextObject)pageObject;
-				//Check positions
+				/*Check positions*/
 				assertTrue(text.getXStart() == 0.6f);
 				assertTrue(text.getYStart() == 0.2f);
-				//Check font 
+				/*Check font */
 				assertTrue(text.getFont().equals("arial"));
 				break;
 			case IMAGE:
 				ImageObject image = (ImageObject)pageObject;
-				//Check positions
+				/*/Check positions*/
 				assertTrue(image.getXStart() == 0.5f);
 				assertTrue(image.getYStart() == 0.5f);
-				//Check source file
+				/*Check source file*/
 				assertTrue(image.getSourcefile().equals("C:\\Users\\sadjlsd\\imagefile.jpg"));
-				//Check rotation
+				/*Check rotation*/
 				assertTrue(image.getRotation() == 0.0f);
 				break;
 			case AUDIO:
 				AudioObject audio = (AudioObject)pageObject;
-				//Check positions
+				/*Check positions*/
 				assertTrue(audio.getXStart() == 0.5f);
 				assertTrue(audio.getYStart() == 0.1f);
-				//Check source file
+				/*Check source file*/
 				assertTrue(audio.getSourcefile().equals("gavel.wav"));
 				break;
 			case VIDEO:
 				VideoObject video = (VideoObject)pageObject;
-				//Check positions
+				/*Check positions*/
 				assertTrue(video.getXStart() == 0.1f);
 				assertTrue(video.getYStart() == 0.1f);
-				//Check source file and screenshot
+				///*Check source file and screenshot*/
 				assertTrue(video.getSourcefile().equals("avengers.mkv"));
 				break;
 			case GRAPHIC:
 				GraphicObject graphics = (GraphicObject)pageObject;
-				//Check positions
+				/*Check positions*/
 				assertTrue(graphics.getXStart() == 0.5f);
 				assertTrue(graphics.getXEnd() == 0.7f);
 				assertTrue(graphics.getYStart() == 0.5f);
 				assertTrue(graphics.getYEnd() == 0.7f);
-				//Check other parameters
+				/*Check other parameters*/
 				assertTrue(graphics.getGraphicType() == GraphicType.OVAL);
 				assertTrue(graphics.getOutlineThickness() == 0.5f);
 				assertTrue(graphics.getGraphicColour().equals("#11223344"));
 				break;
 			case ANSWER_BOX:
 				AnswerBoxObject answerbox = (AnswerBoxObject)pageObject;
-				//Check positions
+				/*Check positions*/
 				assertTrue(answerbox.getXStart() == 0.1f);
 				assertTrue(answerbox.getYStart() == 0.1f);
 				//assertTrue(answerbox.getCorrectAnswers().equals("springs~spring"));
@@ -206,7 +207,7 @@ public class Iteration1XMLTest {
 				break;
 			case MULTIPLE_CHOICE:
 				MultipleChoiceObject multipleChoice = (MultipleChoiceObject)pageObject;
-				//Check positions
+				//*Check positions*/
 				assertTrue(multipleChoice.getXStart() == 0.2f);
 				assertTrue(multipleChoice.getYStart() == 0.2f);
 				assertTrue(multipleChoice.getMultiChoiceType() == MultiChoiceType.CHECKBOX);
@@ -236,7 +237,7 @@ public class Iteration1XMLTest {
 			switch (pageObject.getType()) {
 			case TEXT:
 				TextObject text = (TextObject)pageObject;
-				//Check defaults have been correctly recognised
+				/*Check defaults have been correctly recognised*/
 				assertTrue(text.getFont().equals("arial"));
 				assertTrue(text.getFontSize() == 24);
 				assertTrue(text.getColor().equals("#ffffffff"));

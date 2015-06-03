@@ -1,3 +1,9 @@
+/*
+ * Sam Raeburn
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
+ * 
+ */
 package teacheasy.test;
 
 import static org.junit.Assert.*;
@@ -40,7 +46,7 @@ public class Iteration3XMLTest {
 		writer = new XMLWriter();
 	}
 
-	/* This tests parsing a non existent XML file */
+	/** This tests parsing a non existent XML file */
 	@Test
 	public void nonExistentXMLFile() {
 		ArrayList<XMLNotification> errorList = parser.parse("nonExistentXML.xml");
@@ -49,15 +55,15 @@ public class Iteration3XMLTest {
 		}
 	}
 	
-	/* This tests parsing a file which does not contain all possible types of media */
+	/** This tests parsing a file which does not contain all possible types of media */
 	@Test
 	public void notAllMedia() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/testXML.xml");
 		assertTrue(errorList.size() == 0);
 	}
 	
-	/* This test parsing a file which contains incorrectly formatted colour */
-	/* An incorrectly formatted background colour should be set to the default value */
+	/** This test parsing a file which contains incorrectly formatted colour
+	 *  An incorrectly formatted background colour should be set to the default value 
 	/* Any other incorrectly formatted colour should cause an error*/
 	@Test
 	public void badBackgroundColour() {
@@ -67,7 +73,7 @@ public class Iteration3XMLTest {
 		}
 	}
 	
-	/* Parse a file with a text object but no information about font font size or font colour */
+	/** Parse a file with a text object but no information about font font size or font colour */
 	@Test
 	public void badTextData() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/badTextData.xml");
@@ -76,7 +82,7 @@ public class Iteration3XMLTest {
 		}	
 	}
 	
-	/* Check that the data specified in an XML file is correctly stored */
+	/** Check that the data specified in an XML file is correctly stored */
 	@Test
 	public void checkDataStored() {
 		parser.parse("testXML/checkDataStored.xml");
@@ -126,7 +132,7 @@ public class Iteration3XMLTest {
 		}
 	}
 	
-	/* Check that default settings are stored in the correct field */
+	/** Check that default settings are stored in the correct field */
 	@Test
 	public void checkDefaults() {
 		parser.parse("testXML/checkDataStored.xml");
@@ -140,7 +146,7 @@ public class Iteration3XMLTest {
 		assertTrue(text.getColor().equals("#ff000000"));
 	}
 	
-	/* Check that the writer creates an XML file */
+	/** Check that the writer creates an XML file */
 	@Test
 	public void checkWriterCreatesXML() {
 		parser.parse("testXML/testXML.xml");
@@ -152,7 +158,7 @@ public class Iteration3XMLTest {
 		assertFalse(file.exists());
 	}
 	
-	/*
+	/**
 	 * Check to see that the XML file created by the writer contains
 	 * the correct data, since it has already been shown that the parser
 	 * behaves as wished this can simply be done using the parser
@@ -168,7 +174,7 @@ public class Iteration3XMLTest {
 		assertTrue(errorList.size() == 0);
 	}
 	
-	/* Parse a file with no document info */
+	/** Parse a file with no document info 
 	/* Should add an error */
 	@Test
 	public void noDocumentInfo() {
@@ -184,7 +190,7 @@ public class Iteration3XMLTest {
 		assertTrue(errorFound);
 	}
 	
-	/* Parse a file which does not include default info */
+	/** Parse a file which does not include default info */
 	@Test
 	public void noDefaultInfo() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/noDeafaultInfo.xml");
@@ -199,7 +205,7 @@ public class Iteration3XMLTest {
 		assertTrue(errorFound);
 	}
 	
-	/* Parse a file which contains grade settings but no information about boundaries */
+	/** Parse a file which contains grade settings but no information about boundaries */
 	@Test
 	public void noBoundaryInfo() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/noBoundaryInfo.xml");
@@ -214,7 +220,7 @@ public class Iteration3XMLTest {
 		assertTrue(errorFound);
 	}
 	
-	/* Parse a file which does not contain grade setting information */
+	/** Parse a file which does not contain grade setting information */
 	@Test
 	public void noGradeSetting() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/noGradeSettingInfo.xml");
@@ -247,8 +253,8 @@ public class Iteration3XMLTest {
 		assertTrue(errorFound);
 	}
 	
-	/* Attempt parsing a file which contains text but no info about rich text */
-	/* No error or warning should be added to the error list */
+	/** Attempt parsing a file which contains text but no info about rich text 
+	* No error or warning should be added to the error list */
 	@Test
 	public void noRichText() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/noRichText.xml");
@@ -271,8 +277,8 @@ public class Iteration3XMLTest {
 		assertTrue(errorFound);
 	}
 	
-	/* Attempt to parse a file which contains image but no sourcefile */
-	/* Error should be added to the list */
+	/** Attempt to parse a file which contains image but no sourcefile *
+	* Error should be added to the list */
 	@Test
 	public void imageNoSourcefile() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/imageNoSourcefile.xml");
@@ -286,8 +292,8 @@ public class Iteration3XMLTest {
 		assertTrue(errorFound);
 	}
 	
-	/* Attempt to parse a file which contains image with badly formatted sourcefile */
-	/* no error should be added to the list */
+	/** Attempt to parse a file which contains image with badly formatted sourcefile 
+	* no error should be added to the list */
 	@Test
 	public void imageBadSourcefile() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/imageBadSourcefile.xml");
@@ -303,9 +309,9 @@ public class Iteration3XMLTest {
 		assertTrue(!errorFound);
 	}
 	
-	/* Attempt to parse a file which contains an image with badly formatted */
-	/* online hosted source file */
-	/* no error should be added to the list */
+	/** Attempt to parse a file which contains an image with badly formatted 
+	* online hosted source file 
+	* no error should be added to the list */
 	@Test
 	public void imageBadOnlineSourcefile() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/imageBadOnlineSourcefile.xml");
@@ -321,9 +327,9 @@ public class Iteration3XMLTest {
 		assertTrue(!errorFound);
 	}
 	
-	/* Attempt to parse a file with an image but no scale information */
-	/* Parser should default this value to 1 */
-	/* also no rotation information - default to 0*/
+	/** Attempt to parse a file with an image but no scale information 
+	* Parser should default this value to 1 
+	* also no rotation information - default to 0*/
 	@Test
 	public void imageNoScale() {
 		parser.parse("testXML/imageNosScale.xml");
@@ -337,8 +343,8 @@ public class Iteration3XMLTest {
 		assertTrue(image.getRotation() == 0);
 	}
 
-	/* Attempt to parse a file with an image but incorrectly formatted info for */
-	/* position, error should be added to list */
+	/** Attempt to parse a file with an image but incorrectly formatted info for 
+	 *position, error should be added to list */
 	@Test
 	public void imageBadPosition() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/imageBadPosition.xml");
@@ -352,8 +358,8 @@ public class Iteration3XMLTest {
 		assertTrue(errorFound);
 	}
 	
-	/* Attempt to parse a file with audio with no information about position */
-	/* The parser should add an error to the list */
+	/** Attempt to parse a file with audio with no information about position 
+	* The parser should add an error to the list */
 	@Test
 	public void audioNoPosition() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/audioNoPosition.xml");
@@ -367,9 +373,9 @@ public class Iteration3XMLTest {
 		assertTrue(errorFound);
 	}
 	
-	/* Attempt parsing a file with audio which does not state whether */
-	/* to hide or show the progress bar */
-	/* The parser should hide the progress bar by default */
+	/** Attempt parsing a file with audio which does not state whether *
+	* to hide or show the progress bar 
+	* The parser should hide the progress bar by default */
 	@Test
 	public void audioNoProgress() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/audioNoProgress.xml");
@@ -383,8 +389,8 @@ public class Iteration3XMLTest {
 
 	}
 	
-	/* Attempt parsing a file which contains video with no position info */
-	/* Error should be added to the list */
+	/** Attempt parsing a file which contains video with no position info 
+	* Error should be added to the list */
 	@Test
 	public void videoNoPosition() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/videoNoPosition.xml");
@@ -398,8 +404,8 @@ public class Iteration3XMLTest {
 		assertTrue(errorFound);
 	}
 	
-	/* Attempt parsing a file which contains a video with no screenshot info */
-	/* Warning should be added to list */
+	/** Attempt parsing a file which contains a video with no screenshot info 
+	* Warning should be added to list */
 	@Test
 	public void videoNoScreenshot() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/videoNoScreenshot.xml");
@@ -407,8 +413,8 @@ public class Iteration3XMLTest {
 		System.out.println("Video No Position:" + errorList);
 	}
 	
-	/* Attempt parsing a file with graphics object but no information about type */
-	/* error should be added */
+	/** Attempt parsing a file with graphics object but no information about type 
+	* error should be added */
 	@Test
 	public void graphicsNoType() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/graphicsNoType.xml");
@@ -422,8 +428,8 @@ public class Iteration3XMLTest {
 		assertTrue(errorFound);
 	}
 	
-	/* Attempt parsing a file with graphics object but no information about solidness */
-	/* error should be added to the list */
+	/** Attempt parsing a file with graphics object but no information about solidness 
+	* error should be added to the list */
 	@Test
 	public void graphicsNoSolid() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/graphicsNoSolid.xml");
@@ -437,8 +443,8 @@ public class Iteration3XMLTest {
 		assertTrue(errorFound);
 	}
 	
-	/* Attempt to parse a file with graphics object but no information about colour */
-	/* error should be added to the list */
+	/** Attempt to parse a file with graphics object but no information about colour 
+	* error should be added to the list */
 	@Test
 	public void graphicsNoColour() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/graphicsNoColour.xml");
@@ -452,8 +458,8 @@ public class Iteration3XMLTest {
 		assertTrue(errorFound);
 	}
 	
-	/* Attempt to parse a file with graphics object but no information about position */
-	/* error should be added to the list */
+	/** Attempt to parse a file with graphics object but no information about position 
+	* error should be added to the list */
 	@Test
 	public void graphicsNoPosition() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/graphicsNoPosition.xml");
@@ -467,8 +473,8 @@ public class Iteration3XMLTest {
 		assertTrue(errorFound);	
 	}
 	
-	/* attempt to parse a file with graphics object with shading but no shading colour */
-	/* error should be added to the list */
+	/** attempt to parse a file with graphics object with shading but no shading colour 
+	* error should be added to the list */
 	@Test
 	public void graphicsNoShadingColour() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/graphicsNoShadingColour.xml");
@@ -482,9 +488,9 @@ public class Iteration3XMLTest {
 		assertTrue(errorFound);
 	}
 	
-	/* Attempt to parse a file with a graphics object but no information about */
-	/* rotation, line thickness or line colour */
-	/* should be set to defaults */
+	/** Attempt to parse a file with a graphics object but no information about 
+	* rotation, line thickness or line colour 
+	* should be set to defaults */
 	@Test
 	public void graphicsDefaults() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/graphicsDefaults.xml");
@@ -496,8 +502,8 @@ public class Iteration3XMLTest {
 		assertTrue(graphic.getRotation() == 0);
 	}
 	
-	/* Attempt to parse a file with an answer box but no positions */
-	/* error should be added */
+	/** Attempt to parse a file with an answer box but no positions 
+	* error should be added */
 	@Test
 	public void answerNoPosition() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/answerNoPosition.xml");
@@ -511,8 +517,8 @@ public class Iteration3XMLTest {
 		assertTrue(errorFound);
 	}
 	
-	/* Attempt to parse a file with an answer box but no character limit */
-	/* error should be added to the list */
+	/** Attempt to parse a file with an answer box but no character limit 
+	* error should be added to the list */
 	@Test
 	public void answerNoCharacterLimit() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/answerNoCharacterLimit.xml");
@@ -526,8 +532,8 @@ public class Iteration3XMLTest {
 		assertTrue(errorFound);
 	}
 	
-	/* Attempt to parse a file with an answer box but no correct answers */
-	/* error should be added to the list */
+	/** Attempt to parse a file with an answer box but no correct answers 
+	* error should be added to the list */
 	@Test
 	public void answerNoAnswers() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/answerNoAnswers.xml");
@@ -541,8 +547,8 @@ public class Iteration3XMLTest {
 		assertTrue(errorFound);
 	}
 	
-	/* Attempt to parse a file with an answer box but no mark information */
-	/* error should be added to the list */
+	/** Attempt to parse a file with an answer box but no mark information 
+	* error should be added to the list */
 	@Test
 	public void answerNoMarks() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/answerNoMarks.xml");
@@ -556,8 +562,8 @@ public class Iteration3XMLTest {
 		assertTrue(errorFound);
 	}
 	
-	/* Attempt to parse a file with an answer box which doesn't state whether */
-	/* the user can retry the question - error should be added */
+	/** Attempt to parse a file with an answer box which doesn't state whether 
+	* the user can retry the question - error should be added */
 	@Test
 	public void answerNoRetry() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/answerNoRetry.xml");
@@ -571,8 +577,8 @@ public class Iteration3XMLTest {
 		assertTrue(errorFound);
 	}
 	
-	/* Attempt to parse a file which contains a multiple choice object but no position */
-	/* error should be added */
+	/** Attempt to parse a file which contains a multiple choice object but no position 
+	* error should be added */
 	@Test
 	public void multiNoPosition() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/multiNoPosition.xml");
@@ -586,8 +592,8 @@ public class Iteration3XMLTest {
 		assertTrue(errorFound);
 	}
 	
-	/* Attempt to parse a file with an multiple choice object but no information about type */
-	/* error should be added to the list */
+	/** Attempt to parse a file with an multiple choice object but no information about type 
+	* error should be added to the list */
 	@Test
 	public void multiNoType() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/multiNoType.xml");
@@ -601,8 +607,8 @@ public class Iteration3XMLTest {
 		assertTrue(errorFound);
 	}
 	
-	/* Attempt to parse a file with a multiple choice object but no information about orientation */
-	/* error should be added to the list */
+	/** Attempt to parse a file with a multiple choice object but no information about orientation 
+	* error should be added to the list */
 	@Test
 	public void multiNoOrientation() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/multiNoOrientation.xml");
@@ -616,8 +622,8 @@ public class Iteration3XMLTest {
 		assertTrue(errorFound);
 	}
 	
-	/* Attempt to parse a file with a multiple choice object but no marks associated with it */
-	/* error should be added to the list */
+	/** Attempt to parse a file with a multiple choice object but no marks associated with it 
+	* error should be added to the list */
 	@Test
 	public void multiNoMarks() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/multiNoMarks.xml");
@@ -631,8 +637,8 @@ public class Iteration3XMLTest {
 		assertTrue(errorFound);
 	}
 	
-	/* Attempt to parse a file with a multiple choice object but no correct answers */
-	/* error should be added to the list */
+	/** Attempt to parse a file with a multiple choice object but no correct answers 
+	* error should be added to the list */
 	@Test
 	public void multiNoAnswers() {
 		ArrayList<XMLNotification> errorList = parser.parse("testXML/multiNoAnswers.xml");
