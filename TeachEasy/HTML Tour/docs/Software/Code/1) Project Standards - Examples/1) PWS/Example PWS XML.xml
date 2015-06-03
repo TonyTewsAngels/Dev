@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<slideshow>
+	<documentinfo>
+		<author>Ali Jewers</author>
+		<version>1.0</version>
+		<comment>this is a comment</comment>
+		<groupid>4</groupid>
+	</documentinfo>
+	<defaultsettings>
+		<backgroundcolor>#ff00ff00</backgroundcolor>
+		<font>times new roman</font>
+		<fontsize>24</fontsize>
+		<fontcolor>#ffcccc00</fontcolor>
+	</defaultsettings>
+	<slide>
+		<text sourcefile="null" xstart="0.5" ystart="0.5" font="arial" fontsize="24" fontcolor="#00112233"  duration="1.5">
+			Some Text.
+		</text>
+		<image sourcefile="selfie.jpg" xstart="0.5" ystart="0.5" scale="1.0" duration="1.5" starttime="2.0" />
+		<audio sourcefile="gavel.wav" starttime="2.5" />
+		<video sourcefile="avengers.mkv" xstart="0.5" ystart="0.5" />
+		<graphic type="oval/rectangle/line" xstart="0.5" ystart="0.5" xend="0.7" yend="0.7" solid="true" graphiccolor="#11223344" duration="1.5">
+			<cyclicshading shadingcolor="#88776655" />
+		</graphic>		
+	</slide>
+</slideshow>
