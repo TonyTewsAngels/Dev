@@ -1,19 +1,15 @@
+/*
+ * Lewis Thresh & Alistair Jewers
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
+ */
 package teacheasy.main;
 
-import java.util.ArrayList;
-
 import teacheasy.data.PageObject.PageObjectType;
-import teacheasy.debug.EditorRuntimeDataDummyUI.KeyHandler;
-import teacheasy.debug.EditorRuntimeDataDummyUI.MenuEventHandler;
-import teacheasy.debug.EditorRuntimeDataDummyUI.MouseEventHandler;
 import teacheasy.render.RenderUtil;
 import teacheasy.runtime.EditorRunTimeData;
 import teacheasy.runtime.editor.LessonInfoWindow;
 import teacheasy.runtime.editor.TemplateController.TemplateType;
-import teacheasy.runtime.editor.URLWindow;
-import teacheasy.xml.XMLErrorWindow;
-import teacheasy.xml.XMLHandler;
-import teacheasy.xml.util.XMLNotification;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -23,14 +19,12 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.Pagination;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -38,7 +32,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -51,17 +44,28 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
+/**
+ * Creates the main learn easy client window.
+ * 
+ * @author Lewis Thresh
+ * @author Alistair Jewers
+ * @version 1.0 19 Apr 2015
+ */
 public class TeachEasyClient extends Application {
+    /* Texts */
     private Text text1, botText, propText, titleText;
     
+    /** The runtime data for the editor */
     private EditorRunTimeData editorRuntimeData;
     
+    /** The page */
     private Group contentPanel;
     
+    /** The dimensions of the page  */
     private Rectangle r;
     
+    /* Buttons */
     private Button textBtn;  
     private Button imageBtn; 
     private Button videoBtn;    
@@ -74,6 +78,7 @@ public class TeachEasyClient extends Application {
     private Button nextPageBtn;
     private Button prevPageBtn;
     
+    /** The dropdown list for changing */
     private ComboBox<Integer> pageList;
     
     /**
@@ -276,7 +281,6 @@ public class TeachEasyClient extends Application {
         
         
         /* Page */
-        
         r = new Rectangle();
         r.setWidth(RenderUtil.TE_WIDTH);
         r.setHeight(RenderUtil.TE_HEIGHT);
@@ -346,42 +350,42 @@ public class TeachEasyClient extends Application {
         
         /* Import Images */
         
-        //Text Box
+        /* Text Box */
         Image textImST = new Image(getClass().getResourceAsStream("/teacheasy/icons/Textbox_ST_TOP_CIRC_Blue_T-01.png"));
         Image textImHO = new Image(getClass().getResourceAsStream("/teacheasy/icons/Textbox_HO_TOP_CIRC_Blue_T-01.png"));
         Image textImPR = new Image(getClass().getResourceAsStream("/teacheasy/icons/Textbox_PRE_TOP_CIRC_Blue_T-01.png"));
         
-        //Image
+        /* Image */
         Image imImST = new Image(getClass().getResourceAsStream("/teacheasy/icons/Image_ST_TOP_CIRC_Blue_T-01.png"));
         Image imImHO = new Image(getClass().getResourceAsStream("/teacheasy/icons/Image_HO_TOP_CIRC_Blue_T-01.png"));
         Image imImPR = new Image(getClass().getResourceAsStream("/teacheasy/icons/Image_PRE_TOP_CIRC_Blue_T-01.png"));
         
-        //Video
+        /* Video */
         Image vidImST = new Image(getClass().getResourceAsStream("/teacheasy/icons/Video_ST_TOP_CIRC_Blue_T-01.png"));
         Image vidImHO = new Image(getClass().getResourceAsStream("/teacheasy/icons/Video_HO_TOP_CIRC_Blue_T-01.png"));
         Image vidImPR = new Image(getClass().getResourceAsStream("/teacheasy/icons/Video_PRE_TOP_CIRC_Blue_T-01.png"));
         
-        //Audio
+        /* Audio */
         Image audioImST = new Image(getClass().getResourceAsStream("/teacheasy/icons/Audio_ST_TOP_CIRC_Blue_T-01.png"));
         Image audioImHO = new Image(getClass().getResourceAsStream("/teacheasy/icons/Audio_HO_TOP_CIRC_Blue_T-01.png"));
         Image audioImPR = new Image(getClass().getResourceAsStream("/teacheasy/icons/Audio_PRE_TOP_CIRC_Blue_T-01.png"));
         
-        //Graphics
+        /* Graphics */
         Image graphicImST = new Image(getClass().getResourceAsStream("/teacheasy/icons/Shape_ST_TOP_CIRC_Blue_T-01.png"));
         Image graphicImHO = new Image(getClass().getResourceAsStream("/teacheasy/icons/Shape_HO_TOP_CIRC_Blue_T-01.png"));
         Image graphicImPR = new Image(getClass().getResourceAsStream("/teacheasy/icons/Shape_PRE_TOP_CIRC_Blue_T-01.png"));
         
-        //Question Box
+        /* Question Box */
         Image queImST = new Image(getClass().getResourceAsStream("/teacheasy/icons/Questionbox_ST_TOP_CIRC_Blue_T-01.png"));
         Image queImHO = new Image(getClass().getResourceAsStream("/teacheasy/icons/Questionbox_HO_TOP_CIRC_Blue_T-01.png"));
         Image queImPR = new Image(getClass().getResourceAsStream("/teacheasy/icons/Questionbox_PRE_TOP_CIRC_Blue_T-01.png"));
         
-        //Multiple Choice
+        /* Multiple Choice */
         Image mulImST = new Image(getClass().getResourceAsStream("/teacheasy/icons/Choice_ST_TOP_CIRC_Blue_T-01.png"));
         Image mulImHO = new Image(getClass().getResourceAsStream("/teacheasy/icons/Choice_HO_TOP_CIRC_Blue_T-01.png"));
         Image mulImPR = new Image(getClass().getResourceAsStream("/teacheasy/icons/Choice_PRE_TOP_CIRC_Blue_T-01.png"));
         
-        //Arrows
+        /* Arrows */
         Image arImST_R = new Image(getClass().getResourceAsStream("/teacheasy/icons/Arrow_ST_BOTTOM_RECT_DarkBlue_L-01.png"));
         Image arImHO_R = new Image(getClass().getResourceAsStream("/teacheasy/icons/Arrow_HO_BOTTOM_RECT_DarkBlue_L-01.png"));
         Image arImPRE_R = new Image(getClass().getResourceAsStream("/teacheasy/icons/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-01.png"));
@@ -390,17 +394,12 @@ public class TeachEasyClient extends Application {
         Image arImHO_L = new Image(getClass().getResourceAsStream("/teacheasy/icons/Arrow_HO_BOTTOM_RECT_DarkBlue_L-02.png"));
         Image arImPRE_L = new Image(getClass().getResourceAsStream("/teacheasy/icons/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-02.png"));
         
-        //Preview Button
+        /* Preview Button */
         Image prevImST = new Image(getClass().getResourceAsStream("/teacheasy/icons/Preview_ST_TOP_CIRC_Blue_T-01.png"));
         Image prevImHO = new Image(getClass().getResourceAsStream("/teacheasy/icons/Preview_HO_TOP_CIRC_Blue_T-01.png"));
         Image prevImPRE = new Image(getClass().getResourceAsStream("/teacheasy/icons/Preview_PRE_TOP_CIRC_Blue_T-01.png"));
         
-         
-        
-        /*Prev.setFitWidth(80);
-        Prev.setFitHeight(80);*/
-        
-        //TE Logo
+        /* TE Logo */
         Image Logo = new Image(getClass().getResourceAsStream("/teacheasy/icons/TE_V5_1.png"));
         ImageView TE = new ImageView(Logo);
         TE.setFitWidth(55);
@@ -445,10 +444,7 @@ public class TeachEasyClient extends Application {
         
         final ImageView prevBoxST = new ImageView(prevImST);
         final ImageView prevBoxHO = new ImageView(prevImHO);
-        final ImageView prevBoxPRE = new ImageView(prevImPRE);
-        
-        //previewBtn.setGraphic(Prev);  
-        
+        final ImageView prevBoxPRE = new ImageView(prevImPRE);        
         
         /* Skin buttons */
         textBtn.setGraphic(textBoxST); 
@@ -464,7 +460,6 @@ public class TeachEasyClient extends Application {
         prevPageBtn.setGraphic(arST_L);
         
         /*Button dimensions*/
-
         int x = 70;
         int y = 70;
         
@@ -523,8 +518,7 @@ public class TeachEasyClient extends Application {
         prevBoxHO.setFitHeight(y);
         prevBoxPRE.setFitWidth(x);
         prevBoxPRE.setFitHeight(y);
-        
-        
+
         x = 40;
         y = 40;
         
@@ -593,7 +587,6 @@ public class TeachEasyClient extends Application {
         previewBtn.setOnMouseExited(new ButtonEventHandler(previewBtn, prevBoxST));
         
         /* Top Bar Constraints */
-        
         ColumnConstraints topFarLeft = new ColumnConstraints();
         topFarLeft.setMaxWidth(50);
         topGrid.getColumnConstraints().add(topFarLeft);
@@ -639,13 +632,10 @@ public class TeachEasyClient extends Application {
         RowConstraints botBarRow = new RowConstraints();
         botBarRow.setMaxHeight(1000);
         innerGrid.getRowConstraints().add(botBarRow);
-        
-        
-        /* innerGrid Column constraints */
 
+        /* innerGrid Column constraints */
         ColumnConstraints farLeft = new ColumnConstraints();
         farLeft.setFillWidth(true);
-       // centerRow.setMaxWidth(100);
         farLeft.setHgrow(Priority.SOMETIMES);
         innerGrid.getColumnConstraints().add(farLeft);
    
@@ -655,7 +645,6 @@ public class TeachEasyClient extends Application {
         
         ColumnConstraints centerRow = new ColumnConstraints();
         centerRow.setFillWidth(true);
-       // centerRow.setMaxWidth(100);
         centerRow.setHgrow(Priority.SOMETIMES);
         innerGrid.getColumnConstraints().add(centerRow);
         
@@ -664,7 +653,6 @@ public class TeachEasyClient extends Application {
         innerGrid.getColumnConstraints().add(propertiesCol);
         
         /* botGrid Column Constraints */
-         
         ColumnConstraints botStretchLeft = new ColumnConstraints();
         botStretchLeft.setFillWidth(true);
         botStretchLeft.setHgrow(Priority.SOMETIMES);
@@ -676,7 +664,6 @@ public class TeachEasyClient extends Application {
         
         ColumnConstraints botStretchRight = new ColumnConstraints();
         botStretchRight.setFillWidth(true);
-       // centerRow.setMaxWidth(100);
         botStretchRight.setHgrow(Priority.SOMETIMES);
         botGrid.getColumnConstraints().add(botStretchRight);
         
@@ -738,6 +725,9 @@ public class TeachEasyClient extends Application {
         updateUI();
     }
     
+    /**
+     * Update the user interface.
+     */
     public void updateUI() {        
         /* 
          * Enable or disable the relevant buttons based on whether
@@ -768,12 +758,15 @@ public class TeachEasyClient extends Application {
             pageList.setDisable(false);
             pageList.getItems().clear();
             
+            /* Fill the page select list */
             for(int i = 0; i < editorRuntimeData.getPageCount(); i++) {
                 pageList.getItems().add(new Integer(i+1));
             }
             
+            /* Set to the current page */
             pageList.setValue(new Integer(editorRuntimeData.getCurrentPageNumber() + 1));
             
+            /* Set the title */
             titleText.setText(editorRuntimeData.getLesson().lessonInfo.getLessonName());
         } else {
             textBtn.setDisable(true);
@@ -960,21 +953,41 @@ public class TeachEasyClient extends Application {
         }
     }
     
+    /**
+     * Handles button presses.
+     * 
+     * @author Alistair Jewers
+     */
     public class ButtonEventHandler implements EventHandler<MouseEvent> {
+        /** The button the handler is associated with */
         private Button button;
+        
+        /** The image to set on the button when this handler is called */
         private ImageView image;
         
+        /**
+         * Constructor.
+         * 
+         * @param nButton The button associated with the handler.
+         * @param nImage The image to set on the button when the handler is called.
+         */
         ButtonEventHandler(Button nButton, ImageView nImage) {
             this.button = nButton;
             this.image = nImage;
         }
 
+        /**
+         * Override the handle mouse event method.
+         */
         @Override
         public void handle(MouseEvent me) {
+            /* Update the button graphic */
             button.setGraphic(image);
             
+            /* If this was a press event */
             if(me.getEventType() == MouseEvent.MOUSE_PRESSED) {                
                 if(editorRuntimeData.isLessonOpen()) {
+                    /* Check the ID of the source button and call the relevant runtime method */
                     switch(button.getId()) {
                         case "textBtn":
                             editorRuntimeData.newObject(PageObjectType.TEXT);
@@ -1012,9 +1025,18 @@ public class TeachEasyClient extends Application {
         }
     }
     
+    /**
+     * Handle key presses.
+     * 
+     * @author Alistair Jewers
+     */
     public class KeyHandler implements EventHandler<KeyEvent> {
+        /**
+         * Override the key handle method
+         */
         @Override
-        public void handle(KeyEvent ke) {            
+        public void handle(KeyEvent ke) {
+            /* Check for specific keys */
             if(ke.getCode() == KeyCode.DELETE) {
                 editorRuntimeData.removeObject();
             } else if(ke.getCode() == KeyCode.O && ke.isControlDown()) {
@@ -1027,6 +1049,11 @@ public class TeachEasyClient extends Application {
         }
     }
     
+    /**
+     * Handle mouse events.
+     * 
+     * @author Alistair Jewers
+     */
     public class MouseEventHandler implements EventHandler<MouseEvent> {
         @Override
         public void handle(MouseEvent me) {
@@ -1040,6 +1067,11 @@ public class TeachEasyClient extends Application {
         }
     }
     
+    /**
+     * Handle changes to the page list selection.
+     * 
+     * @author Alistair Jewers
+     */
     public class PageListListener implements ChangeListener<Integer> {
         @Override
         public void changed(ObservableValue<? extends Integer> ov,
@@ -1053,13 +1085,27 @@ public class TeachEasyClient extends Application {
         }
     }
     
+    /**
+     * Handle clicks on the title box.
+     * 
+     * @author Alistair Jewers
+     */
     public class TitleBoxClickHandler implements EventHandler<MouseEvent> {
+        /** Reference to the calling client */
         private TeachEasyClient clientRef;
         
+        /**
+         * Constructor.
+         * 
+         * @param nClientRef Reference to the client.
+         */
         public TitleBoxClickHandler(TeachEasyClient nClientRef) {
             this.clientRef = nClientRef;
         }
         
+        /**
+         * Override the mouse event handling method.
+         */
         @Override
         public void handle(MouseEvent me) {
             if(editorRuntimeData.isLessonOpen()) {
@@ -1068,6 +1114,11 @@ public class TeachEasyClient extends Application {
         }
     }
     
+    /**
+     * Main function to make the application executable.
+     * 
+     * @param args Command line arguments.
+     */
     public static void main(String[] args) {
         launch(args);
     }
