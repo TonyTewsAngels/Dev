@@ -1,8 +1,11 @@
+/*
+ * Lewis Thresh, Sam Hall & Alistair Jewers
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
+ */
 package teacheasy.main;
 
 import teacheasy.certificate.CertificateWindow;
-import teacheasy.data.Lesson;
-import teacheasy.main.PreviewWindow.ButtonEventHandler;
 import teacheasy.render.RenderUtil;
 import teacheasy.runtime.RunTimeData;
 import javafx.application.*;
@@ -20,17 +23,28 @@ import javafx.scene.shape.*;
 import javafx.scene.text.*;
 import javafx.stage.*;
 
+/**
+ * Creates the main learn easy client window.
+ * 
+ * @author Lewis Thresh
+ * @author Sam Hall
+ * @author Alistair Jewers
+ * @version 1.4 20 May 2015
+ */
 public class LearnEasyClient extends Application {
-    /* Text */
+    /** Text */
     Text text;
     
     /* UI Elements */
     Button nextPageBtn;
     Button prevPageBtn;
     
-    /* Application state */
+    /** Application state */
     RunTimeData runtimeData;
     
+    /**
+     * Override the start application method.
+     */
     @Override
     public void start (Stage primaryStage) {
         /* Get screen size */
@@ -183,9 +197,7 @@ public class LearnEasyClient extends Application {
         /* Mouse Exited */
         nextPageBtn.setOnMouseExited(new ButtonEventHandler(nextPageBtn, arST_R));
         prevPageBtn.setOnMouseExited(new ButtonEventHandler(prevPageBtn, arST_L));
-        
-        
-        
+
         /* Add central LE icon */
         Image image2 = new Image("/teacheasy/icons/LE_V5_1.png");
         ImageView LE = new ImageView(image2);
@@ -232,15 +244,14 @@ public class LearnEasyClient extends Application {
         gridBot.add(nextPageBtn, 4, 0);
         gridBot.setAlignment(Pos.CENTER);
         
-        
         /* Add other panes to grid layout */
         grid.add(hBoxTop, 0, 0);
         grid.add(contentPane, 0, 1);
-        //grid.add(botAnchor, 0, 2);
         grid.add(gridBot, 0, 2);
         AnchorPane.setRightAnchor(nextPageBtn, 8.0);
         AnchorPane.setLeftAnchor(prevPageBtn, 8.0);
         
+        /* Initialise the run time in normal mode */
         runtimeData = new RunTimeData(group, canvasBounds, this);
         
         /* Show the window */
@@ -249,32 +260,46 @@ public class LearnEasyClient extends Application {
         /* Update the UI */
         updateUI();
     }
-    
-    public static void main(String[] args) {
-        launch(args);
-    }
-    
+
+    /**
+     * Called when the open file button is pressed.
+     */
     public void openFilePressed() {
         /* Open the file */
         runtimeData.openLesson();
     }
     
+    /**
+     * Called when the close file button is pressed.
+     */
     public void closeFilePressed() {
         runtimeData.closeLesson();
     }
     
+    /**
+     * Called when the next page button is pressed.
+     */
     public void nextPageButtonPressed() {
+        /* Let the rutime know we're moving forwards */
         runtimeData.setPageDirection(true);
         
+        /* Check for page completion to trigger warning if needed */
         if(runtimeData.checkPageCompleted()) {
+            /* Move to the next page */
              runtimeData.nextPage();
         }
     }
     
+    /**
+     * Called when the previous page button is pressed.
+     */
     public void prevPageButtonPressed() {
+        /* Let the runtime know we're moving backwards */
         runtimeData.setPageDirection(false);
         
+        /* Check for page completion to trigger warning if needed */
         if(runtimeData.checkPageCompleted()) {
+            /* Move to the previous page */
             runtimeData.prevPage();  
         }    
     }
@@ -306,23 +331,49 @@ public class LearnEasyClient extends Application {
         }
     }
     
+    /**
+     * Main method to make the application executable.
+     * 
+     * @param args Command line arguments.
+     */
+    public static void main(String[] args) {
+        launch(args);
+    }
     
+    /**
+     * Handles button presses.
+     * 
+     * @author Alistair Jewers
+     */
     public class ButtonEventHandler implements EventHandler<MouseEvent> {
+        /** The button the handler is associated with */
         private Button button;
+        
+        /** The image to set on the button when this handler is called */
         private ImageView image;
         
+        /**
+         * Constructor.
+         * 
+         * @param nButton The button associated with the handler.
+         * @param nImage The image to set on the button when the handler is called.
+         */
         ButtonEventHandler(Button nButton, ImageView nImage) {
             this.button = nButton;
             this.image = nImage;
         }
     
+        /**
+         * Override the handle mouse event method.
+         */
         @Override
-        public void handle(MouseEvent me) {        	
+        public void handle(MouseEvent me) {    
+            /* Update the button graphic */
             button.setGraphic(image);
             
-            /* Check the ID of the source button and call the relevant runtime method */
-            
+            /* If this was a press event */
             if(me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+                /* Check the ID of the source button and call the relevant runtime method */
 	            switch(button.getId()) {
 	                case "nextPageBtn":
 	                    nextPageButtonPressed();
@@ -345,13 +396,21 @@ public class LearnEasyClient extends Application {
         }
     }
     
+    /**
+     * Handle menu button events.
+     * 
+     * @author Alistair Jewers
+     */
     public class UIMenuEventHandler implements EventHandler<ActionEvent> {
+        /**
+         * Override the handle action event method.
+         */
         @Override
         public void handle(ActionEvent e) {
             /* Get the source */
             MenuItem source = (MenuItem) e.getSource();
             
-            /* TODO Check the ID of the source and call the relevant runtime method */
+            /* Check the ID of the source and call the relevant runtime method */
             switch(source.getId()) {
                 case "openFile":
                     openFilePressed();
@@ -363,7 +422,7 @@ public class LearnEasyClient extends Application {
                     break;
             }
             
-            /* TODO Update UI to reflect changes to application state */
+            /* Update UI to reflect changes to application state */
             updateUI();
         }
     }

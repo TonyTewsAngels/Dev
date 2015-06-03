@@ -1,10 +1,12 @@
+/*
+ * Lewis Thresh, Sam Hall & Alistair Jewers
+ * 
+ * Copyright (c) 2015 Sofia Software Solutions. All Rights Reserved.
+ */
 package teacheasy.main;
 
 import teacheasy.data.Lesson;
-import teacheasy.main.TeachEasyClient.ButtonEventHandler;
 import teacheasy.runtime.RunTimeData;
-import javafx.application.*;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.*;
 import javafx.scene.*;
@@ -18,17 +20,31 @@ import javafx.scene.shape.*;
 import javafx.scene.text.*;
 import javafx.stage.*;
 
+/**
+ * Creates a window for previewing a lesson from within 
+ * teach easy.
+ * 
+ * @author Lewis Thresh
+ * @author Sam Hall
+ * @author Alistair Jewers
+ * @version 1.1 10 May 2015
+ */
 public class PreviewWindow {
-    /* Text */
-    Text text;
+    /** Text */
+    private Text text;
     
     /* UI Elements */
-    Button nextPageBtn;
-    Button prevPageBtn;
+    private Button nextPageBtn;
+    private Button prevPageBtn;
     
-    /* Application state */
-    RunTimeData runtimeData;
+    /** Application state */
+    private RunTimeData runtimeData;
     
+    /**
+     * Constructor.
+     * 
+     * @param lesson The lesson to preview.
+     */
     public PreviewWindow(Lesson lesson) {
         /* Create a stage */
         Stage primaryStage = new Stage();
@@ -212,13 +228,12 @@ public class PreviewWindow {
         contentPane.setCenter(group);
         
         /* Add content to panes */
-        hBoxTop.getChildren().addAll(menuBar/*,imageNext*/);
-        group.getChildren().addAll(text,r/*,imageNext*/);
+        hBoxTop.getChildren().addAll(menuBar);
+        group.getChildren().addAll(text,r);
         gridBot.add(prevPageBtn, 0, 0); 
         gridBot.add(LE, 2, 0);      
         gridBot.add(nextPageBtn, 4, 0);
         gridBot.setAlignment(Pos.CENTER);
-        
         
         /* Add other panes to grid layout */
         grid.add(hBoxTop, 0, 0);
@@ -227,6 +242,7 @@ public class PreviewWindow {
         AnchorPane.setRightAnchor(nextPageBtn, 8.0);
         AnchorPane.setLeftAnchor(prevPageBtn, 8.0);
         
+        /* Instantiate the runtime data in preview mode */
         runtimeData = new RunTimeData(group, canvasBounds, this, lesson);
         
         /* Show the window */
@@ -236,22 +252,37 @@ public class PreviewWindow {
         updateUI();
     }
     
+    /**
+     * Called when the next page button is pressed.
+     */
     public void nextPageButtonPressed() {
+        /* Let the rutime know we're moving forwards */
         runtimeData.setPageDirection(true);
         
+        /* Check for page completion to trigger warning if needed */
         if(runtimeData.checkPageCompleted()) {
-             runtimeData.nextPage();
+            /* Move to the next page */
+            runtimeData.nextPage();
         }
     }
     
+    /**
+     * Called when the previous page button is pressed.
+     */
     public void prevPageButtonPressed() {
+        /* Let the runtime know we're moving backwards */
         runtimeData.setPageDirection(false);
         
+        /* Check for page completion to trigger warning if needed */
         if(runtimeData.checkPageCompleted()) {
+            /* Move to the previous page */
             runtimeData.prevPage();  
         }    
     }
     
+    /**
+     * Update the user interface
+     */
     public void updateUI() {
         /* 
          * If there is a lesson open enable the relevant page 
@@ -275,22 +306,40 @@ public class PreviewWindow {
         }
     }
     
+    /**
+     * Handles button presses.
+     * 
+     * @author Alistair Jewers
+     */
     public class ButtonEventHandler implements EventHandler<MouseEvent> {
+        /** The button the handler is associated with */
         private Button button;
+        
+        /** The image to set on the button when this handler is called */
         private ImageView image;
         
+        /**
+         * Constructor.
+         * 
+         * @param nButton The button associated with the handler.
+         * @param nImage The image to set on the button when the handler is called.
+         */
         ButtonEventHandler(Button nButton, ImageView nImage) {
             this.button = nButton;
             this.image = nImage;
         }
     
+        /**
+         * Override the handle mouse event method.
+         */
         @Override
-        public void handle(MouseEvent me) {        	
+        public void handle(MouseEvent me) {        
+            /* Update the button graphic */
             button.setGraphic(image);
             
-            /* Check the ID of the source button and call the relevant runtime method */
-            
+            /* If this was a press event */
             if(me.getEventType() == MouseEvent.MOUSE_PRESSED) {
+                /* Check the ID of the source button and call the relevant runtime method */
 	            switch(button.getId()) {
 	                case "nextPageBtn":
 	                    nextPageButtonPressed();
