@@ -127,13 +127,13 @@ public class PreviewWindow {
         prevPageBtn.setId("prevPageBtn");
         
         /* Add Arrow images */
-        Image arImST_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_ST_BOTTOM_RECT_DarkBlue_L-01.png"));
-        Image arImHO_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_HO_BOTTOM_RECT_DarkBlue_L-01.png"));
-        Image arImPRE_R = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-01.png"));
+        Image arImST_R = new Image(getClass().getResourceAsStream("/teacheasy/icons/Arrow_ST_BOTTOM_RECT_DarkBlue_L-01.png"));
+        Image arImHO_R = new Image(getClass().getResourceAsStream("/teacheasy/icons/Arrow_HO_BOTTOM_RECT_DarkBlue_L-01.png"));
+        Image arImPRE_R = new Image(getClass().getResourceAsStream("/teacheasy/icons/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-01.png"));
         
-        Image arImST_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_ST_BOTTOM_RECT_DarkBlue_L-02.png"));
-        Image arImHO_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_HO_BOTTOM_RECT_DarkBlue_L-02.png"));
-        Image arImPRE_L = new Image(getClass().getResourceAsStream("/teacheasy/topIcons/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-02.png"));
+        Image arImST_L = new Image(getClass().getResourceAsStream("/teacheasy/icons/Arrow_ST_BOTTOM_RECT_DarkBlue_L-02.png"));
+        Image arImHO_L = new Image(getClass().getResourceAsStream("/teacheasy/icons/Arrow_HO_BOTTOM_RECT_DarkBlue_L-02.png"));
+        Image arImPRE_L = new Image(getClass().getResourceAsStream("/teacheasy/icons/Arrow_PRE_BOTTOM_RECT_DarkBlue_L-02.png"));
         
         /* Image Views*/
         final ImageView arST_L = new ImageView(arImST_L);
@@ -185,7 +185,7 @@ public class PreviewWindow {
         prevPageBtn.setOnMouseExited(new ButtonEventHandler(prevPageBtn, arST_L));
         
         /* Add central LE icon */
-        Image image2 = new Image("/teacheasy/topIcons/LE_V5_1.png");
+        Image image2 = new Image("/teacheasy/icons/LE_V5_1.png");
         ImageView LE = new ImageView(image2);
         LE.setFitWidth(50);
         LE.setFitHeight(60);
