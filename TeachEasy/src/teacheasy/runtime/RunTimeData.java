@@ -431,13 +431,12 @@ public class RunTimeData {
                 .getProperty("user.home")));        
         
         /* Set the initial directory to the recent read path */
-        fileChooser.setInitialDirectory(
-                new File(homePage.getPreference().get("recentlyOpened", xmlHandler.getRecentReadPath())));
+        String string = homePage.getPreference().get("recentlyOpened", xmlHandler.getRecentReadPath());
         
-        /* Set the initial directory to the recent read path */
-        fileChooser.setInitialDirectory(
-                new File(homePage.getPreference().get("recentlyOpened", xmlHandler.getRecentReadPath())));
-       
+        if(string != null) {
+        	fileChooser.setInitialDirectory(new File(string));
+        }
+                
         /* Get the file to open */
         File file = fileChooser.showOpenDialog(new Stage());
 
