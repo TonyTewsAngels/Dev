@@ -62,7 +62,7 @@ public class RichText {
      * @param nText The text string.
      * @param nFont The font.
      * @param nFontSize The font size as an integer pt size.
-     * @oaram nColor The color as a hex string.
+     * @param nColor The color as a hex string.
      * @param settings A vararg collection of the various emphasis settings, e.g. bold and italic.
      */
     public RichText(String nText, String nFont, int nFontSize, String nColor, String... settings) {

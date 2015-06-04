@@ -311,7 +311,7 @@ public class NewObjectController {
      * Copy a text box.
      * 
      * @param page The page to add copy text box onto.
-     * @text The text box object to copy.
+     * @param text The text box object to copy.
      */
     public static void copyTextObject(Page page, TextObject text) {
         /* Copy properties of the source text box data object */
@@ -345,7 +345,7 @@ public class NewObjectController {
      * Copy a multiple choice question.
      * 
      * @param page The page to copy the multiple choice object onto.
-     * @param mchoice The multiple choice object to copy.
+     * @param mChoice The multiple choice object to copy.
      */
     public static void copyMultipleChoiceObject(Page page, MultipleChoiceObject mChoice) {
         /* Copy properties of the source multiple choice data object */

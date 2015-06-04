@@ -20,9 +20,9 @@ import javafx.scene.image.ImageView;
  * are added by supplying the relevant data from the data structure.
  * This class is used by the renderer when redrawing pages.
  * 
- * @Author Daniel Berhe 
+ * @author Daniel Berhe 
  * @author Jake Ransom
- * @Verion 1.0 23 Feb 2015
+ * @version 1.0 23 Feb 2015
  */
 public class ImageHandler {
     
