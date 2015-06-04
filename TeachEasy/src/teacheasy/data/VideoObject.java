@@ -29,7 +29,7 @@ public class VideoObject extends PageObject{
      * @param nXStart Relative X axis start position (0 - 1).
      * @param nYStart Relative Y axis start position (0 - 1).
      * @param nXEnd Relative X axis end position (0 - 1).
-     * @param nSourceFile The source file path as a string.
+     * @param nSourcefile The source file path as a string.
      * @param nAutoPlay The auto play setting.
      * @param nLoop The loop setting.
      */

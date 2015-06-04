@@ -618,7 +618,7 @@ public class Renderer {
      * Returns the width of a multiple choice object in pixels, given the 
      * corresponding data object.
      * 
-     * @param answerBox The multiple choice data object.
+     * @param multipleChoice The multiple choice data object.
      * @param page The current page.
      * @return The width of the related multiple choice object in the scene.
      */
@@ -643,7 +643,7 @@ public class Renderer {
      * Returns the height of a multiple choice object in pixels, given the 
      * corresponding data object.
      * 
-     * @param answerBox The multiple choice data object.
+     * @param multipleChoice The multiple choice data object.
      * @param page The current page.
      * @return The height of the related multiple choice object in the scene.
      */

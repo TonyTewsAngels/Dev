@@ -50,7 +50,7 @@ public class TextHandler {
 	/**
 	 * Method toggles the visibility of a textbox.
 	 * 
-	 * @param graphicNumber
+	 * @param textNumber
 	 *            the index of the textbox to be changed
 	 * @param visible
 	 *            boolean containing the state of the visibility of the textbox
@@ -64,7 +64,7 @@ public class TextHandler {
 	/**
 	 * Method to send a particular textbox to the back of the group.
 	 * 
-	 * @param graphicNumber
+	 * @param textNumber
 	 *            the index of the textbox to be sent to back
 	 */
 	public void sendToBack(int textNumber) {
@@ -76,7 +76,7 @@ public class TextHandler {
 	/**
 	 * Method to send a particular textbox to the front of the group.
 	 * 
-	 * @param graphicNumber
+	 * @param textNumber
 	 *            the index of the textbox to be sent to front
 	 */
 	public void sendToFront(int textNumber) {

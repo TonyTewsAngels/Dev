@@ -460,7 +460,7 @@ public class MultipleChoice {
     /**
      * Sets mark button object
      * 
-     * @param mark button object
+     * @param markButton button object
      */
     public void setMarkButton(Button markButton) {
         this.markButton = markButton;

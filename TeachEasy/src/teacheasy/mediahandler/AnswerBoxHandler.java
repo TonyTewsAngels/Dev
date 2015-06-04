@@ -31,19 +31,19 @@ public class AnswerBoxHandler {
     /**
      * Creates a new answer box object
      * 
-     * @param nXStart X coordinate of the object
-     * @param nYStart Y coordinate of the object
-     * @param nCharacterLimit Maximum allowed characters
-     * @param nRetry To allow retry
-     * @param nMarks Possible marks for a correct answer
-     * @param nIsNumerical Whether or not numerical input is expected
-     * @param nUpperBound Upper range of numerical solution
-     * @param nLowerBound Lower range of numerical solution
-     * @param nAnswers Solutions to questions
+     * @param xStart X coordinate of the object
+     * @param yStart Y coordinate of the object
+     * @param characterLimit Maximum allowed characters
+     * @param retry To allow retry
+     * @param marks Possible marks for a correct answer
+     * @param isNumerical Whether or not numerical input is expected
+     * @param upperBound Upper range of numerical solution
+     * @param lowerBound Lower range of numerical solution
+     * @param answers Solutions to questions
      */
     public void createAnswerBox(double xStart, double yStart,
-            int characterLimit, boolean retry, int marks, boolean isNumerical,
-            float upperBound, float lowerBound, ArrayList<Answer> answers) {
+                                int characterLimit, boolean retry, int marks, boolean isNumerical,
+                                float upperBound, float lowerBound, ArrayList<Answer> answers) {
 
         answerBox.add(new AnswerBox(xStart, yStart, characterLimit, retry,
                 marks, isNumerical, group, upperBound, lowerBound, answers));
