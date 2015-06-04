@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<slideshow>
+    <documentinfo>
+        <author>Author</author>
+        <version>1.0</version>
+        <comment>Comment</comment>
+        <groupid>4</groupid>
+        <datecreated>01/01/2001</datecreated>
+        <totalmarks>4</totalmarks>
+        <lessonname>New Lesson</lessonname>
+    </documentinfo>
+    <defaultsettings>
+        <backgroundcolor>#ff000000</backgroundcolor>
+        <font>Arial</font>
+        <fontsize>20</fontsize>
+        <fontcolor>#ff000000</fontcolor>
+    </defaultsettings>
+    <gradesettings>
+        <passboundary failmessage="fail" passmessage="pass">0</passboundary>
+    </gradesettings>
+    <slide backgroundcolor="#ffcce6ff">
+        <text duration="0.0" font="Courier New" fontcolor="#ff000000" fontsize="50" sourcefile="" starttime="0.0" xend="0.7108" xstart="0.30080003" yend="0.13431108" ystart="0.020859405">
+            <richtext bold="true" font="Courier New" fontcolor="#ff000000" fontsize="50" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Digital Circuits</richtext>
+        </text>
+        <image duration="0.0" rotation="0.0" scale="1.0" sourcefile="http://i.imgur.com/fCWQPiV.gif" starttime="0.0" xend="0.9501333" xstart="0.51493335" yend="0.66517043" yscale="1.0" ystart="0.2136572"/>
+        <text duration="0.0" font="Arial" fontcolor="#ff000000" fontsize="21" sourcefile="" starttime="0.0" xend="0.82919997" xstart="0.57919997" yend="0.7997383" ystart="0.69973826">
+            <richtext bold="true" font="Arial" fontcolor="#ff000000" fontsize="21" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">SR Latch (NAND Design)</richtext>
+        </text>
+        <text duration="0.0" font="Arial" fontcolor="#ff4d804d" fontsize="20" sourcefile="" starttime="0.0" xend="0.57493347" xstart="0.49493343" yend="0.26669782" ystart="0.20669776">
+            <richtext bold="true" font="Arial" fontcolor="#ff4d804d" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">S (Set)</richtext>
+        </text>
+        <text duration="0.0" font="Arial" fontcolor="#ffcc3333" fontsize="20" sourcefile="" starttime="0.0" xend="0.56773335" xstart="0.4757334" yend="0.6573374" ystart="0.5973375">
+            <richtext bold="true" font="Arial" fontcolor="#ffff0000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">R (Reset)</richtext>
+        </text>
+        <text duration="0.0" font="Arial" fontcolor="#ff000000" fontsize="24" sourcefile="" starttime="0.0" xend="0.9424" xstart="0.90239996" yend="0.6113077" ystart="0.56130767">
+            <richtext bold="true" font="Arial" fontcolor="#ffff0000" fontsize="24" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">!Q</richtext>
+        </text>
+        <text duration="0.0" font="Arial" fontcolor="#ff000000" fontsize="24" sourcefile="" starttime="0.0" xend="0.94346666" xstart="0.90346664" yend="0.3097945" ystart="0.25979447">
+            <richtext bold="true" font="Arial" fontcolor="#ff000000" fontsize="24" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Q</richtext>
+        </text>
+        <text duration="0.0" font="Courier New" fontcolor="#ff000000" fontsize="24" sourcefile="" starttime="0.0" xend="0.4656" xstart="0.037333354" yend="0.41345167" ystart="0.15929003">
+            <richtext bold="false" font="Courier New" fontcolor="#ff000000" fontsize="24" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">The concept of a latch circuit is important in the creation of many </richtext>
+            <richtext bold="false" font="Courier New" fontcolor="#ff000000" fontsize="24" italic="true" newline="false" strikethrough="false" subscript="false" superscript="false" underline="true">memory devices</richtext>
+            <richtext bold="false" font="Courier New" fontcolor="#ff000000" fontsize="24" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">. The function of this circuit is to </richtext>
+            <richtext bold="true" font="Courier New" fontcolor="#ff000000" fontsize="24" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">"latch"</richtext>
+            <richtext bold="false" font="Courier New" fontcolor="#ff000000" fontsize="24" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false"> the value created by the input signal until some other signal alters it.</richtext>
+        </text>
+        <text duration="0.0" font="Courier New" fontcolor="#ff000000" fontsize="20" sourcefile="" starttime="0.0" xend="0.44146663" xstart="0.038399965" yend="0.5645958" ystart="0.4645958">
+            <richtext bold="false" font="Courier New" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Complete the truth table for the circuit</richtext>
+        </text>
+        <text duration="0.0" font="Arial" fontcolor="#ff000000" fontsize="20" sourcefile="" starttime="0.0" xend="0.18959999" xstart="0.046933338" yend="0.62810373" ystart="0.5745819">
+            <richtext bold="false" font="Arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">S = 0, R = 0, Q = </richtext>
+        </text>
+        <text duration="0.0" font="Arial" fontcolor="#ff000000" fontsize="20" sourcefile="" starttime="0.0" xend="0.18533331" xstart="0.046933338" yend="0.69068193" ystart="0.6371601">
+            <richtext bold="false" font="Arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">S = 0, R = 1, Q = </richtext>
+        </text>
+        <text duration="0.0" font="Arial" fontcolor="#ff000000" fontsize="20" sourcefile="" starttime="0.0" xend="0.185" xstart="0.046933338" yend="0.75705284" ystart="0.703531">
+            <richtext bold="false" font="Arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">S = 1, R = 0, Q = </richtext>
+        </text>
+        <text duration="0.0" font="Arial" fontcolor="#ff000000" fontsize="20" sourcefile="" starttime="0.0" xend="0.185" xstart="0.046933338" yend="0.8196311" ystart="0.7661093">
+            <richtext bold="false" font="Arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">S = 1, R = 1, Q = </richtext>
+        </text>
+        <multiplechoice marks="1" orientation="horizontal" retry="true" type="radio" xstart="0.18346667" ystart="0.5707892">
+            <answer correct="true">1</answer>
+            <answer correct="true">0</answer>
+            <answer correct="true">Undefined</answer>
+        </multiplechoice>
+        <multiplechoice marks="1" orientation="horizontal" retry="true" type="radio" xstart="0.18346667" ystart="0.635">
+            <answer correct="true">1</answer>
+            <answer correct="true">0</answer>
+            <answer correct="true">Undefined</answer>
+        </multiplechoice>
+        <multiplechoice marks="1" orientation="horizontal" retry="true" type="radio" xstart="0.18346667" ystart="0.7">
+            <answer correct="true">1</answer>
+            <answer correct="true">0</answer>
+            <answer correct="true">Undefined</answer>
+        </multiplechoice>
+        <multiplechoice marks="1" orientation="horizontal" retry="true" type="radio" xstart="0.18346667" ystart="0.7623164">
+            <answer correct="true">1</answer>
+            <answer correct="true">0</answer>
+            <answer correct="true">Undefined</answer>
+        </multiplechoice>
+        <image duration="0.0" rotation="0.0" scale="1.0" sourcefile="http://i.imgur.com/hTFwmXB.gif" starttime="0.0" xend="1.0" xstart="0.68" yend="1.0" yscale="1.0" ystart="0.8976"/>
+        <text duration="0.0" font="Arial" fontcolor="#ff000000" fontsize="24" sourcefile="" starttime="0.0" xend="0.15" xstart="0.0" yend="0.08" ystart="0.0">
+            <richtext bold="false" font="Arial" fontcolor="#ff000000" fontsize="24" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">ELE00005H</richtext>
+        </text>
+        <text duration="0.0" font="Arial" fontcolor="#ff000000" fontsize="20" sourcefile="" starttime="0.0" xend="0.23826663" xstart="0.009599999" yend="1.0" ystart="0.9272955">
+            <richtext bold="false" font="Arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Page 1 of 6</richtext>
+        </text>
+        <text duration="0.0" font="Arial" fontcolor="#ff000000" fontsize="17" sourcefile="" starttime="0.0" xend="1.0" xstart="0.8821333" yend="0.086725846" ystart="0.0">
+            <richtext bold="false" font="Arial" fontcolor="#ff000000" fontsize="17" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">30</richtext>
+            <richtext bold="false" font="Arial" fontcolor="#ff000000" fontsize="17" italic="false" newline="false" strikethrough="false" subscript="false" superscript="true" underline="false">th</richtext>
+            <richtext bold="false" font="Arial" fontcolor="#ff000000" fontsize="17" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false"> May 2015</richtext>
+        </text>
+    </slide>
+</slideshow>

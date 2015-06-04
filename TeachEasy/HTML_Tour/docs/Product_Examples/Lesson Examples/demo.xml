@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<slideshow>
+    <documentinfo>
+        <author>Mr Raeburn</author>
+        <version>2.0</version>
+        <comment>This is the lesson used to demonstrate the product.</comment>
+        <groupid>4</groupid>
+        <datecreated>01/01/2001</datecreated>
+        <totalmarks>14</totalmarks>
+        <lessonname>TeachEasy Lesson</lessonname>
+    </documentinfo>
+    <defaultsettings>
+        <backgroundcolor>#ffffffb3</backgroundcolor>
+        <font>Arial</font>
+        <fontsize>20</fontsize>
+        <fontcolor>#ff000000</fontcolor>
+    </defaultsettings>
+    <gradesettings>
+        <passboundary failmessage="Unlucky, if you need" passmessage="Great work! Keep it up!">13</passboundary>
+    </gradesettings>
+    <slide backgroundcolor="#ffffe6cc">
+        <audio autoplay="false" loop="false" sourcefile="http://www.tonycuffe.com/mp3/tail%20toddle.mp3" starttime="0.0" viewprogress="true" xend="-1.0" xstart="0.100266665" ystart="0.17478289"/>
+        <text duration="0.0" font="Papyrus" fontcolor="#ff000000" fontsize="60" sourcefile="" starttime="0.0" xend="0.7" xstart="0.3" yend="0.2" ystart="0.02">
+            <richtext bold="true" font="Papyrus" fontcolor="#ff000000" fontsize="60" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="true">Language Lesson</richtext>
+        </text>
+        <text duration="0.0" font="Papyrus" fontcolor="#ff000000" fontsize="24" sourcefile="" starttime="0.0" xend="0.7" xstart="0.35" yend="0.28" ystart="0.2">
+            <richtext bold="false" font="Papyrus" fontcolor="#ff000000" fontsize="24" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Translate the audio clip into english</richtext>
+        </text>
+        <multiplechoice marks="1" orientation="vertical" retry="true" type="dropdownlist" xstart="0.11093333" ystart="0.491495">
+            <answer correct="false">der Apfel</answer>
+            <answer correct="true">die Ananas</answer>
+            <answer correct="false">das Apfel</answer>
+            <answer correct="false">der Hund</answer>
+        </multiplechoice>
+        <multiplechoice marks="1" orientation="vertical" retry="true" type="dropdownlist" xstart="0.7690667" ystart="0.64317137">
+            <answer correct="false">der Wein</answer>
+            <answer correct="false">die Honigmelone</answer>
+            <answer correct="true">die Banane</answer>
+            <answer correct="false">das Banane</answer>
+        </multiplechoice>
+        <image duration="0.0" rotation="0.0" scale="1.0" sourcefile="http://i.imgur.com/xIoJMna.gif" starttime="0.0" xend="0.7093333" xstart="0.34133333" yend="1.0" yscale="1.0" ystart="0.63"/>
+        <multiplechoice marks="1" orientation="horizontal" retry="true" type="dropdownlist" xstart="0.51413333" ystart="0.36820647">
+            <answer correct="false">das Papier</answer>
+            <answer correct="true">die Orange</answer>
+            <answer correct="false">das Orange</answer>
+            <answer correct="false">die Mango</answer>
+        </multiplechoice>
+        <graphic duration="0.0" graphiccolor="#ff994d00" linecolor="#ff000000" outlinethickness="2.0" rotation="0.0" shadow="false" solid="true" starttime="0.0" type="arrow" xend="0.42533332" xstart="0.24" yend="0.69576365" ystart="0.55">
+            <noneshading shadingcolor="#ff000000"/>
+        </graphic>
+        <graphic duration="0.0" graphiccolor="#ffcc3333" linecolor="#ff000000" outlinethickness="2.0" rotation="0.0" shadow="false" solid="true" starttime="0.0" type="arrow" xend="0.55" xstart="0.55" yend="0.65" ystart="0.4497478">
+            <noneshading shadingcolor="#ff000000"/>
+        </graphic>
+        <graphic duration="0.0" graphiccolor="#ff999900" linecolor="#ff000000" outlinethickness="2.0" rotation="0.0" shadow="false" solid="true" starttime="0.0" type="arrow" xend="0.6532" xstart="0.7701333" yend="0.7443111" ystart="0.68678653">
+            <noneshading shadingcolor="#ff000000"/>
+        </graphic>
+        <answerbox characterlimit="25" lowerbound="0.0" marks="1" numerical="false" retry="true" upperbound="0.0" xstart="0.368" ystart="0.29614672">
+            <answer correct="true">How are you?</answer>
+            <answer correct="true">How are you</answer>
+            <answer correct="true">how are you?</answer>
+            <answer correct="true">how are you</answer>
+        </answerbox>
+        <graphic duration="0.0" graphiccolor="#ff000000" linecolor="#ff000000" outlinethickness="2.0" rotation="0.0" shadow="false" solid="true" starttime="0.0" type="rectangle" xend="0.95" xstart="0.85" yend="0.1333333" ystart="0.1">
+            <noneshading shadingcolor="#ff000000"/>
+        </graphic>
+        <graphic duration="0.0" graphiccolor="#ffff0400" linecolor="#ffff0400" outlinethickness="2.0" rotation="0.0" shadow="false" solid="true" starttime="0.0" type="rectangle" xend="0.95" xstart="0.85" yend="0.1666666" ystart="0.1333333">
+            <noneshading shadingcolor="#ff000000"/>
+        </graphic>
+        <graphic duration="0.0" graphiccolor="#ffffff03" linecolor="#fff3ff00" outlinethickness="2.0" rotation="0.0" shadow="false" solid="true" starttime="0.0" type="rectangle" xend="0.95" xstart="0.85" yend="0.2" ystart="0.166666">
+            <noneshading shadingcolor="#ff000000"/>
+        </graphic>
+    </slide>
+    <slide backgroundcolor="#ffe6e6b3">
+        <audio autoplay="false" loop="false" sourcefile="http://www.tonycuffe.com/mp3/tail%20toddle.mp3" starttime="0.0" viewprogress="true" xend="-1.0" xstart="0.6314667" ystart="0.60980725"/>
+        <text duration="0.0" font="Gulim" fontcolor="#ff000000" fontsize="56" sourcefile="" starttime="0.0" xend="0.7" xstart="0.34" yend="0.15" ystart="0.02">
+            <richtext bold="true" font="Gulim" fontcolor="#ff000000" fontsize="56" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Biology Lesson</richtext>
+        </text>
+        <text duration="0.0" font="Arial" fontcolor="#ff000000" fontsize="22" sourcefile="" starttime="0.0" xend="0.5" xstart="0.25" yend="0.36" ystart="0.29983932">
+            <richtext bold="false" font="Arial" fontcolor="#ff000000" fontsize="22" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Name the </richtext>
+            <richtext bold="true" font="Arial" fontcolor="#ff4d804d" fontsize="22" italic="true" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">GREEN</richtext>
+            <richtext bold="false" font="Arial" fontcolor="#ff000000" fontsize="22" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false"> bone.</richtext>
+        </text>
+        <text duration="0.0" font="Arial" fontcolor="#ff000000" fontsize="22" sourcefile="" starttime="0.0" xend="0.5" xstart="0.25" yend="0.65" ystart="0.5694675">
+            <richtext bold="false" font="Arial" fontcolor="#ff000000" fontsize="22" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Name the </richtext>
+            <richtext bold="true" font="Arial" fontcolor="#ffcc9933" fontsize="22" italic="true" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">ORANGE</richtext>
+            <richtext bold="false" font="Arial" fontcolor="#ff000000" fontsize="22" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false"> bone.</richtext>
+        </text>
+        <text duration="0.0" font="Gautami" fontcolor="#ff000000" fontsize="24" sourcefile="" starttime="0.0" xend="0.95" xstart="0.6037333" yend="0.26" ystart="0.18949558">
+            <richtext bold="false" font="Gautami" fontcolor="#ff000000" fontsize="24" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Which of the following facts are true?</richtext>
+        </text>
+        <multiplechoice marks="2" orientation="vertical" retry="true" type="checkbox" xstart="0.62013334" ystart="0.25939214">
+            <answer correct="false">Plants have bones</answer>
+            <answer correct="true">The adult skeleton has 206 bones</answer>
+            <answer correct="false">Women have more ribs than Men</answer>
+            <answer correct="true">A babies skeleton contains 300 bones</answer>
+            <answer correct="false">The number of bones in the skeleton never changes</answer>
+        </multiplechoice>
+        <answerbox characterlimit="12" lowerbound="0.0" marks="1" numerical="false" retry="false" upperbound="0.0" xstart="0.26" ystart="0.38">
+            <answer correct="true">Humerus</answer>
+            <answer correct="true">humerus</answer>
+        </answerbox>
+        <answerbox characterlimit="12" lowerbound="0.0" marks="1" numerical="false" retry="false" upperbound="0.0" xstart="0.26" ystart="0.66520244">
+            <answer correct="true">Femur</answer>
+            <answer correct="true">femur</answer>
+        </answerbox>
+        <image duration="0.0" rotation="0.0" scale="1.0" sourcefile="http://i.imgur.com/s513knF.gif" starttime="0.0" xend="0.25" xstart="0.0224" yend="1.0" yscale="1.0" ystart="0.13173287"/>
+        <graphic duration="0.0" graphiccolor="#ffe6b34d" linecolor="#ffe6b34d" outlinethickness="2.0" rotation="0.0" shadow="false" solid="true" starttime="0.0" type="oval" xend="0.19493334" xstart="0.17493336" yend="0.654979" ystart="0.6149789">
+            <noneshading shadingcolor="#ff000000"/>
+        </graphic>
+        <graphic duration="0.0" graphiccolor="#ff4d804d" linecolor="#ff4d804d" outlinethickness="2.0" rotation="0.0" shadow="false" solid="true" starttime="0.0" type="oval" xend="0.2162666" xstart="0.19626665" yend="0.36863622" ystart="0.3286362">
+            <noneshading shadingcolor="#ff000000"/>
+        </graphic>
+    </slide>
+    <slide backgroundcolor="#ffcce6ff">
+        <text duration="0.0" font="Rod" fontcolor="#ff000000" fontsize="60" sourcefile="" starttime="0.0" xend="0.6968" xstart="0.30400002" yend="0.11207381" ystart="0.0041150153">
+            <richtext bold="false" font="Rod" fontcolor="#ff000000" fontsize="60" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Example Video</richtext>
+        </text>
+        <video autoplay="false" loop="false" sourcefile="http://download.oracle.com/otndocs/products/javafx/oow2010-2.flv" xend="0.8005333" xstart="0.20053324" ystart="0.14222325"/>
+    </slide>
+    <slide backgroundcolor="#ffe6e6cc">
+        <text duration="0.0" font="Kalinga" fontcolor="#ff000000" fontsize="56" sourcefile="" starttime="0.0" xend="0.67" xstart="0.34" yend="0.15" ystart="0.02">
+            <richtext bold="false" font="Kalinga" fontcolor="#ff000000" fontsize="56" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Maths Lesson</richtext>
+        </text>
+        <text duration="0.0" font="Arial" fontcolor="#ff000000" fontsize="30" sourcefile="" starttime="0.0" xend="0.45" xstart="0.0704" yend="0.3" ystart="0.19564229">
+            <richtext bold="false" font="Arial" fontcolor="#ff000000" fontsize="30" italic="false" newline="true" strikethrough="false" subscript="false" superscript="false" underline="false">Name the following equation:</richtext>
+            <richtext bold="false" font="Arial" fontcolor="#ff000000" fontsize="30" italic="true" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">c</richtext>
+            <richtext bold="false" font="Arial" fontcolor="#ff000000" fontsize="20" italic="true" newline="false" strikethrough="false" subscript="false" superscript="true" underline="false">2</richtext>
+            <richtext bold="false" font="Arial" fontcolor="#ff000000" fontsize="30" italic="true" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">=a</richtext>
+            <richtext bold="false" font="Arial" fontcolor="#ff000000" fontsize="20" italic="true" newline="false" strikethrough="false" subscript="false" superscript="true" underline="false">2</richtext>
+            <richtext bold="false" font="Arial" fontcolor="#ff000000" fontsize="30" italic="true" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">+b</richtext>
+            <richtext bold="false" font="Arial" fontcolor="#ff000000" fontsize="20" italic="true" newline="false" strikethrough="false" subscript="false" superscript="true" underline="false">2</richtext>
+        </text>
+        <multiplechoice marks="1" orientation="vertical" retry="true" type="radio" xstart="0.06826667" ystart="0.3170061">
+            <answer correct="false">Bilateral Laplace Transform</answer>
+            <answer correct="false">Euler's Identity</answer>
+            <answer correct="true">Pythagoras's Theorem</answer>
+            <answer correct="true">Cosine Rule</answer>
+        </multiplechoice>
+        <graphic duration="0.0" graphiccolor="#ffe6b34d" linecolor="#ffe6b34d" outlinethickness="2.0" rotation="0.0" shadow="false" solid="true" starttime="0.0" type="rectangle" xend="0.78" xstart="0.6314667" yend="0.3980432" ystart="0.2">
+            <noneshading shadingcolor="#ff000000"/>
+        </graphic>
+        <graphic duration="0.0" graphiccolor="#ffe6e6cc" linecolor="#ffe6e6cc" outlinethickness="2.0" rotation="-50.0" shadow="false" solid="true" starttime="0.0" type="rectangle" xend="0.8" xstart="0.6944" yend="0.48034102" ystart="0.067">
+            <noneshading shadingcolor="#ff000000"/>
+        </graphic>
+        <text duration="0.0" font="Arial" fontcolor="#ff000000" fontsize="20" sourcefile="" starttime="0.0" xend="0.63" xstart="0.60693336" yend="0.34" ystart="0.2904578">
+            <richtext bold="false" font="Arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">3</richtext>
+        </text>
+        <text duration="0.0" font="Arial" fontcolor="#ff000000" fontsize="20" sourcefile="" starttime="0.0" xend="0.7" xstart="0.672" yend="0.44327417" ystart="0.39665112">
+            <richtext bold="false" font="Arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">4</richtext>
+        </text>
+        <text duration="0.0" font="Arial" fontcolor="#ff000000" fontsize="20" sourcefile="" starttime="0.0" xend="0.71" xstart="0.6816" yend="0.31" ystart="0.2563242">
+            <richtext bold="false" font="Arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">?</richtext>
+        </text>
+        <text duration="0.0" font="Arial" fontcolor="#ff000000" fontsize="20" sourcefile="" starttime="0.0" xend="1.0" xstart="0.4832" yend="0.53" ystart="0.4725035">
+            <richtext bold="false" font="Arial" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">What is the length of the hypotenuse of this right angled triangle?</richtext>
+        </text>
+        <image duration="0.0" rotation="0.0" scale="1.0" sourcefile="http://i.imgur.com/df5U6M7.png" starttime="0.0" xend="0.4733333" xstart="0.19253331" yend="0.8783127" yscale="1.0" ystart="0.7247127"/>
+        <image duration="0.0" rotation="0.0" scale="1.0" sourcefile="http://i.imgur.com/wJoq84O.png" starttime="0.0" xend="0.5796" xstart="0.5212" yend="0.8275873" yscale="1.0" ystart="0.7834984"/>
+        <answerbox characterlimit="12" lowerbound="5.0" marks="1" numerical="true" retry="true" upperbound="5.0" xstart="0.5856" ystart="0.5578374"/>
+        <answerbox characterlimit="12" lowerbound="2500.0" marks="1" numerical="true" retry="true" upperbound="2501.0" xstart="0.5856" ystart="0.77970564"/>
+    </slide>
+    <slide backgroundcolor="#ffffcce6">
+        <text duration="0.0" font="Castellar" fontcolor="#ff000000" fontsize="58" sourcefile="" starttime="0.0" xend="0.67" xstart="0.33" yend="0.15" ystart="0.02">
+            <richtext bold="true" font="Castellar" fontcolor="#ff000000" fontsize="58" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="true">Art Lesson</richtext>
+        </text>
+        <text duration="0.0" font="Century Gothic" fontcolor="#ff000000" fontsize="18" sourcefile="" starttime="0.0" xend="0.2" xstart="0.017066669" yend="0.45" ystart="0.33596924">
+            <richtext bold="false" font="Century Gothic" fontcolor="#ff000000" fontsize="18" italic="false" newline="true" strikethrough="false" subscript="false" superscript="false" underline="false">Which of the following</richtext>
+            <richtext bold="false" font="Century Gothic" fontcolor="#ff000000" fontsize="18" italic="false" newline="true" strikethrough="false" subscript="false" superscript="false" underline="false">are primary colours?</richtext>
+        </text>
+        <multiplechoice marks="1" orientation="vertical" retry="true" type="checkbox" xstart="0.03" ystart="0.45">
+            <answer correct="true">Red</answer>
+            <answer correct="false">Green</answer>
+            <answer correct="true">Blue</answer>
+            <answer correct="true">Yellow</answer>
+            <answer correct="false">Purple</answer>
+        </multiplechoice>
+        <graphic duration="0.0" graphiccolor="#ffd70000" linecolor="#ffd90303" outlinethickness="0.5" rotation="0.0" shadow="true" solid="true" starttime="0.0" type="rectangle" xend="0.14" xstart="0.12" yend="0.5" ystart="0.47">
+            <noneshading shadingcolor="#ff000000"/>
+        </graphic>
+        <graphic duration="0.0" graphiccolor="#ff4d804d" linecolor="#ff4d804d" outlinethickness="0.5" rotation="0.0" shadow="true" solid="true" starttime="0.0" type="rectangle" xend="0.14" xstart="0.12" yend="0.55" ystart="0.52">
+            <noneshading shadingcolor="#ff000000"/>
+        </graphic>
+        <graphic duration="0.0" graphiccolor="#ff4d66cc" linecolor="#ff4d66cc" outlinethickness="0.5" rotation="0.0" shadow="true" solid="true" starttime="0.0" type="rectangle" xend="0.14" xstart="0.12" yend="0.6" ystart="0.57">
+            <noneshading shadingcolor="#ff000000"/>
+        </graphic>
+        <graphic duration="0.0" graphiccolor="#ffffff4d" linecolor="#ffffff4d" outlinethickness="0.5" rotation="0.0" shadow="true" solid="true" starttime="0.0" type="rectangle" xend="0.14" xstart="0.12" yend="0.65" ystart="0.62">
+            <noneshading shadingcolor="#ff000000"/>
+        </graphic>
+        <graphic duration="0.0" graphiccolor="#ff4d1a4d" linecolor="#ff663366" outlinethickness="0.5" rotation="0.0" shadow="true" solid="true" starttime="0.0" type="rectangle" xend="0.14" xstart="0.12" yend="0.7" ystart="0.67">
+            <noneshading shadingcolor="#ff000000"/>
+        </graphic>
+        <graphic duration="0.0" graphiccolor="#ff669999" linecolor="#ffffcce6" outlinethickness="0.5" rotation="0.0" shadow="false" solid="true" starttime="0.0" type="oval" xend="0.45" xstart="0.25" yend="0.77" ystart="0.47">
+            <verticalshading shadingcolor="#ffcc9933"/>
+        </graphic>
+        <graphic duration="0.0" graphiccolor="#ffe6804d" linecolor="#ffffccff" outlinethickness="0.5" rotation="0.0" shadow="false" solid="true" starttime="0.0" type="oval" xend="0.7" xstart="0.5" yend="0.77" ystart="0.47">
+            <horizontalshading shadingcolor="#ff669999"/>
+        </graphic>
+        <text duration="0.0" font="Century Gothic" fontcolor="#ff000000" fontsize="30" sourcefile="" starttime="0.0" xend="0.36" xstart="0.32746664" yend="0.65" ystart="0.55877155">
+            <richtext bold="false" font="Century Gothic" fontcolor="#ff000000" fontsize="30" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">a</richtext>
+        </text>
+        <text duration="0.0" font="Century Gothic" fontcolor="#ff000000" fontsize="30" sourcefile="" starttime="0.0" xend="0.61" xstart="0.58" yend="0.64" ystart="0.56">
+            <richtext bold="false" font="Century Gothic" fontcolor="#ff000000" fontsize="30" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">b</richtext>
+        </text>
+        <text duration="0.0" font="Century Gothic" fontcolor="#ff000000" fontsize="20" sourcefile="" starttime="0.0" xend="0.6" xstart="0.035" yend="0.87" ystart="0.8">
+            <richtext bold="false" font="Century Gothic" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Which of the shapes show an example of horizontal shading?</richtext>
+        </text>
+        <text duration="0.0" font="Century Gothic" fontcolor="#ff000000" fontsize="20" sourcefile="" starttime="0.0" xend="0.6" xstart="0.035" yend="0.9734517" ystart="0.88">
+            <richtext bold="false" font="Century Gothic" fontcolor="#ff000000" fontsize="20" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Which of the shapes show an example of vertical shading?</richtext>
+        </text>
+        <multiplechoice marks="1" orientation="horizontal" retry="true" type="dropdownlist" xstart="0.68" ystart="0.88">
+            <answer correct="true">a</answer>
+            <answer correct="false">b</answer>
+            <answer correct="false">c</answer>
+        </multiplechoice>
+        <multiplechoice marks="1" orientation="horizontal" retry="true" type="dropdownlist" xstart="0.68" ystart="0.8">
+            <answer correct="false">a</answer>
+            <answer correct="true">b</answer>
+            <answer correct="false">c</answer>
+        </multiplechoice>
+        <text duration="0.0" font="GulimChe" fontcolor="#ff000000" fontsize="30" sourcefile="" starttime="0.0" xend="1.0" xstart="0.04906667" yend="0.3" ystart="0.15">
+            <richtext bold="false" font="GulimChe" fontcolor="#ff000000" fontsize="30" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="true">Any</richtext>
+            <richtext bold="false" font="GulimChe" fontcolor="#ff000000" fontsize="30" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false"> colour can be created by mixing together different quantities of the</richtext>
+            <richtext bold="false" font="GulimChe" fontcolor="#ff000000" fontsize="30" italic="true" newline="true" strikethrough="false" subscript="false" superscript="false" underline="false"> three primary colours.</richtext>
+            <richtext bold="false" font="GulimChe" fontcolor="#ff000000" fontsize="30" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">Use this</richtext>
+            <richtext bold="true" font="GulimChe" fontcolor="#ff000000" fontsize="30" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false"> and</richtext>
+            <richtext bold="false" font="GulimChe" fontcolor="#ff000000" fontsize="30" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false"> the information your learned in class to answer the following questions:</richtext>
+        </text>
+        <graphic duration="0.0" graphiccolor="#ffe6e6cc" linecolor="#ffffcce6" outlinethickness="0.5" rotation="0.0" shadow="false" solid="true" starttime="0.0" type="oval" xend="0.95" xstart="0.75" yend="0.77" ystart="0.47">
+            <cyclicshading shadingcolor="#ff669999"/>
+        </graphic>
+        <text duration="0.0" font="Century Gothic" fontcolor="#ff000000" fontsize="30" sourcefile="" starttime="0.0" xend="0.86" xstart="0.83" yend="0.65" ystart="0.56">
+            <richtext bold="false" font="Century Gothic" fontcolor="#ff000000" fontsize="30" italic="false" newline="false" strikethrough="false" subscript="false" superscript="false" underline="false">c</richtext>
+        </text>
+    </slide>
+</slideshow>
